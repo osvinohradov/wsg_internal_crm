@@ -1,0 +1,17 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// Авіа компанії
+const ReferenceAviaCompanySchema = new Schema({
+    _id     :{ type: mongoose.SchemaTypes.ObjectId },
+    // Номер
+    Number  :{ type: String },
+    // Найменування
+    Name    :{ type: String },
+    // IATA
+    IATA    :{ type: String }
+});
+
+const ReferenceAviaCompany = mongoose.model('ReferenceAviaCompany', ReferenceAviaCompanySchema);
+
+exports.ReferenceAviaCompany = ReferenceAviaCompany;

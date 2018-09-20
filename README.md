@@ -1,1 +1,1 @@
-# wsg_internal_crm
+# WSG Internal CRM

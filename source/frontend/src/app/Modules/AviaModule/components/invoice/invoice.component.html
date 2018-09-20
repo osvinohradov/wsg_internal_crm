@@ -1,0 +1,267 @@
+<h2 class="ml-4 title_main_page_margin">
+  Накладна авіаційних квитків
+</h2>
+
+<div class="ml-4 mr-4 pl-0 pr-0  clearfix">
+  <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+    <div class="d-inline pl-0 mr-my-1">
+      <button (click)="openDialog()" type="button" class="btn btn-default my_button_style">
+        <span class="material-icons">add</span>
+        <span class="my_button_label">Створити</span>
+      </button>
+    </div>
+
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" title="Скопіювати" data-placement="top">
+        <span class="material-icons">filter_none</span>
+      </button>
+    </div>
+
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Змінити">
+        <span class="material-icons">edit</span>
+      </button>
+    </div>
+
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Оновити">
+        <span class="material-icons">refresh</span>
+      </button>
+    </div>
+
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+        <span class="material-icons">save</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Відмінити для вилучення/Зняти позначку">
+        <span class="material-icons">remove_from_queue</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Встановити період...">
+        <span class="material-icons">access_time</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style">
+        <span class="material-icons">location_searching</span>
+        <span class="my_button_label">Знайти</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Відмінити пошук">
+        <span class="material-icons">location_disabled</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style">
+        <span class="material-icons"> filter_tilt_shift</span>
+        <span class="my_button_label">Підбір</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="PrintMenu">
+        <span class="printDropdownButton">Друк</span>
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #PrintMenu="matMenu">
+        <button (click)="openPrintInvoice()" mat-menu-item class="my_menu_label">Друк акта</button>
+        <button (click)="openPrintAct()" mat-menu-item class="my_menu_label">Друк накладної</button>
+        <button (click)="openPrintScore()" mat-menu-item class="my_menu_label">Друк рахунка</button>
+        <button (click)="openPrintScoreWithStamp()" mat-menu-item class="my_menu_label">Друк рахунка з печаткою</button>
+      </mat-menu>
+    </div>
+    <!-- Button Row - End -->
+  </div>
+  <!--MENU Buttons End-->
+  <!-- DropDown ALL Actions -->
+  <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+    <div id="referencesButton" class="d-lg-inline d-none float-right">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+        <span class="material-icons">help_outline</span>
+      </button>
+
+    </div>
+    <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialog()">
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">add</span>
+          </div>
+          <span class="d-inline my_menu_label">Створити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">filter_none</span>
+          </div>
+          <span class="d-inline my_menu_label">Скопіювати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">edit</span>
+          </div>
+          <span class="d-inline my_menu_label">Змінити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">remove_from_queue</span>
+          </div>
+          <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">refresh</span>
+          </div>
+          <span class="d-inline my_menu_label">Оновити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">access_time</span>
+          </div>
+          <span class="d-inline my_menu_label">Встановити період...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Провести</span>
+        </button>
+        <button mat-menu-item>
+          <span class="empty-icon d-inline my_menu_label">Знайти: Дата - 14.08.2018</span>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">chevron_right</span>
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">location_searching</span>
+          </div>
+          <span class="d-inline my_menu_label">Знайти...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">location_disabled</span>
+          </div>
+          <span class="d-inline my_menu_label">Відмінити пошук</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">settings</span>
+          </div>
+          <span class="d-inline my_menu_label">Настроїти список...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons"> done_all</span>
+          </div>
+          <span class="d-inline my_menu_label">Вивести список...</span>
+        </button>
+        <button mat-menu-item>
+          <span class="empty-icon d-inline my_menu_label">Друк</span>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">chevron_right</span>
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons"> filter_tilt_shift</span>
+          </div>
+          <span class="d-inline my_menu_label">Підбір</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">transform</span>
+          </div>
+          <span class="d-inline my_menu_label">Змінити форму...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons"> help_outline</span>
+          </div>
+          <span class="d-inline my_menu_label">Довідка</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <!-- DropDown ALL Actions end-->
+</div>
+<div class="ml-4 mr-4 mt-2 my_table_style">
+  <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+    <table class="table table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Дата</th>
+          <th scope="col">Номер</th>
+          <th scope="col">Повернення</th>
+          <th scope="col">Void</th>
+          <th scope="col">Опл.</th>
+          <th scope="col">Контрагент</th>
+          <th scope="col">Групове замовлення</th>
+          <th scope="col">Вид сервісу</th>
+          <th scope="col">Зміст</th>
+          <th scope="col">Постачальник</th>
+          <th scope="col">Сума</th>
+          <th scope="col">В т.ч.ПДВ</th>
+          <th scope="col">Коментар</th>
+          <th scope="col">Агент</th>
+          <th scope="col">Відповідальний</th>
+          <th scope="col">Валюта пропозиції</th>
+          <th scope="col">Підсумкова валюта</th>
+          <th scope="col">Організація</th>
+          <th scope="col">Код бронювання</th>
+          <th scope="col">Документ що повертається</th>
+          <th scope="col">Дата купівлі у постачальника</th>
+          <th scope="col">Форма сплати</th>
+          <th scope="col">Дата сплати</th>
+          <th scope="col">Код РМ</th>
+          <th scope="col">Оброблено</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="main" *ngFor="let invoice of avia_invoices">
+          <td class="text-center" scope="row">{{invoice.Date | date: 'dd/MM/yyyy H:mm:ss'}}</td>
+          <td class="text-center">{{invoice.Number}}</td>
+          <td class="text-center">
+              <mat-checkbox class="" primary [(ngModel)]="invoice.IsReturned"></mat-checkbox>
+          </td>
+          <td class="text-center">
+              <mat-checkbox class="" primary [(ngModel)]="invoice.IsVoid"></mat-checkbox>
+          </td>
+          <td class="text-center">
+            <mat-checkbox class="" primary [(ngModel)]="invoice.IsPaid"></mat-checkbox>
+          </td>
+          <td class="text-center">{{invoice.ClientId ? invoice.ClientId.Name : ""}}</td>
+          <td class="text-center">{{invoice.GroupInvoiceId ? invoice.GroupInvoiceId.Name : ""}}</td>
+          <td class="text-center">{{invoice.ServiceTypeId ? invoice.ServiceTypeId.Name : ""}}</td>
+          <!-- Авіаційний квиток №(номер) для Біла Олена, за маршрутом: виліт із Київ 18.10.2018, приліт в Пекін 18.10.2018; виліт із Пекін 18.10.2018, приліт в Київ 18.10.2018  -->
+          <td class="text-center" matTooltip="{{_get_invoice_content(invoice)}}">{{_get_invoice_content(invoice)}}</td>
+          <td class="text-center">{{invoice.ProviderId ? invoice.ProviderId.Name : ""}}</td>
+          <td class="text-center">{{invoice.TotalAmount}}</td>
+          <td class="text-center">{{"MPE"}}</td>
+          <td class="text-center">{{invoice.Comment}}</td>
+          <td class="text-center">{{invoice.Agent}}</td>
+          <td class="text-center">{{invoice.ResponsibleAgent}}</td>
+          <td class="text-center">{{invoice.OfferCurrencyId ? invoice.OfferCurrencyId.Name : ""}}</td>
+          <td class="text-center">{{invoice.TotalCurrencyId ? invoice.TotalCurrencyId.Name : ""}}</td>
+          <td class="text-center">{{invoice.Organization}}</td>
+          <td class="text-center">{{invoice.BookingCode}}</td>
+          <td class="text-center">{{invoice.ReturnedDocument}}</td>
+          <td class="text-center">Дата купівлі у постачальника</td>
+          <td class="text-center">{{invoice.PaymentForm}}</td>
+          <td class="text-center">{{invoice.PaymentDate}}</td>
+          <td class="text-center">{{invoice.PmCode}}</td>
+          <td class="text-center">{{invoice.IsProcessed}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="ml-4 mr-4 mt-2" style="background-color: red">
+  Pagination
+</div>

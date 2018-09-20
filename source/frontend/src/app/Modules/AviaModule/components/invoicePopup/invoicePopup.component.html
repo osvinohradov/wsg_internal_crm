@@ -1,0 +1,726 @@
+<!-- Modal content-->
+
+<h2 class="ml-4 title_main_page_margin">Накладна авіаційних квитків:
+  <span>00000067621 від 07.09.2017 17:14:13</span>
+</h2>
+
+<!--Row MENU Buttons -->
+<div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
+  <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+    <div class="d-inline pl-0 mr-my-1">
+      <button type="button" class="btn btn-default my_button_style bold">
+        <span class="my_button_label font-weight-bold">Провести та закрити</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="PrintMenu">Друк
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #PrintMenu="matMenu">
+        <button (click)="openPrintInvoice()" mat-menu-item class="my_menu_label">Друк акта</button>
+        <button mat-menu-item class="my_menu_label">Друк накладної</button>
+        <button mat-menu-item class="my_menu_label">Друк рахунка</button>
+        <button mat-menu-item class="my_menu_label">Друк рахунка з печаткою</button>
+      </mat-menu>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="ChoiceMenu">Підбір
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #ChoiceMenu="matMenu">
+        <button (click)="openPrintInvoice()" mat-menu-item class="my_menu_label">Choice 1</button>
+        <button mat-menu-item class="my_menu_label">Choice 2</button>
+      </mat-menu>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+        <span class="material-icons">save</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Провести">
+        <span class="material-icons">offline_pin</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Закрити">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Завантаження ONLINE бронювання">
+        <span class="material-icons">vertical_align_bottom</span>
+      </button>
+    </div>
+  </div>
+  <!--Container MENU Buttons End-->
+
+  <!-- DropDown ALL Actions -->
+  <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+    <div id="referencesButton" class="d-xl-inline d-none float-right">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+        <span class="material-icons">help_outline</span>
+      </button>
+    </div>
+    <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Провести та закрити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">library_books</span>
+          </div>
+          <span class="d-inline my_menu_label">Перечитати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">filter_none</span>
+          </div>
+          <span class="d-inline my_menu_label">Скопіювати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">remove_from_queue</span>
+          </div>
+          <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">playlist_play</span>
+          </div>
+          <span class="d-inline my_menu_label">Показати у списку</span>
+        </button>
+        <button mat-menu-item>
+          <span class="empty-icon d-inline my_menu_label">Друк</span>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">chevron_right</span>
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons"> filter_tilt_shift</span>
+          </div>
+          <span class="d-inline my_menu_label">Підбір</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">save</span>
+          </div>
+          <span class="d-inline my_menu_label">Записати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Провести</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">close</span>
+          </div>
+          <span class="d-inline my_menu_label">Закрити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">cloud_download</span>
+          </div>
+          <span class="d-inline my_menu_label">Завантаження ONLINE бронювання</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">transform</span>
+          </div>
+          <span class="d-inline my_menu_label">Змінити форму...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">help_outline</span>
+          </div>
+          <span class="d-inline my_menu_label">Довідка</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <!-- DropDown ALL Actions end-->
+</div>
+<!--Row MENU Buttons End-->
+
+<!-- Invoice Popup Form Container -->
+<div class="ml-4 mr-4 mt-4 mb-4">
+  <form class="form-horizontal" role="form">
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Номер" value="">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Введіть дату">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+        <mat-form-field>
+          <mat-select placeholder="Форма сплати:">
+            <mat-option *ngFor="let currency of currency" [value]="currency.value">
+              {{ currency.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker1" placeholder="Дата сплати">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Квитків:" value="">
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Всього:" value="">
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Клієнт:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker2" placeholder="Дата послуг:">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+        <mat-checkbox class="" primary>Без реалізації:</mat-checkbox>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+        <mat-checkbox class="" primary>Повернення:</mat-checkbox>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+        <mat-checkbox class="" primary>Сплачено:</mat-checkbox>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Групове замовлення:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field>
+          <mat-select placeholder="Валюта пропозиції:">
+            <mat-option *ngFor="let currency of currencyProposal" [value]="currencyProposal.value">
+              {{ currency.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field>
+          <mat-select placeholder="Підсумкова валюта:">
+            <mat-option *ngFor="let currency of currencyFinal" [value]="currencyFinal.value">
+              {{ currency.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Постачальник:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Сплата такси:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Куратор:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field>
+          <mat-select placeholder="Обмін валют:">
+            <mat-option *ngFor="let currency of currencyExchange" [value]="currencyExchange.value">
+              {{ currency.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Код бронювання:" value="">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Розрахунковий рахунок:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <button mat-button matSuffix mat-icon-button aria-label="Search">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker3" placeholder="На дату:">
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Вид сервісу:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0 mb-4">
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Коментар:" value="">
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Відповідальний:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Агент:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Код РМ:" value="">
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Angular Material Tabs -->
+    <mat-tab-group>
+      <mat-tab activelabel label="Детальна інформація">
+        <div id="document_content" class="mb-4 mt-4">
+          <div class="row ml-0 mr-0">
+            <div class="form-group col-12 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Прізвище:" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row ml-0 mr-0 mt-4 mb-4 all_flight_info">
+            <div class="my_flight_info col-lg-12">
+              <label class="control-label">Виліт: із KIEV/BORYSPIL(KBP. Terminal) в 27.09.2017 12:00:00</label>
+            </div>
+            <div class="my_flight_info col-lg-12 mb-4">
+              <label class="control-label">Приліт: в TBILISI(TBS. Terminal) в 27.09.2017 15:45:00</label>
+            </div>
+          </div>
+
+          <!-- Fieldsets -->
+          <div class="row mr-0 ml-0 mt-4">
+            <!-- Fieldset 1 -->
+            <div class="mr-0 ml-0 col-12 pl-0 pr-0">
+              <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                <h4 class="control-label float-left">Вартість постачальника</h4>
+              </div>
+              <div class="row mr-0 ml-0">
+                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Сума постач.:">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="В т.ч. ПДВ:" value="">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field>
+                    <mat-select placeholder="Валюта:">
+                      <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                        {{ currency.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- Fieldset 1 - End -->
+            <!-- Fieldset 2 -->
+            <div class="mr-0 ml-0 col-12 pl-0 pr-0">
+              <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
+                <h4 class="control-label text-left">Використанний тариф постачальникау</h4>
+              </div>
+              <div class="row mr-0 ml-0">
+                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Сума постач.:">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="В т.ч. ПДВ:" value="">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field>
+                    <mat-select placeholder="Валюта:">
+                      <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                        {{ currency.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- Fieldset 2 - End -->
+
+            <!-- Fieldset 3 -->
+            <div class="mr-0 ml-0 col-12 pl-0 pr-0">
+              <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
+                <h4 class="control-label text-left">Додаткова комісія постачальника</h4>
+              </div>
+              <div class="row mr-0 ml-0">
+                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Сума:">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Готівка:">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="В т.ч. ПДВ:" value="">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
+                  <mat-form-field>
+                    <mat-select placeholder="Валюта:">
+                      <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                        {{ currency.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- Fieldset 3 - End -->
+          </div>
+          <!-- Fieldsets - End -->
+
+          <div class="row ml-0 mr-0">
+            <div class="form-group col-12 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Детальна інформація:" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- TAB 1 - END -->
+
+      <mat-tab label="Інформація про рейс">
+        <!-- TAB 2 - START -->
+        <div class="mb-4 mt-4">
+
+          <!-- Table Controls -->
+          <div class="pl-0 mt-4 pr-0 clearfix">
+            <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
+                  <span class="material-icons">filter_none</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                  <span class="material-icons">delete_sweep</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вверх">
+                  <span class="material-icons">arrow_upward</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вниз">
+                  <span class="material-icons">arrow_downward</span>
+                </button>
+              </div>
+            </div>
+            <!-- Button Row - End -->
+            <!-- DropDown ALL Actions -->
+            <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+              <div id="referencesButton" class="d-lg-inline d-none float-right">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+                  <span class="material-icons">help_outline</span>
+                </button>
+              </div>
+              <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+                <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+                  <span class="material-icons">keyboard_arrow_down</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_searching</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Знайти</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_disabled</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Відмінити пошук</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">settings</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Настроїти список...</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">done_all</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Вивести список...</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">refresh</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Оновити</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+            <!-- DropDown ALL Actions end-->
+          </div>
+          <!-- Table Controls - End -->
+
+          <!-- Popup Table -->
+          <div class="mt-2 ml-0 mr-0 my_table_style">
+            <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="code_column">N</th>
+                    <th scope="col">Номер рейсу</th>
+                    <th scope="col">Місце</th>
+                    <th scope="col">Місце відправлення</th>
+                    <th scope="col">Місце прибуття</th>
+                    <th scope="col" class="code_column">Тип сервісу</th>
+                    <th scope="col">Час відправлення</th>
+                      <th scope="col">Час прибуття</th>
+                </thead>
+                <tbody>
+                  <tr class="main">
+                    <td class="text-center" scope="row">count</td>
+                    <td class="text-center">FlightNumber</td>
+                    <td class="text-center">&nbsp;</td>
+                    <td class="text-center">ArrivalPlace</td>
+                    <td class="text-center">DeliveryPlace</td>
+                    <td class="text-center">ServiceKind</td>
+                    <td class="text-center">ArrivalDate</td>
+                    <td class="text-center">DeliveryDate</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Popup Table - End -->
+
+        </div>
+      </mat-tab>
+      <!-- TAB 2 - END -->
+
+      <mat-tab label="Квитки">
+        <!-- TAB 3 - START -->
+        <div class="mb-4">
+          <!-- Table Controls -->
+          <div class="pl-0 mt-4 pr-0 clearfix">
+            <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
+                  <span class="material-icons">filter_none</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                  <span class="material-icons">delete_sweep</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вверх">
+                  <span class="material-icons">arrow_upward</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вниз">
+                  <span class="material-icons">arrow_downward</span>
+                </button>
+              </div>
+            </div>
+            <!-- Button Row - End -->
+            <!-- DropDown ALL Actions -->
+            <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+              <div id="referencesButton" class="d-lg-inline d-none float-right">
+                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+                  <span class="material-icons">help_outline</span>
+                </button>
+              </div>
+              <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+                <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+                  <span class="material-icons">keyboard_arrow_down</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">filter_none</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Скопіювати</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">edit</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Змінити</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">delete_sweep</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Вилучити</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">done_all</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Вивести список...</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">save</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Закінчити редагування</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_searching</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Знайти...</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+            <!-- DropDown ALL Actions end-->
+          </div>
+          <!-- Table Controls - End -->
+          <!-- Popup Table -->
+          <div class="mt-2 ml-0 mr-0 my_table_style">
+            <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="code_column">N</th>
+                    <th scope="col">Прізвище</th>
+                    <th scope="col">Номер квитка</th>
+                </thead>
+                <tbody>
+                  <tr class="main">
+                    <td class="text-center" scope="row">1</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Popup Table - End -->
+          <div class="row ml-0 mr-0">
+            <div class="form-group col-12 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Документ, що повертається:" />
+                <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+                <button mat-button matSuffix mat-icon-button aria-label="Search">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- TAB 3 - END -->
+    </mat-tab-group>
+    <!-- Angular Material Tabs - End -->
+  </form>
+</div>
+
+<!-- Popup Footer -->
+
+<div id="invoiceModalFooter">
+  <div class="mr-4 mb-4 float-right">
+    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+      <span class="pr-3 my_button_label">Закрити</span>
+    </button>
+  </div>
+</div>
+<!-- Popup Footer - End -->

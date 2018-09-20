@@ -1,0 +1,46 @@
+
+.mat-form-field{
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #7db0db !important;
+}
+
+::ng-deep .mat-checkbox-frame {
+    border: 1px solid grey !important;
+}
+
+::ng-deep .mat-ripple-element {
+    background: rgba(27, 142, 241, .4) !important;
+}
+
+::ng-deep .mat-tab-label-active {
+    background-color: #dadde5 !important;
+}
+
+::ng-deep .mat-tab-label-content {
+    color: black !important;
+}
+
+::ng-deep .mat-empty {
+    color: black !important;
+}
+
+span.my_button_label {
+    font-weight: normal;
+    display: inline-block;
+    position: relative;
+    bottom: 2px;
+    left: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+

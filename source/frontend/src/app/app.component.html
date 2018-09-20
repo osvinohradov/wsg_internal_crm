@@ -1,0 +1,137 @@
+<div class="wrapper">
+
+  <nav id="mainNavbar" class="navbar pl-0 pr-0 pt-0">
+
+    <div class="sidebar_header">
+      <!-- Sidebar Hdeaer -->
+      <a href="#">
+        <img src="../../assets/img/logo_small.png" alt="logo" class="sidebar_header_logo" />
+      </a>
+    </div>
+
+    <ul class="navbar-nav list-group pl-4 w-em-20 pr-em-05 pt-4">
+      <li class="nav-item clearfix">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link active list-group-item" href="#">Робочий стіл</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">home</span>
+          </span>
+        </div>
+      </li>
+      <li class="nav-item clearfix" href="#mainAvia" data-toggle="collapse" aria-expanded="false">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link list-group-item" href="#mainAvia">Авіаквитки</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">local_airport</span>
+          </span>
+        </div>
+        <div id="mainAvia" class="collapse float-left my-overflow">
+          <a class="list-group-item" data-parent="#mainAvia" routerLink="/avia/groupinvoice" routerLinkActive="active">
+            Групові замовлення</a>
+          <a href="#" class="list-group-item" data-parent="#mainAvia" routerLink="/avia/invoice" routerLinkActive="active">
+            Накладна авіаційних квитків</a>
+        </div>
+      </li>
+      <li class="nav-item clearfix" href="#mainTrain" data-toggle="collapse" aria-expanded="false">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link list-group-item" href="#mainTrain">Залізничні квитки</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">train</span>
+          </span>
+        </div>
+        <div id="mainTrain" class="collapse float-left my-overflow">
+          <a href="#" class="list-group-item" data-parent="#mainTrain" routerLink="/train/groupinvoice" routerLinkActive="active">
+            Групові замовлення</a>
+          <a href="#" class="list-group-item" data-parent="#mainTrain" routerLink="/train/invoice" routerLinkActive="active">
+            Накладна залізничних квитків</a>
+        </div>
+      </li>
+      <li class="nav-item clearfix" href="#mainSecurity" data-toggle="collapse" aria-expanded="false">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link list-group-item" href="#mainSecurity">Страхування</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">security</span>
+          </span>
+        </div>
+        <div id="mainSecurity" class="collapse float-left my-overflow">
+          <a href="#" class="list-group-item" data-parent="#mainSecurity" routerLink="/insurance/groupinvoice" routerLinkActive="active">
+            Групові замовлення</a>
+          <a href="#" class="list-group-item" data-parent="#mainSecurity" routerLink="/insurance/invoice" routerLinkActive="active">
+            Накладні страхування</a>
+        </div>
+      </li>
+      <li class="nav-item clearfix" href="#mainTourism" data-toggle="collapse" aria-expanded="false">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link list-group-item" href="#mainTourism">Туризм</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">transfer_within_a_station</span>
+          </span>
+        </div>
+        <div id="mainTourism" class="collapse float-left my-overflow">
+          <a href="#" class="list-group-item" data-parent="#mainTourism" routerLink="/tourism/groupinvoice" routerLinkActive="active">
+            Групові замовлення</a>
+          <a href="#" class="list-group-item" data-parent="#mainTourism" routerLink="/tourism/invoice" routerLinkActive="active">
+            Накладні туризм</a>
+        </div>
+      </li>
+      <li class="nav-item clearfix" href="#mainReferences" data-toggle="collapse" aria-expanded="false">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link list-group-item" href="#mainReferences">Довідники</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">info</span>
+          </span>
+        </div>
+        <div id="mainReferences" class="collapse float-left my-overflow">
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/avia-company" routerLinkActive="active">
+            Авіакомпанії</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/airport" routerLinkActive="active">
+            Аеропорти</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/service" routerLinkActive="active">
+            Види сервісів</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/counterparties-contracts" routerLinkActive="active">
+            Договори контрагентiв</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/counterparty" routerLinkActive="active">
+            Контрагенти</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/curator" routerLinkActive="active">
+            Куратори</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/city" routerLinkActive="active">
+            Населені пункти</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/nomenclature" routerLinkActive="active">
+            Номенклатура</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/currency-exchange" routerLinkActive="active">
+            Обмін валют</a>
+          <a href="#" class="list-group-item" data-parent="#mainReferences" routerLink="/reference/individual-counterparties" routerLinkActive="active">
+            Фізичні особи контрагентів</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="page_content_wrapper ">
+    <div class="container-fluid pr-0 pl-0">
+      <div class="row">
+        <div class="page_header col-md-12">
+          <a href="#">
+            <img src="../../assets/img/logo_small.png" alt="logo" class="ml-4 main_header_logo" />
+          </a>
+        </div>
+      </div>
+
+      <div class="page_items_wrapper col-md-12 pl-0 pr-0">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

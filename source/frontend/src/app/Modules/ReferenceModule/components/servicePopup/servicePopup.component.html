@@ -1,0 +1,214 @@
+<!-- Modal content-->
+
+<h2 class="ml-4 title_main_page_margin">Види сервисів (створення)
+</h2>
+
+<!--Row MENU Buttons -->
+<div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
+  <div class="col-md-6 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+    <div class="d-inline pl-0 mr-my-1">
+      <button type="button" class="btn btn-default my_button_style bold">
+        <span class="my_button_label font-weight-bold">Записати та закрити</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+        <span class="material-icons">save</span>
+      </button>
+    </div>
+  </div>
+  <!--Container MENU Buttons End-->
+
+  <!-- DropDown ALL Actions -->
+  <div class="col-md-6 pl-0 pr-0 float-lg-right float-left">
+    <div id="referencesButton" class="d-xl-inline d-none float-right">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+        <span class="material-icons">help_outline</span>
+      </button>
+    </div>
+    <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Записати та закрити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">save</span>
+          </div>
+          <span class="d-inline my_menu_label">Записати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">library_books</span>
+          </div>
+          <span class="d-inline my_menu_label">Перечитати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">filter_none</span>
+          </div>
+          <span class="d-inline my_menu_label">Скопіювати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">remove_from_queue</span>
+          </div>
+          <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">delete_sweep</span>
+          </div>
+          <span class="d-inline my_menu_label">Вилучити</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">playlist_play</span>
+          </div>
+          <span class="d-inline my_menu_label">Показати у списку</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">transform</span>
+          </div>
+          <span class="d-inline my_menu_label">Змінити форму...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">help_outline</span>
+          </div>
+          <span class="d-inline my_menu_label">Довідка</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <!-- DropDown ALL Actions end-->
+</div>
+<!--Row MENU Buttons End-->
+
+<div class="ml-4 mr-4 mt-4 mb-4">
+
+  <!-- Angular Material Tabs -->
+  <mat-tab-group>
+    <mat-tab activelabel label="Головна">
+      <div id="document_content" class="mb-4 mt-4">
+        <div class="row ml-0 mr-0">
+          <div class="form-group col-6 p-2 my_input_style">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Код:" value="">
+            </mat-form-field>
+          </div>
+          <div class="form-group col-6 p-2 my_input_style">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Найменування:" value="">
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Постачальник:" value="">
+              <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Додатковий постачальник:" value="">
+              <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <!-- TAB 1 - END -->
+
+    <mat-tab label="Номенклатура">
+      <!-- TAB 2 - START -->
+      <div class="mb-4 mt-4">
+        <div class="row ml-0 mr-0">
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Каталог номенклатури:" value="">
+              <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Кратке найменування квитка:" />
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Повне найменування квитка:" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <!-- TAB 2 - END -->
+
+    <mat-tab label="Послуги">
+      <!-- TAB 3 - START -->
+      <div class="mb-4 mt-4">
+        <div class="row ml-0 mr-0">
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Підлегла номенклатура (як послуга):" value="">
+              <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Основні послуги:" />
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Послуги агенства:" />
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Інші послуги:" />
+            </mat-form-field>
+          </div>
+          <div class="form-group col-12 p-2 my_input_style">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Штрафні санкції:" />
+            </mat-form-field>
+          </div>
+          <div class="form-group col-4 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Ставка ПДВ:" />
+              </mat-form-field>
+            </div>
+        </div>
+      </div>
+    </mat-tab>
+    <!-- TAB 3 - END -->
+  </mat-tab-group>
+  <!-- Angular Material Tabs - End -->
+
+</div>
+
+<!-- Popup Footer -->
+<div id="invoiceModalFooter">
+  <div class="mr-4 mb-4 float-right">
+    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+      <span class="pr-3 my_button_label">Закрити</span>
+    </button>
+  </div>
+</div>
+<!-- Popup Footer - End -->

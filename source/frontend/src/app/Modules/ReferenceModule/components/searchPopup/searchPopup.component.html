@@ -1,0 +1,43 @@
+<!-- Modal content-->
+
+<h2 class="ml-4 title_main_page_margin">Знайти
+</h2>
+
+<!-- Airport Popup Form Container -->
+<div class="ml-4 mr-4 mt-4 mb-4">
+  <form class="form-horizontal" role="form">
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-12 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Де шукати:" value="">
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-12 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Що шукати:" value="">
+        </mat-form-field>
+      </div>
+      <div class="form-group col-12 p-2 my_input_style">
+        <mat-radio-group id="searchTypeMenu">
+          <label for="searchTypeMenu" class="radio_label">Як шукати:</label>
+          <mat-radio-button value="1" class="d-block">За початком рядка</mat-radio-button>
+          <mat-radio-button value="2" class="d-block">За частиною рядка</mat-radio-button>
+          <mat-radio-button value="2" class="d-block">За точним збігом</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Popup Footer -->
+<div id="invoiceModalFooter">
+  <div class="mr-4 mb-4 float-right">
+    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+      <span class="pr-3 my_button_label">Закрити</span>
+    </button>
+  </div>
+</div>
+<!-- Popup Footer - End -->

@@ -1,0 +1,738 @@
+/* TABLE STYLES */
+
+thead {
+    background-color: #f1f1f1;
+  }
+  
+  th {
+    font-weight: normal;
+  }
+  
+  td {
+    min-width: 80px;
+    max-width: 300px;
+    -ms-word-break: keep-all;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .table{
+    margin-bottom: 0;
+  }
+  
+  .table > thead > tr > th {
+    padding: 12px 15px;
+  } 
+  
+  .code_column{
+    width: 10%;
+  }
+  
+  .my_table_style {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .my_table_popup {
+    margin-top: 18px;
+    margin-bottom: 0;
+    padding-left: 1px !important;
+    padding-right: 0;
+  }
+  
+  .my_table_style th{
+    text-align: center;
+  }
+  
+  .table-responsive {
+    max-height: 195px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  tr{
+    cursor: pointer;
+  }
+  
+  .table > thead > tr > th {
+    vertical-align: middle;
+    font-size: 0.875em;
+    cursor: pointer;
+  }
+  
+  .my_fieldset {
+    margin-bottom: 30px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .my_fieldset_sm {
+    margin-bottom: 0px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  #contracts_main_tab .my_fieldset{
+    margin-bottom: 10px;
+  } /* TABLE STYLES end */
+  
+  
+  
+  /* MENU BAR */
+  
+  span.printDropdownButton{
+    position: relative;
+    bottom: 1px;
+  }
+  
+  span.my_menu_label{
+    position: relative;
+    top: 0px;
+  }
+  
+  button.btn.btn-default.my_button_style {
+    background-color: #dadde5;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 0.875em;
+    border: none;
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+  
+  .my_square_button{
+    width: 39px;
+  }
+  
+  .btn:focus {
+    outline: none !important;
+  }
+  
+  button.btn.btn-default.my_button_style:hover {
+    background-color: #7db0db;
+    cursor: pointer;
+  }
+  
+  h2 {
+    color: #2b303b;
+  }
+  
+  .menu_icons:focus {
+    background-color: #7db0db;
+  }
+  
+  span.menu_icons {
+    font-weight: 300;
+  }
+  
+  #first_menu_button {
+    font-weight: bold;
+  }
+  
+  span > i {
+    color: #2b303b;
+  }
+  
+  .icon_button{
+    width: 40px;
+  } /* MENU BAR end */
+  
+  
+  /* FORM STYLES */
+  h2 span {
+    font-size: 0.688em;
+    display: inline-block;
+    margin-left: 5px;
+    color: #2b303b;
+  }
+  
+  .form-horizontal .form-group{
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .form-group{
+    margin-bottom: 10px;
+  }
+  
+  .form-group.my_last_margin-bottom{
+    margin-bottom: 20px;
+  }
+  
+  .all_flight_info.form-group {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 0;
+    margin-top: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dbdbdb;
+  }
+  
+  .all_flight_info{
+    text-align: center;
+  }
+  
+  label {
+    font-weight: 500;
+    color: #2b303b;
+    font-size: 0.75rem;
+    margin-bottom: 5px !important;
+  }
+
+  label.radio_label{
+    font-size: 0.75rem;
+  }
+  
+  label.control-label{
+    padding-top: 0px !important;
+  }
+  
+  #invoice_form{
+    margin-top: 25px;
+    padding-left: 13px;
+    padding-right: 13px;
+  } /* FORM STYLES end */
+  
+  
+  /* INPUT STYLES */
+  
+  input.form-control {
+    height: 25px;
+  }
+  
+  .input-group-btn button.btn.btn-default{
+    height: 25px;
+    padding: 6px;
+  }
+  
+  .input-group-btn span.my_input_icon {
+    font-size: 11px;
+    position: relative;
+    bottom: 5px;
+  }
+  
+  #tickets .input-group-btn span.my_input_icon {
+    font-size: 11px;
+    position: relative;
+    bottom: 0;
+  }
+  
+  #document_content .input-group-btn span.my_input_icon {
+    font-size: 11px;
+    bottom: 0;
+  }
+  
+  .my_tabinput_text_padding {
+    padding: 5px 10px 3px;
+  }
+  
+  .my_input_style {
+    padding-right: 2px;
+    padding-left: 2px;
+  }
+  
+  .my_input_style.zero_padding_left{
+    padding-left: 0;
+  }
+  
+  .my_input_style label{
+    padding-left: 1px;
+  }
+  
+  .my_input_style h4 {
+    text-align: left !important;
+  }
+  
+  .form-control::placeholder {
+    color: #788195;
+    opacity: 0.6;
+    font-size: 1em;
+  }
+  
+  input[type=checkbox].form-control{
+    margin-top: 0;
+    margin-left: 1px;
+    width: auto;
+    height: auto;
+    outline: none;
+  }
+  
+  input[type="text"] {
+    font-size: 0.875em;
+  } /* INPUT STYLES end */
+  
+  
+  
+  /* Horizontal Divider */
+  #invoice_form hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  } /* Horizontal Divider end */
+  
+  
+  
+  /* TABS STYLES */
+  
+  #invoice_tabs{
+    margin-top: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  .my_input_style_sm {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  
+  .last_input_margin_top{
+    margin-top: 20px;
+  }
+  
+  .my_input_style h4 {
+    font-size: 0.875em;
+    font-weight: bold;
+    color: #788195;
+    margin-top: 2px;
+  }
+  
+  .my_flight_info label {
+    font-weight: 600;
+    font-size: 0.875em;
+    color: #2b303b;
+    margin-left: 2px;
+    text-align: left;
+  }
+  
+  select.form-control {
+    height: 25px;
+    padding: 4px 8px;
+    font-size: 0.875em;
+    color: #555;
+  } /* TABS STYLES end */
+  
+  /* GROUp Order CSS*/
+  
+  .modal-content {
+    background-color: #f5f5f5 !important;
+  }
+  
+  #referencesButton{
+    position: relative;
+    top: 1px;
+  }
+  
+  /* TABLE STYLES */
+  
+  .mr-my-1{
+    margin-right: 2px;
+  }
+  
+  .ml-my-1{
+    margin-right: 2px;
+  }
+  
+  thead {
+    background-color: #f1f1f1;
+  }
+  
+  th {
+    font-weight: normal;
+  }
+  
+  td {
+    min-width: 5em;
+    max-width: 1.875em;
+    -ms-word-break: keep-all;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 0.750rem;
+  }
+  
+  tr.main:hover{
+    background-color:rgba(136,185,226, 0.5);
+  }
+  
+  .table > thead > tr > th {
+    padding: 0.750rem 1rem;
+  }
+  
+  button:active, button:focus {
+    outline: none;
+    border: none;
+  }
+  
+  .mat-menu-item:active, .mat-menu-item:focus {
+    outline: none;
+    border: none;
+  }
+  
+  .code_column{
+    width: 10%;
+  }
+  
+  .my_table_style th{
+    text-align: center;
+  }
+  
+  .table-responsive {
+    max-height: 12em;
+    padding-left:0;
+  }
+  
+  tr{
+    cursor: pointer;
+  }
+  
+  .table > thead > tr > th {
+    vertical-align: middle;
+    font-size: 0.875em;
+    cursor: pointer;
+  } /* TABLE STYLES end */
+  
+  
+  /* MENU BAR */
+  
+  button.btn.btn-default.my_button_style {
+    background-color:rgba(192,199,214, 0.5);
+    cursor: pointer;
+    font-weight: normal;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    border: none;
+  }
+  /* 
+  .mat-button{
+    position: relative;
+    top: 1px;
+    padding-right: 0.625rem;
+    padding-left: 0.625rem;
+  } */
+  
+  .my_square_button{
+    width: 39px;
+    height: 39px;
+  }
+  
+  span.my_button_label{
+    font-weight: normal;
+  }
+  
+  button:focus {
+    outline: none !important;
+  }
+  
+  button.btn.btn-default.my_button_style:hover {
+    background-color: rgb(136,185,226); /* #88b9e2 */
+    cursor: pointer;
+  }
+  
+  h2 {
+    color: #2b303b;
+  }
+  
+  .title_main_page_margin{
+    margin-top: 1.5rem; /* 24px */
+    margin-bottom: 1.5rem; /* 24px */
+    font-size: 1.500rem !important;
+  }
+  
+  .subtitle_main_page_margin{
+    margin-top: 1.5rem; /* 24px */
+    margin-bottom: 0.75rem; 
+    font-size: 1.2rem;
+  }
+  span.menu_icons {
+    font-weight: 300;
+  }
+  
+  span > i {
+    color: #2b303b;
+  } /* MENU BAR end */
+  
+  /* DROPDOWN ALL Actions */
+  
+  .mat-menu-content{
+    min-height: 70vh;
+  }
+  
+  .mat-menu-item {
+    color: black;
+    font-size: 0.875rem; /* 14px */
+    border: none;
+    cursor: pointer;
+    line-height: 1.5rem; /* 24px */
+    height: 1.5rem; /* 24px */
+  }
+  
+  .mat-menu-item:hover, .mat-menu-item:focus {
+    background-color:rgba(136,185,226, 0.5); /* #88b9e2 */
+  }
+  
+  .menu_icons.mat-menu-item{
+    cursor: default;
+  }
+  
+  span.my_menu_label, button.my_menu_label{
+    font-size: 11px;
+  }
+  
+  div.my_menu_icon span.material-icons{
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    font-size: 0.875rem; /* 14px */
+  }
+  
+  div.my_menu_icon span.material-icons:hover{
+    background-color:rgb(136,185,226);
+  }
+  
+  span.empty-icon {
+  margin-left: 30px;  
+  }
+  
+  div.my_menu_icon{
+    width: 1.875rem; /* 30px */
+    text-align: center;
+  } /* DROPDOWN ALL Actions end */
+  
+  /* FORM STYLES */
+  
+  h2 span {
+    font-size: 0.688em;
+    display: inline-block;
+    margin-left: 5px;
+    color: #2b303b;
+  }
+  
+  .form-horizontal .form-group{
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .form-group{
+    margin-bottom: 10px;
+  }
+  
+  .form-group.my_last_margin-bottom{
+    margin-bottom: 20px;
+  }
+  
+  .all_flight_info.form-group {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dbdbdb;
+  }
+  
+  .all_flight_info{
+    text-align: center;
+  }
+  
+  label {
+    font-weight: 500;
+    color: #2b303b;
+    font-size: 0.813em;
+    margin-bottom: 5px !important;
+  }
+  
+  label.control-label{
+    padding-top: 0px !important;
+  }
+  
+  #invoice_form{
+    margin-top: 25px;
+    padding-left: 13px;
+    padding-right: 13px;
+  } /* FORM STYLES end */
+  
+  /* INPUT STYLES */
+  
+  input.form-control {
+    height: 25px;
+  }
+  
+  .input-group-btn button.btn.btn-default{
+    height: 25px;
+    padding: 6px;
+  }
+  
+  .input-group-btn span.my_input_icon {
+    font-size: 11px;
+    position: relative;
+    bottom: 5px;
+  }
+  
+  #tickets .input-group-btn span.my_input_icon {
+    font-size: 11px;
+    position: relative;
+    bottom: 0;
+  }
+  
+  #document_content .input-group-btn span.my_input_icon {
+    font-size: 11px;
+    bottom: 0;
+  }
+  
+  .form-control::placeholder {
+    color: #788195;
+    opacity: 0.6;
+    font-size: 1em;
+  }
+  
+  input[type=checkbox].form-control{
+    margin-top: 0;
+    margin-left: 1px;
+    width: auto;
+    height: auto;
+    outline: none;
+  }
+  
+  input[type="text"] {
+    font-size: 0.875em;
+  } /* INPUT STYLES end */
+  
+  /* Horizontal Divider */
+  #invoice_form hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  } /* Horizontal Divider end */
+  
+  /* TABS STYLES */
+  #invoice_tabs{
+    margin-top: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  .my_input_style_sm {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  
+  .last_input_margin_top{
+    margin-top: 20px;
+  }
+  
+  .my_input_style h4 {
+    font-size: 0.875em;
+    font-weight: bold;
+    color: #788195;
+    margin-top: 2px;
+  }
+  
+  .my_flight_info label {
+    font-weight: 600;
+    font-size: 0.875em;
+    color: #2b303b;
+    margin-left: 2px;
+    text-align: left;
+  }
+  
+  select.form-control {
+    height: 25px;
+    padding: 4px 8px;
+    font-size: 0.875em;
+    color: #555;
+  }
+  
+  option{
+    display: inline-block;
+  }
+  
+  .traveller_info{
+    margin-bottom: 25px;
+  }
+  
+  /* TABS STYLES end */
+  
+  .my_input_style h4 {
+    padding-bottom: 7px;
+    margin-bottom: 12px !important;
+    border-bottom: 1px solid #dbdbdb;
+  }
+  
+  #total_amount .form-group {
+    margin-bottom: 0;
+  }
+  
+  #total_amount .my_input_style{
+    padding-left: 0 !important;
+  }
+  
+  
+  /* GROUP ORDER POPUP -- end */
+  
+
+  .my-centered-dialog{
+    height: auto;
+}
+
+/* From GroupInvoicePopup.css */
+
+.mat-form-field{
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #7db0db !important;
+}
+
+::ng-deep .mat-checkbox-frame {
+    border: 1px solid grey !important;
+}
+
+::ng-deep .mat-ripple-element {
+    background: rgba(27, 142, 241, .4) !important;
+}
+
+::ng-deep .mat-tab-label-active {
+    background-color: #dadde5 !important;
+}
+
+::ng-deep .mat-tab-label-content {
+    color: black !important;
+}
+
+::ng-deep .mat-empty {
+    color: black !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #7db0db !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    background-color: #7db0db !important;
+}
+
+div.my_menu_icon{
+    position: relative;
+    top: 1px;
+    font-size: 0.875rem; /* 14px */
+}
+
+span.my_button_label {
+    font-weight: normal;
+    display: inline-block;
+    position: relative;
+    bottom: 2px;
+    left: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
