@@ -22,7 +22,7 @@ router.route('/references/avia_company/:id')
         ReferenceHandler.AviaCompanyView.remove_avia_company(req, res);
     });
 
-router.route('/references/avia_company/count')
+router.route('/references/count/avia_company')
     .get(async (req, res) => {
         ReferenceHandler.AviaCompanyView.get_avia_company_count(req, res);
     })

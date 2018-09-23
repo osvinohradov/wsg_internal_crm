@@ -22,7 +22,7 @@ router.route('/references/nomenclature/:id')
         ReferenceHandler.NomenclatureView.remove_nomenclature(req, res);
     });
 
-router.route('/references/nomenclature/count')
+router.route('/references/count/nomenclature')
     .get(async (req, res) => {
         ReferenceHandler.NomenclatureView.get_nomenclature_count(req, res);
     })

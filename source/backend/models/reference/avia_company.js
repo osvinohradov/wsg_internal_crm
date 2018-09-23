@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 // Авіа компанії
 const ReferenceAviaCompanySchema = new Schema({
-    _id     :{ type: mongoose.SchemaTypes.ObjectId },
     // Номер
     Number  :{ type: String },
     // Найменування

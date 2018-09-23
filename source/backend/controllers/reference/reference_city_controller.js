@@ -22,7 +22,7 @@ router.route('/references/city/:id')
         ReferenceHandler.CityView.remove_city(req, res);
     });
 
-router.route('/references/city/count')
+router.route('/references/count/city')
     .get(async (req, res) => {
         ReferenceHandler.CityView.get_city_count(req, res);
     })

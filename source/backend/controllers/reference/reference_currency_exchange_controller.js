@@ -22,7 +22,7 @@ router.route('/references/currency_exchange/:id')
         ReferenceHandler.CurrencyExchangeView.remove_currency_exchange(req, res);
     });
 
-router.route('/references/currency_exchange/count')
+router.route('/references/count.currency_exchange')
     .get(async (req, res) => {
         ReferenceHandler.CurrencyExchangeView.get_currency_exchange_count(req, res);
     })

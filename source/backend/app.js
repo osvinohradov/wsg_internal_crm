@@ -7,10 +7,10 @@ import cookie_parser from 'cookie-parser';
 import { register_routes } from './controllers';
 
 const app = express();
-const port = 6000;
-const baseUrl = '/wsg/api/v1';
+const port = 8080;
+const baseUrl = '/api/v1';
 
-app.use(body_parser);
+app.use(body_parser.json());
 app.use(cookie_parser());
 app.use(cors({ origin: '*' }))
 

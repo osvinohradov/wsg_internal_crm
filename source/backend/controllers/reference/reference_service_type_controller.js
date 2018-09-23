@@ -22,7 +22,7 @@ router.route('/references/service_type/:id')
         ReferenceHandler.ServiceTypeView.remove_service_type(req, res);
     });
 
-router.route('/references/service_type/count')
+router.route('/references/count/service_type')
     .get(async (req, res) => {
         ReferenceHandler.ServiceTypeView.get_service_type_count(req, res);
     })

@@ -11,6 +11,7 @@ import { ReferenceService } from '../../services/reference.service';
   //  styleUrls: ['./invoicePopup.component.css', './../invoice/invoice.component.css']
 })
 export class AirportPopupReferencesComponent implements OnInit {
+  public is_saved: Boolean = false;
 
   constructor(public dialogRef: MatDialogRef<AirportPopupReferencesComponent>, @Inject(MAT_DIALOG_DATA) public airport: AirportReference, public ReferenceService: ReferenceService) {
     console.log('From parent: ', this.airport)
@@ -35,6 +36,17 @@ export class AirportPopupReferencesComponent implements OnInit {
     });
   }
 
+  remove_airport(airport_id: string){
+    if(!airport_id){
+      console.log(`airport_id не передано.`);
+      // Show error dialog
+      return;
+    }
+
+    this.ReferenceService.remove_airport(airport_id);
+    this.dialogRef.close({ action: "remove", id: airport_id, element: null });
+  }
+
   save_and_close(airport:AirportReference){
     // Save ticket
     this.save_update_airport(airport)
@@ -48,10 +60,25 @@ export class AirportPopupReferencesComponent implements OnInit {
     else{
       this.update_airport(airport);
     }
+    this.is_saved = true;
   }
 
-  close_dialog(airport:AirportReference): void {
-    this.dialogRef.close(airport);
+  /**
+   * 
+   * data = {
+   * action: "" (create, update, remove),
+   * id: "",
+   * element: Object
+   * }
+   * 
+   * @param data 
+   */
+  close_dialog(data): void {
+    if(!this.is_saved){
+      this.dialogRef.close(null);
+    }
+    else{
+      this.dialogRef.close(data);
+    }
   }
-
 }

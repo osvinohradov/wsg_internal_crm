@@ -6,9 +6,13 @@ import { AviaInvoiceComponent } from './Modules/AviaModule/components/invoice/in
 const routes: Routes = [
   {
     path: 'avia', children: [
-      { path: 'invoice', component: AviaInvoiceComponent }
-    ]
-  }
+      { path: 'invoice', component: AviaInvoiceComponent },
+    ],
+  
+  },
+  // {
+  //   path: 'reference'
+  // }
 ]
 
 @NgModule({

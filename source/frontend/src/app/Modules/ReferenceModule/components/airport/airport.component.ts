@@ -49,8 +49,7 @@ export class AirportReferencesComponent implements OnInit {
     this.ReferenceService.get_airports(skip, limit).subscribe((data) => {
       this.airports = data;
       console.log('Next page')
-    })
-
+    });
   }
 
   ngOnInit() {
@@ -64,7 +63,7 @@ export class AirportReferencesComponent implements OnInit {
       //data = data.map((item) => AirportReference.serialize_from_json(item, new AirportReference()))
       console.log(this.airports[0]);
       this.loader_displayed = false;
-    })
+    });
   }
 
   create_airport(){
@@ -91,10 +90,6 @@ export class AirportReferencesComponent implements OnInit {
         }
       });
     });
-  }
-
-  select_item(airport_item_id){
-
   }
 
   open_dialog(data): MatDialogRef<AirportPopupReferencesComponent> {

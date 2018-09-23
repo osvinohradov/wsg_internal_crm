@@ -22,7 +22,7 @@ router.route('/references/curator/:id')
         ReferenceHandler.CuratorView.remove_curator(req, res);
     });
 
-router.route('/references/curator/count')
+router.route('/references/count/curator')
     .get(async (req, res) => {
         ReferenceHandler.CuratorView.get_curator_count(req, res);
     })

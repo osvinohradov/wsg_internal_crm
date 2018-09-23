@@ -24,7 +24,7 @@ export class AviaInvoiceComponent implements OnInit {
   ngOnInit() {
     this.AviaService.get_avia_invoices().subscribe((data)=>{
       this.avia_invoices = data as Array<any>;
-    })
+    });
   }
 
   public _get_invoice_content(invoice){

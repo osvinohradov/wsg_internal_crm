@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start_server": "nodemon --exec babel-node --presets env,stage-2 app.js",
-    "parser": "node ./services/avia_ticket_parser.js"
+    "parser": "nodemon --exec babel-node --presets env,stage-2 ./services/file_watcher.js"
   },
   "author": "Vladimir Vinohradov",
   "license": "ISC",
@@ -20,10 +20,11 @@
     "xml2js": "^0.4.19"
   },
   "dependencies": {
+    "chokidar": "^2.0.4",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
-    "node-cron": "^2.0.1",
     "mongoose": "^5.2.15",
+    "node-cron": "^2.0.1",
     "xml-parser": "^1.2.1"
   }
 }

@@ -22,7 +22,7 @@ router.route('/references/individual_counterparty/:id')
         ReferenceHandler.IndividualCounterpartyView.remove_individual_counterparty(req, res);
     });
 
-router.route('/references/individual_counterparty/count')
+router.route('/references/count/individual_counterparty')
     .get(async (req, res) => {
         ReferenceHandler.IndividualCounterpartyView.get_individual_counterparty_count(req, res);
     })
