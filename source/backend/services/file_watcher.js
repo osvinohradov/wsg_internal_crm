@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import utils from 'util';
 
 import chokidar from 'chokidar';
 
@@ -14,7 +15,7 @@ class FileWatcher{
         this.dir_name = dir_name;
         this.counter = 1;
         this.watcher = null;
-        this.mapper = new TicketMapper();
+        //this.mapper = new TicketMapper();
     }
 
     initialize_watcher(){
@@ -46,7 +47,11 @@ class FileWatcher{
             }
     
             let parsed_ticket = await TicketsParser.parseAviaTicketFromXML(data.toString());
-            let avia_invoice = await this.mapper.avia_ticker_from_amadeus_xml_mapper(parsed_ticket);
+            // let avia_invoice = await this.mapper.avia_ticker_from_amadeus_xml_mapper(parsed_ticket);
+            console.log(utils.inspect(parsed_ticket, {
+                depth: Infinity,
+                colors: true
+            }))
 
             avia_invoice.save();
             if(err){

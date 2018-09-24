@@ -467,5 +467,4 @@ TicketsParser.parseTrainInvoiceFromXML = async function(xml_data){
     return train_invoice;
 }
 
-
 export { TicketsParser }

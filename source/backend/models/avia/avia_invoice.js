@@ -153,6 +153,8 @@ const AviaInvoiceSchema = new Schema({
                                 // Номер квитка
                                 TicketNumber        :{ type: String }
     }] },
+
+    created_at          :{ type: Date, default: Date.now() },
 });
 
 const AviaInvoice = mongoose.model('AviaInvocie', AviaInvoiceSchema);
