@@ -4,18 +4,15 @@ import utils from 'util';
 
 import chokidar from 'chokidar';
 
-import { Avia } from '../models';
 import { TicketsParser } from './tickets_parser';
 import { TicketMapper } from './tickets_mapper';
-
-const AviaInvoice = Avia.AviaInvoice;
 
 class FileWatcher{
     constructor(dir_name){
         this.dir_name = dir_name;
         this.counter = 1;
         this.watcher = null;
-        //this.mapper = new TicketMapper();
+        this.mapper = new TicketMapper();
     }
 
     initialize_watcher(){
@@ -29,45 +26,62 @@ class FileWatcher{
             return;
         }
     
-        this.watcher = chokidar.watch(dir_name, { 
+        this.watcher = chokidar.watch(this.dir_name, { 
             ignored: /(^|[\/\\])\../,
             ignoreInitial: true
         });
-    
-        this.watcher.on('add', this._added_files_handler);
+
+        let self = this;
+        this.watcher.on('add', function(path, file_info){
+            self._added_files_handler(path, file_info);
+        });
     }
 
     async _added_files_handler(path, file_info){
-        console.log('Added new file:', path, ' ', this.counter);
-        this.counter++;
-        fs.readFile(path, async function(err, data){
-            if(err){
-                console.log(`Білет не прочитанно: ${path}`, err);
-                return;
+        let self = this;
+        fs.stat(path, function(err, stat){
+            if(err) throw err;
+            function func (path, prev_stat){
+                fs.stat(path, async (err, stat) => {
+                    if(err) throw err;
+                    if(stat.mtime.getTime() === prev_stat.mtime.getTime()){
+                        console.log('Finished');
+                        await self.parse_file(path);
+                    }
+                    else{
+                        console.log('Copying')
+                        setTimeout(func, 200, path, stat)
+                    }
+                });
             }
-    
-            let parsed_ticket = await TicketsParser.parseAviaTicketFromXML(data.toString());
-            // let avia_invoice = await this.mapper.avia_ticker_from_amadeus_xml_mapper(parsed_ticket);
-            console.log(utils.inspect(parsed_ticket, {
-                depth: Infinity,
-                colors: true
-            }))
-
-            avia_invoice.save();
-            if(err){
-                console.log(`[Ticket Parser] Авіабілет не збереженно.`)
-                console.log(err);
-            }
-
-            console.log('\n\n\n');
-            console.log(parsed_ticket)
-        });        
+            setTimeout(func, 200, path, stat)
+        });
     }
 
+    async parse_file(path){
+        fs.readFile(path, async (err, data) => {
+            if(err){
+                console.log(`Білет не прочитанно: ${path}\n`, err);
+                return;
+            }
+            // Парсим билет
+            let parsed_ticket = await TicketsParser.parseAviaTicketFromXML(data.toString());
+            // Сопоставляем полученный на предыдущем шаге билет с инвойсом
+            let avia_invoices = await this.mapper.avia_ticker_from_amadeus_xml_mapper(parsed_ticket);
+
+            for(let i =0; i < avia_invoices.length; i++){
+                let avia_invoice = avia_invoices[i];
+                let saved = avia_invoice.save();
+                if(!saved){
+                    console.log(`[Ticket Parser] Авіабілет не збереженно.`)
+                    console.log(saved);
+                    return;
+                }
+            }
+        });
+    }
 }
 
-let dir_name = 'E:\\test_ticket';
-
-
-let fw = new FileWatcher(dir_name);
-fw.initialize_watcher()
+export {
+    FileWatcher
+}

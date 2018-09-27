@@ -1,7 +1,9 @@
-import * as Mapper from './avia_xml_ticket_mapper';
-import { TicketsParser } from './avia_ticket_parser';
+import * as Mapper from './tickets_mapper';
+import { FileWatcher } from './file_watcher';
+import { TicketsParser } from './tickets_parser';
 
 export {
     Mapper,
-    TicketsParser
+    TicketsParser,
+    FileWatcher
 }

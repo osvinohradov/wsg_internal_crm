@@ -314,7 +314,6 @@ TicketsParser.parseAviaTicketFromXML = async function(xml_data){
             }
         }
     }
-
     return invoice;
 }
 
