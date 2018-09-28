@@ -19,7 +19,7 @@ router.route('/references/airport/:id')
         ReferenceHandler.AirportsView.update_airport(req, res);
     })
     .delete(async (req, res) => {
-        ReferenceHandler.AirportsView.remove(req, res);
+        ReferenceHandler.AirportsView.remove_airport(req, res);
     });
 
 router.route('/references/count/airport')

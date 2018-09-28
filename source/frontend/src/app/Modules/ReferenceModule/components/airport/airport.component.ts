@@ -18,37 +18,39 @@ import { AirportReference } from '../../models';
 })
 export class AirportReferencesComponent implements OnInit {
 
-  public nomenclatureAirports:string = 'AAA';
-
+  // Сохраняются загруженне Аэропорты
   public airports: AirportReference[] = null;
-
+  // В данной версии не используется. Сохраняются выделенные элементы.
   public selected_items = [];
-
+  // Указывает нужно отображать загрузчик или нет
   public loader_displayed = false;
-
+  // Указываем сколько элементов нужно пропустить в БД при запросе
   public skip: number = 0;
+  // Указываем сколько элементов нужно выбрать из БД
   public limit: number = 20;
-  public element_count: number = 0;
+  // Хранится общее количество элементов в БД
+  public elements_count: number = 0;
+  // Текущая страница, используется для подсчета сколько элементов нужно пропустить при выборке 
   public current_page: number = 0;
+  // Переменная для блока пагинации. Пересмотреть и возможно избавится.
+  public pagination_arr = [];
 
 
-  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) {
-    this.get_airports_count()
-  }
+  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) {}
 
   get_airports_count(){
     this.ReferenceService.get_airports_count().subscribe((data) => {
-      this.element_count = (50 / this.limit)
+      this.elements_count = data;
+      let count = Math.ceil(this.elements_count / this.limit);
+      this.pagination_arr = new Array(count)
     });
   }
 
   load_airports(skip, limit){
-    console.log('Index: ', skip)
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
     this.ReferenceService.get_airports(skip, limit).subscribe((data) => {
       this.airports = data;
-      console.log('Next page')
     });
   }
 
@@ -58,10 +60,9 @@ export class AirportReferencesComponent implements OnInit {
 
   refresh_data(){
     this.loader_displayed = true;
-    this.ReferenceService.get_airports(this.skip, 20).subscribe((data) => {
+    this.ReferenceService.get_airports(this.skip, this.limit).subscribe((data) => {
       this.airports = data;
-      //data = data.map((item) => AirportReference.serialize_from_json(item, new AirportReference()))
-      console.log(this.airports[0]);
+      this.get_airports_count()
       this.loader_displayed = false;
     });
   }
@@ -83,6 +84,7 @@ export class AirportReferencesComponent implements OnInit {
     this.open_dialog(airport_copy).afterClosed()
     .subscribe((dialog_result) => {
       if(!dialog_result) return;
+      this.handle_dialog_result(dialog_result);
 
       this.airports.forEach((item, index, array) => {
         if(item._id == dialog_result._id){
@@ -90,6 +92,16 @@ export class AirportReferencesComponent implements OnInit {
         }
       });
     });
+  }
+
+  handle_dialog_result(response){
+    if(response.action == 'remove'){
+      this.airports.forEach((item, index, array) => {
+        if(item._id == response.id){
+          array.splice(index, 1)
+        }
+      });
+    }
   }
 
   open_dialog(data): MatDialogRef<AirportPopupReferencesComponent> {

@@ -30,7 +30,7 @@ export async function create_avia_company(req, res) {
         err = avia_company.validateSync();
 
         if (err) {
-            throw new HttpResponseError(`Bad request. Avia Company object not created.`, 400, err);
+            throw new HttpResponseError(`Validate error. Avia Company object not created.`, 400, err);
         }
 
         avia_company = await avia_company.save();

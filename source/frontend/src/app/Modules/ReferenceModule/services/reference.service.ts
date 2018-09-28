@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AirportReference } from '../models/airport.reference';
-import { AviaCompanyReference } from '../models/aviaCompany.reference'
+import { AviaCompanyReference } from '../models/avia_company.reference'
 
 @Injectable()
 export class ReferenceService {
@@ -12,7 +12,7 @@ export class ReferenceService {
 
   // Start Airports Service Block
   get_airports_count(){
-    return this.http.get<Number>(this.baseUrl + `/references/airport/count`); 
+    return this.http.get<number>(this.baseUrl + `/references/count/airport`); 
   }
 
   get_airports(skip, limit){
@@ -38,7 +38,7 @@ export class ReferenceService {
 
   // Start Avia Company Service Block
   get_avia_company_count(){
-    return this.http.get<Number>(this.baseUrl + `/references/avia_company/count`); 
+    return this.http.get<Number>(this.baseUrl + `/references/count/avia_company`); 
   }
 
   get_avia_companies(skip, limit){

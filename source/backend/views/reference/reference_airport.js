@@ -30,13 +30,14 @@ export async function create_airport(req, res) {
         err = airport.validateSync();
 
         if (err) {
-            throw new HttpResponseError(`Bad request. Airport object not created.`, 400, err);
+            console.log(err);
+            throw new HttpResponseError(`Validate error. Airport object not created.`, 400, err);
         }
 
         airport = await airport.save();
 
         if (!airport) {
-            throw new HttpResponseError(`Airport not saved.`, 400);
+            throw new HttpResponseError(`Airport not saved.`, 404);
         }
 
         res.status(200).json(airport);

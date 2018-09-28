@@ -23,7 +23,7 @@ const ReferenceCounterpartySchema = new Schema({
         BankAccount :{ type: String }
     } },
     // Інші
-    Others          :{ type: {
+    Other            :{ type: {
         // ІПН
         IPN         :{ type: String },
         // Код ЕДРПОУ
@@ -36,30 +36,30 @@ const ReferenceCounterpartySchema = new Schema({
         AgencyServices  :{ type: Boolean }
     } },
     // Контакти
-    Contacts        :{ type: {
+    Contacts        :{ type: [{
         // Тип (перелік Адреса, Телефон, Адреса електронної пошти, Веб сторінка, Інше)
         ContactType     :{ type: String },
         // Вид (поки що вручну)
         Type            :{ type: String },
         // Представлення
         Representation  :{ type: String },
-    } },
+    }] },
     // Фізичні особи (посилання на Фізичні особи) Потрібні поля: (Фізична особа, Коментар)
-    IndividualsId  :{ type: String },
+    IndividualsId  :{ type: [mongoose.SchemaTypes.ObjectId] },
     // Послуги
-    ServicesId     :{ type: {
+    Services     :{ type: [{
         // Послуга (посилання на Види сервісів)
         ServiceId         :{ type: String },
         // Агентська винагорода
         AgentAward        :{ type: Number },
         // Процент банку
         BankPercent       :{ type: Number }
-    } },
+    }] },
     //
-    TouristServices     :{ type: {
+    TouristServices     :{ type: [{
         // Послуга
         Name    :{ type: String }
-    } },
+    }] },
     // Коментар
     Comment         :{ type: String },
 });

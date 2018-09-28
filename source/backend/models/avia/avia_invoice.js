@@ -142,9 +142,9 @@ const AviaInvoiceSchema = new Schema({
                                 // Вид сервісу
                                 ServiceType         :{ type: String },
                                 // Час відправлення
-                                DepartureTime       :{ type: Date },
+                                DepartureTime       :{ type: String },
                                 // Час прибуття
-                                ArrivalTime         :{ type: Date },
+                                ArrivalTime         :{ type: String },
     }] },
     // Квитки
     TicketsInfo         :{ type: [{

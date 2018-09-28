@@ -177,6 +177,17 @@ div.row {
   margin-left: 0;
 }
 
+#mainNavbar a {
+  color: #788195;
+  cursor: pointer;
+}
+
+#mainNavbar a:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+
 
 
 /* ====================================== MEDIA QUERIES ======================================== */

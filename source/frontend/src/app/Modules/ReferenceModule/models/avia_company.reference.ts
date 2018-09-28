@@ -1,5 +1,7 @@
-export class AviaCompanyReference{
-    _id: string = null;
+import { BaseModel } from './base_model';
+
+export class AviaCompanyReference extends BaseModel{
+    _id: string = undefined;
     // Найменування
     Name: string = null;
     // Номер

@@ -1,4 +1,7 @@
 import { Avia } from '../../models';
+import { HttpResponseError } from '../../infrastructure';
+
+const AviaInvoice = Avia.AviaInvoice;
 
 /**
  * 
@@ -27,7 +30,7 @@ export async function get_all_avia_invoices(req, res){
     try{
         res.status(200).json(get_mock_invoice());
         return;
-        avia_invoices = await Avia.AviaInvoice.find({}).skip(skip).limit(limit);
+        avia_invoices = await AviaInvoice.find({}).skip(skip).limit(limit);
 
         if(!avia_invoices){
             res.status(404).json({ "Error": "Avia Invoices not found." });
@@ -66,17 +69,17 @@ export async function create_avia_invoice(req, res) {
     let body = req.body;
 
     try {
-        let airport = new Airport(body);
+        let airport = new AviaInvoice(body);
         err = airport.validateSync();
 
         if (err) {
-            throw new HttpResponseError(`Bad request. Airport object not created.`, 400, err);
+            throw new HttpResponseError(`Validate error. Avia invoice was not created.`, 400, err);
         }
 
         airport = await airport.save();
 
         if (!airport) {
-            throw new HttpResponseError(`Airport not saved.`, 400);
+            throw new HttpResponseError(`Avia invoice not saved.`, 400);
         }
 
         res.status(200).json(airport);
@@ -116,9 +119,9 @@ export async function update_avia_invoice(req, res) {
     let airport = req.body;
 
     try {
-        let update = await Airport.findByIdAndUpdate(airport_id, airport, { new: true });
+        let update = await AviaInvoice.findByIdAndUpdate(airport_id, airport, { new: true });
         if (!update) {
-            throw new HttpResponseError(`Bad request. Airport not found or parameters invalid.`, 400, null);
+            throw new HttpResponseError(`Bad request. Avia invoice not found or parameters invalid.`, 400, null);
         }
 
         res.status(200).json(update);
@@ -156,7 +159,7 @@ export async function update_avia_invoice(req, res) {
 export async function remove_avia_invoice(req, res) {
     let airport_id = req.params.id;
     try {
-        await Airport.remove({ _id: airport_id });
+        await AviaInvoice.remove({ _id: airport_id });
         res.status(200).json({ "Status": `OK.` });
     }
     catch (err) {
@@ -194,15 +197,15 @@ export async function get_avia_invoice_by_id(req, res) {
     let airport = null;
 
     if (!airport_id) {
-        res.status(400).json({ "Error": `Bad raquest. Airport id is empty.` });
+        res.status(400).json({ "Error": `Bad raquest. Avia invoice id is empty.` });
         return;
     }
 
     try {
-        airport = await Airport.findById(airport_id);
+        airport = await AviaInvoice.findById(airport_id);
 
         if (!airport) {
-            throw new HttpResponseError(`Airport with id ${airport_id} not found.`, 404, null);
+            throw new HttpResponseError(`Avia invoice with id ${airport_id} not found.`, 404, null);
         }
 
         res.status(200).json(airport);
@@ -239,10 +242,10 @@ export async function get_avia_invoice_by_id(req, res) {
 export async function get_avia_invoice_count(req, res) {
     let airports_count = null;
     try {
-        airports_count = await Airport.count();
+        airports_count = await AviaInvoice.count();
 
         if (!airports_count) {
-            throw new HttpResponseError(`Can't get airports count.`, 404, null);
+            throw new HttpResponseError(`Can't get avia invoice count.`, 404, null);
         }
 
         res.status(200).json(airports_count);
