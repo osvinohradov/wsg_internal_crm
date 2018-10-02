@@ -36,7 +36,11 @@ export class AirportReferencesComponent implements OnInit {
   public pagination_arr = [];
 
 
-  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) {}
+  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) { }
+
+  ngOnInit() {
+    this.refresh_data();
+  }
 
   get_airports_count(){
     this.ReferenceService.get_airports_count().subscribe((data) => {
@@ -52,10 +56,6 @@ export class AirportReferencesComponent implements OnInit {
     this.ReferenceService.get_airports(skip, limit).subscribe((data) => {
       this.airports = data;
     });
-  }
-
-  ngOnInit() {
-    this.refresh_data();
   }
 
   refresh_data(){

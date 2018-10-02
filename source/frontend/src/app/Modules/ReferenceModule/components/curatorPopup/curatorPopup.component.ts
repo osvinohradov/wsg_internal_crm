@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
+import { CuratorReference } from "../../models";
+import { ReferenceService } from "../../services/reference.service";
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'curator-popup-ref',
@@ -10,14 +14,102 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 })
 export class CuratorPopupReferencesComponent implements OnInit {
+  public is_saved: Boolean = false;
+  //
+  public counterparty_names: any[] = [];
+  public counterparty_names_control = new FormControl();
 
-  constructor(public dialogRef: MatDialogRef<CuratorPopupReferencesComponent>) { }
+  constructor(
+    public dialogRef: MatDialogRef<CuratorPopupReferencesComponent>,
+    @Inject(MAT_DIALOG_DATA) public curator: CuratorReference,
+    public ReferenceService: ReferenceService
+  ) {
+    if (!this.curator) {
+      this.curator = new CuratorReference();
+    }
 
-  ngOnInit() {
+    this.counterparty_names = [
+      { _id: 0, Name: "First" },
+      { _id: 1, Name: "Second" },
+      { _id: 2, Name: "Third" },
+      { _id: 3, Name: "Fourth" },
+      { _id: 4, Name: "Fifth" }
+    ]
+
+
   }
 
-  closePopup(): void {
-    this.dialogRef.close();
+  ngOnInit() {}
+
+  update_airport(curator: CuratorReference) {
+    this.ReferenceService.update_curator(curator).subscribe(data => {
+      this.curator = data as CuratorReference;
+    });
+  }
+
+  save_airport(curator: CuratorReference) {
+    this.ReferenceService.save_curator(curator).subscribe(data => {
+      let tmp = data as CuratorReference;
+      if (!tmp._id) {
+        this.is_saved = false;
+      } else {
+        this.curator = tmp;
+        this.is_saved = true;
+      }
+    });
+  }
+
+  remove_airport(curator_id: string) {
+    if (!curator_id) {
+      console.log(`curator_id не передано.`);
+      // Show error dialog
+      return;
+    }
+
+    this.ReferenceService.remove_curator(curator_id).subscribe(() => {
+      this.dialogRef.close({ action: "remove", id: curator_id, element: null });
+    });
+  }
+
+  save_and_close(curator: CuratorReference) {
+    // Save ticket
+    this.save_update_curator(curator);
+    this.close_dialog(curator);
+  }
+
+  save_update_curator(curator: CuratorReference) {
+    if (!curator._id) {
+      this.save_airport(curator);
+    } else {
+      this.update_airport(curator);
+      this.is_saved = true;
+    }
+  }
+
+  load_couterparty_names(pattern){
+    console.log('Curator id', pattern)
+    this.ReferenceService.get_counterparty_names(pattern).subscribe((data) => {
+      this.counterparty_names = data;
+    });
+  }
+
+  /**
+   *
+   * data = {
+   * action: "" (create, update, remove),
+   * id: "",
+   * element: Object
+   * }
+   *
+   * @param data
+   */
+  close_dialog(data): void {
+    console.log("Close dialog:", data);
+    if (!this.is_saved) {
+      this.dialogRef.close(null);
+    } else {
+      this.dialogRef.close(data);
+    }
   }
 
 }

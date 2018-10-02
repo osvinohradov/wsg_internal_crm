@@ -1,21 +1,26 @@
 <!-- Modal content-->
 
-<h2 class="ml-4 title_main_page_margin">{{nomencaltureAirlinePopup}} (Авіакомпанії)
+<h2 class="ml-4 title_main_page_margin">{{nomencaltureAirlinePopup}} Авіакомпанії - {{ avia_company.Name ? avia_company.Name : "" }}
 </h2>
 
 <!--Row MENU Buttons -->
 <div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
   <div class="col-md-6 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button type="button" class="btn btn-default my_button_style bold">
+      <button type="button" class="btn btn-default my_button_style bold" (click)="save_and_close(avia_company)">
         <span class="my_button_label font-weight-bold">Записати та закрити</span>
       </button>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_avia_company(avia_company)" matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
+    <div class="d-inline mr-my-1">
+        <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Видалити" (click)="remove_avia_company(avia_company._id)">
+          <span class="material-icons">remove</span>
+        </button>
+      </div>
   </div>
   <!--Container MENU Buttons End-->
 
@@ -98,22 +103,22 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Код:" value="">
+          <input matInput placeholder="Номер:" [(ngModel)]="avia_company.Number" name="Number">
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Найменування:" value="">
+          <input matInput placeholder="Найменування:" [(ngModel)]="avia_company.Name" name="Name">
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Код:" value="">
+          <input matInput placeholder="Код:" [(ngModel)]="avia_company.Code" name="Code">
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="IATA:" value="">
+          <input matInput placeholder="IATA:" [(ngModel)]="avia_company.IATA" name="IATA">
         </mat-form-field>
       </div>
     </div>
@@ -123,7 +128,7 @@
 <!-- Popup Footer -->
 <div id="invoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(avia_company)">
       <span class="pr-3 my_button_label">Закрити</span>
     </button>
   </div>

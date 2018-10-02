@@ -4,7 +4,7 @@
 <div class="ml-4 mr-4 pl-0 pr-0  clearfix">
     <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
         <div class="d-inline pl-0 mr-my-1">
-            <button (click)="openDialog()" type="button" class="btn btn-default my_button_style">
+            <button (click)="create_avia_company(avia_compnay)" type="button" class="btn btn-default my_button_style">
                 <span class="material-icons">add</span>
                 <span class="my_button_label">Створити</span>
             </button>
@@ -75,7 +75,7 @@
                     </div>
                     <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="refresh_data()">
                     <div class="d-inline mr-3 my_menu_icon">
                         <span class="material-icons">refresh</span>
                     </div>
@@ -129,24 +129,54 @@
     <!-- DropDown ALL Actions end-->
 </div>
 <div class="ml-4 mr-4 mt-2 my_table_style">
-    <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+    <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
         <table class="table">
             <thead class="thead-light">
                 <tr>
+                    <th scope="col">Номер</th>
                     <th scope="col">Найменування</th>
-                    <th scope="col">Код</th>
                     <th scope="col">Код</th>
                     <th scope="col">IATA</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="main">
-                    <td class="text-center" scope="row">1</td>
-                    <td class="text-center">2</td>
-                    <td class="text-center">3</td>
-                    <td class="text-center">4</td>
+                <tr class="main" *ngFor="let avia_company of avia_companies" (dblclick)="edit_avia_company(avia_company)">
+                    <td class="text-center" scope="row">{{avia_company.Number}}</td>
+                    <td class="text-center">{{avia_company.Name}}</td>
+                    <td class="text-center">{{avia_company.Code}}</td>
+                    <td class="text-center">{{avia_company.IATA}}</td>
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div *ngIf="elements_count >= limit" class="col-md-12 d-flex align-items-center justify-content-center clearfix">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <button class="page-link" aria-label="Previous" (click)="load_avia_companies(0, 20)">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </button>
+            </li>
+            <li class="page-item" *ngFor="let item of pagination_arr; let index = index" [class.active]="index == current_page">
+                    <button class="page-link" (click)="load_avia_companies(index, limit)">{{index + 1}}</button>
+            </li>
+            <li class="page-item">
+                <button class="page-link" aria-label="Next" (click)="load_avia_companies(0, 20)">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container-fluid position-absolute d-flex align-items-center justify-content-center clearfix" *ngIf="loader_displayed">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <img src="../../../../../assets/img/loader.gif">
+        </div>
     </div>
 </div>

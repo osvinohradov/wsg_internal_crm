@@ -1,18 +1,18 @@
 <!-- Modal content-->
 
-<h2 class="ml-4 title_main_page_margin">Види сервисів (створення)
+<h2 class="ml-4 title_main_page_margin">Види сервисів
 </h2>
 
 <!--Row MENU Buttons -->
 <div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
   <div class="col-md-6 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button type="button" class="btn btn-default my_button_style bold">
+      <button type="button" class="btn btn-default my_button_style bold" (click)="save_and_close(service_type)">
         <span class="my_button_label font-weight-bold">Записати та закрити</span>
       </button>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_service_type(service_type)" matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
@@ -106,12 +106,12 @@
           </div>
           <div class="form-group col-6 p-2 my_input_style">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Найменування:" value="">
+              <input matInput placeholder="Найменування:" [(ngModel)]="service_type.Name">
             </mat-form-field>
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Постачальник:" value="">
+              <input matInput placeholder="Постачальник:" [(ngModel)]="service_type.Name">
               <button mat-button matSuffix mat-icon-button aria-label="Settings">
                 <mat-icon>more_horiz</mat-icon>
               </button>
@@ -119,7 +119,7 @@
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Додатковий постачальник:" value="">
+              <input matInput placeholder="Додатковий постачальник:" [(ngModel)]="service_type.Name">
               <button mat-button matSuffix mat-icon-button aria-label="Settings">
                 <mat-icon>more_horiz</mat-icon>
               </button>
@@ -136,7 +136,7 @@
         <div class="row ml-0 mr-0">
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Каталог номенклатури:" value="">
+              <input matInput placeholder="Каталог номенклатури:" [(ngModel)]="service_type.Name">
               <button mat-button matSuffix mat-icon-button aria-label="Settings">
                 <mat-icon>more_horiz</mat-icon>
               </button>
@@ -144,12 +144,12 @@
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Кратке найменування квитка:" />
+              <input matInput type="text" placeholder="Коротке найменування квитка:" [(ngModel)]="service_type.Name" />
             </mat-form-field>
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Повне найменування квитка:" />
+              <input matInput type="text" placeholder="Повне найменування квитка:" [(ngModel)]="service_type.Name" />
             </mat-form-field>
           </div>
         </div>
@@ -163,7 +163,7 @@
         <div class="row ml-0 mr-0">
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Підлегла номенклатура (як послуга):" value="">
+              <input matInput placeholder="Підлегла номенклатура (як послуга):" [(ngModel)]="service_type.Name">
               <button mat-button matSuffix mat-icon-button aria-label="Settings">
                 <mat-icon>more_horiz</mat-icon>
               </button>
@@ -171,27 +171,27 @@
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Основні послуги:" />
+              <input matInput type="text" placeholder="Основні послуги:" [(ngModel)]="service_type.Name" />
             </mat-form-field>
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Послуги агенства:" />
+              <input matInput type="text" placeholder="Послуги агенства:" [(ngModel)]="service_type.Name" />
             </mat-form-field>
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Інші послуги:" />
+              <input matInput type="text" placeholder="Інші послуги:" [(ngModel)]="service_type.Name" />
             </mat-form-field>
           </div>
           <div class="form-group col-12 p-2 my_input_style">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Штрафні санкції:" />
+              <input matInput type="text" placeholder="Штрафні санкції:" [(ngModel)]="service_type.Name" />
             </mat-form-field>
           </div>
           <div class="form-group col-4 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Ставка ПДВ:" />
+                <input matInput type="text" placeholder="Ставка ПДВ:" [(ngModel)]="service_type.Name" />
               </mat-form-field>
             </div>
         </div>
@@ -206,7 +206,7 @@
 <!-- Popup Footer -->
 <div id="invoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(service_type)">
       <span class="pr-3 my_button_label">Закрити</span>
     </button>
   </div>

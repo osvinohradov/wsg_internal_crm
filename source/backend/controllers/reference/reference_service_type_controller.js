@@ -5,7 +5,7 @@ const router = Router();
 
 router.route('/references/service_type')
     .get(async (req, res) => {
-        ReferenceHandler.ServiceTypeView.get_all_service_type(req, res);
+        ReferenceHandler.ServiceTypeView.get_all_service_types(req, res);
     })
     .post(async (req, res) => {
         ReferenceHandler.ServiceTypeView.create_service_type(req, res);

@@ -188,6 +188,48 @@ export async function get_counterparty_by_id(req, res) {
  * 
  * Description:
  * Функція приймає запит від клієнта, дістає ідентифікатор із рядка запиту,
+ * знаходить обє'кт в БД та повертає його клієнту.
+ * 
+ * Example (GET) data:
+ * {
+ * 
+ * }
+ * 
+ * @param {HttpRequest} req 
+ * @param {HttpResponse} res 
+ */
+export async function get_counterparty_by_name(req, res) {
+    let counterparty_name = req.query.search_name;
+    let counterparty_name_regexp = new RegExp(counterparty_name, 'i');
+    try {
+        counterparty_name = await Counterparty.find({ Name: { $regex: counterparty_name_regexp } });
+
+        if (!counterparty_name) {
+            throw new HttpResponseError(`Counterparty with namw ${counterparty_name} not found.`, 404, null);
+        }
+
+        res.status(200).json(counterparty_name);
+    }
+    catch (err) {
+        if(err instanceof HttpResponseError){
+            console.log(err.message);
+            return res.status(err.status_code).json({ "Error": err.message });
+        }
+        console.log(err);
+        return res.status(500).json({ "Error": `Internal Server Error. See logs.` });
+    }
+}
+
+/**
+ * 
+ * Details:
+ * 
+ * Method: GET
+ * 
+ * Route: /reference/counterparty/:id
+ * 
+ * Description:
+ * Функція приймає запит від клієнта, дістає ідентифікатор із рядка запиту,
  * знаходить всі обє'кти в БД та повертає їх клієнту.
  * 
  * Example (GET) data:

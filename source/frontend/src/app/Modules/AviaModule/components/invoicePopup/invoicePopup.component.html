@@ -33,7 +33,7 @@
       </mat-menu>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_airport(avia_invoice)" matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
@@ -155,51 +155,59 @@
 <!-- Invoice Popup Form Container -->
 <div class="ml-4 mr-4 mt-4 mb-4">
   <form class="form-horizontal" role="form">
+
+
     <div class="row mr-0 ml-0">
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Номер" value="">
+          <input matInput placeholder="Номер:" value="{{avia_invoice.Number}}" name="Number" disabled>
         </mat-form-field>
       </div>
 
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Введіть дату">
+          <input matInput [matDatepicker]="picker" placeholder="Дата:" [(ngModel)]="test_date" name="avia_invoice.Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
 
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field>
-          <mat-select placeholder="Форма сплати:">
-            <mat-option *ngFor="let currency of currency" [value]="currency.value">
-              {{ currency.viewValue }}
+          <mat-select placeholder="Форма сплати:" [(ngModel)]="avia_invoice.PaymentForm" name="PaymentForm">
+            <mat-option *ngFor="let payment_form of payment_forms" (change)="avia_invoice.PaymentForm=payment_form" [value]="payment_form">
+              {{
+                payment_form
+              }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker1" placeholder="Дата сплати">
+          <input matInput [matDatepicker]="picker1" placeholder="Дата сплати:">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
       </div>
+
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Квитків:" [value]="avia_invoice.TicketsCount">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Всього:" [value]="avia_invoice.TotalAmount">
+        </mat-form-field>
+      </div>
     </div>
+
+
     <div class="row mr-0 ml-0">
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Квитків:" value="">
-        </mat-form-field>
-      </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Всього:" value="">
-        </mat-form-field>
-      </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+      <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Клієнт:" />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
@@ -207,25 +215,29 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
           <input matInput [matDatepicker]="picker2" placeholder="Дата послуг:">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
+
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+        <mat-checkbox class="" primary [(ngModel)]="avia_invoice.IsVoid" name="IsVoid">Без реалізації:</mat-checkbox>
+      </div>
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+        <mat-checkbox class="" primary [(ngModel)]="avia_invoice.IsReturned" name="IsReturned">Повернення:</mat-checkbox>
+      </div>
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+        <mat-checkbox class="" primary [(ngModel)]="avia_invoice.IsPaid" name="IsPaid">Сплачено:</mat-checkbox>
+      </div>
     </div>
+
+
     <div class="row mr-0 ml-0">
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
-        <mat-checkbox class="" primary>Без реалізації:</mat-checkbox>
-      </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
-        <mat-checkbox class="" primary>Повернення:</mat-checkbox>
-      </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
-        <mat-checkbox class="" primary>Сплачено:</mat-checkbox>
-      </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+      <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 p-2 form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Групове замовлення:" />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
@@ -233,17 +245,17 @@
           </button>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row mr-0 ml-0">
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
-          <mat-select placeholder="Валюта пропозиції:">
-            <mat-option *ngFor="let currency of currencyProposal" [value]="currencyProposal.value">
-              {{ currency.viewValue }}
+          <mat-select placeholder="Валюта пропозиції:" [(ngModel)]="avia_invoice.OfferCurrencyId" name="OfferCurrencyId">
+            <mat-option *ngFor="let currency_exchange of currency_exchanges" (change)="avia_invoice.OfferCurrencyId=currency_exchange" [value]="currency_exchange._id">
+              {{ currency_exchange.Name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
           <mat-select placeholder="Підсумкова валюта:">
@@ -253,6 +265,11 @@
           </mat-select>
         </mat-form-field>
       </div>
+    </div>
+
+
+
+    <div class="row mr-0 ml-0">
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Постачальник:" />
@@ -261,6 +278,7 @@
           </button>
         </mat-form-field>
       </div>
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Сплата такси:" />
@@ -269,8 +287,7 @@
           </button>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row mr-0 ml-0">
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Куратор:" />
@@ -279,7 +296,17 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+
+      <div class="form-group col-lg-3 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Код бронювання:" value="">
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
           <mat-select placeholder="Обмін валют:">
             <mat-option *ngFor="let currency of currencyExchange" [value]="currencyExchange.value">
@@ -288,13 +315,24 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Код бронювання:" value="">
+
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker3" placeholder="На дату:">
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row mr-0 ml-0">
+
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Вид сервісу:" />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
       <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Розрахунковий рахунок:" />
@@ -306,28 +344,16 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker3" placeholder="На дату:">
-          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-          <mat-datepicker #picker3></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Вид сервісу:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
     </div>
+
+
     <div class="row mr-0 ml-0 mb-4">
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Коментар:" value="">
         </mat-form-field>
       </div>
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Відповідальний:" />
@@ -336,6 +362,7 @@
           </button>
         </mat-form-field>
       </div>
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
           <input matInput type="text" placeholder="Агент:" />
@@ -344,23 +371,44 @@
           </button>
         </mat-form-field>
       </div>
+
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Код РМ:" value="">
         </mat-form-field>
       </div>
     </div>
+
+
     <!-- Angular Material Tabs -->
     <mat-tab-group>
       <mat-tab activelabel label="Детальна інформація">
         <div id="document_content" class="mb-4 mt-4">
+
           <div class="row ml-0 mr-0">
-            <div class="form-group col-12 p-2 my_input_style">
+            <div class="form-group col-4 p-2 my_input_style">
               <mat-form-field class="example-form-field">
                 <input matInput type="text" placeholder="Прізвище:" />
+                <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
               </mat-form-field>
             </div>
+
+            <div class="form-group col-4 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Номер квитка:" />
+              </mat-form-field>
+            </div>
+
+            <div class="form-group col-4 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Дата покупки:" />
+                </mat-form-field>
+              </div>
           </div>
+
+
           <div class="row ml-0 mr-0 mt-4 mb-4 all_flight_info">
             <div class="my_flight_info col-lg-12">
               <label class="control-label">Виліт: із KIEV/BORYSPIL(KBP. Terminal) в 27.09.2017 12:00:00</label>
@@ -374,97 +422,322 @@
           <div class="row mr-0 ml-0 mt-4">
             <!-- Fieldset 1 -->
             <div class="mr-0 ml-0 col-12 pl-0 pr-0">
-              <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                <h4 class="control-label float-left">Вартість постачальника</h4>
-              </div>
               <div class="row mr-0 ml-0">
-                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Сума постач.:">
-                  </mat-form-field>
-                </div>
-                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="В т.ч. ПДВ:" value="">
-                  </mat-form-field>
-                </div>
-                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field>
-                    <mat-select placeholder="Валюта:">
-                      <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                        {{ currency.viewValue }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            <!-- Fieldset 1 - End -->
-            <!-- Fieldset 2 -->
-            <div class="mr-0 ml-0 col-12 pl-0 pr-0">
-              <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
-                <h4 class="control-label text-left">Використанний тариф постачальникау</h4>
-              </div>
-              <div class="row mr-0 ml-0">
-                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Сума постач.:">
-                  </mat-form-field>
-                </div>
-                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="В т.ч. ПДВ:" value="">
-                  </mat-form-field>
-                </div>
-                <div class="form-group col-xs-12 col-lg-4 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field>
-                    <mat-select placeholder="Валюта:">
-                      <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                        {{ currency.viewValue }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            <!-- Fieldset 2 - End -->
+                <!-- Section 1 -->
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Вартість постачальника:</h4>
+                  </div>
 
-            <!-- Fieldset 3 -->
-            <div class="mr-0 ml-0 col-12 pl-0 pr-0">
-              <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
-                <h4 class="control-label text-left">Додаткова комісія постачальника</h4>
-              </div>
-              <div class="row mr-0 ml-0">
-                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Сума:">
-                  </mat-form-field>
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума постач.:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Готівка:">
-                  </mat-form-field>
+                <!-- END Section 1 -->
+
+                <!-- Section 2 -->
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Комісія постачальника:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="%:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="В т.ч. ПДВ:" value="">
-                  </mat-form-field>
+                <!-- END Section 2 -->
+
+                <!-- Section 3 -->
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Штраф:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col-xs-12 col-md-6 col-lg-3 p-2 mr-0 ml-0 my_input_style">
-                  <mat-form-field>
-                    <mat-select placeholder="Валюта:">
-                      <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                        {{ currency.viewValue }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <!-- END Section 3 -->
+
+                <!-- Section 4 -->
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Використанний тариф постачальника:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Тариф:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
                 </div>
+                <!-- END Section 4 -->
+
+                <!-- Section 5 -->
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Додаткова комісія постачальника:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума готівка:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 5 -->
+
+                <!-- Section 6 -->
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Використання такси:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума постач.:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 6 -->
+
+                <!-- Section 7 -->
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Послуги агенції:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="%:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="% банку:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 7 -->
+
+                <!-- Section 8 -->
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Інші послуги:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 8 -->
+
+                <!-- Section 9 -->
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Всього:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Сума:">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field>
+                        <mat-select placeholder="Валюта:">
+                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
+                            {{ currency.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 9 -->
               </div>
             </div>
-            <!-- Fieldset 3 - End -->
           </div>
           <!-- Fieldsets - End -->
-
           <div class="row ml-0 mr-0">
             <div class="form-group col-12 p-2 my_input_style">
               <mat-form-field class="example-form-field">
@@ -477,6 +750,8 @@
       <!-- TAB 1 - END -->
 
       <mat-tab label="Інформація про рейс">
+
+
         <!-- TAB 2 - START -->
         <div class="mb-4 mt-4">
 
@@ -718,7 +993,7 @@
 
 <div id="invoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(avia_invoice)">
       <span class="pr-3 my_button_label">Закрити</span>
     </button>
   </div>

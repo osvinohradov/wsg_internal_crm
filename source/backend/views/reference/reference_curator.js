@@ -202,6 +202,7 @@ export async function get_all_curators(req, res) {
     let curator = null;
     let limit = req.query.limit ? parseInt(req.query.limit) : 10;
     let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+    let search = req.query.q;
     try {
         curator = await Curator.find({}).skip(skip).limit(limit);
 
@@ -244,11 +245,6 @@ export async function get_curator_count(req, res) {
     let curators_count = null;
     try {
         curators_count = await Curator.count();
-
-        if (!curators_count) {
-            throw new HttpResponseError(`Can't get Curator count.`, 404, null);
-        }
-
         res.status(200).json(curators_count);
     }
     catch (err) {

@@ -14,6 +14,22 @@ import { AviaService } from "../../services/avia.service";
 export class AviaInvoicePopupComponent implements OnInit {
   public is_saved: Boolean = false;
 
+  public test_date = "12.09.2018 17:45:00"
+
+  // Вынести в БД и получать формы оплаты по запросу
+  public selected_payment_form: string;
+  public payment_forms:any[] = ["Банківська картка", "Безготівковий розрахунок"];
+
+  public mock_currency_exchange = [
+    { _id: "0", Name: "$" },
+    { _id: "1", Name: "Evro" },
+    { _id: "1", Name: "грн" }
+  ]
+
+  public currency_exchanges = this.mock_currency_exchange;
+
+
+
   constructor(
     public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
@@ -26,21 +42,22 @@ export class AviaInvoicePopupComponent implements OnInit {
   ngOnInit() {}
 
   update_airport(avia_invoice: AviaInvoice) {
-    this.AviaService.update_airport(avia_invoice).subscribe(data => {
+    this.AviaService.update_avia_invoice(avia_invoice).subscribe(data => {
       this.avia_invoice = data as AviaInvoice;
     });
   }
 
   save_airport(airport: AviaInvoice) {
-    this.AviaService.save_airport(airport).subscribe(data => {
-      let tmp = data as AviaInvoice;
-      if (!tmp._id) {
-        this.is_saved = false;
-      } else {
-        this.avia_invoice = tmp;
-        this.is_saved = true;
-      }
-    });
+    console.log('Save avia invoice:', airport)
+    // this.AviaService.save_avia_invoice(airport).subscribe(data => {
+    //   let tmp = data as AviaInvoice;
+    //   if (!tmp._id) {
+    //     this.is_saved = false;
+    //   } else {
+    //     this.avia_invoice = tmp;
+    //     this.is_saved = true;
+    //   }
+    // });
   }
 
   remove_airport(avia_invoice_id: string) {
@@ -50,7 +67,7 @@ export class AviaInvoicePopupComponent implements OnInit {
       return;
     }
 
-    this.AviaService.remove_airport(avia_invoice_id).subscribe(() => {
+    this.AviaService.remove_avia_invoice(avia_invoice_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: avia_invoice_id, element: null });
     });
   }

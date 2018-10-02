@@ -11,6 +11,11 @@ router.route('/references/counterparty')
         ReferenceHandler.CounterpartyView.create_counterparty(req, res);
     });
 
+router.route('/references/counterparty/search')
+    .get(async (req, res) => {
+        ReferenceHandler.CounterpartyView.get_counterparty_by_name(req, res);
+    });
+
 router.route('/references/counterparty/:id')
     .get(async (req, res) => {
         ReferenceHandler.CounterpartyView.get_counterparty_by_id(req, res);

@@ -7,6 +7,8 @@ const ReferenceAviaCompanySchema = new Schema({
     Number  :{ type: String },
     // Найменування
     Name    :{ type: String },
+    //
+    Code    :{ type: String },
     // IATA
     IATA    :{ type: String }
 });
