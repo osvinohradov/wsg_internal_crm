@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CurrencyExchangeReference } from "../../models";
-import { ReferenceService } from "../../services/reference.service";
+import { CurrencyExchangeService } from "../../services";
 
 @Component({
   selector: 'currency-exchange-popup-ref',
@@ -18,7 +18,7 @@ export class CurrencyExchangePopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CurrencyExchangePopupReferencesComponent>,
     @Inject(MAT_DIALOG_DATA) public currency_exchange: CurrencyExchangeReference,
-    public ReferenceService: ReferenceService
+    public CurrencyExchangeService: CurrencyExchangeService
   ) {
     if (!this.currency_exchange) {
       this.currency_exchange = new CurrencyExchangeReference();
@@ -28,13 +28,13 @@ export class CurrencyExchangePopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_currency_exchange(currency_exchange: CurrencyExchangeReference) {
-    this.ReferenceService.update_currency_exchange(currency_exchange).subscribe(data => {
+    this.CurrencyExchangeService.update_currency_exchange(currency_exchange).subscribe(data => {
       this.currency_exchange = data as CurrencyExchangeReference;
     });
   }
 
   save_currency_exchange(currency_exchange: CurrencyExchangeReference) {
-    this.ReferenceService.save_currency_exchange(currency_exchange).subscribe(data => {
+    this.CurrencyExchangeService.save_currency_exchange(currency_exchange).subscribe(data => {
       let tmp = data as CurrencyExchangeReference;
       if (!tmp._id) {
         this.is_saved = false;
@@ -52,7 +52,7 @@ export class CurrencyExchangePopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.ReferenceService.remove_currency_exchange(currency_exchange_id).subscribe(() => {
+    this.CurrencyExchangeService.remove_currency_exchange(currency_exchange_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: currency_exchange_id, element: null });
     });
   }

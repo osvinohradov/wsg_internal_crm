@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { AviaCompanyReference } from "../../models";
-import { ReferenceService } from "../../services/reference.service";
+import { AviaCompanyService } from "../../services";
 
 @Component({
   selector: 'avia-company-popup-ref',
@@ -18,7 +18,7 @@ export class AviaCompanyPopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AviaCompanyReference>,
     @Inject(MAT_DIALOG_DATA) public avia_company: AviaCompanyReference,
-    public ReferenceService: ReferenceService
+    public AviaCompanyService: AviaCompanyService
   ) {
     if (!this.avia_company) {
       this.avia_company = new AviaCompanyReference();
@@ -28,13 +28,13 @@ export class AviaCompanyPopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_avia_company(avia_company: AviaCompanyReference) {
-    this.ReferenceService.update_avia_company(avia_company).subscribe(data => {
+    this.AviaCompanyService.update_avia_company(avia_company).subscribe(data => {
       this.avia_company = data as AviaCompanyReference;
     });
   }
 
   save_avia_company(avia_company: AviaCompanyReference) {
-    this.ReferenceService.save_avia_company(avia_company).subscribe(data => {
+    this.AviaCompanyService.save_avia_company(avia_company).subscribe(data => {
       let tmp = data as AviaCompanyReference;
       if (!tmp._id) {
         this.is_saved = false;
@@ -53,7 +53,7 @@ export class AviaCompanyPopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.ReferenceService.remove_avia_company(avia_company_id).subscribe(() => {
+    this.AviaCompanyService.remove_avia_company(avia_company_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: avia_company_id, element: null });
     });
   }

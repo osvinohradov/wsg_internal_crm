@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, PageEvent } from '@angular/ma
 // import { AviaPrintScoreWithStampPopupComponent } from './../../../../Components/printScoreWithStamp/printScoreWithStamp.component';
 import { AirportPopupReferencesComponent } from './../airportPopup/airportPopup.component';
 
-import { ReferenceService } from '../../services/reference.service';
+import { AirportService } from '../../services';
 
 import { AirportReference } from '../../models';
 
@@ -36,14 +36,14 @@ export class AirportReferencesComponent implements OnInit {
   public pagination_arr = [];
 
 
-  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) { }
+  constructor(public dialog: MatDialog, private AirportService: AirportService) { }
 
   ngOnInit() {
     this.refresh_data();
   }
 
   get_airports_count(){
-    this.ReferenceService.get_airports_count().subscribe((data) => {
+    this.AirportService.get_airports_count().subscribe((data) => {
       this.elements_count = data;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count)
@@ -53,14 +53,14 @@ export class AirportReferencesComponent implements OnInit {
   load_airports(skip, limit){
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.ReferenceService.get_airports(skip, limit).subscribe((data) => {
+    this.AirportService.get_airports(skip, limit).subscribe((data) => {
       this.airports = data;
     });
   }
 
   refresh_data(){
     this.loader_displayed = true;
-    this.ReferenceService.get_airports(this.skip, this.limit).subscribe((data) => {
+    this.AirportService.get_airports(this.skip, this.limit).subscribe((data) => {
       this.airports = data;
       this.get_airports_count()
       this.loader_displayed = false;

@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { NomenclatureReference } from "../../models";
-import { ReferenceService } from "../../services/reference.service";
+import { NomenclatureService } from "../../services";
 
 @Component({
   selector: 'nomenclature-popup-ref',
@@ -16,7 +16,7 @@ export class NomenclaturePopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<NomenclaturePopupReferencesComponent>,
     @Inject(MAT_DIALOG_DATA) public nomenclature: NomenclatureReference,
-    public ReferenceService: ReferenceService
+    public NomenclatureService: NomenclatureService
   ) {
     if (!this.nomenclature) {
       this.nomenclature = new NomenclatureReference();
@@ -26,13 +26,13 @@ export class NomenclaturePopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_nomenclature(nomenclature: NomenclatureReference) {
-    this.ReferenceService.update_nomenclature(nomenclature).subscribe(data => {
+    this.NomenclatureService.update_nomenclature(nomenclature).subscribe(data => {
       this.nomenclature = data as NomenclatureReference;
     });
   }
 
   save_nomenclature(nomenclature: NomenclatureReference) {
-    this.ReferenceService.save_nomenclature(nomenclature).subscribe(data => {
+    this.NomenclatureService.save_nomenclature(nomenclature).subscribe(data => {
       let tmp = data as NomenclatureReference;
       if (!tmp._id) {
         this.is_saved = false;
@@ -50,7 +50,7 @@ export class NomenclaturePopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.ReferenceService.remove_nomenclature(nomenclature_id).subscribe(() => {
+    this.NomenclatureService.remove_nomenclature(nomenclature_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: nomenclature_id, element: null });
     });
   }

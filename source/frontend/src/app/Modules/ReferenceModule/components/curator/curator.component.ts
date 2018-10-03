@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 import { CuratorPopupReferencesComponent } from './../curatorPopup/curatorPopup.component';
-import { ReferenceService } from '../../services/reference.service';
+import { CuratorService } from '../../services';
 import { CuratorReference } from '../../models';
 
 
@@ -32,14 +32,14 @@ export class CuratorReferencesComponent implements OnInit {
   public pagination_arr = [];
 
 
-  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) { }
+  constructor(public dialog: MatDialog, private CuratorService: CuratorService) { }
 
   ngOnInit() {
     this.refresh_data();
   }
 
   get_curators_count(){
-    this.ReferenceService.get_curators_count().subscribe((data) => {
+    this.CuratorService.get_curators_count().subscribe((data) => {
       this.elements_count = data;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count)
@@ -49,14 +49,14 @@ export class CuratorReferencesComponent implements OnInit {
   load_curator(skip, limit){
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.ReferenceService.get_curators(skip, limit).subscribe((data) => {
+    this.CuratorService.get_curators(skip, limit).subscribe((data) => {
       this.curators = data;
     });
   }
 
   refresh_data(){
     this.loader_displayed = true;
-    this.ReferenceService.get_curators(this.skip, this.limit).subscribe((data) => {
+    this.CuratorService.get_curators(this.skip, this.limit).subscribe((data) => {
       this.curators = data;
       this.get_curators_count()
       this.loader_displayed = false;

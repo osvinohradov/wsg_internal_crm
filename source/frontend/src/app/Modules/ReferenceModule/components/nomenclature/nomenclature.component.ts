@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { NomenclaturePopupReferencesComponent } from './../nomenclaturePopup/nomenclaturePopup.component';
 
-import { ReferenceService } from '../../services/reference.service';
+import { NomenclatureService } from '../../services';
 
 import { NomenclatureReference } from '../../models';
 
@@ -31,14 +31,14 @@ export class NomenclatureReferencesComponent implements OnInit {
  public pagination_arr = [];
 
 
- constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) { }
+ constructor(public dialog: MatDialog, private NomenclatureService: NomenclatureService) { }
 
  ngOnInit() {
    this.refresh_data();
  }
 
  get_nomenclature_count(){
-   this.ReferenceService.get_nomenclature_count().subscribe((data) => {
+   this.NomenclatureService.get_nomenclature_count().subscribe((data) => {
      this.elements_count = data;
      let count = Math.ceil(this.elements_count / this.limit);
      this.pagination_arr = new Array(count)
@@ -48,14 +48,14 @@ export class NomenclatureReferencesComponent implements OnInit {
  load_nomenclatures(skip, limit){
    this.current_page = skip;
    skip = skip > 0 ? skip * 10 : skip;
-   this.ReferenceService.get_nomenclatures(skip, limit).subscribe((data) => {
+   this.NomenclatureService.get_nomenclatures(skip, limit).subscribe((data) => {
      this.nomenclatures = data;
    });
  }
 
  refresh_data(){
    this.loader_displayed = true;
-   this.ReferenceService.get_nomenclatures(this.skip, this.limit).subscribe((data) => {
+   this.NomenclatureService.get_nomenclatures(this.skip, this.limit).subscribe((data) => {
      this.nomenclatures = data;
      this.get_nomenclature_count()
      this.loader_displayed = false;

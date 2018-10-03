@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import { ReferenceService } from '../../services/reference.service';
+import { ServiceTypeService } from '../../services';
 
 import { ServiceTypeReference } from '../../models';
 
@@ -19,7 +19,7 @@ export class ServicePopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ServiceTypeReference>,
     @Inject(MAT_DIALOG_DATA) public service_type: ServiceTypeReference,
-    public ReferenceService: ReferenceService
+    public ServiceTypeService: ServiceTypeService
   ) {
     if (!this.service_type) {
       this.service_type = new ServiceTypeReference();
@@ -29,13 +29,13 @@ export class ServicePopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_service_type(service_type: ServiceTypeReference) {
-    this.ReferenceService.update_service_type(service_type).subscribe(data => {
+    this.ServiceTypeService.update_service_type(service_type).subscribe(data => {
       this.service_type = data as ServiceTypeReference;
     });
   }
 
   save_service_type(service_type: ServiceTypeReference) {
-    this.ReferenceService.save_service_type(service_type).subscribe(data => {
+    this.ServiceTypeService.save_service_type(service_type).subscribe(data => {
       let tmp = data as ServiceTypeReference;
       if (!tmp._id) {
         this.is_saved = false;
@@ -54,7 +54,7 @@ export class ServicePopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.ReferenceService.remove_service_type(service_type_id).subscribe(() => {
+    this.ServiceTypeService.remove_service_type(service_type_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: service_type_id, element: null });
     });
   }

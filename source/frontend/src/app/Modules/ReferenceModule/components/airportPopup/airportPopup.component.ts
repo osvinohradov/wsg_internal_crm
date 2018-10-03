@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { AirportReference } from "../../models";
-import { ReferenceService } from "../../services/reference.service";
+import { AirportService } from "../../services";
 
 @Component({
   selector: "airport-popup-ref",
@@ -20,7 +20,7 @@ export class AirportPopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AirportPopupReferencesComponent>,
     @Inject(MAT_DIALOG_DATA) public airport: AirportReference,
-    public ReferenceService: ReferenceService
+    public AirportService: AirportService
   ) {
     if (!this.airport) {
       this.airport = new AirportReference();
@@ -30,13 +30,13 @@ export class AirportPopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_airport(airport: AirportReference) {
-    this.ReferenceService.update_airport(airport).subscribe(data => {
+    this.AirportService.update_airport(airport).subscribe(data => {
       this.airport = data as AirportReference;
     });
   }
 
   save_airport(airport: AirportReference) {
-    this.ReferenceService.save_airport(airport).subscribe(data => {
+    this.AirportService.save_airport(airport).subscribe(data => {
       let tmp = data as AirportReference;
       if (!tmp._id) {
         this.is_saved = false;
@@ -54,7 +54,7 @@ export class AirportPopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.ReferenceService.remove_airport(airport_id).subscribe(() => {
+    this.AirportService.remove_airport(airport_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: airport_id, element: null });
     });
   }

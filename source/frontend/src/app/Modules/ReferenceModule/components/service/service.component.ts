@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 // import { AviaPrintScoreWithStampPopupComponent } from './../../../../Components/printScoreWithStamp/printScoreWithStamp.component';
 import { ServicePopupReferencesComponent } from "./../servicePopup/servicePopup.component";
 
-import { ReferenceService } from '../../services/reference.service';
+import { ServiceTypeService } from '../../services';
 
 import { ServiceTypeReference } from '../../models';
 
@@ -38,7 +38,7 @@ export class ServiceReferencesComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private ReferenceService: ReferenceService
+    private ServiceTypeService: ServiceTypeService
   ) {}
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class ServiceReferencesComponent implements OnInit {
   }
 
   get_service_types_count() {
-    this.ReferenceService.get_service_types_count().subscribe(data => {
+    this.ServiceTypeService.get_service_types_count().subscribe(data => {
       this.elements_count = data;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count);
@@ -56,14 +56,14 @@ export class ServiceReferencesComponent implements OnInit {
   load_service_types(skip, limit) {
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.ReferenceService.get_service_types(skip, limit).subscribe(data => {
+    this.ServiceTypeService.get_service_types(skip, limit).subscribe(data => {
       this.service_types = data;
     });
   }
 
   refresh_data() {
     this.loader_displayed = true;
-    this.ReferenceService.get_service_types(this.skip, this.limit).subscribe(
+    this.ServiceTypeService.get_service_types(this.skip, this.limit).subscribe(
       data => {
         this.service_types = data;
         this.get_service_types_count();

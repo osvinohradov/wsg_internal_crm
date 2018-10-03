@@ -55,7 +55,9 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatListModule } from "@angular/material/list";
-import { ReferenceService } from "./services/reference.service";
+import { AirportService, AviaCompanyService, CityService,
+         CounterpartyService, CuratorService, CurrencyExchangeService,
+         IndividualCounterpartyService, NomenclatureService, ServiceTypeService } from "./services";
 
 // print components
 // import { AviaPrintInvoicePopupComponent } from './../AviaModule/components/printInvoice/printInvoice.component';
@@ -153,7 +155,15 @@ import { ReferenceService } from "./services/reference.service";
     ReferenceRoutingModule
   ],
   providers: [
-    ReferenceService,
+    AirportService,
+    AviaCompanyService,
+    CityService,
+    CounterpartyService,
+    CuratorService,
+    CurrencyExchangeService,
+    IndividualCounterpartyService,
+    NomenclatureService,
+    ServiceTypeService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
   ],
   bootstrap: []

@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 import { CuratorReference } from "../../models";
-import { ReferenceService } from "../../services/reference.service";
-import { FormControl } from '@angular/forms';
+import { CuratorService } from "../../services";
+
 
 @Component({
   selector: 'curator-popup-ref',
@@ -22,7 +23,7 @@ export class CuratorPopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CuratorPopupReferencesComponent>,
     @Inject(MAT_DIALOG_DATA) public curator: CuratorReference,
-    public ReferenceService: ReferenceService
+    public CuratorService: CuratorService
   ) {
     if (!this.curator) {
       this.curator = new CuratorReference();
@@ -42,13 +43,13 @@ export class CuratorPopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_airport(curator: CuratorReference) {
-    this.ReferenceService.update_curator(curator).subscribe(data => {
+    this.CuratorService.update_curator(curator).subscribe(data => {
       this.curator = data as CuratorReference;
     });
   }
 
   save_airport(curator: CuratorReference) {
-    this.ReferenceService.save_curator(curator).subscribe(data => {
+    this.CuratorService.save_curator(curator).subscribe(data => {
       let tmp = data as CuratorReference;
       if (!tmp._id) {
         this.is_saved = false;
@@ -66,7 +67,7 @@ export class CuratorPopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.ReferenceService.remove_curator(curator_id).subscribe(() => {
+    this.CuratorService.remove_curator(curator_id).subscribe(() => {
       this.dialogRef.close({ action: "remove", id: curator_id, element: null });
     });
   }
@@ -100,7 +101,7 @@ export class CuratorPopupReferencesComponent implements OnInit {
         { _id: 10, Name: "andrew"}
       ]
     }
-    this.ReferenceService.get_counterparty_names(pattern).subscribe((data) => {
+    this.CuratorService.get_counterparty_names(pattern).subscribe((data) => {
       this.counterparty_names = data;
     });
   }

@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 // import { AviaPrintScoreWithStampPopupComponent } from './../../../../Components/printScoreWithStamp/printScoreWithStamp.component';
 import { AviaCompanyPopupReferencesComponent } from './../aviaCompanyPopup/aviaCompanyPopup.component';
 
-import { ReferenceService } from '../../services/reference.service';
+import { AviaCompanyService } from '../../services';
 
 import { AviaCompanyReference } from '../../models';
 
@@ -34,14 +34,14 @@ export class AviaCompanyReferencesComponent implements OnInit {
   // Переменная для блока пагинации. Пересмотреть и возможно избавится.
   public pagination_arr = [];
 
-  constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) { }
+  constructor(public dialog: MatDialog, private AviaCompanyService: AviaCompanyService) { }
 
   ngOnInit() {
     this.refresh_data();
   }
   // Получаем общее количество авиа компаний в БД
   get_avia_companies_count(){
-    this.ReferenceService.get_avia_company_count().subscribe((data) => {
+    this.AviaCompanyService.get_avia_company_count().subscribe((data) => {
       this.elements_count = data;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count)
@@ -51,7 +51,7 @@ export class AviaCompanyReferencesComponent implements OnInit {
   load_avia_compaies(skip, limit){
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.ReferenceService.get_avia_companies(skip, limit).subscribe((data) => {
+    this.AviaCompanyService.get_avia_companies(skip, limit).subscribe((data) => {
       this.avia_companies = data;
     });
   }
@@ -59,7 +59,7 @@ export class AviaCompanyReferencesComponent implements OnInit {
   // Запрашиваем данные заново для обновления
   refresh_data(){
     this.loader_displayed = true;
-    this.ReferenceService.get_avia_companies(this.skip, this.limit).subscribe((data) => {
+    this.AviaCompanyService.get_avia_companies(this.skip, this.limit).subscribe((data) => {
       this.avia_companies = data;
       this.get_avia_companies_count()
       this.loader_displayed = false;

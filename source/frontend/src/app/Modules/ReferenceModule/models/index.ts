@@ -2,11 +2,12 @@
 import { AirportReference } from './airport.reference';
 import { AviaCompanyReference } from './avia_company.reference';
 import { CityReference } from './city.reference';
+import { CounterpartyReference } from './counerparty.reference';
 import { CuratorReference } from './curator.reference';
 import { CurrencyExchangeReference } from './currency_exchange.reference';
-import { ServiceTypeReference } from './service_type.reference';
-import { NomenclatureReference } from './nomenclature.reference';
 import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference } from './individual_counterparties.reference';
+import { NomenclatureReference } from './nomenclature.reference';
+import { ServiceTypeReference } from './service_type.reference';
 
 
 
@@ -14,11 +15,11 @@ export {
     AirportReference,
     AviaCompanyReference,
     CityReference,
+    CounterpartyReference,
     CuratorReference,
     CurrencyExchangeReference,
-    NomenclatureReference,
-    ServiceTypeReference,
-
     IndividualCounterpartyReference,
-    IndividualCounterpartiesPassportReference
+    IndividualCounterpartiesPassportReference,
+    NomenclatureReference,
+    ServiceTypeReference
 }

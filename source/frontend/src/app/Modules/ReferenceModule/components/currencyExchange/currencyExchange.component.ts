@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CurrencyExchangePopupReferencesComponent } from './../currencyExchangePopup/currencyExchangePopup.component';
-import { ReferenceService } from '../../services/reference.service';
+import { CurrencyExchangeService } from '../../services';
 import { CurrencyExchangeReference } from '../../models';
 
 @Component({
@@ -29,14 +29,14 @@ public current_page: number = 0;
 public pagination_arr = [];
 
 
-constructor(public dialog: MatDialog, private ReferenceService: ReferenceService) { }
+constructor(public dialog: MatDialog, private CurrencyExchangeService: CurrencyExchangeService) { }
 
 ngOnInit() {
   this.refresh_data();
 }
 
 get_currency_exchanges_count(){
-  this.ReferenceService.get_curators_count().subscribe((data) => {
+  this.CurrencyExchangeService.get_currency_exchange_count().subscribe((data) => {
     this.elements_count = data;
     let count = Math.ceil(this.elements_count / this.limit);
     this.pagination_arr = new Array(count)
@@ -46,14 +46,14 @@ get_currency_exchanges_count(){
 load_currency_exchanges(skip, limit){
   this.current_page = skip;
   skip = skip > 0 ? skip * 10 : skip;
-  this.ReferenceService.get_currency_exchanges(skip, limit).subscribe((data) => {
+  this.CurrencyExchangeService.get_currency_exchanges(skip, limit).subscribe((data) => {
     this.currency_exchanges = data;
   });
 }
 
 refresh_data(){
   this.loader_displayed = true;
-  this.ReferenceService.get_currency_exchanges(this.skip, this.limit).subscribe((data) => {
+  this.CurrencyExchangeService.get_currency_exchanges(this.skip, this.limit).subscribe((data) => {
     this.currency_exchanges = data;
     this.get_currency_exchanges_count()
     this.loader_displayed = false;
