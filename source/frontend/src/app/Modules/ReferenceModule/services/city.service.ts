@@ -8,30 +8,30 @@ export class CityService {
 
   constructor(private http: HttpClient) {}
 
-  get_curators_count() {
-    return this.http.get<number>(this.baseUrl + `/references/count/curator`);
+  get_cities_count() {
+    return this.http.get<number>(this.baseUrl + `/references/count/city`);
   }
 
-  get_curators(skip, limit) {
+  get_cities(skip, limit) {
     return this.http.get<CityReference[]>(
-      this.baseUrl + `/references/curator?skip=${skip}&limit=${limit}`
+      this.baseUrl + `/references/city?skip=${skip}&limit=${limit}`
     );
   }
 
-  get_curator_by_id(id: string) {
-    return this.http.get(this.baseUrl + `/references/curator/${id}`);
+  get_city_by_id(id: string) {
+    return this.http.get(this.baseUrl + `/references/city/${id}`);
   }
 
-  update_curator(curator: CityReference) {
+  update_city(city: CityReference) {
     return this.http.put(
-      this.baseUrl + `/references/curator/${curator._id}`, curator);
+      this.baseUrl + `/references/curator/${city._id}`, city);
   }
 
-  save_curator(curator: CityReference) {
-    return this.http.post(this.baseUrl + `/references/curator`, curator);
+  save_city(city: CityReference) {
+    return this.http.post(this.baseUrl + `/references/city`, city);
   }
 
-  remove_curator(id: string) {
-    return this.http.delete(this.baseUrl + `/references/curator/${id}`);
+  remove_city(id: string) {
+    return this.http.delete(this.baseUrl + `/references/city/${id}`);
   }
 }

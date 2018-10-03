@@ -9,33 +9,33 @@ export class CounterpartyService {
   constructor(private http: HttpClient) {}
 
   // Start Service Type Service Block
-  get_service_types_count() {
+  get_counterparties_count() {
     return this.http.get<number>(
-      this.baseUrl + `/references/count/service_type`
+      this.baseUrl + `/references/count/counterparty`
     );
   }
 
-  get_service_types(skip, limit) {
+  get_counterparties(skip, limit) {
     return this.http.get<CounterpartyReference[]>(
-      this.baseUrl + `/references/service_type?skip=${skip}&limit=${limit}`
+      this.baseUrl + `/references/counterparty?skip=${skip}&limit=${limit}`
     );
   }
 
-  get_service_type_by_id(id: string) {
-    return this.http.get(this.baseUrl + `/references/service_type/${id}`);
+  get_counterparty_by_id(id: string) {
+    return this.http.get(this.baseUrl + `/references/counterparty/${id}`);
   }
 
-  update_service_type(service_type: CounterpartyReference) {
+  update_counterparty(counterparty: CounterpartyReference) {
     return this.http.put(
-      this.baseUrl + `/references/service_type/${service_type._id}`, service_type);
+      this.baseUrl + `/references/counterparty/${counterparty._id}`, counterparty);
   }
 
-  save_service_type(service_type: CounterpartyReference) {
+  save_counterparty(counterparty: CounterpartyReference) {
     return this.http.post(
-      this.baseUrl + `/references/service_type`, service_type);
+      this.baseUrl + `/references/counterparty`, counterparty);
   }
 
-  remove_service_type(id: string) {
-    return this.http.delete(this.baseUrl + `/references/service_type/${id}`);
+  remove_counterparty(id: string) {
+    return this.http.delete(this.baseUrl + `/references/counterparty/${id}`);
   }
 }

@@ -8,32 +8,30 @@ export class IndividualCounterpartyService {
 
   constructor(private http: HttpClient) {}
 
-  get_curators_count() {
-    return this.http.get<number>(this.baseUrl + `/references/count/curator`);
+  get_individual_counterparties_count() {
+    return this.http.get<number>(this.baseUrl + `/references/count/individual_counterparty`);
   }
 
-  get_curators(skip, limit) {
+  get_individual_counterparties(skip, limit) {
     return this.http.get<IndividualCounterpartyReference[]>(
-      this.baseUrl + `/references/curator?skip=${skip}&limit=${limit}`
+      this.baseUrl + `/references/individual_counterparty?skip=${skip}&limit=${limit}`
     );
   }
 
-  get_curator_by_id(id: string) {
-    return this.http.get(this.baseUrl + `/references/curator/${id}`);
+  get_individual_counterparty_by_id(id: string) {
+    return this.http.get(this.baseUrl + `/references/individual_counterparty/${id}`);
   }
 
-  update_curator(curator: IndividualCounterpartyReference) {
+  update_individual_counterparty(individual_counterparty: IndividualCounterpartyReference) {
     return this.http.put(
-      this.baseUrl + `/references/curator/${curator._id}`,
-      curator
-    );
+      this.baseUrl + `/references/individual_counterparty/${individual_counterparty._id}`,individual_counterparty);
   }
 
-  save_curator(curator: IndividualCounterpartyReference) {
-    return this.http.post(this.baseUrl + `/references/curator`, curator);
+  save_individual_counterparty(individual_counterparty: IndividualCounterpartyReference) {
+    return this.http.post(this.baseUrl + `/references/individual_counterparty`, individual_counterparty);
   }
 
-  remove_curator(id: string) {
-    return this.http.delete(this.baseUrl + `/references/curator/${id}`);
+  remove_individual_counterparty(id: string) {
+    return this.http.delete(this.baseUrl + `/references/individual_counterparty/${id}`);
   }
 }
