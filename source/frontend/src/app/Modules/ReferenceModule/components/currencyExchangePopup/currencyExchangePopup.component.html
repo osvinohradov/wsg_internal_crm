@@ -1,18 +1,18 @@
 <!-- Modal content-->
 
-<h2 class="ml-4 title_main_page_margin">Обмін валют (створення)
+<h2 class="ml-4 title_main_page_margin">Обмін валют
 </h2>
 
 <!--Row MENU Buttons -->
 <div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
   <div class="col-md-6 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button type="button" class="btn btn-default my_button_style bold">
+      <button type="button" class="btn btn-default my_button_style bold" (click)="save_and_close(currency_exchange)">
         <span class="my_button_label font-weight-bold">Записати та закрити</span>
       </button>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_currency_exchange(currency_exchange)" matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
@@ -31,13 +31,13 @@
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="save_and_close(currency_exchange)">
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">offline_pin</span>
           </div>
           <span class="d-inline my_menu_label">Записати та закрити</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="save_update_currency_exchange(currency_exchange)">
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">save</span>
           </div>
@@ -98,18 +98,18 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Код:" value="">
+          <input matInput placeholder="Код:" [(ngModel)]="currency_exchange.Number" name="Number" disabled>
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Найменування:" value="">
+          <input matInput placeholder="Найменування:" [(ngModel)]="currency_exchange.Name" name="Name">
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Коефіціент:" value="">
-          <button mat-button matSuffix mat-icon-button aria-label="Coefficient">
+          <input matInput placeholder="Коефіціент:"  >
+          <button mat-button matSuffix mat-icon-button aria-label="Coeff">
             <mat-icon>show_chart</mat-icon>
           </button>
         </mat-form-field>
@@ -121,7 +121,7 @@
 <!-- Popup Footer -->
 <div id="invoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(currency_exchange)">
       <span class="pr-3 my_button_label">Закрити</span>
     </button>
   </div>

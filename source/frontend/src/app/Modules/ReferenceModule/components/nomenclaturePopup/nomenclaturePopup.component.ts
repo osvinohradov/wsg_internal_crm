@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
+import { NomenclatureReference } from "../../models";
+import { ReferenceService } from "../../services/reference.service";
 
 @Component({
   selector: 'nomenclature-popup-ref',
@@ -8,14 +11,81 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 })
 export class NomenclaturePopupReferencesComponent implements OnInit {
+  public is_saved: Boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<NomenclaturePopupReferencesComponent>) { }
-
-  ngOnInit() {
+  constructor(
+    public dialogRef: MatDialogRef<NomenclaturePopupReferencesComponent>,
+    @Inject(MAT_DIALOG_DATA) public nomenclature: NomenclatureReference,
+    public ReferenceService: ReferenceService
+  ) {
+    if (!this.nomenclature) {
+      this.nomenclature = new NomenclatureReference();
+    }
   }
 
-  closePopup(): void {
-    this.dialogRef.close();
+  ngOnInit() {}
+
+  update_nomenclature(nomenclature: NomenclatureReference) {
+    this.ReferenceService.update_nomenclature(nomenclature).subscribe(data => {
+      this.nomenclature = data as NomenclatureReference;
+    });
   }
 
+  save_nomenclature(nomenclature: NomenclatureReference) {
+    this.ReferenceService.save_nomenclature(nomenclature).subscribe(data => {
+      let tmp = data as NomenclatureReference;
+      if (!tmp._id) {
+        this.is_saved = false;
+      } else {
+        this.nomenclature = tmp;
+        this.is_saved = true;
+      }
+    });
+  }
+
+  remove_nomenclature(nomenclature_id: string) {
+    if (!nomenclature_id) {
+      console.log(`nomenclature_id не передано.`);
+      // Show error dialog
+      return;
+    }
+
+    this.ReferenceService.remove_nomenclature(nomenclature_id).subscribe(() => {
+      this.dialogRef.close({ action: "remove", id: nomenclature_id, element: null });
+    });
+  }
+
+  save_and_close(nomenclature: NomenclatureReference) {
+    // Save ticket
+    this.save_update_nomenclature(nomenclature);
+    this.close_dialog(nomenclature);
+  }
+
+  save_update_nomenclature(nomenclature: NomenclatureReference) {
+    if (!nomenclature._id) {
+      this.save_nomenclature(nomenclature);
+    } else {
+      this.update_nomenclature(nomenclature);
+      this.is_saved = true;
+    }
+  }
+
+  /**
+   *
+   * data = {
+   * action: "" (create, update, remove),
+   * id: "",
+   * element: Object
+   * }
+   *
+   * @param data
+   */
+  close_dialog(data): void {
+    console.log("Close dialog:", data);
+    if (!this.is_saved) {
+      this.dialogRef.close(null);
+    } else {
+      this.dialogRef.close(data);
+    }
+  }
 }

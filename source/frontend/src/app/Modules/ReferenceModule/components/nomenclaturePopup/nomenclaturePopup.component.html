@@ -7,13 +7,18 @@
 <div id="counterpartiesContractPopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
   <div class="col-md-8 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button type="button" class="btn btn-default my_button_style bold">
+      <button type="button" class="btn btn-default my_button_style bold" click)="save_and_close(nomenclature)">
         <span class="my_button_label font-weight-bold">Записати та закрити</span>
       </button>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_nomenclature(nomenclature)" matTooltip="Записати">
         <span class="material-icons">save</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Видалити" (click)="remove_nomenclature(nomenclature._id)">
+        <span class="material-icons">remove</span>
       </button>
     </div>
   </div>
@@ -86,14 +91,14 @@
 </div>
 <!--Row MENU Buttons End-->
 
-<!-- Airport Popup Form Container -->
+<!-- nomanclature Popup Form Container -->
 <div class="ml-4 mr-4 mt-4 mb-4">
 
   <form class="form-horizontal" role="form">
     <div class="row mr-0 ml-0">
       <div class="form-group col-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Група номенклатури:" />
+          <input matInput type="text" placeholder="Група номенклатури:" [(ngModel)]="nomanclature.NomenclatureGroupId" name="Name" />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
             <mat-icon>more_horiz</mat-icon>
           </button>
@@ -101,17 +106,17 @@
       </div>
       <div class="form-group col-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Коротка назва:" />
+          <input matInput type="text" placeholder="Коротка назва:" [(ngModel)]="nomanclature.NameShort" name="NameShort" />
         </mat-form-field>
       </div>
       <div class="form-group col-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Повна назва:" />
+          <input matInput type="text" placeholder="Повна назва:" [(ngModel)]="nomanclature.NameFull" name="NameFull" />
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Артикул:" />
+          <input matInput type="text" placeholder="Артикул:" [(ngModel)]="nomanclature.Article" name="Article" />
         </mat-form-field>
       </div>
     </div>
@@ -128,16 +133,16 @@
                 </div>
                 <div class="row mr-0 ml-0">
                   <div class="form-group p-2 my_input_style my_ng_checkbox">
-                    <mat-checkbox class="" primary>Послуга:</mat-checkbox>
+                    <mat-checkbox class="" primary [(ngModel)]="nomanclature.Service" name="Service">Послуга:</mat-checkbox>
                   </div>
                   <div class="form-group p-2 my_input_style my_ng_checkbox">
-                    <mat-checkbox class="" primary>Транспортна послуга:</mat-checkbox>
+                    <mat-checkbox class="" primary [(ngModel)]="nomanclature.TransportService" name="TransportService">Транспортна послуга:</mat-checkbox>
                   </div>
                   <div class="form-group p-2 my_input_style my_ng_checkbox">
-                    <mat-checkbox class="" primary>Бланк суворої звітності:</mat-checkbox>
+                    <mat-checkbox class="" primary [(ngModel)]="nomanclature.ReportingBank" name="ReportingBank">Бланк суворої звітності:</mat-checkbox>
                   </div>
                   <div class="form-group p-2 my_input_style my_ng_checkbox">
-                    <mat-checkbox class="" primary>Враховується по номінальній вартості:</mat-checkbox>
+                    <mat-checkbox class="" primary [(ngModel)]="nomanclature.NominalCost" name="NominalCost">Враховується по номінальній вартості:</mat-checkbox>
                   </div>
                 </div>
               </div>
@@ -149,7 +154,7 @@
                 <div class="row mr-0 ml-0">
                   <div class="form-group col-12 col-lg-8 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Номенклатурна група:" />
+                      <input matInput type="text" placeholder="Номенклатурна група:" [(ngModel)]="nomanclature.Name" name="Name" />
                       <button mat-button matSuffix mat-icon-button aria-label="Settings">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
@@ -157,7 +162,7 @@
                   </div>
                   <div class="form-group col-12 col-lg-4 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Базова одиниця виміру:" />
+                      <input matInput type="text" placeholder="Базова одиниця виміру:" [(ngModel)]="nomanclature.Name" name="Name"/>
                       <button mat-button matSuffix mat-icon-button aria-label="Settings">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
@@ -173,7 +178,7 @@
                 <div class="row mr-0 ml-0">
                   <div class="form-group col-12 col-lg-8 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Ставка ПДВ:" />
+                      <input matInput type="text" placeholder="Ставка ПДВ:" [(ngModel)]="nomanclature.RateOfMPE" name="RateOfMPE" />
                       <button mat-button matSuffix mat-icon-button aria-label="Settings">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
@@ -181,28 +186,28 @@
                   </div>
                   <div class="form-group col-12 col-lg-4 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Льгота з ПДВ:" />
+                      <input matInput type="text" placeholder="Льгота з ПДВ:" [(ngModel)]="nomanclature.MPEPrivilege" name="MPEPrivilege" />
                     </mat-form-field>
                   </div>
                   <div class="form-group col-12 col-lg-4 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Код для ПН (по умовч.):" />
+                      <input matInput type="text" placeholder="Код для ПН (по умовч.):" [(ngModel)]="nomanclature.PNCode" name="PNCode" />
                       <button mat-button matSuffix mat-icon-button aria-label="Settings">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
                     </mat-form-field>
                   </div>
                   <div class="form-group p-2 my_input_style my_ng_checkbox">
-                    <mat-checkbox class="" primary>Вимірюється тількі в сумовому виразі:</mat-checkbox>
+                    <mat-checkbox class="" primary [(ngModel)]="nomanclature.LongExpression" name="LongExpression">Вимірюється тількі в сумовому виразі:</mat-checkbox>
                   </div>
                   <div class="form-group col-12 col-lg-4 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Текст для друка у колонці кількість податкової накладної:" />
+                      <input matInput type="text" placeholder="Текст для друка у колонці кількість податкової накладної:" [(ngModel)]="nomanclature.InvoiceCount" name="InvoiceCount" />
                     </mat-form-field>
                   </div>
                   <div class="form-group col-12 col-lg-8 p-2 my_input_style">
                     <mat-form-field class="example-form-field">
-                      <input matInput type="text" placeholder="Стаття витрат:" />
+                      <input matInput type="text" placeholder="Стаття витрат:" [(ngModel)]="nomanclature.EmbezzlementId" name="EmbezzlementId" />
                       <button mat-button matSuffix mat-icon-button aria-label="Settings">
                         <mat-icon>more_horiz</mat-icon>
                       </button>

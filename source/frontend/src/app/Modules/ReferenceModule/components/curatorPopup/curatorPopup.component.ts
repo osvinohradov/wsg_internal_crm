@@ -87,7 +87,19 @@ export class CuratorPopupReferencesComponent implements OnInit {
   }
 
   load_couterparty_names(pattern){
-    console.log('Curator id', pattern)
+    console.log('Curator id', pattern);
+    if(pattern == 'b'){
+      this.counterparty_names = [
+        { _id: 10, Name: "bogdan"},
+        { _id: 10, Name: "boris"}
+      ]
+    }
+    else if(pattern == 'a'){
+      this.counterparty_names = [
+        { _id: 10, Name: "arkadiy"},
+        { _id: 10, Name: "andrew"}
+      ]
+    }
     this.ReferenceService.get_counterparty_names(pattern).subscribe((data) => {
       this.counterparty_names = data;
     });

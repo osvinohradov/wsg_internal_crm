@@ -5,7 +5,9 @@ import {
   AviaCompanyReference,
   CityReference,
   CuratorReference,
-  ServiceTypeReference
+  ServiceTypeReference,
+  CurrencyExchangeReference,
+  NomenclatureReference
 } from "../models";
 
 @Injectable()
@@ -149,9 +151,75 @@ export class ReferenceService {
 
 
   get_counterparty_names(pattern){
-    return this.http.get<any[]>(this.baseUrl + `/references/counterparty/search?q=${pattern}`)
+    return this.http.get<any[]>(this.baseUrl + `/references/counterparty/search?name=${pattern}`)
     // Dummy route for get counterparty elements
     
   }
   // End Curators Service Block
+
+
+  // Start Currency Exchange Service Block
+  get_currency_exchange_count() {
+    return this.http.get<number>(this.baseUrl + `/references/count/currency_exchange`);
+  }
+
+  get_currency_exchanges(skip, limit) {
+    return this.http.get<CurrencyExchangeReference[]>(
+      this.baseUrl + `/references/currency_exchange?skip=${skip}&limit=${limit}`
+    );
+  }
+
+  get_currency_exchange_by_id(id: string) {
+    return this.http.get(this.baseUrl + `/references/currency_exchange/${id}`);
+  }
+
+  update_currency_exchange(curator: CurrencyExchangeReference) {
+    return this.http.put(
+      this.baseUrl + `/references/currency_exchange/${curator._id}`,
+      curator
+    );
+  }
+
+  save_currency_exchange(curator: CurrencyExchangeReference) {
+    return this.http.post(this.baseUrl + `/references/currency_exchange`, curator);
+  }
+
+  remove_currency_exchange(id: string) {
+    return this.http.delete(this.baseUrl + `/references/currency_exchange/${id}`);
+  }
+  // End Currency Exchange Service Block
+
+
+
+// Start Nomenclature Service Block
+get_nomenclature_count() {
+  return this.http.get<number>(this.baseUrl + `/references/count/nomenclature`);
+}
+
+get_nomenclatures(skip, limit) {
+  return this.http.get<NomenclatureReference[]>(
+    this.baseUrl + `/references/nomenclature?skip=${skip}&limit=${limit}`
+  );
+}
+
+get_nomenclature_by_id(id: string) {
+  return this.http.get(this.baseUrl + `/references/nomenclature/${id}`);
+}
+
+update_nomenclature(nomenclature: NomenclatureReference) {
+  return this.http.put(
+    this.baseUrl + `/references/nomenclature/${nomenclature._id}`,
+    nomenclature
+  );
+}
+
+save_nomenclature(nomenclature: NomenclatureReference) {
+  return this.http.post(this.baseUrl + `/references/nomenclature`, nomenclature);
+}
+
+remove_nomenclature(id: string) {
+  return this.http.delete(this.baseUrl + `/references/nomenclature/${id}`);
+}
+// End Nomenclature Service Block
+
 }
