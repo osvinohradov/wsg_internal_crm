@@ -1,7 +1,7 @@
 <!-- Modal content-->
 
 <h2 class="ml-4 title_main_page_margin">Накладна авіаційних квитків:
-  <span>00000067621 від 07.09.2017 17:14:13</span>
+  <span>{{avia_invoice.Number}} від {{avia_invoice.Date}}</span>
 </h2>
 
 <!--Row MENU Buttons -->
@@ -156,7 +156,6 @@
 <div class="ml-4 mr-4 mt-4 mb-4">
   <form class="form-horizontal" role="form">
 
-
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
@@ -173,15 +172,18 @@
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
-        <mat-form-field>
-          <mat-select placeholder="Форма сплати:" [(ngModel)]="avia_invoice.PaymentForm" name="PaymentForm">
-            <mat-option *ngFor="let payment_form of payment_forms" (change)="avia_invoice.PaymentForm=payment_form" [value]="payment_form">
-              {{
-                payment_form
-              }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Форма сплати:" aria-label="PaymentForm" matInput [formControl]="input_autocomplete"
+                [matAutocomplete]="PaymentForm" name="PaymentForm">
+              <mat-autocomplete #PaymentForm="matAutocomplete">
+                <mat-option *ngFor="let payment_form of payment_forms" [value]="payment_form" (click)="avia_invoice.PaymentForm=payment_form" ()>
+                  {{payment_form}}
+                </mat-option>
+              </mat-autocomplete>
+              <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
@@ -247,25 +249,45 @@
       </div>
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
-        <mat-form-field>
-          <mat-select placeholder="Валюта пропозиції:" [(ngModel)]="avia_invoice.OfferCurrencyId" name="OfferCurrencyId">
-            <mat-option *ngFor="let currency_exchange of currency_exchanges" (change)="avia_invoice.OfferCurrencyId=currency_exchange" [value]="currency_exchange._id">
-              {{ currency_exchange.Name }}
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Валюта пропозиції:" aria-label="OfferCurrency" matInput [formControl]="input_autocomplete"
+            [matAutocomplete]="OfferCurrency" name="OfferCurrency">
+          <mat-autocomplete #OfferCurrency="matAutocomplete">
+            <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.OfferCurrency=currency">
+              {{currency}}
             </mat-option>
-          </mat-select>
+          </mat-autocomplete>
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
-        <mat-form-field>
-          <mat-select placeholder="Підсумкова валюта:">
-            <mat-option *ngFor="let currency of currencyFinal" [value]="currencyFinal.value">
-              {{ currency.viewValue }}
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Підсумкова валюта:" aria-label="TotalCurrency" matInput [formControl]="input_autocomplete"
+            [matAutocomplete]="TotalCurrency" name="TotalCurrency">
+          <mat-autocomplete #TotalCurrency="matAutocomplete">
+            <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.TotalCurrency=currency">
+              {{currency}}
             </mat-option>
-          </mat-select>
+          </mat-autocomplete>
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
         </mat-form-field>
       </div>
     </div>
+
+    <!-- <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Підсумкова валюта:" aria-label="Number" matInput [formControl]="counterparty_names_control"
+          [matAutocomplete]="auto" [(ngModel)]="client" name="Client" (keyup)="load_couterparty_names(client)">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let currency of currencies" [value]="counterparty_name.Name" (click)="curator.ClientId=counterparty_name._id">
+            {{counterparty_name.Name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field> -->
 
 
 
@@ -402,10 +424,10 @@
             </div>
 
             <div class="form-group col-4 p-2 my_input_style">
-                <mat-form-field class="example-form-field">
-                  <input matInput type="text" placeholder="Дата покупки:" />
-                </mat-form-field>
-              </div>
+              <mat-form-field class="example-form-field">
+                <input matInput type="text" placeholder="Дата покупки:" />
+              </mat-form-field>
+            </div>
           </div>
 
 
@@ -432,28 +454,34 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума постач.:">
+                        <input matInput placeholder="Сума постач.:" [(ngModel)]="avia_invoice.DetailInfo.SupplierCost.Sum" name="SupplierCost.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.SupplierCost.MPE" name="SupplierCost.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="SupplierCostCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="SupplierCostCurrency" name="SupplierCostCurrency">
+                        <mat-autocomplete #SupplierCostCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.SupplierCost.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 1 -->
+
 
                 <!-- Section 2 -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
@@ -464,34 +492,40 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="%:">
+                        <input matInput placeholder="%:" [(ngModel)]="avia_invoice.DetailInfo.SupplierCommision.Percent" name="SupplierCommision.Percent">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:" value="">
+                        <input matInput placeholder="Сума:" [(ngModel)]="avia_invoice.DetailInfo.SupplierCommision.Sum" name="SupplierCommision.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.SupplierCommision.MPE" name="SupplierCommision.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="SupplierCommisionCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="SupplierCommisionCurrency" name="SupplierCommisionCurrency">
+                        <mat-autocomplete #SupplierCommisionCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.SupplierCommision.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 2 -->
+
 
                 <!-- Section 3 -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
@@ -502,28 +536,34 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:">
+                        <input matInput placeholder="Сума:" [(ngModel)]="avia_invoice.DetailInfo.Forfeit.Sum" name="Forfeit.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.Forfeit.MPE" name="Forfeit.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="ForfeitCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="ForfeitCurrency" name="ForfeitCurrency">
+                        <mat-autocomplete #ForfeitCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.Forfeit.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 3 -->
+
 
                 <!-- Section 4 -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
@@ -534,28 +574,34 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Тариф:">
+                        <input matInput placeholder="Тариф:" [(ngModel)]="avia_invoice.DetailInfo.UsedSupplierRate.MPE" name="UsedSupplierRate.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.UsedSupplierRate.MPE" name="UsedSupplierRate.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="UsedSupplierRateCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="UsedSupplierRate" name="UsedSupplierRate">
+                        <mat-autocomplete #UsedSupplierRate="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.UsedSupplierRate.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 4 -->
+
 
                 <!-- Section 5 -->
                 <div class="col-lg-4 col-md-4">
@@ -566,34 +612,40 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:">
+                        <input matInput placeholder="Сума:" [(ngModel)]="avia_invoice.DetailInfo.AdditionalSupplierComission.Sum" name="AdditionalSupplierComission.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума готівка:">
+                        <input matInput placeholder="Сума готівка:" [(ngModel)]="avia_invoice.DetailInfo.AdditionalSupplierComission.CashSum" name="AdditionalSupplierComission.CashSum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.AdditionalSupplierComission.MPE" name="AdditionalSupplierComission.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="AdditionalSupplierComissionCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="AdditionalSupplierComissionCurrency" name="AdditionalSupplierComissionCurrency">
+                        <mat-autocomplete #AdditionalSupplierComissionCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.AdditionalSupplierComission.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 5 -->
+
 
                 <!-- Section 6 -->
                 <div class="col-lg-4 col-md-4">
@@ -604,28 +656,34 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума постач.:">
+                        <input matInput placeholder="Сума постач.:" [(ngModel)]="avia_invoice.DetailInfo.UsedTaxes.Sum" name="UsedTaxes.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.UsedTaxes.MPE" name="UsedTaxes.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="UsedTaxesCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="UsedTaxesCurrency" name="UsedTaxesCurrency">
+                        <mat-autocomplete #UsedTaxesCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.UsedTaxes.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 6 -->
+
 
                 <!-- Section 7 -->
                 <div class="col-lg-4 col-md-4">
@@ -636,40 +694,46 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="%:">
+                        <input matInput placeholder="%:" [(ngModel)]="avia_invoice.DetailInfo.AgencyServices.Percent" name="AgencyServices.Percent">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:">
+                        <input matInput placeholder="Сума:" [(ngModel)]="avia_invoice.DetailInfo.AgencyServices.Sum" name="AgencyServices.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="% банку:">
+                        <input matInput placeholder="% банку:" [(ngModel)]="avia_invoice.DetailInfo.AgencyServices.BankPercent" name="AgencyServices.BankPercent">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.AgencyServices.MPE" name="AgencyServices.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="AgencyServicesCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="AgencyServicesCurrency" name="AgencyServicesCurrency">
+                        <mat-autocomplete #AgencyServicesCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.AgencyServices.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 7 -->
+
 
                 <!-- Section 8 -->
                 <div class="col-lg-4 col-md-4">
@@ -680,23 +744,28 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:">
+                        <input matInput placeholder="Сума:" [(ngModel)]="avia_invoice.DetailInfo.OtherServices.Sum" name="OtherServices.Sum">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.OtherServices.MPE" name="OtherServices.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="OtherServicesCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="OtherServicesCurrency" name="OtherServicesCurrency">
+                        <mat-autocomplete #OtherServicesCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.OtherServices.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
@@ -712,23 +781,28 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:">
+                        <input matInput placeholder="Сума:" [(ngModel)]="avia_invoice.DetailInfo.TotalAmount.MPE" name="TotalAmount.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" value="">
+                        <input matInput placeholder="В т.ч. ПДВ:" [(ngModel)]="avia_invoice.DetailInfo.TotalAmount.MPE" name="TotalAmount.MPE">
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                      <mat-form-field>
-                        <mat-select placeholder="Валюта:">
-                          <mat-option *ngFor="let currency of supplierCost" [value]="supplierCost.value">
-                            {{ currency.viewValue }}
+                      <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Валюта:" aria-label="TotalAmountCurrency" matInput [formControl]="input_autocomplete"
+                          [matAutocomplete]="TotalAmountCurrency" name="TotalAmountCurrency">
+                        <mat-autocomplete #TotalAmountCurrency="matAutocomplete">
+                          <mat-option *ngFor="let currency of currencies" [value]="currency" (click)="avia_invoice.DetailInfo.TotalAmount.Currency=currency">
+                            {{currency}}
                           </mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
+                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                   </div>
@@ -738,10 +812,12 @@
             </div>
           </div>
           <!-- Fieldsets - End -->
+
+
           <div class="row ml-0 mr-0">
             <div class="form-group col-12 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Детальна інформація:" />
+                <input matInput type="text" placeholder="Детальна інформація:" [(ngModel)]="avia_invoice.DetailInfo.AdditionalInfo" name="AdditionalInfo" />
               </mat-form-field>
             </div>
           </div>
@@ -749,10 +825,9 @@
       </mat-tab>
       <!-- TAB 1 - END -->
 
+
+      <!-- TAB 2 - START -->
       <mat-tab label="Інформація про рейс">
-
-
-        <!-- TAB 2 - START -->
         <div class="mb-4 mt-4">
 
           <!-- Table Controls -->

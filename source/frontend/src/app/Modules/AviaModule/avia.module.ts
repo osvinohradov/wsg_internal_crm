@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AviaService } from './services/avia.service';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
-
 // materials modules
-import { MatTabsModule, MatNativeDateModule } from '@angular/material';
+import { MatTabsModule, MatNativeDateModule, MatAutocompleteModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
@@ -48,8 +47,10 @@ import { AviaRoutingModule } from './avia-routing.module';
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     AviaRoutingModule,
+    MatAutocompleteModule,
     MatTabsModule,
     MatInputModule,
     MatDatepickerModule,

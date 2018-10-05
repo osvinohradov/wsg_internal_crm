@@ -38,4 +38,17 @@ export class CounterpartyService {
   remove_counterparty(id: string) {
     return this.http.delete(this.baseUrl + `/references/counterparty/${id}`);
   }
+
+  /**
+   * 
+   * return object like this
+   * {
+   *    _id: ObjectId
+   *    Name: String
+   * }
+   */
+  get_counterparty_names(pattern){
+    return this.http.get<any[]>(this.baseUrl + `/references/counterparty/search?name=${pattern}`)
+    // Dummy route for get counterparty elements
+  }
 }

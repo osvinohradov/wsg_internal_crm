@@ -37,10 +37,16 @@ export class CuratorService {
     return this.http.delete(this.baseUrl + `/references/curator/${id}`);
   }
 
-
+  /**
+   * 
+   * return object like this
+   * {
+   *    _id: ObjectId
+   *    Name: String
+   * }
+   */
   get_counterparty_names(pattern){
     return this.http.get<any[]>(this.baseUrl + `/references/counterparty/search?name=${pattern}`)
     // Dummy route for get counterparty elements
-    
   }
 }

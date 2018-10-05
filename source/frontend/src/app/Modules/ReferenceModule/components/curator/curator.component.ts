@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 import { CuratorPopupReferencesComponent } from './../curatorPopup/curatorPopup.component';
-import { CuratorService } from '../../services';
+import { CuratorService, CounterpartyService } from '../../services';
 import { CuratorReference } from '../../models';
 
 

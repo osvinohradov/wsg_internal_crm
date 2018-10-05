@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl } from '@angular/forms';
 
 import { CuratorReference } from "../../models";
-import { CuratorService } from "../../services";
+import { CuratorService, CounterpartyService } from "../../services";
 
 
 @Component({
@@ -23,7 +23,7 @@ export class CuratorPopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CuratorPopupReferencesComponent>,
     @Inject(MAT_DIALOG_DATA) public curator: CuratorReference,
-    public CuratorService: CuratorService
+    public CuratorService: CuratorService, private CounterpartyService: CounterpartyService
   ) {
     if (!this.curator) {
       this.curator = new CuratorReference();
@@ -101,7 +101,7 @@ export class CuratorPopupReferencesComponent implements OnInit {
         { _id: 10, Name: "andrew"}
       ]
     }
-    this.CuratorService.get_counterparty_names(pattern).subscribe((data) => {
+    this.CounterpartyService.get_counterparty_names(pattern).subscribe((data) => {
       this.counterparty_names = data;
     });
   }
