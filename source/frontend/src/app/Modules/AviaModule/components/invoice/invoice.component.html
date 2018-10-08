@@ -191,7 +191,7 @@
   <!-- DropDown ALL Actions end-->
 </div>
 <div class="ml-4 mr-4 mt-2 my_table_style">
-  <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+  <div style="overflow-x: scroll" class="col-md-12 pl-0 pr-0 mb-0 table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
     <table class="table table-sm">
       <thead class="thead-light">
         <tr>
@@ -236,7 +236,7 @@
             <mat-checkbox class="" primary [(ngModel)]="invoice.IsPaid" [disabled]="true"></mat-checkbox>
           </td>
           <td class="text-center">{{invoice.ClientId ? invoice.ClientId : ""}}</td>
-          <td class="text-center">{{invoice.GroupInvoiceId ? invoice.GroupInvoiceId.Name : ""}}</td>
+          <td class="text-center">{{invoice.GroupInvoiceId ? invoice.GroupInvoiceId.Content : ""}}</td>
           <td class="text-center">{{invoice.ServiceTypeId ? invoice.ServiceTypeId : ""}}</td>
           <!-- Авіаційний квиток №(номер) для Біла Олена, за маршрутом: виліт із Київ 18.10.2018, приліт в Пекін 18.10.2018; виліт із Пекін 18.10.2018, приліт в Київ 18.10.2018  -->
           <td class="text-center" matTooltip="{{_get_invoice_content(invoice)}}">{{_get_invoice_content(invoice)}}</td>
@@ -255,7 +255,9 @@
           <td class="text-center">{{invoice.PaymentForm}}</td>
           <td class="text-center">{{invoice.PaymentDate | date: 'dd/MM/yyyy' }}</td>
           <td class="text-center">{{invoice.PmCode}}</td>
-          <td class="text-center">{{invoice.IsProcessed}}</td>
+          <td class="text-center">
+            <mat-checkbox class="" primary [(ngModel)]="invoice.IsProcessed" [disabled]="true"></mat-checkbox>
+          </td>
         </tr>
       </tbody>
     </table>

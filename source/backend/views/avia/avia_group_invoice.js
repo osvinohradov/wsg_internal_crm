@@ -128,7 +128,10 @@ export async function get_all_avia_group_invoices(req, res) {
     let limit = req.query.limit ? parseInt(req.query.limit) : 10;
     let skip = req.query.skip ? parseInt(req.query.skip) : 0;
     try{
-        avia_group_invoice = await AviaGroupInvoice.find({}).skip(skip).limit(limit);
+        avia_group_invoice = await AviaGroupInvoice.find({}).skip(skip).limit(limit).populate({
+            path: 'AviaInvoicesId',
+            model: 'AviaInvocie'
+        });
 
         if(!avia_group_invoice){
             res.status(400).json({ "Error": `Avia Group Invoice not found.` });
@@ -160,6 +163,31 @@ export async function get_avia_group_invoice_count(req, res) {
         }
 
         res.status(200).json(avia_group_invoice_count);
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({ "Error": `Internal Server Error.` });
+    }
+}
+
+export async function get_avia_group_invoice_content(req, res){
+    let query = req.query;
+    console.log(query);
+    let avia_group_invoices = null;
+    let db_query = {};
+    try{
+        if(query.name){
+            db_query.Name = new RegExp(query.name);
+        }
+        avia_group_invoices = await AviaGroupInvoice.find(db_query).select('Content');
+        console.log(avia_group_invoices)
+
+        if(!avia_group_invoices){
+            res.status(400).json({ "Error": `Avia Group Invoice not found.` });
+            return;
+        }
+
+        res.status(200).json(avia_group_invoices);
     }
     catch(err){
         console.log(err);

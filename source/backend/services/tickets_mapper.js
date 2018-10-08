@@ -97,7 +97,9 @@ class TicketMapper{
             // Добавить агента с таким номером
             avia_invoice.PmCode = xml_ticket.xml_ticket;
             avia_invoice.IsProcessed = false;
-
+            console.log(current_invoice)
+            let supplier_commission_sum = current_invoice.Ticket[0].Commission.search(/[a-zA-Z]/) != -1 ? parseInt(current_invoice.Ticket[0].Commission) : 0;
+            let supplier_commission_percent = current_invoice.Ticket[0].Commission.search(/[a-zA-Z]/) == -1 ? current_invoice.Ticket[0].Commission : 0;
             avia_invoice.DetailInfo = {
                 NameId: null,
                 TicketNumber: current_invoice.No,
@@ -108,9 +110,9 @@ class TicketMapper{
                     CurrencyId: null
                 },
                 SupplierCommision: {
-                    Sum: 0,
+                    Sum: supplier_commission_sum,
                     MPE: 0,
-                    Percent: 0,
+                    Percent: supplier_commission_percent,
                     CurrencyId: null
                 },
                  // Пока не делаем
@@ -177,7 +179,7 @@ class TicketMapper{
 
             avia_invoice.FlightInfo = flight_infos;
 
-            avia_invoice.TicketsInfo = {
+            avia_invoice.TicketInfo = {
                 Name: current_invoice.LastName + ' ' + current_invoice.FirstName,
                 TicketNumber: current_invoice.Ticket[0].No
             }

@@ -1,5 +1,5 @@
 <h2 class="ml-4 title_main_page_margin">
-  Групове замовлення (створення) *</h2>
+  Групове замовлення </h2>
 
 <!--Row MENU Buttons -->
 <div id="groupInvoicePopupMenuButtons" class="ml-4 mr-4 pl-0 pr-0 clearfix">
@@ -42,7 +42,8 @@
       </mat-menu>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button (click)="save_update_avia_group_invoice(avia_group_invoice)" type="button" class="btn btn-default my_button_style my_square_button"
+        matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
@@ -72,12 +73,6 @@
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <div class="d-inline mr-3 my_menu_icon">
-            <span class="material-icons">add</span>
-          </div>
-          <span class="d-inline my_menu_label">Створити</span>
-        </button>
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">filter_none</span>
@@ -193,27 +188,27 @@
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style ">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Введіть дату">
+          <input [(ngModel)]="avia_group_invoice.Date" name="Date" matInput [matDatepicker]="picker" placeholder="Введіть дату">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Організація" />
+          <input [(ngModel)]="avia_group_invoice.Organization" name="Organization" matInput type="text" placeholder="Організація" />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
             <mat-icon>more_horiz</mat-icon>
           </button>
         </mat-form-field>
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 order-12 my_input_style ">
-        <mat-checkbox class="" primary>Сплачено</mat-checkbox>
+        <mat-checkbox [(ngModel)]="avia_group_invoice.IsPaid" class="" name="IsPaid" primary>Сплачено</mat-checkbox>
       </div>
     </div>
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Клієнт" />
+          <input [(ngModel)]="avia_group_invoice.ClientId" name="ClientId" matInput type="text" placeholder="Клієнт" />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
             <mat-icon>more_horiz</mat-icon>
           </button>
@@ -221,21 +216,21 @@
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style ">
         <mat-form-field>
-          <input matInput [matDatepicker]="pickerPaid" placeholder="Дата сплати:">
+          <input [(ngModel)]="avia_group_invoice.PaymentDate" name="PaymentDate" matInput [matDatepicker]="pickerPaid" placeholder="Дата сплати:">
           <mat-datepicker-toggle matSuffix [for]="pickerPaid"></mat-datepicker-toggle>
           <mat-datepicker #pickerPaid></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style ">
         <mat-form-field>
-          <input matInput [matDatepicker]="pickerService" placeholder="Дата послуг:">
+          <input [(ngModel)]="avia_group_invoice.ServiseDate" name="ServiseDate" matInput [matDatepicker]="pickerService" placeholder="Дата послуг:">
           <mat-datepicker-toggle matSuffix [for]="pickerService"></mat-datepicker-toggle>
           <mat-datepicker #pickerService></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Форма сплати:" />
+          <input [(ngModel)]="avia_group_invoice.PaymentForm" name="PaymentForm" matInput type="text" placeholder="Форма сплати:" />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
             <mat-icon>more_horiz</mat-icon>
           </button>
@@ -245,75 +240,28 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Розрахунковий рахунок:" />
+          <input [(ngModel)]="avia_group_invoice.CheckingAccount" name="CheckingAccount" matInput type="text" placeholder="Розрахунковий рахунок:"
+          />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
             <mat-icon>more_horiz</mat-icon>
           </button>
         </mat-form-field>
       </div>
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 my_input_style">
-        <mat-form-field>
-          <mat-select placeholder="Підсумкова валюта:">
-            <mat-option *ngFor="let currency of currency" [value]="currency.value">
-              {{ currency.viewValue }}
-            </mat-option>
-          </mat-select>
+        <mat-form-field class="example-form-field">
+          <input [(ngModel)]="avia_group_invoice.TotalCurrencyId" name="TotalCurrencyId" matInput type="text" placeholder="Підсумкова валюта:"
+          />
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
         </mat-form-field>
       </div>
       <div class="form-group col-md-3 col-sm-6 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Всього:" value="">
+          <input [(ngModel)]="avia_group_invoice.TotalAmount" name="TotalAmount" matInput placeholder="Всього:" value="">
         </mat-form-field>
       </div>
     </div>
-
-    <!-- Fieldsets -->
-    <h3 class="p-2 subtitle_main_page_margin">Відбір:</h3>
-    <div class="row mr-0 ml-0">
-      <!-- Fieldset 1 -->
-      <div class="mr-0 ml-0 col-6 pl-0 pr-0">
-        <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-          <h4 class="control-label float-left">За датою документу</h4>
-        </div>
-        <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style ">
-          <mat-form-field>
-            <input matInput [matDatepicker]="pickerStartDoc" placeholder="Дата початку:">
-            <mat-datepicker-toggle matSuffix [for]="pickerStartDoc"></mat-datepicker-toggle>
-            <mat-datepicker #pickerStartDoc></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style ">
-          <mat-form-field>
-            <input matInput [matDatepicker]="pickerEndDoc" placeholder="Дата завершення:">
-            <mat-datepicker-toggle matSuffix [for]="pickerEndDoc"></mat-datepicker-toggle>
-            <mat-datepicker #pickerEndDoc></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
-      <!-- Fieldset 1 - End -->
-      <!-- Fieldset 2 -->
-      <div class="mr-0 ml-0 col-6 pl-0 pr-0">
-        <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
-          <h4 class="control-label text-left">За датою документу</h4>
-        </div>
-        <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
-          <mat-form-field>
-            <input matInput [matDatepicker]="pickerStartDoc1" placeholder="Дата початку:">
-            <mat-datepicker-toggle matSuffix [for]="pickerStartDoc1"></mat-datepicker-toggle>
-            <mat-datepicker #pickerStartDoc1></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div class="form-group col-12 p-2 mr-0 ml-0 my_input_style">
-          <mat-form-field>
-            <input matInput [matDatepicker]="pickerEndDoc1" placeholder="Дата завершення:">
-            <mat-datepicker-toggle matSuffix [for]="pickerEndDoc1"></mat-datepicker-toggle>
-            <mat-datepicker #pickerEndDoc1></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
-      <!-- Fieldset 2 - End -->
-    </div>
-    <!-- Fieldsets - End -->
 
     <!-- Table Controls -->
     <div class="pl-0 mt-4 pr-0  clearfix">
@@ -425,26 +373,18 @@
               <th scope="col">Рахунок</th>
               <th scope="col">Послуги агенства</th>
               <th scope="col">% банку</th>
-              <th scope="col">Сума до...</th>
+              <th scope="col">Сума до сплати</th>
               <th scope="col">Зміст</th>
-              <th scope="col">&nbsp;</th>
-              <th scope="col">&nbsp;</th>
-              <th scope="col">&nbsp;</th>
-              <th scope="col">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="main">
-              <td class="text-center" scope="row">1</td>
-              <td class="text-center">2</td>
-              <td class="text-center">3</td>
-              <td class="text-center">4</td>
-              <td class="text-center">5</td>
-              <td class="text-center">6</td>
-              <td class="text-center">7</td>
-              <td class="text-center">8</td>
-              <td class="text-center">9</td>
-              <td class="text-center">10</td>
+            <tr class="main" *ngFor="let avia_invoice of avia_group_invoice.AviaInvoicesId; let i = index">
+              <td class="text-center" scope="row">{{i + 1}}</td>
+              <td class="text-center">{{avia_invoice.CheckingAccount}}</td>
+              <td class="text-center">{{avia_invoice.DetailInfo.AgencyServices.Sum}}</td>
+              <td class="text-center">{{avia_invoice.DetailInfo.AgencyServices.BankPercent}}</td>
+              <td class="text-center">{{avia_invoice.TotalAmount}}</td>
+              <td class="text-center" matTooltip="{{_get_avia_invoice_content(avia_invoice)}}">{{_get_avia_invoice_content(avia_invoice)}}</td>
             </tr>
           </tbody>
         </table>
@@ -456,44 +396,48 @@
     <mat-tab-group>
       <mat-tab activelabel label="Зміст документу">
         <div id="document_content" class="mb-4 mt-4">
-          <div class="form-group col-12 p-2 my_input_style">
-            <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Номер:" />
-            </mat-form-field>
-          </div>
-          <div class="form-group col-12 p-2 my_input_style">
-            <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Коментар:" />
-            </mat-form-field>
-          </div>
-          <div class="form-group col-12 p-2 my_input_style">
-            <mat-form-field class="example-form-field">
-              <input matInput type="text" placeholder="Відповідальний:" />
-              <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                <mat-icon>more_horiz</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
           <div class="row pl-0 pr-0 mr-0 ml-0">
-            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 p-2 my_input_style">
+            <div class="form-group col-5 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Агент:" />
-                <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                  <mat-icon>more_horiz</mat-icon>
-                </button>
+                <input [(ngModel)]="avia_group_invoice.Content" name="Content" matInput type="text" placeholder="Зміст:" />
               </mat-form-field>
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 p-2 my_input_style">
+            <div class="form-group col-5 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Куратор:" />
-                <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                  <mat-icon>more_horiz</mat-icon>
-                </button>
+                <input [(ngModel)]="avia_group_invoice.Comment" name="Comment" matInput type="text" placeholder="Коментар:" />
               </mat-form-field>
+            </div>
+            <div class="form-group col-2 p-2 order-12 my_input_style ">
+              <mat-checkbox [(ngModel)]="avia_group_invoice.IsImplementation" name="IsImplementation" class="" primary>Без реалізації</mat-checkbox>
             </div>
           </div>
-          <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 order-12 my_input_style ">
-            <mat-checkbox class="" primary>Сплачено</mat-checkbox>
+
+          <div class="row pl-0 pr-0 mr-0 ml-0">
+            <div class="form-group col-4 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input [(ngModel)]="avia_group_invoice.ResponsibleAgentId" name="ResponsibleAgentId" matInput type="text" placeholder="Відповідальний:"
+                />
+                <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-4 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input [(ngModel)]="avia_group_invoice.AgentId" name="AgentId" matInput type="text" placeholder="Агент:" />
+                <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-4 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input [(ngModel)]="avia_group_invoice.CuratorId" name="CuratorId" matInput type="text" placeholder="Куратор:" />
+                <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
           </div>
         </div>
       </mat-tab>
@@ -503,11 +447,11 @@
         <!-- TAB 2 - START -->
         <div id="total_amount" class="mb-4 mt-4">
           <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 p-2 order-12 my_input_style ">
-            <mat-checkbox class="" primary>Загальний рахунок:</mat-checkbox>
+            <mat-checkbox [(ngModel)]="avia_group_invoice.IsTotalAccount" name="IsTotalAccount" class="" primary>Загальний рахунок:</mat-checkbox>
           </div>
           <div class="form-group col-12 my_input_style">
             <mat-form-field class="col-md-12">
-              <textarea matInput placeholder="Зміст для загального рахунку та акта:"></textarea>
+              <textarea [(ngModel)]="avia_group_invoice.CheckingAccountContent" name="CheckingAccountContent" matInput placeholder="Зміст для загального рахунку та акта:"></textarea>
             </mat-form-field>
           </div>
         </div>
@@ -626,7 +570,7 @@
 <!-- Popup Footer -->
 <div id="groupInvoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(avia_group_invoice)">
       <span class="my_button_label pr-3">Закрити</span>
     </button>
   </div>

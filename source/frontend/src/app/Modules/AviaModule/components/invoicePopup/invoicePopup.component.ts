@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { AviaInvoice } from "../../models";
-import { AviaService } from "../../services/avia.service";
+import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
 import { CounterpartyService } from "../../../ReferenceModule/services";
 import { FormControl } from "@angular/forms";
 
@@ -22,6 +22,16 @@ export class AviaInvoicePopupComponent implements OnInit {
   public payment_form_input_autocomplete = new FormControl();
   public offer_currency_input_autocomplete = new FormControl();
   public total_currency_input_autocomplete = new FormControl();
+  public avia_group_input_autocomplete = new FormControl();
+  public supplier_cost_input_autocomplete = new FormControl();
+  public supplier_commission_input_autocomplete = new FormControl();
+  public forfeit_input_autocomplete = new FormControl();
+  public used_supplier_rate_input_autocomplete = new FormControl();
+  public additional_supplier_commission_input_autocomplete = new FormControl();
+  public used_taxes_input_autocomplete = new FormControl();
+  public agency_services_input_autocomplete = new FormControl();
+  public other_services_input_autocomplete = new FormControl();
+  public total_amount_input_autocomplete = new FormControl();
   public input_autocomplete = new FormControl();
 
   // Вынести в БД и получать формы оплаты по запросу
@@ -37,6 +47,7 @@ export class AviaInvoicePopupComponent implements OnInit {
       console.log(data)
     });
   }
+  public avia_group_invoices: any = []
 
   _set_date(field, event){
     field = event.value;
@@ -53,26 +64,27 @@ export class AviaInvoicePopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
-    public AviaService: AviaService,
-    public CounterpartyService: CounterpartyService
+    public AviaInvoiceService: AviaInvoiceService,
+    public CounterpartyService: CounterpartyService,
+    public AviaGroupInvoiceService: AviaGroupInvoiceService
   ) {
     if (!this.avia_invoice) {
       this.avia_invoice = new AviaInvoice();
     }
-
+    this.get_avia_group_invoice_content(null);
     console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
   }
   ngOnInit() {}
 
   update_avia_invoice(avia_invoice: AviaInvoice) {
-    this.AviaService.update_avia_invoice(avia_invoice).subscribe(data => {
+    this.AviaInvoiceService.update_avia_invoice(avia_invoice).subscribe(data => {
       this.avia_invoice = data as AviaInvoice;
     });
   }
 
   save_avia_invoice(avia_invoice: AviaInvoice) {
     console.log("Save avia invoice:", avia_invoice);
-    this.AviaService.save_avia_invoice(avia_invoice).subscribe(data => {
+    this.AviaInvoiceService.save_avia_invoice(avia_invoice).subscribe(data => {
       let tmp = data as AviaInvoice;
       if (!tmp._id) {
         this.is_saved = false;
@@ -90,7 +102,7 @@ export class AviaInvoicePopupComponent implements OnInit {
       return;
     }
 
-    this.AviaService.remove_avia_invoice(avia_invoice_id).subscribe(() => {
+    this.AviaInvoiceService.remove_avia_invoice(avia_invoice_id).subscribe(() => {
       this.dialogRef.close({
         action: "remove",
         id: avia_invoice_id,
@@ -112,6 +124,13 @@ export class AviaInvoicePopupComponent implements OnInit {
       this.update_avia_invoice(avia_invoice);
       this.is_saved = true;
     }
+  }
+
+  get_avia_group_invoice_content(pattent){
+    this.AviaGroupInvoiceService.get_avia_group_invoice_content(pattent).subscribe((data) => {
+      this.avia_group_invoices = data;
+      console.log(data)
+    });
   }
 
   /**
@@ -142,6 +161,13 @@ export class AviaInvoicePopupComponent implements OnInit {
     this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
       console.log(data);
     });
+  }
+  get_total_amount_cost(avia_invoice){
+    let result = parseInt(avia_invoice.DetailInfo.SupplierCost.Sum) + parseInt(avia_invoice.DetailInfo.AgencyServices.Sum) +
+    parseInt(avia_invoice.DetailInfo.AgencyServices.MPE) + parseInt(avia_invoice.DetailInfo.OtherServices.Sum) + parseInt(avia_invoice.DetailInfo.OtherServices.MPE);
+    console.log('Result: ', result)
+    if(!result) result = -1;
+    return result;
   }
 
   get_counterparties_name(pattern) {

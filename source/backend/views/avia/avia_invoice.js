@@ -2,6 +2,7 @@ import { Avia } from '../../models';
 import { HttpResponseError } from '../../infrastructure';
 
 const AviaInvoice = Avia.AviaInvoice;
+const AviaGroupInvoice = Avia.AviaGroupInvoice;
 
 /**
  * 
@@ -28,7 +29,16 @@ export async function get_all_avia_invoices(req, res){
     let limit = parseInt(req.query.limit ? req.query.limit : 15);
     try{
         //res.status(200).json(get_mock_invoice());
-        avia_invoices = await AviaInvoice.find({}).skip(skip).limit(limit);
+        avia_invoices = await AviaInvoice.find({}).skip(skip).limit(limit)
+        .populate({ path: 'GroupInvoiceId', model: 'AviaGroupInvoice' }).lean();
+
+        for(let i = 0; i < avia_invoices.length; i++){
+            if(avia_invoices[i].GroupInvoiceId == null){
+                console.log('----------')
+                avia_invoices[i].GroupInvoiceId = {}
+                console.log(avia_invoices[i].GroupInvoiceId)
+            }
+        }
 
         if(!avia_invoices){
             res.status(404).json({ "Error": "Avia Invoices not found." });
@@ -67,20 +77,22 @@ export async function create_avia_invoice(req, res) {
     let body = req.body;
 
     try {
-        let airport = new AviaInvoice(body);
-        err = airport.validateSync();
+        let avia_invoice = new AviaInvoice(body);
+        err = avia_invoice.validateSync();
 
         if (err) {
             throw new HttpResponseError(`Validate error. Avia invoice was not created.`, 400, err);
         }
 
-        airport = await airport.save();
+        avia_invoice = await avia_invoice.save();
 
-        if (!airport) {
+        if (!avia_invoice) {
             throw new HttpResponseError(`Avia invoice not saved.`, 400);
         }
 
-        res.status(200).json(airport);
+
+
+        res.status(200).json(avia_invoice);
     }
     catch (err) {
         if(err instanceof HttpResponseError){
@@ -113,14 +125,16 @@ export async function create_avia_invoice(req, res) {
  * @param {HttpResponse} res 
  */
 export async function update_avia_invoice(req, res) {
-    let airport_id = req.params.id;
-    let airport = req.body;
+    let avia_invoice_id = req.params.id;
+    let avia_invoice = req.body;
 
     try {
-        let update = await AviaInvoice.findByIdAndUpdate(airport_id, airport, { new: true });
+        let update = await AviaInvoice.findByIdAndUpdate(avia_invoice_id, avia_invoice, { new: true });
         if (!update) {
             throw new HttpResponseError(`Bad request. Avia invoice not found or parameters invalid.`, 400, null);
         }
+
+        await AviaGroupInvoice.findByIdAndUpdate(update.GroupInvoiceId, { $push: { AviaInvoicesId: avia_invoice_id} });
 
         res.status(200).json(update);
     }
@@ -155,9 +169,9 @@ export async function update_avia_invoice(req, res) {
  * @param {HttpResponse} res 
  */
 export async function remove_avia_invoice(req, res) {
-    let airport_id = req.params.id;
+    let avia_invoice_id = req.params.id;
     try {
-        await AviaInvoice.remove({ _id: airport_id });
+        await AviaInvoice.remove({ _id: avia_invoice_id });
         res.status(200).json({ "Status": `OK.` });
     }
     catch (err) {
@@ -191,22 +205,22 @@ export async function remove_avia_invoice(req, res) {
  * @param {HttpResponse} res 
  */
 export async function get_avia_invoice_by_id(req, res) {
-    let airport_id = req.params.id;
-    let airport = null;
+    let avia_invoice_id = req.params.id;
+    let avia_invoice = null;
 
-    if (!airport_id) {
+    if (!avia_invoice_id) {
         res.status(400).json({ "Error": `Bad raquest. Avia invoice id is empty.` });
         return;
     }
 
     try {
-        airport = await AviaInvoice.findById(airport_id).populate('GroupInvoiceId');
+        avia_invoice = await AviaInvoice.findById(avia_invoice_id).populate('GroupInvoiceId');
 
-        if (!airport) {
-            throw new HttpResponseError(`Avia invoice with id ${airport_id} not found.`, 404, null);
+        if (!avia_invoice) {
+            throw new HttpResponseError(`Avia invoice with id ${avia_invoice_id} not found.`, 404, null);
         }
 
-        res.status(200).json(airport);
+        res.status(200).json(avia_invoice);
     }
     catch (err) {
         if(err instanceof HttpResponseError){
@@ -238,15 +252,15 @@ export async function get_avia_invoice_by_id(req, res) {
  * @param {HttpResponse} res 
  */
 export async function get_avia_invoice_count(req, res) {
-    let airports_count = null;
+    let avia_invoices_count = null;
     try {
-        airports_count = await AviaInvoice.count();
+        avia_invoices_count = await AviaInvoice.count();
 
-        if (!airports_count) {
+        if (!avia_invoices_count) {
             throw new HttpResponseError(`Can't get avia invoice count.`, 404, null);
         }
 
-        res.status(200).json(airports_count);
+        res.status(200).json(avia_invoices_count);
     }
     catch (err) {
         if(err instanceof HttpResponseError){

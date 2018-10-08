@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { AviaInvoicePopupComponent } from "../invoicePopup/invoicePopup.component";
-import { AviaService } from "../../services/avia.service";
+
 
 import { AviaPrintInvoicePopupComponent } from "./../../../../Components/printInvoice/printInvoice.component";
 import { AviaPrintActPopupComponent } from "./../../../../Components/printAct/printAct.component";
@@ -9,6 +9,7 @@ import { AviaPrintScorePopupComponent } from "./../../../../Components/printScor
 import { AviaPrintScoreWithStampPopupComponent } from "./../../../../Components/printScoreWithStamp/printScoreWithStamp.component";
 
 import { AviaInvoice } from "../../models";
+import { AviaInvoiceService } from "../../services";
 
 @Component({
   selector: "avia-invoice",
@@ -33,10 +34,10 @@ export class AviaInvoiceComponent implements OnInit {
   // Переменная для блока пагинации. Пересмотреть и возможно избавится.
   public pagination_arr = [];
 
-  constructor(public dialog: MatDialog,  private AviaService: AviaService) {}
+  constructor(public dialog: MatDialog,  private AviaInvoiceService: AviaInvoiceService) {}
 
   get_avia_invoices_count() {
-    this.AviaService.get_avia_invoice_count().subscribe(data => {
+    this.AviaInvoiceService.get_avia_invoice_count().subscribe(data => {
       this.elements_count = data;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count);
@@ -47,7 +48,7 @@ export class AviaInvoiceComponent implements OnInit {
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
     // Повторяется, по возможности убрать
-    this.AviaService.get_avia_invoices(skip, limit).subscribe(data => {
+    this.AviaInvoiceService.get_avia_invoices(skip, limit).subscribe(data => {
       this.avia_invoices = data;
     });
   }
@@ -57,9 +58,8 @@ export class AviaInvoiceComponent implements OnInit {
   }
 
   public _get_invoice_content(invoice) {
-    let info = `Авіаційний квиток №${invoice.DetailInfo.TicketNumber} для ${
-      invoice.DetailInfo.NameId //.LastNameNative
-    } ${invoice.DetailInfo.NameId //.FirstNameNative
+    let info = `Авіаційний квиток №${invoice.TicketInfo ? invoice.TicketInfo.TicketNumber : 0} для ${
+      invoice.TicketInfo ? invoice.TicketInfo.Name : 0 //.LastNameNative
     }, за маршрутом: `;
     let additional = "";
     for (let i = 0; i < invoice.FlightInfo.length; i++) {
@@ -76,7 +76,7 @@ export class AviaInvoiceComponent implements OnInit {
   refresh_data() {
     this.loader_displayed = true;
     // Повторяется, по возможности убрать
-    this.AviaService.get_avia_invoices(this.skip, this.limit).subscribe(
+    this.AviaInvoiceService.get_avia_invoices(this.skip, this.limit).subscribe(
       data => {
         this.avia_invoices = data;
         this.get_avia_invoices_count();

@@ -181,15 +181,13 @@ const AviaInvoiceSchema = new Schema({
     ]
   },
   // Квитки
-  TicketsInfo: {
-    type: [
-      {
+  TicketInfo: {
+    type: {
         // Поле содержит имя и фамилию
         Name: { type: String },
         // Номер квитка
         TicketNumber: { type: String }
       }
-    ]
   },
 
   created_at: { type: Date, default: Date.now, index: true }

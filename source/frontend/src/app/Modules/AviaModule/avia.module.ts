@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AviaService } from './services/avia.service';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -33,6 +32,7 @@ import { AviaGroupInvoicePopupComponent } from './components/groupInvoicePopup/g
 // import { AviaPrintScoreWithStampPopupComponent } from './components/printScoreWithStamp/printScoreWithStamp.component';
 
 import { AviaRoutingModule } from './avia-routing.module';
+import { AviaInvoiceService, AviaGroupInvoiceService } from './services';
 
 @NgModule({
   declarations: [
@@ -90,7 +90,7 @@ import { AviaRoutingModule } from './avia-routing.module';
     // AviaPrintScoreWithStampPopupComponent,
     AviaRoutingModule
   ],
-  providers: [AviaService],
+  providers: [AviaInvoiceService, AviaGroupInvoiceService],
   bootstrap: []
 })
 export class AviaModule { }

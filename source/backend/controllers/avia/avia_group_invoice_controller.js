@@ -33,4 +33,10 @@ router.route('/avia/group/count/invoices')
         AviaHandler.AviaGroupInvoiceView.get_avia_group_invoice_count(req, res);
     });
 
+
+router.route('/avia/group/search/invoices')
+    .get((req, res) => {
+        AviaHandler.AviaGroupInvoiceView.get_avia_group_invoice_content(req, res);
+    });
+
 export { router };

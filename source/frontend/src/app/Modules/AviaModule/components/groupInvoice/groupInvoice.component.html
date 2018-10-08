@@ -6,7 +6,7 @@
 
   <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button (click)="openDialog()" type="button" class="btn btn-default my_button_style">
+      <button (click)="create_avia_group_invoice()" type="button" class="btn btn-default my_button_style">
         <span class="material-icons">add</span>
         <span class="my_button_label">Створити</span>
       </button>
@@ -60,7 +60,8 @@
         <button (click)="openPrintScoreWithStamp()" mat-menu-item class="my_menu_label">Друк рахунка з печаткою</button>
       </mat-menu>
     </div>
-  </div> <!-- Button Row - End -->
+  </div>
+  <!-- Button Row - End -->
   <!-- DropDown ALL Actions -->
   <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
     <div id="referencesButton" class="d-lg-inline d-none float-right">
@@ -73,7 +74,7 @@
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openDialog()" >
+        <button mat-menu-item (click)="create_avia_group_invoice()">
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">add</span>
           </div>
@@ -97,7 +98,7 @@
           </div>
           <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="refresh_data()">
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">refresh</span>
           </div>
@@ -179,13 +180,15 @@
 
       </mat-menu>
     </div>
-  </div> <!-- DropDown ALL Actions end-->
+  </div>
+  <!-- DropDown ALL Actions end-->
 
-</div> <!--Row MENU Buttons End-->
+</div>
+<!--Row MENU Buttons End-->
 <!-- -------------------------------------------------- GROUP ORDER MAIN - MENU BAR END ----------------------------------------------------- -->
 <!-- ------------------------------------------------------------ TABLE GROUP ORDER --------------------------------------------------------- -->
 <div class="ml-4 mr-4 mt-2 my_table_style">
-  <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+  <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -197,26 +200,20 @@
           <th scope="col">Агент</th>
           <th scope="col">Відповідальний</th>
           <th scope="col">Коментар</th>
-          <th scope="col">&nbsp;</th>
-          <th scope="col">&nbsp;</th>
-          <th scope="col">&nbsp;</th>
-          <th scope="col">&nbsp;</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="main">
-          <td class="text-center" scope="row">1</td>
-          <td class="text-center">2</td>
-          <td class="text-center">3</td>
-          <td class="text-center">4</td>
-          <td class="text-center">5</td>
-          <td class="text-center">6</td>
-          <td class="text-center">7</td>
-          <td class="text-center">8</td>
-          <td class="text-center">9</td>
-          <td class="text-center">10</td>
-          <td class="text-center">11</td>
-          <td class="text-center">12</td>
+        <tr class="main" *ngFor="let group_invoice of avia_group_invoices" (dblclick)="edit_avia_group_invoice(group_invoice)">
+          <td class="text-center" scope="row">{{group_invoice.Date}}</td>
+          <td class="text-center">{{group_invoice.Number}}</td>
+          <td class="text-center">
+              <mat-checkbox class="" primary [(ngModel)]="group_invoice.IsPaid" [disabled]="true"></mat-checkbox>
+          </td>
+          <td class="text-center">{{group_invoice.ClientId}}</td>
+          <td class="text-center">{{group_invoice.Content}}</td>
+          <td class="text-center">{{group_invoice.AgentId}}</td>
+          <td class="text-center">{{group_invoice.ResponsibleAgentId}}</td>
+          <td class="text-center">{{group_invoice.Comment}}</td>
         </tr>
       </tbody>
     </table>

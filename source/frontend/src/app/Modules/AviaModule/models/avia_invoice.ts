@@ -27,7 +27,7 @@ export class AviaInvoice extends BaseModel {
   // Сплачено
   IsPaid: boolean = false;
   // Групове замовлення
-  GroupInvoiceId: any = null; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
+  GroupInvoiceId: any = {}; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
   // Валюта пропозиції
   OfferCurrency: string = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Підсумкова валюта
@@ -62,16 +62,15 @@ export class AviaInvoice extends BaseModel {
   Organization: string = null;
   // Детальна інформація
   DetailInfo: DetailInfo = null;
-  FlightInfo: FlightInfo[] = null;
+  FlightInfo: any[] = [];
   // Квитки
-  TicketsInfo: TicketsInfo = null;
+  TicketInfo: TicketInfo = null;
   created_at: Date = null;
 
   constructor() {
     super();
     this.DetailInfo = new DetailInfo();
-    this.FlightInfo = [new FlightInfo()];
-    this.TicketsInfo = new TicketsInfo();
+    this.TicketInfo = new TicketInfo();
   }
 }
 
@@ -115,10 +114,9 @@ class FlightInfo {
   ArrivalTime: Date = null;
 }
 
-class TicketsInfo {
+class TicketInfo {
   Name: string = "";
   TicketNumber: string = "";
-  ReturnedDocument: string = "";
 }
 
 class BaseDetailInfo {
