@@ -3,9 +3,11 @@ import { BaseModel } from './base_model';
 export class NomenclatureReference extends BaseModel{
     _id: string = undefined;
     //
-    Code: number = 0;
+    Number: string = "";
+
+
     // Група Номенлатури
-    NomenclatureGroupId: any = null;
+    NomenclatureGroupId: string = null;
     // Коротка назва
     NameShort: string = null;
     // Повна назва
@@ -21,7 +23,7 @@ export class NomenclatureReference extends BaseModel{
     // Враховується по номінальній вартості
     NominalCost: boolean = null;
     // Базова одиниця виміру
-    BaseUnitId: any = null; // ref: 'ReferenceUnitClassifier'
+    BaseUnitId: string = null; // ref: 'ReferenceUnitClassifier'
     // Ставка ПДВ (пеерчислення: 0%, 20%, 7%, Без ПДВ, Не ПДВ)
     RateOfMPE: string = null;
     // Льгота з ПДВ
@@ -33,5 +35,5 @@ export class NomenclatureReference extends BaseModel{
     // Текст для друка у колонці кількість податкової Накладної
     InvoiceCount: string = null;
     // Стаття витрат (посилання на статтю)
-    EmbezzlementId: any = null;   // ref: 'ReferenceEmbezzlement'
+    EmbezzlementId: string = null;   // ref: 'ReferenceEmbezzlement'
 }

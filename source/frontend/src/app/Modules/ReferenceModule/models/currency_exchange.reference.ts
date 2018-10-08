@@ -4,6 +4,8 @@ export class CurrencyExchangeReference extends BaseModel{
     _id: string = undefined;
     // 
     Number: number = 0;
+
+    
     // Найменування
     Name: string = null;
     // Коефіцієнт

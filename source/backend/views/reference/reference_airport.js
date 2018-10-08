@@ -22,10 +22,20 @@ const Airport = References.ReferenceAirport;
  * @param {HttpResponse} res 
  */
 export async function create_airport(req, res) {
+    const number = "18air000000000";
     let err = null;
     let body = req.body;
 
     try {
+        
+        let ai_count = await Airport.count();
+        if(!ai_count){
+            airport.Number = number;
+        }
+        else{
+            airport.Number = number;
+        }
+
         let airport = new Airport(body);
         err = airport.validateSync();
 
@@ -117,7 +127,7 @@ export async function update_airport(req, res) {
 export async function remove_airport(req, res) {
     let airport_id = req.params.id;
     try {
-        await Airport.remove({ _id: airport_id });
+        await Airport.deleteOne({ _id: airport_id });
         res.status(200).json({ "Status": `OK.` });
     }
     catch (err) {

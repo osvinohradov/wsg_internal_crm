@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 // Аеропорти
 const ReferenceAirportSchema = new Schema({
     // Код
-    Code        :{ type: Number, default: 0 },
+    Number        :{ type: String, default: "" },
+
+
     // Найменування
     Name        :{ type: String, required: true },
     // Найменування на російській

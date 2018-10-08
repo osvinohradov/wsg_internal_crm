@@ -5,7 +5,7 @@
 <div class="ml-4 mr-4 pl-0 pr-0  clearfix">
   <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button (click)="create_airport()" type="button" class="btn btn-default my_button_style">
+      <button (click)="create_avia_invoice()" type="button" class="btn btn-default my_button_style">
         <span class="material-icons">add</span>
         <span class="my_button_label">Створити</span>
       </button>
@@ -191,7 +191,7 @@
   <!-- DropDown ALL Actions end-->
 </div>
 <div class="ml-4 mr-4 mt-2 my_table_style">
-  <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+  <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
     <table class="table table-sm">
       <thead class="thead-light">
         <tr>
@@ -223,37 +223,37 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="main" *ngFor="let invoice of avia_invoices">
+        <tr class="main" *ngFor="let invoice of avia_invoices" (dblclick)="edit_avia_invoice(invoice)">
           <td class="text-center" scope="row">{{invoice.Date | date: 'dd/MM/yyyy H:mm:ss'}}</td>
           <td class="text-center">{{invoice.Number}}</td>
           <td class="text-center">
-              <mat-checkbox class="" primary [(ngModel)]="invoice.IsReturned"></mat-checkbox>
+            <mat-checkbox class="" primary [(ngModel)]="invoice.IsReturned" [disabled]="true"></mat-checkbox>
           </td>
           <td class="text-center">
-              <mat-checkbox class="" primary [(ngModel)]="invoice.IsVoid"></mat-checkbox>
+            <mat-checkbox class="" primary [(ngModel)]="invoice.IsVoid" [disabled]="true"></mat-checkbox>
           </td>
           <td class="text-center">
-            <mat-checkbox class="" primary [(ngModel)]="invoice.IsPaid"></mat-checkbox>
+            <mat-checkbox class="" primary [(ngModel)]="invoice.IsPaid" [disabled]="true"></mat-checkbox>
           </td>
-          <td class="text-center">{{invoice.ClientId ? invoice.ClientId.Name : ""}}</td>
+          <td class="text-center">{{invoice.ClientId ? invoice.ClientId : ""}}</td>
           <td class="text-center">{{invoice.GroupInvoiceId ? invoice.GroupInvoiceId.Name : ""}}</td>
-          <td class="text-center">{{invoice.ServiceTypeId ? invoice.ServiceTypeId.Name : ""}}</td>
+          <td class="text-center">{{invoice.ServiceTypeId ? invoice.ServiceTypeId : ""}}</td>
           <!-- Авіаційний квиток №(номер) для Біла Олена, за маршрутом: виліт із Київ 18.10.2018, приліт в Пекін 18.10.2018; виліт із Пекін 18.10.2018, приліт в Київ 18.10.2018  -->
           <td class="text-center" matTooltip="{{_get_invoice_content(invoice)}}">{{_get_invoice_content(invoice)}}</td>
-          <td class="text-center">{{invoice.ProviderId ? invoice.ProviderId.Name : ""}}</td>
+          <td class="text-center">{{invoice.ProviderId ? invoice.ProviderId : ""}}</td>
           <td class="text-center">{{invoice.TotalAmount}}</td>
           <td class="text-center">{{"MPE"}}</td>
           <td class="text-center">{{invoice.Comment}}</td>
           <td class="text-center">{{invoice.Agent}}</td>
           <td class="text-center">{{invoice.ResponsibleAgent}}</td>
-          <td class="text-center">{{invoice.OfferCurrencyId ? invoice.OfferCurrencyId.Name : ""}}</td>
-          <td class="text-center">{{invoice.TotalCurrencyId ? invoice.TotalCurrencyId.Name : ""}}</td>
+          <td class="text-center">{{invoice.OfferCurrency}}</td>
+          <td class="text-center">{{invoice.TotalCurrency}}</td>
           <td class="text-center">{{invoice.Organization}}</td>
           <td class="text-center">{{invoice.BookingCode}}</td>
           <td class="text-center">{{invoice.ReturnedDocument}}</td>
           <td class="text-center">Дата купівлі у постачальника</td>
           <td class="text-center">{{invoice.PaymentForm}}</td>
-          <td class="text-center">{{invoice.PaymentDate}}</td>
+          <td class="text-center">{{invoice.PaymentDate | date: 'dd/MM/yyyy' }}</td>
           <td class="text-center">{{invoice.PmCode}}</td>
           <td class="text-center">{{invoice.IsProcessed}}</td>
         </tr>
@@ -264,30 +264,30 @@
 
 <div *ngIf="elements_count >= limit" class="col-md-12 d-flex align-items-center justify-content-center clearfix">
   <nav aria-label="Page navigation example">
-      <ul class="pagination">
-          <li class="page-item">
-              <button class="page-link" aria-label="Previous" (click)="load_airports(0, 20)">
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-              </button>
-          </li>
-          <li class="page-item" *ngFor="let item of pagination_arr; let index = index" [class.active]="index == current_page">
-                  <button class="page-link" (click)="load_airports(index, limit)">{{index + 1}}</button>
-          </li>
-          <li class="page-item">
-              <button class="page-link" aria-label="Next" (click)="load_airports(0, 20)">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-              </button>
-          </li>
-      </ul>
+    <ul class="pagination">
+      <li class="page-item">
+        <button class="page-link" aria-label="Previous" (click)="load_airports(0, 20)">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </button>
+      </li>
+      <li class="page-item" *ngFor="let item of pagination_arr; let index = index" [class.active]="index == current_page">
+        <button class="page-link" (click)="load_airports(index, limit)">{{index + 1}}</button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" aria-label="Next" (click)="load_airports(0, 20)">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </button>
+      </li>
+    </ul>
   </nav>
 </div>
 
 <div class="container-fluid position-absolute d-flex align-items-center justify-content-center clearfix" *ngIf="loader_displayed">
   <div class="row">
-      <div class="col-md-12 col-lg-12 col-xl-12">
-          <img src="../../../../../assets/img/loader.gif">
-      </div>
+    <div class="col-md-12 col-lg-12 col-xl-12">
+      <img src="../../../../../assets/img/loader.gif">
+    </div>
   </div>
 </div>

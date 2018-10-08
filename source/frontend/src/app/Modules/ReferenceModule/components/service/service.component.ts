@@ -114,7 +114,7 @@ export class ServiceReferencesComponent implements OnInit {
   open_dialog(data): MatDialogRef<ServicePopupReferencesComponent> {
     return this.dialog.open(ServicePopupReferencesComponent, {
       panelClass: "my-centered-dialog",
-      width: "50%",
+      width: "80%",
       height: "70vh",
       data: data
     });

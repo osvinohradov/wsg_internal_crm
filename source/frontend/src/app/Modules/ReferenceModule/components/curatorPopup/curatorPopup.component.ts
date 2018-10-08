@@ -101,7 +101,7 @@ export class CuratorPopupReferencesComponent implements OnInit {
         { _id: 10, Name: "andrew"}
       ]
     }
-    this.CounterpartyService.get_counterparty_names(pattern).subscribe((data) => {
+    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
       this.counterparty_names = data;
     });
   }

@@ -15,7 +15,8 @@ const AviaInvoiceSchema = new Schema({
   // Всього
   TotalAmount: { type: Number },
   // Клієнт (посилання на Контрагентів)
-  ClientId: { type: Schema.Types.ObjectId, ref: "ReferenceCounterparty" },
+  //ClientId: { type: Schema.Types.ObjectId, ref: "ReferenceCounterparty" },
+  ClientId: { type: String },
   // Дата послуг
   ServiceDate: { type: Date },
   // Без реалізації
@@ -31,20 +32,24 @@ const AviaInvoiceSchema = new Schema({
   // Підсумкова валюта
   TotalCurrency: { type: String }, //       :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Постачальник
-  ProviderId: { type: Schema.Types.ObjectId, ref: "ReferenceCounterparty" },
+  //ProviderId: { type: Schema.Types.ObjectId, ref: "ReferenceCounterparty" },
+  ProviderId: { type: String },
   // Сплата такси
   TaxesPayment: { type: String },
   // Куратор
-  CuratorId: { type: Schema.Types.ObjectId, ref: "ReferenceCurator" },
+  // CuratorId: { type: Schema.Types.ObjectId, ref: "ReferenceCurator" },
+  CuratorId: { type: String },
   // Код бронювання
   BookingCode: { type: String },
   // Обмін валют
-  CurrencyExchangeId: {
-    type: Schema.Types.ObjectId,
-    ref: "ReferenceCurrencyExchange"
-  },
+  // CurrencyExchangeId: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "ReferenceCurrencyExchange"
+  // },
+  CurrencyExchangeId: {type: String },
   // Вид сервісу
-  ServiceTypeId: { type: Schema.Types.ObjectId, ref: "ReferenceServiceType" },
+  // ServiceTypeId: { type: Schema.Types.ObjectId, ref: "ReferenceServiceType" },
+  ServiceTypeId: { type: String },
   // Розрахунковий рахунок (посилання на Банківські рахунки)
   CheckingAccount: { type: String },
   // Коментар
@@ -65,10 +70,11 @@ const AviaInvoiceSchema = new Schema({
   DetailInfo: {
     type: {
       // Поле "Прізвище", містить фамілію й ім'я
-      NameId: {
-        type: Schema.Types.ObjectId,
-        ref: "ReferenceIndividualCounterparties"
-      },
+      // NameId: {
+      //   type: Schema.Types.ObjectId,
+      //   ref: "ReferenceIndividualCounterparties"
+      // },
+      NameId: { type: String },
       // Номер квитка
       TicketNumber: { type: Number },
       // Дата покупки

@@ -3,7 +3,9 @@ import { BaseModel } from "./base_model";
 export class AviaInvoice extends BaseModel {
   _id: string = undefined;
   // Номер
-  Number: number = 0;
+  Number: string = "";
+
+
   // Дата
   Date: Date = null;
   // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
@@ -11,7 +13,7 @@ export class AviaInvoice extends BaseModel {
   // Дата сплати
   PaymentDate: Date = null;
   // Кількість квитків
-  TicketsCount: number = 0;
+  TicketsCount: number = 1;
   // Всього
   TotalAmount: number = 0;
   // Клієнт (посилання на Контрагентів)
@@ -60,7 +62,7 @@ export class AviaInvoice extends BaseModel {
   Organization: string = null;
   // Детальна інформація
   DetailInfo: DetailInfo = null;
-  FlightInfo: FlightInfo = null;
+  FlightInfo: FlightInfo[] = null;
   // Квитки
   TicketsInfo: TicketsInfo = null;
   created_at: Date = null;
@@ -68,7 +70,7 @@ export class AviaInvoice extends BaseModel {
   constructor() {
     super();
     this.DetailInfo = new DetailInfo();
-    this.FlightInfo = new FlightInfo();
+    this.FlightInfo = [new FlightInfo()];
     this.TicketsInfo = new TicketsInfo();
   }
 }

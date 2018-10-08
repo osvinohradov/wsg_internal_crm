@@ -3,27 +3,29 @@ import { BaseModel } from './base_model';
 export class AirportReference extends BaseModel{
     _id: string = null;
     // Код
-    Code: number = null;
+    Number: string = "";
+
+
     // Найменування
-    Name: string = null;
+    Name: string = "";
     // Найменування на російській
-    NameRus: string = null;
+    NameRus: string = "";
     // Найменування на англійській
-    NameEng: string = null;
+    NameEng: string = "";
     // Найменування на українській
-    NameUkr: string = null;
+    NameUkr: string = "";
     // Місце на російській
-    PlaceRus: string = null;
+    PlaceRus: string = "";
     // Місце на англійській
-    PlaceEng: string = null;
+    PlaceEng: string = "";
     // Місце на українській
-    PlaceUkr: string = null;
+    PlaceUkr: string = "";
     // Країна на російській
-    CountryRus: string = null;
+    CountryRus: string = "";
     // Країна на англійській
-    CountryEng: string = null;
+    CountryEng: string = "";
     // Країна на українській
-    CountryUkr: string = null;
+    CountryUkr: string = "";
     //
     latitude: number = 0;
     //

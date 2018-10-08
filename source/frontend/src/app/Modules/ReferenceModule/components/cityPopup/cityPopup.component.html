@@ -1,19 +1,24 @@
 <!-- Modal content-->
 
-<h2 class="ml-4 title_main_page_margin">Населені пункти (створення)
+<h2 class="ml-4 title_main_page_margin">Населені пункти
 </h2>
 
 <!--Row MENU Buttons -->
 <div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
   <div class="col-md-6 pl-0 pr-0 d-lg-inline d-none float-lg-left">
     <div class="d-inline pl-0 mr-my-1">
-      <button type="button" class="btn btn-default my_button_style bold">
+      <button type="button" class="btn btn-default my_button_style bold" (click)="save_and_close(city)">
         <span class="my_button_label font-weight-bold">Записати та закрити</span>
       </button>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_city(city)" matTooltip="Записати">
         <span class="material-icons">save</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Видалити" (click)="remove_city(city._id)">
+        <span class="material-icons">remove</span>
       </button>
     </div>
   </div>
@@ -98,27 +103,27 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Код:" value="">
+          <input matInput placeholder="Код:" value="{{city.Number}}" name="Number" disabled>
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Код станції:" value="">
+          <input matInput placeholder="Код станції:" [(ngModel)]="city.StationCode" name="StationCode">
         </mat-form-field>
       </div>
       <div class="form-group col-12 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Назва (рос):" value="">
+          <input matInput placeholder="Назва (рос):" [(ngModel)]="city.NameRus" name="NameRus">
         </mat-form-field>
       </div>
       <div class="form-group col-12 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Назва (укр):" value="">
+          <input matInput placeholder="Назва (укр):" [(ngModel)]="city.NameUkr" name="NameUkr">
         </mat-form-field>
       </div>
       <div class="form-group col-12 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Назва (англ):" value="">
+          <input matInput placeholder="Назва (англ):" [(ngModel)]="city.NameEng" name="NameEng">
         </mat-form-field>
       </div>
     </div>
@@ -128,7 +133,7 @@
 <!-- Popup Footer -->
 <div id="invoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(city)">
       <span class="pr-3 my_button_label">Закрити</span>
     </button>
   </div>

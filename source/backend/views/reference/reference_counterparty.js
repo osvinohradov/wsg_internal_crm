@@ -302,3 +302,50 @@ export async function get_counterparty_count(req, res) {
         return res.status(500).json({ "Error": `Internal Server Error. See logs.` });
     }
 }
+
+/**
+ * 
+ * Details:
+ * 
+ * Method: GET
+ * 
+ * Route: /references/count/counterparty
+ * 
+ * Description:
+ * Функція повертає кількість збережених Контрагентів.
+ * 
+ * Example (GET) data:
+ * {
+ * 
+ * }
+ * 
+ * @param {HttpRequest} req 
+ * @param {HttpResponse} res 
+ */
+export async function get_counterparties_names(req, res) {
+    let query = req.query;
+    console.log(query);
+    let counterparties = null;
+    let db_query = {};
+    try {
+        if(query.name){
+            db_query.Name = new RegExp(query.name);
+        }
+        counterparties = await Counterparty.find(db_query).select('Name');
+        console.log(counterparties);
+
+        if (!counterparties) {
+            throw new HttpResponseError(`Can't get Counterparties names.`, 404, null);
+        }
+
+        res.status(200).json(counterparties);
+    }
+    catch (err) {
+        if(err instanceof HttpResponseError){
+            console.log(err.message);
+            return res.status(err.status_code).json({ "Error": err.message });
+        }
+        console.log(err);
+        return res.status(500).json({ "Error": `Internal Server Error. See logs.` });
+    }
+}

@@ -244,11 +244,6 @@ export async function get_city_count(req, res) {
     let cities_count = null;
     try {
         cities_count = await City.count();
-
-        if (!cities_count) {
-            throw new HttpResponseError(`Can't get Cities count.`, 404, null);
-        }
-
         res.status(200).json(cities_count);
     }
     catch (err) {

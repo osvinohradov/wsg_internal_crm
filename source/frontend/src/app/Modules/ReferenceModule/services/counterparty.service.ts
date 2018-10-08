@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CounterpartyReference } from "../models";
+import { __core_private_testing_placeholder__ } from "@angular/core/testing";
 
 @Injectable()
 export class CounterpartyService {
@@ -47,8 +48,9 @@ export class CounterpartyService {
    *    Name: String
    * }
    */
-  get_counterparty_names(pattern){
-    return this.http.get<any[]>(this.baseUrl + `/references/counterparty/search?name=${pattern}`)
+  get_counterparties_names_ids(pattern){
+    let query_string = pattern ? `?name=${pattern}` : ""
     // Dummy route for get counterparty elements
+    return this.http.get<any[]>(this.baseUrl + `/references/search/counterparty${query_string}`);
   }
 }

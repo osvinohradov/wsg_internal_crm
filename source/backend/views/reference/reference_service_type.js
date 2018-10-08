@@ -31,6 +31,7 @@ export async function create_service_type(req, res) {
         err = service_type.validateSync();
 
         if (err) {
+            console.log(err);
             throw new HttpResponseError(`Bad request. Service Type object not created.`, 400, err);
         }
 
@@ -203,7 +204,11 @@ export async function get_all_service_types(req, res) {
     let limit = req.query.limit ? parseInt(req.query.limit) : 10;
     let skip = req.query.skip ? parseInt(req.query.skip) : 0;
     try {
-        service_types = await ServiceType.find({}).skip(skip).limit(limit);
+        service_types = await ServiceType.find({}).skip(skip).limit(limit)
+        .populate({ path: 'ProviderId' })
+        .populate({ path: 'AdditionalProviderId' })
+        .populate({ path: 'NomenclatureCatalogId' })
+        .populate({ path: 'NomenclatureAsServiceId' });
 
         if (!service_types) {
             throw new HttpResponseError(`ServiceTypes not found.`, 404, null);

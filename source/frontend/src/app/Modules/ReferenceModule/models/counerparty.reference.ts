@@ -2,10 +2,13 @@ import { BaseModel } from './base_model';
 
 export class CounterpartyReference extends BaseModel{
     _id: string = undefined;
+    // 
+    Number: string = "";
+
     // Найменування
     Name: string = null;
     // Загальні
-    General: any = null;
+    General: General = null;
     /*
     {
         Person :{ type: String },
@@ -18,7 +21,7 @@ export class CounterpartyReference extends BaseModel{
     }
     */
     // Інші
-    Other: any = null;
+    Other: Other = null;
     /*
     {
         IPN         :{ type: String },
@@ -29,7 +32,7 @@ export class CounterpartyReference extends BaseModel{
     }
     */
     // Контакти
-    Contacts: any = null;
+    Contacts: Contacts = null;
     /*
     {
         ContactType     :{ type: String },
@@ -57,4 +60,44 @@ export class CounterpartyReference extends BaseModel{
     */
     // Коментар
     Comment: string = null;
+    constructor(){
+        super();
+        this.General = new General();
+        this.Other = new Other();
+        this.Contacts = new Contacts();
+    }
+}
+
+class General{
+    Person: string = "";
+    IsResident: boolean = false;
+    FullName: string = "";
+    GroupId: CounterpartyGroup = null;
+    MainCounterparty: CounterpartyGroup = null;
+    MainContact: string = "";
+    BankAccount: string = "";
+
+    constructor(){
+        this.GroupId = new CounterpartyGroup();
+        this.MainCounterparty = new CounterpartyGroup();
+    }
+}
+
+class CounterpartyGroup{
+    _id: string = "";
+    Name: string = "";
+}
+
+class Other{
+    IPN: string = "";
+    EDRPOUCode: string = "";
+    Passport: string = "";
+    MPECertificate: string = "";
+    AgencyServices: boolean = false;
+}
+
+class Contacts{
+    ContactType: string = "";
+    Type: string = "";
+    Representation: string = "";
 }

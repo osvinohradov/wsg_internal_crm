@@ -57,17 +57,18 @@ class TicketMapper{
             // Групповой заказ, ставиться пользователем системы, потому как мы не знаем для кого покупается билет
             avia_invoice.GroupInvoiceId = null;
             // Поставщик для xml авиа билетов всегда IATA Україна (вынести в отдельную функцию)
-            let provider = await References.ReferenceCounterparty.findOne({Name: 'ІАТА Україна'});
-            if(!provider){
-                console.log('Provider not found. Creating new provider.')
-                provider = new References.ReferenceCounterparty({
-                    Name: 'ІАТА Україна'
-                });
+            // let provider = await References.ReferenceCounterparty.findOne({Name: 'ІАТА Україна'});
+            // if(!provider){
+            //     console.log('Provider not found. Creating new provider.')
+            //     provider = new References.ReferenceCounterparty({
+            //         Name: 'ІАТА Україна'
+            //     });
 
-                provider = await provider.save();
-            }
-            console.log('Provider:', provider)
-            avia_invoice.ProviderId = provider._id;
+            //     provider = await provider.save();
+            // }
+            // console.log('Provider:', provider)
+            // avia_invoice.ProviderId = provider._id;
+            avia_invoice.ProviderId = 'ІАТА Україна'
 
             // Оплата таксы для xml авиа билетов всегда IATA Україна
             avia_invoice.TaxesPayment = 'ІАТА Україна';
@@ -75,17 +76,18 @@ class TicketMapper{
             avia_invoice.BookingCode = xml_ticket.RecordLocator;
             avia_invoice.CurrencyExchangeId = null;
             // Вид сервиса (ищем в базе, если нет, то создаем его)
-            let service_type = await References.ReferenceServiceType.findOne({ Name: 'AirTickets'});
-            if(!service_type){
-                console.log('Service Type not found. Creating new Service Type.');
-                service_type = new References.ReferenceServiceType({
-                    Name: 'AirTickets'
-                });
+            // let service_type = await References.ReferenceServiceType.findOne({ Name: 'AirTickets'});
+            // if(!service_type){
+            //     console.log('Service Type not found. Creating new Service Type.');
+            //     service_type = new References.ReferenceServiceType({
+            //         Name: 'AirTickets'
+            //     });
 
-                service_type = await provider.save();
-            }
-            console.log('Service Type:', service_type);
-            avia_invoice.ServiceTypeId = service_type._id;
+            //     service_type = await provider.save();
+            // }
+            // console.log('Service Type:', service_type);
+            // avia_invoice.ServiceTypeId = service_type._id;
+            avia_invoice.ServiceTypeId = 'AirTickets';
 
             avia_invoice.CheckingAccount = '';
             avia_invoice.Comment = '';

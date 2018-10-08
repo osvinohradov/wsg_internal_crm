@@ -24,12 +24,10 @@ const AviaInvoice = Avia.AviaInvoice;
  */
 export async function get_all_avia_invoices(req, res){
     let avia_invoices = null;
-    let skip = req.query.skip ? req.query.skip : 0;
-    let limit = req.query.limit ? req.query.limit : 15;
-
+    let skip = parseInt(req.query.skip ? req.query.skip : 0);
+    let limit = parseInt(req.query.limit ? req.query.limit : 15);
     try{
-        res.status(200).json(get_mock_invoice());
-        return;
+        //res.status(200).json(get_mock_invoice());
         avia_invoices = await AviaInvoice.find({}).skip(skip).limit(limit);
 
         if(!avia_invoices){
@@ -41,7 +39,7 @@ export async function get_all_avia_invoices(req, res){
     }
     catch(err){
         console.log(err);
-        req.status(500).json({ "Error": `Internal Server Error.` });
+        res.status(500).json({ "Error": `Internal Server Error.` });
     }
 }
 
@@ -202,7 +200,7 @@ export async function get_avia_invoice_by_id(req, res) {
     }
 
     try {
-        airport = await AviaInvoice.findById(airport_id);
+        airport = await AviaInvoice.findById(airport_id).populate('GroupInvoiceId');
 
         if (!airport) {
             throw new HttpResponseError(`Avia invoice with id ${airport_id} not found.`, 404, null);

@@ -2,16 +2,17 @@ import { BaseModel } from './base_model';
 
 export class CityReference extends BaseModel{
     _id: string = undefined;
-    // Найменування
-    Name: string = null;
     // Код
-    Code: number = null;
+    Number: string = "";
+    
+    // Найменування
+    Name: string = "";
     // Повна назва російською
-    NameRus: string = null;
+    NameRus: string = "";
     // Повна назва англійською
-    NameEng: string = null;
+    NameEng: string = "";
     // Повна назва українською
-    NameUkr: string = null;
+    NameUkr: string = "";
     // Код станції
-    StationCode: number = null;
+    StationCode: number = 0;
 }

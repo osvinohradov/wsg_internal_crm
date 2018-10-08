@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 // Види сервісів
 const ReferenceServiceTypeSchema = new Schema({
     // 
-    Number        :{ type: Number },
+    Number        :{ type: String },
+
+
     // Найменування
     Name        :{ type: String },
     // Постачальник (посилання на Контрагентів)

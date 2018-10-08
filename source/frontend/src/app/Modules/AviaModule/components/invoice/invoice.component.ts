@@ -43,7 +43,7 @@ export class AviaInvoiceComponent implements OnInit {
     });
   }
 
-  load_airports(skip, limit) {
+  load_avia_invoices(skip, limit) {
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
     // Повторяется, по возможности убрать
@@ -58,8 +58,9 @@ export class AviaInvoiceComponent implements OnInit {
 
   public _get_invoice_content(invoice) {
     let info = `Авіаційний квиток №${invoice.DetailInfo.TicketNumber} для ${
-      invoice.DetailInfo.NameId.LastNameNative
-    } ${invoice.DetailInfo.NameId.FirstNameNative}, за маршрутом: `;
+      invoice.DetailInfo.NameId //.LastNameNative
+    } ${invoice.DetailInfo.NameId //.FirstNameNative
+    }, за маршрутом: `;
     let additional = "";
     for (let i = 0; i < invoice.FlightInfo.length; i++) {
       additional += `виліт із ${invoice.FlightInfo[i].DeparturePlace} ${
@@ -89,7 +90,7 @@ export class AviaInvoiceComponent implements OnInit {
     );
   }
 
-  create_airport() {
+  create_avia_invoice() {
     this.open_dialog(new AviaInvoice())
       .afterClosed()
       .subscribe(dialog_result => {
@@ -100,10 +101,10 @@ export class AviaInvoiceComponent implements OnInit {
       });
   }
 
-  edit_airport(airport_item: AviaInvoice) {
-    let airport_copy = AviaInvoice.clone(airport_item);
+  edit_avia_invoice(avia_invoice_item: AviaInvoice) {
+    let avia_invoice_copy = AviaInvoice.clone(avia_invoice_item);
 
-    this.open_dialog(airport_copy)
+    this.open_dialog(avia_invoice_copy)
       .afterClosed()
       .subscribe(dialog_result => {
         if (!dialog_result) return;

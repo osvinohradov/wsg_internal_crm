@@ -19,6 +19,9 @@ export class AviaInvoicePopupComponent implements OnInit {
 
   public test_date = "12.09.2018 17:45:00";
   // Currencies inputs
+  public payment_form_input_autocomplete = new FormControl();
+  public offer_currency_input_autocomplete = new FormControl();
+  public total_currency_input_autocomplete = new FormControl();
   public input_autocomplete = new FormControl();
 
   // Вынести в БД и получать формы оплаты по запросу
@@ -27,6 +30,17 @@ export class AviaInvoicePopupComponent implements OnInit {
     "Безготівковий розрахунок",
     "Банківський кредит"
   ];
+
+  public counterparties_name_id: any = [];
+  get_counterparties_names_id(pattern){
+    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
+      console.log(data)
+    });
+  }
+
+  _set_date(field, event){
+    field = event.value;
+  }
   
 
   // Валюту - временно сделать внутренним массивом (CAD, CHF, CZK, EUR, GBP, JPY, RUB, SEK, USD, grn)
@@ -45,29 +59,31 @@ export class AviaInvoicePopupComponent implements OnInit {
     if (!this.avia_invoice) {
       this.avia_invoice = new AviaInvoice();
     }
+
+    console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
   }
   ngOnInit() {}
 
-  update_airport(avia_invoice: AviaInvoice) {
+  update_avia_invoice(avia_invoice: AviaInvoice) {
     this.AviaService.update_avia_invoice(avia_invoice).subscribe(data => {
       this.avia_invoice = data as AviaInvoice;
     });
   }
 
-  save_airport(airport: AviaInvoice) {
-    console.log("Save avia invoice:", airport);
-    // this.AviaService.save_avia_invoice(airport).subscribe(data => {
-    //   let tmp = data as AviaInvoice;
-    //   if (!tmp._id) {
-    //     this.is_saved = false;
-    //   } else {
-    //     this.avia_invoice = tmp;
-    //     this.is_saved = true;
-    //   }
-    // });
+  save_avia_invoice(avia_invoice: AviaInvoice) {
+    console.log("Save avia invoice:", avia_invoice);
+    this.AviaService.save_avia_invoice(avia_invoice).subscribe(data => {
+      let tmp = data as AviaInvoice;
+      if (!tmp._id) {
+        this.is_saved = false;
+      } else {
+        this.avia_invoice = tmp;
+        this.is_saved = true;
+      }
+    });
   }
 
-  remove_airport(avia_invoice_id: string) {
+  remove_avia_invoice(avia_invoice_id: string) {
     if (!avia_invoice_id) {
       console.log(`avia_invoice_id не передано.`);
       // Show error dialog
@@ -85,15 +101,15 @@ export class AviaInvoicePopupComponent implements OnInit {
 
   save_and_close(avia_invoice: AviaInvoice) {
     // Save ticket
-    this.save_update_airport(avia_invoice);
+    this.save_update_avia_invoice(avia_invoice);
     this.close_dialog(avia_invoice);
   }
 
-  save_update_airport(avia_invoice: AviaInvoice) {
+  save_update_avia_invoice(avia_invoice: AviaInvoice) {
     if (!avia_invoice._id) {
-      this.save_airport(avia_invoice);
+      this.save_avia_invoice(avia_invoice);
     } else {
-      this.update_airport(avia_invoice);
+      this.update_avia_invoice(avia_invoice);
       this.is_saved = true;
     }
   }
@@ -123,7 +139,7 @@ export class AviaInvoicePopupComponent implements OnInit {
    */
 
   get_counterparty_names(pattern) {
-    this.CounterpartyService.get_counterparty_names(pattern).subscribe(data => {
+    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
       console.log(data);
     });
   }

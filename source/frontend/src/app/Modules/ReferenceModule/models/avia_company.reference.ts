@@ -3,11 +3,13 @@ import { BaseModel } from './base_model';
 export class AviaCompanyReference extends BaseModel{
     _id: string = undefined;
     // Номер
-    Number: number = 0;
+    Number: string = "";
+
+    
     // Найменування
-    Name: string = null;
+    Name: string = "";
     // 
-    Code: string = null;
+    Code: string = "";
     // IATA
-    IATA: string = null;
+    IATA: string = "";
 }

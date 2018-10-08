@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import { ServiceTypeService } from '../../services';
-
+import { ServiceTypeService, CounterpartyService } from '../../services';
 import { ServiceTypeReference } from '../../models';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'service-popup-ref',
@@ -14,13 +14,16 @@ import { ServiceTypeReference } from '../../models';
 
 })
 export class ServicePopupReferencesComponent implements OnInit {
+  public input_autocomplete = new FormControl();
   public is_saved: Boolean = false;
+  public counterparties_names_ids: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ServiceTypeReference>,
     @Inject(MAT_DIALOG_DATA) public service_type: ServiceTypeReference,
-    public ServiceTypeService: ServiceTypeService
+    public ServiceTypeService: ServiceTypeService, public CounterpartyService: CounterpartyService
   ) {
+    this.get_counterparties_names_ids(null);
     if (!this.service_type) {
       this.service_type = new ServiceTypeReference();
     }
@@ -92,4 +95,12 @@ export class ServicePopupReferencesComponent implements OnInit {
     }
   }
 
+  get_counterparties_names_ids(pattern: string){
+    console.log(pattern)
+    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
+      console.log('Data:', data)
+      this.counterparties_names_ids = data;
+      console.log(this.counterparties_names_ids)
+    });
+  }
 }

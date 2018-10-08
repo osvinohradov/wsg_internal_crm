@@ -12,15 +12,16 @@
       </button>
     </div>
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_avia_company(avia_company)" matTooltip="Записати">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_avia_company(avia_company)"
+        matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
     <div class="d-inline mr-my-1">
-        <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Видалити" (click)="remove_avia_company(avia_company._id)">
-          <span class="material-icons">remove</span>
-        </button>
-      </div>
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Видалити" (click)="remove_avia_company(avia_company._id)">
+        <span class="material-icons">remove</span>
+      </button>
+    </div>
   </div>
   <!--Container MENU Buttons End-->
 
@@ -103,7 +104,7 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Номер:" [(ngModel)]="avia_company.Number" name="Number">
+          <input matInput placeholder="Номер:" value="{{avia_company.Number}}" name="Number" disabled>
         </mat-form-field>
       </div>
       <div class="form-group col-6 p-2 my_input_style">
