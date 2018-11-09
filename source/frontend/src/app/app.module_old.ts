@@ -18,28 +18,17 @@ import { AviaPrintScorePopupComponent } from './Components/printScore/printScore
 import { AviaPrintScoreWithStampPopupComponent } from './Components/printScoreWithStamp/printScoreWithStamp.component';
 
 
-
-/* ********************** Start Customer Routing Modules Section ********************** */
-import { AviaRoutingModule } from './routers/avia-routing.module';
-/* ********************** End Customer Routing Modules Section ********************** */
-
-/* ********************** Start Customer Components Section ********************** */
-import { AviaInvoiceComponent } from './components/avia/avia.component';
-/* ********************** End Customer Components Section ********************** */
-
 const routes : Routes = []
 
 @NgModule({
   declarations: [
     AppComponent,
-    AviaInvoiceComponent,
     AviaPrintInvoicePopupComponent,
     AviaPrintActPopupComponent,
     AviaPrintScorePopupComponent,
     AviaPrintScoreWithStampPopupComponent
   ],
   imports: [
-    AviaRoutingModule,
     FormsModule,
     BrowserModule,
     AviaModule,
@@ -54,16 +43,13 @@ const routes : Routes = []
     AviaPrintInvoicePopupComponent,
     AviaPrintActPopupComponent,
     AviaPrintScorePopupComponent,
-    AviaPrintScoreWithStampPopupComponent,
-    AviaInvoiceComponent
+    AviaPrintScoreWithStampPopupComponent
   ],
   exports: [
-    AviaRoutingModule,
     AviaPrintInvoicePopupComponent,
     AviaPrintActPopupComponent,
     AviaPrintScorePopupComponent,
-    AviaPrintScoreWithStampPopupComponent,
-    AviaInvoiceComponent
+    AviaPrintScoreWithStampPopupComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
