@@ -20,6 +20,16 @@
           </span>
         </div>
       </li>
+      <li class="nav-item clearfix" aria-expanded="false">
+        <div class="col-10 pl-0 pr-0 float-left">
+          <a class="nav-link list-group-item" routerLink="/group/invoices" routerLinkActive="active">Групові замовлення</a>
+        </div>
+        <div class="col-2 pl-0 pr-0 float-right text-center">
+          <span class="sidebar_icons">
+            <span class="material-icons active-icon">local_airport</span>
+          </span>
+        </div>
+      </li>
       <li class="nav-item clearfix" href="#mainAvia" data-toggle="collapse" aria-expanded="false">
         <div class="col-10 pl-0 pr-0 float-left">
           <a class="nav-link list-group-item">Авіаквитки</a>
@@ -30,8 +40,6 @@
           </span>
         </div>
         <div id="mainAvia" class="collapse float-left my-overflow">
-          <a class="list-group-item" data-parent="#mainAvia" routerLink="/avia/groupinvoice" routerLinkActive="active">
-            Групові замовлення</a>
           <a class="list-group-item" data-parent="#mainAvia" routerLink="/avia/invoice" routerLinkActive="active">
             Накладна авіаційних квитків</a>
         </div>
@@ -46,8 +54,6 @@
           </span>
         </div>
         <div id="mainTrain" class="collapse float-left my-overflow">
-          <a class="list-group-item" data-parent="#mainTrain" routerLink="/train/groupinvoice" routerLinkActive="active">
-            Групові замовлення</a>
           <a class="list-group-item" data-parent="#mainTrain" routerLink="/train/invoice" routerLinkActive="active">
             Накладна залізничних квитків</a>
         </div>
@@ -62,8 +68,6 @@
           </span>
         </div>
         <div id="mainSecurity" class="collapse float-left my-overflow">
-          <a class="list-group-item" data-parent="#mainSecurity" routerLink="/insurance/groupinvoice" routerLinkActive="active">
-            Групові замовлення</a>
           <a class="list-group-item" data-parent="#mainSecurity" routerLink="/insurance/invoice" routerLinkActive="active">
             Накладні страхування</a>
         </div>
@@ -78,8 +82,6 @@
           </span>
         </div>
         <div id="mainTourism" class="collapse float-left my-overflow">
-          <a class="list-group-item" data-parent="#mainTourism" routerLink="/tourism/groupinvoice" routerLinkActive="active">
-            Групові замовлення</a>
           <a class="list-group-item" data-parent="#mainTourism" routerLink="/tourism/invoice" routerLinkActive="active">
             Накладні туризм</a>
         </div>

@@ -1,0 +1,817 @@
+<!-- Modal content-->
+
+<h2 class="ml-4 title_main_page_margin">Контрагенти (створення) *
+</h2>
+
+<!--Row MENU Buttons -->
+<div id="counterpartiesContractPopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
+  <div class="col-md-8 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+    <div class="d-inline pl-0 mr-my-1">
+      <button type="button" class="btn btn-default my_button_style bold" (click)="save_and_close(counterparty)">
+        <span class="my_button_label font-weight-bold">Записати та закрити</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" (click)="save_update_counterparty(counterparty)" matTooltip="Записати">
+        <span class="material-icons">save</span>
+      </button>
+    </div>
+    <div class="d-inline mr-my-1">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Видалити" (click)="remove_counterparty(counterparty._id)">
+        <span class="material-icons">remove</span>
+      </button>
+    </div>
+  </div>
+  <!--Container MENU Buttons End-->
+
+  <!-- DropDown ALL Actions -->
+  <div class="col-md-4 pl-0 pr-0 float-lg-right float-left">
+    <div id="referencesButton" class="d-xl-inline d-none float-right">
+      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+        <span class="material-icons">help_outline</span>
+      </button>
+    </div>
+    <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="save_and_close(counterparty)">
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Записати та закрити</span>
+        </button>
+        <button mat-menu-item (click)="save_update_counterparty(counterparty)" matTooltip="Записати">
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">save</span>
+          </div>
+          <span class="d-inline my_menu_label">Записати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">library_books</span>
+          </div>
+          <span class="d-inline my_menu_label">Перечитати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">filter_none</span>
+          </div>
+          <span class="d-inline my_menu_label">Скопіювати</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">remove_from_queue</span>
+          </div>
+          <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">playlist_play</span>
+          </div>
+          <span class="d-inline my_menu_label">Показати у списку</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">transform</span>
+          </div>
+          <span class="d-inline my_menu_label">Змінити форму...</span>
+        </button>
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">help_outline</span>
+          </div>
+          <span class="d-inline my_menu_label">Довідка</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <!-- DropDown ALL Actions end-->
+</div>
+<!--Row MENU Buttons End-->
+
+<!-- Airport Popup Form Container -->
+<div class="ml-4 mr-4 mt-4 mb-4">
+  <form class="form-horizontal" role="form">
+    <div class="row mr-0 ml-0">
+      <div class="form-group col-10 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Найменування:" [(ngModel)]="counterparty.Name" name="Name" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-2 p-2 my_input_style">
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Код:" [value]="counterparty.Number" name="Number" disabled />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mr-0 ml-0 mt-2">
+      <!-- Angular Material Tabs -->
+      <mat-tab-group class="col-12 pr-0 pl-0">
+        <mat-tab activelabel label="Загальні">
+          <div id="document_content" class="mt-4">
+            <div class="row ml-0 mr-0">
+              <div class="form-group col-lg-9 col-md-8 col-sm-6 col-xs-6 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Юр. / фіз. особа:" />
+                </mat-form-field>
+              </div>
+              <div class="form-group col-lg-3 justify-content-center col-md-4 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+                <mat-checkbox class="" primary>Не є резидентом:</mat-checkbox>
+              </div>
+            </div>
+            <div class="row ml-0 mr-0">
+              <div class="form-group col-12 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Повне найменування:"/>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-12 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Група:" />
+                  <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-12 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Головний контрагент:" />
+                  <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-12 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Основний договір:" />
+                  <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-12 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Основний банківський рахунок:" />
+                  <button mat-button matSuffix mat-icon-button aria-label="Settings">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- TAB 1 - END -->
+
+        <mat-tab activelabel label="Інші">
+          <div id="document_content" class="mt-4">
+            <div class="row ml-0 mr-0">
+              <div class="form-group col-6 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="ІПН:" />
+                </mat-form-field>
+              </div>
+              <div class="form-group col-6 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Код ЕДРПОУ:" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row ml-0 mr-0">
+              <div class="form-group col-6 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Паспорт:" />
+                </mat-form-field>
+              </div>
+              <div class="form-group col-6 p-2 my_input_style">
+                <mat-form-field class="example-form-field">
+                  <input matInput type="text" placeholder="Номер свідоцтва ПДВ:" />
+                </mat-form-field>
+              </div>
+              <div class="form-group col-3 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
+                <mat-checkbox class="" primary>Виділити послуги агенства:</mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- TAB 2 - END -->
+
+        <mat-tab label="Контакти">
+          <!-- TAB 3 - START -->
+          <div class="mt-5 mb-4">
+            <!-- Table Controls -->
+            <div class="pl-0 pr-0 clearfix">
+              <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style">
+                    <span class="material-icons">add</span>
+                    <span class="my_button_label">Додати</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати" (click)="getAviaInvoiceShort()">
+                    <span class="material-icons">filter_none</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Змінити">
+                    <span class="material-icons">edit</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                    <span class="material-icons">delete_sweep</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вверх">
+                    <span class="material-icons">arrow_upward</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вниз">
+                    <span class="material-icons">arrow_downward</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Button Row - End -->
+              <!-- DropDown ALL Actions -->
+              <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+                <div class="allActionsMenu d-inline float-left float-lg-right">
+                  <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu1">Всі дії
+                    <span class="material-icons">keyboard_arrow_down</span>
+                  </button>
+                  <mat-menu #menu1="matMenu">
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">add</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Додати</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">filter_none</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Скопіювати</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">edit</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Змінити</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">delete_sweep</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Вилучити</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">done_all</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Закінчити редагування</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">location_searching</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Знайти</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">location_disabled</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Відмінити пошук</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">arrow_upward</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Перемістити вверх</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">arrow_downward</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Перемістити вниз</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">sort</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Сортувати за зростанням</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons" style="transform: scaleY(-1);">sort</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Сортувати за спаданням</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">done_all</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Вивести список...</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+              <!-- DropDown ALL Actions end-->
+            </div>
+            <!-- Table Controls - End -->
+
+            <!-- Popup Table -->
+            <div class="mt-2 ml-0 mr-0 my_table_style">
+              <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Тип</th>
+                      <th scope="col">Вид</th>
+                      <th scope="col">Представлення</th>
+                  </thead>
+                  <tbody>
+                    <tr class="main">
+                      <td class="text-center" scope="row">1</td>
+                      <td class="text-center">2</td>
+                      <td class="text-center">3</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Popup Table - End -->
+          </div>
+        </mat-tab>
+        <!-- TAB 3 - END -->
+
+        <mat-tab label="Фіз. особи">
+          <!-- TAB 4 - START -->
+          <div class="mt-5 mb-4">
+
+            <!-- Table Controls -->
+            <div class="pl-0 pr-0 clearfix">
+              <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+                <div class="d-inline pl-0 mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style">
+                    <span class="material-icons">add</span>
+                    <span class="my_button_label">Створити</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
+                    <span class="material-icons">filter_none</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Змінити">
+                    <span class="material-icons">edit</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                    <span class="material-icons">delete_sweep</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style">
+                    <span class="material-icons">location_searching</span>
+                    <span class="my_button_label">Знайти</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Відмінити пошук">
+                    <span class="material-icons">location_disabled</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Button Row - End -->
+              <!-- DropDown ALL Actions -->
+              <div class="allActionsMenu d-inline float-left float-lg-right">
+                <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu2">Всі дії
+                  <span class="material-icons">keyboard_arrow_down</span>
+                </button>
+                <mat-menu #menu2="matMenu">
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">add</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Створити</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">filter_none</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Скопіювати</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">edit</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Змінити</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">remove_from_queue</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">delete_sweep</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Вилучити</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">refresh</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Оновити</span>
+                  </button>
+                  <button mat-menu-item>
+                    <span class="empty-icon d-inline my_menu_label">Знайти: Фізична особа - DINA CHUKITOVA</span>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">chevron_right</span>
+                    </div>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_searching</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Знайти</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_disabled</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Відмінити пошук</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">settings</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Настроїти список...</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">done_all</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Вивести список...</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+            <!-- DropDown ALL Actions end-->
+          </div>
+          <!-- Table Controls - End -->
+
+          <!-- Popup Table -->
+          <div class="mt-2 ml-0 mr-0 my_table_style">
+            <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Фізична особа</th>
+                    <th scope="col">Коментар</th>
+                </thead>
+                <tbody>
+                  <tr class="main">
+                    <td class="text-center" scope="row">1</td>
+                    <td class="text-center">2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Popup Table - End -->
+        </mat-tab>
+        <!-- TAB 4 - END -->
+
+        <mat-tab label="Послуги">
+          <!-- TAB 5 - START -->
+          <div class="mt-5 mb-4">
+
+            <!-- Table Controls -->
+            <div class="pl-0 pr-0 clearfix">
+              <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+                <div class="d-inline pl-0 mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style">
+                    <span class="material-icons">add</span>
+                    <span class="my_button_label">Додати</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
+                    <span class="material-icons">filter_none</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                    <span class="material-icons">delete_sweep</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вверх">
+                    <span class="material-icons">arrow_upward</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вниз">
+                    <span class="material-icons">arrow_downward</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Button Row - End -->
+              <!-- DropDown ALL Actions -->
+              <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+                <div id="referencesButton" class="d-lg-inline d-none float-right">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+                    <span class="material-icons">help_outline</span>
+                  </button>
+                </div>
+                <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+                  <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu3">Всі дії
+                    <span class="material-icons">keyboard_arrow_down</span>
+                  </button>
+                  <mat-menu #menu3="matMenu">
+                    <button mat-menu-item (click)="openDialog()">
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">add</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Додати</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">filter_none</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Скопіювати</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">edit</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Змінити</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">delete_sweep</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Вилучити</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">done_all</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Закінчити редагування</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">location_searching</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Знайти</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">location_disabled</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Відмінити пошук</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">arrow_upward</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Перемістити вверх</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">arrow_downward</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Перемістити вниз</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">sort</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Сортувати за зростанням</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons" style="transform: scaleY(-1);">sort</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Сортувати за спаданням</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">done_all</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Вивести список...</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+              <!-- DropDown ALL Actions end-->
+            </div>
+            <!-- Table Controls - End -->
+
+            <!-- Popup Table -->
+            <div class="mt-2 ml-0 mr-0 my_table_style">
+              <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="code_column">N</th>
+                      <th scope="col">Послуга</th>
+                      <th scope="col">Опис</th>
+                      <th scope="col">Агентська винагорода</th>
+                      <th scope="col">% банку</th>
+                  </thead>
+                  <tbody>
+                    <tr class="main">
+                      <td class="text-center" scope="row">1</td>
+                      <td class="text-center">2</td>
+                      <td class="text-center">3</td>
+                      <td class="text-center">4</td>
+                      <td class="text-center">5</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Popup Table - End -->
+
+          </div>
+        </mat-tab>
+        <!-- TAB 5 - END -->
+
+        <mat-tab label="Туристичні послуги">
+          <!-- TAB 6 - START -->
+          <div class="mt-5 mb-4">
+
+            <!-- Table Controls -->
+            <div class="pl-0 pr-0 clearfix">
+              <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style">
+                    <span class="material-icons">add</span>
+                    <span class="my_button_label">Додати</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button">
+                    <span class="material-icons">filter_none</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                    <span class="material-icons">delete_sweep</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вверх">
+                    <span class="material-icons">arrow_upward</span>
+                  </button>
+                </div>
+                <div class="d-inline mr-my-1">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вниз">
+                    <span class="material-icons">arrow_downward</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Button Row - End -->
+              <!-- DropDown ALL Actions -->
+              <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+                <div id="referencesButton" class="d-lg-inline d-none float-right">
+                  <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+                    <span class="material-icons">help_outline</span>
+                  </button>
+                </div>
+                <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+                  <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu4">Всі дії
+                    <span class="material-icons">keyboard_arrow_down</span>
+                  </button>
+                  <mat-menu #menu4="matMenu">
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">add</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Додати</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">filter_none</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Скопіювати</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">edit</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Змінити</span>
+                    </button>
+
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">delete_sweep</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Вилучити</span>
+                    </button>
+
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">done_all</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Закінчити редагування</span>
+                    </button>
+
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">location_searching</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Знайти</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">location_disabled</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Відмінити пошук</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">arrow_upward</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Перемістити вверх</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">arrow_downward</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Перемістити вниз</span>
+                    </button>
+
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">sort</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Сортувати за зростанням</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons" style="transform: scaleY(-1);">sort</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Сортувати за спаданням</span>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="d-inline mr-3 my_menu_icon">
+                        <span class="material-icons">done_all</span>
+                      </div>
+                      <span class="d-inline my_menu_label">Вивести список...</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+              <!-- DropDown ALL Actions end-->
+            </div>
+            <!-- Table Controls - End -->
+
+            <!-- Popup Table -->
+            <div class="mt-2 ml-0 mr-0 my_table_style">
+              <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="code_column">N</th>
+                      <th scope="col">Послуга</th>
+                  </thead>
+                  <tbody>
+                    <tr class="main">
+                      <td class="text-center" scope="row">1</td>
+                      <td class="text-center">2</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Popup Table - End -->
+
+          </div>
+        </mat-tab>
+        <!-- TAB 6 - END -->
+
+      </mat-tab-group>
+      <!-- Angular Material Tabs - End -->
+    </div>
+  </form>
+</div>
+
+<!-- Popup Footer -->
+<div id="counterpartiesContractPopupFooter">
+  <div class="mr-4 mb-4 float-right">
+    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog(counterparty)">
+      <span class="pr-3 my_button_label">Закрити</span>
+    </button>
+  </div>
+</div>
+<!-- Popup Footer - End -->
