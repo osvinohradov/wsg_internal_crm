@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
-import { AviaInvoice } from "../../models";
-import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { CounterpartyService } from "../../../ReferenceModule/services";
+import { AviaInvoiceModel } from "../../models/avia/avia_invoice.model";
+import { AviaInvoiceService } from "../../services/avia/avia_invoice.service";
+import { CounterpartyService } from "../../services/reference/counterparty.service";
 import { FormControl } from "@angular/forms";
 
 @Component({
@@ -63,29 +63,29 @@ export class AviaInvoicePopupComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
+    @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoiceModel,
     public AviaInvoiceService: AviaInvoiceService,
     public CounterpartyService: CounterpartyService,
-    public AviaGroupInvoiceService: AviaGroupInvoiceService
+    // public AviaGroupInvoiceService: AviaGroupInvoiceService
   ) {
     if (!this.avia_invoice) {
-      this.avia_invoice = new AviaInvoice();
+      this.avia_invoice = new AviaInvoiceModel();
     }
     this.get_avia_group_invoice_content(null);
     console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
   }
   ngOnInit() {}
 
-  update_avia_invoice(avia_invoice: AviaInvoice) {
+  update_avia_invoice(avia_invoice: AviaInvoiceModel) {
     this.AviaInvoiceService.update_avia_invoice(avia_invoice).subscribe(data => {
-      this.avia_invoice = data as AviaInvoice;
+      this.avia_invoice = data as AviaInvoiceModel;
     });
   }
 
-  save_avia_invoice(avia_invoice: AviaInvoice) {
+  save_avia_invoice(avia_invoice: AviaInvoiceModel) {
     console.log("Save avia invoice:", avia_invoice);
     this.AviaInvoiceService.save_avia_invoice(avia_invoice).subscribe(data => {
-      let tmp = data as AviaInvoice;
+      let tmp = data as AviaInvoiceModel;
       if (!tmp._id) {
         this.is_saved = false;
       } else {
@@ -111,13 +111,13 @@ export class AviaInvoicePopupComponent implements OnInit {
     });
   }
 
-  save_and_close(avia_invoice: AviaInvoice) {
+  save_and_close(avia_invoice: AviaInvoiceModel) {
     // Save ticket
     this.save_update_avia_invoice(avia_invoice);
     this.close_dialog(avia_invoice);
   }
 
-  save_update_avia_invoice(avia_invoice: AviaInvoice) {
+  save_update_avia_invoice(avia_invoice: AviaInvoiceModel) {
     if (!avia_invoice._id) {
       this.save_avia_invoice(avia_invoice);
     } else {
@@ -127,10 +127,10 @@ export class AviaInvoicePopupComponent implements OnInit {
   }
 
   get_avia_group_invoice_content(pattent){
-    this.AviaGroupInvoiceService.get_avia_group_invoice_content(pattent).subscribe((data) => {
-      this.avia_group_invoices = data;
-      console.log(data)
-    });
+    // this.AviaGroupInvoiceService.get_avia_group_invoice_content(pattent).subscribe((data) => {
+    //   this.avia_group_invoices = data;
+    //   console.log(data)
+    // });
   }
 
   /**

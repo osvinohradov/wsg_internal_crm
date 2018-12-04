@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CuratorReference } from "../models";
+import { CuratorReference }  from "../../models/reference";
 
 @Injectable()
 export class CuratorService {

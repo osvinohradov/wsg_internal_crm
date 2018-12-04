@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CurrencyExchangeReference } from "../models";
+import { CurrencyExchangeReference }  from "../../models/reference";
 
 @Injectable()
 export class CurrencyExchangeService {

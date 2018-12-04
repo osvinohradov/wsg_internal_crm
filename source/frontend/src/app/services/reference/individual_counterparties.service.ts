@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference } from "../models";
+import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference }  from "../../models/reference";
 
 @Injectable()
 export class IndividualCounterpartyService {

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AirportReferenceModel } from "../../models/reference";
+import { AirportReferenceModel }  from "../../models/reference";
 
 @Injectable()
 export class AirportService {

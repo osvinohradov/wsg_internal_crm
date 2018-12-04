@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AviaCompanyReference } from "../models";
+import { AviaCompanyReference }  from "../../models/reference";
 
 @Injectable()
 export class AviaCompanyService {

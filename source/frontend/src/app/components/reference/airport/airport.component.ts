@@ -8,7 +8,7 @@ import { AirportPopupReferencesComponent } from './../airportPopup/airportPopup.
 
 import { AirportService } from '../../../services/reference';
 
-import { AirportReference } from '../../../models/reference';
+import { AirportReferenceModel } from '../../../models/reference/airport.reference';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { AirportReference } from '../../../models/reference';
 export class AirportReferencesComponent implements OnInit {
 
   // Сохраняются загруженне Аэропорты
-  public airports: AirportReference[] = null;
+  public airports: AirportReferenceModel[] = null;
   // В данной версии не используется. Сохраняются выделенные элементы.
   public selected_items = [];
   // Указывает нужно отображать загрузчик или нет
@@ -68,7 +68,7 @@ export class AirportReferencesComponent implements OnInit {
   }
 
   create_airport(){
-    this.open_dialog(new AirportReference()).afterClosed()
+    this.open_dialog(new AirportReferenceModel()).afterClosed()
     .subscribe((dialog_result) => {
       console.log(dialog_result)
       if(!dialog_result) return;
@@ -78,8 +78,8 @@ export class AirportReferencesComponent implements OnInit {
     });
   }
 
-  edit_airport(airport_item: AirportReference){
-    let airport_copy = AirportReference.clone(airport_item);
+  edit_airport(airport_item: AirportReferenceModel){
+    let airport_copy = AirportReferenceModel.clone(airport_item);
     
     this.open_dialog(airport_copy).afterClosed()
     .subscribe((dialog_result) => {

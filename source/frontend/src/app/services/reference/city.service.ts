@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CityReference } from "../models";
+import { CityReference }  from "../../models/reference";
 
 @Injectable()
 export class CityService {

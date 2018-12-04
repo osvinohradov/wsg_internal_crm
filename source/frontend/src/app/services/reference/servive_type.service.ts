@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ServiceTypeReference } from "../models";
+import { ServiceTypeReference } from "../../models/reference";
 
 @Injectable()
 export class ServiceTypeService {

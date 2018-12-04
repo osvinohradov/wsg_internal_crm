@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CounterpartyReference } from "../models";
+import { CounterpartyReference }  from "../../models/reference";
 import { __core_private_testing_placeholder__ } from "@angular/core/testing";
 
 @Injectable()

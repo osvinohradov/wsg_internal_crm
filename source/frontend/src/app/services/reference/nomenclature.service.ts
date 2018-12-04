@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { NomenclatureReference } from "../models";
+import { NomenclatureReference }  from "../../models/reference";
 
 @Injectable()
 export class NomenclatureService {

@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
-import { AirportReference } from "../../models";
-import { AirportService } from "../../services";
+import { AirportReferenceModel } from '../../../models/reference/airport.reference';
+import { AirportService } from "../../../services/reference/airport.service";
 
 @Component({
   selector: "airport-popup-ref",
@@ -19,25 +19,25 @@ export class AirportPopupReferencesComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AirportPopupReferencesComponent>,
-    @Inject(MAT_DIALOG_DATA) public airport: AirportReference,
+    @Inject(MAT_DIALOG_DATA) public airport: AirportReferenceModel,
     public AirportService: AirportService
   ) {
     if (!this.airport) {
-      this.airport = new AirportReference();
+      this.airport = new AirportReferenceModel();
     }
   }
 
   ngOnInit() {}
 
-  update_airport(airport: AirportReference) {
+  update_airport(airport: AirportReferenceModel) {
     this.AirportService.update_airport(airport).subscribe(data => {
-      this.airport = data as AirportReference;
+      this.airport = data as AirportReferenceModel;
     });
   }
 
-  save_airport(airport: AirportReference) {
+  save_airport(airport: AirportReferenceModel) {
     this.AirportService.save_airport(airport).subscribe(data => {
-      let tmp = data as AirportReference;
+      let tmp = data as AirportReferenceModel;
       if (!tmp._id) {
         this.is_saved = false;
       } else {
@@ -59,13 +59,13 @@ export class AirportPopupReferencesComponent implements OnInit {
     });
   }
 
-  save_and_close(airport: AirportReference) {
+  save_and_close(airport: AirportReferenceModel) {
     // Save ticket
     this.save_update_airport(airport);
     this.close_dialog(airport);
   }
 
-  save_update_airport(airport: AirportReference) {
+  save_update_airport(airport: AirportReferenceModel) {
     if (!airport._id) {
       this.save_airport(airport);
     } else {

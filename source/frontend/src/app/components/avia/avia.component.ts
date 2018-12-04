@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material";
 
 
 import { AviaInvoiceModel } from '../../models/avia/avia_invoice.model';
 import { AviaInvoiceService } from "../../services/avia/avia_invoice.service";
+import { AviaInvoicePopupComponent } from "../avia_popup/invoicePopup.component";
 
 
 @Component({
@@ -84,7 +85,7 @@ export class AviaInvoiceComponent implements OnInit {
     return info;
   }
   create_avia_invoice() {
-    this.open_dialog(new AviaInvoice())
+    this.open_dialog(new AviaInvoiceModel())
       .afterClosed()
       .subscribe(dialog_result => {
         console.log(dialog_result);
@@ -94,8 +95,8 @@ export class AviaInvoiceComponent implements OnInit {
       });
   }
 
-  edit_avia_invoice(avia_invoice_item: AviaInvoice) {
-    let avia_invoice_copy = AviaInvoice.clone(avia_invoice_item);
+  edit_avia_invoice(avia_invoice_item: AviaInvoiceModel) {
+    let avia_invoice_copy = AviaInvoiceModel.clone(avia_invoice_item);
 
     this.open_dialog(avia_invoice_copy)
       .afterClosed()

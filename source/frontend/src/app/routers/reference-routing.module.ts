@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AviaCompanyReferencesComponent } from './components/aviaCompany/aviaCompany.component';
-import { AirportReferencesComponent } from './components/airport/airport.component';
-import { CityReferencesComponent } from './components/city/city.component';
-import { CounterpartiesContractReferencesComponent } from './components/counterpartiesContract/counterpartiesContract.component';
-import { CounterpartyReferencesComponent } from './components/counterparty/counterparty.component';
-import { CuratorReferencesComponent } from './components/curator/curator.component';
-import { NomenclatureReferencesComponent } from './components/nomenclature/nomenclature.component';
-import { CurrencyExchangeReferencesComponent } from './components/currencyExchange/currencyExchange.component';
-import { IndividualCounterpartiesReferencesComponent } from './components/individualCounterparties/individualCounterparties.component';
-import { ServiceReferencesComponent } from './components/service/service.component';
+import { AviaCompanyReferencesComponent } from '../components/reference/aviaCompany/aviaCompany.component';
+import { AirportReferencesComponent } from '../components/reference/airport/airport.component';
+import { CityReferencesComponent } from '../components/reference/city/city.component';
+import { CounterpartiesContractReferencesComponent } from '../components/reference/counterpartiesContract/counterpartiesContract.component';
+import { CounterpartyReferencesComponent } from '../components/reference/counterparty/counterparty.component';
+import { CuratorReferencesComponent } from '../components/reference/curator/curator.component';
+import { NomenclatureReferencesComponent } from '../components/reference/nomenclature/nomenclature.component';
+import { CurrencyExchangeReferencesComponent } from '../components/reference/currencyExchange/currencyExchange.component';
+import { IndividualCounterpartiesReferencesComponent } from '../components/reference/individualCounterparties/individualCounterparties.component';
+import { ServiceReferencesComponent } from '../components/reference/service/service.component';
 
 const routes: Routes = [
   {
