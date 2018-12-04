@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start_server": "nodemon --exec babel-node --presets env,stage-2 app.js",
-    "parser": "nodemon --exec babel-node --presets env,stage-2 ./services/file_watcher.js"
+    "parser": "nodemon --exec babel-node --presets env,stage-2 ./services/file_watcher.js",
+    "ticket_parser": "nodemon --exec babel-node --presets env,stage-2 ./services/train/parser.js"
   },
   "author": "Vladimir Vinohradov",
   "license": "ISC",

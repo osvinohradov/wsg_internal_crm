@@ -1,0 +1,94 @@
+<invoice>
+  <id>384153373731</id>
+  <outer_id>-1</outer_id>
+  <sale_point_name>api.worldservice2</sale_point_name>
+  <asps_code>575c64e573f94244eed56f9031e1a0a8</asps_code>
+  <asps_code_2>92Ю-Н1-5103942-0303</asps_code_2>
+  <state>4</state>
+  <is_electronic>1</is_electronic>
+  <creation_time>2018-03-03 16:01:45</creation_time>
+  <owner_email>rail@worldservice.ua</owner_email>
+  <owner_phone>380 (11) 111 11 11</owner_phone>
+  <travel>
+    <guididx>10d821c1-9121-9b0e-00ca-00303932cb00</guididx>
+    <src>
+      <idx>22218000</idx>
+      <name>ЛЬВОВ</name>
+    </src>
+    <dst>
+      <idx>22200001</idx>
+      <name>КИЕВ-ПАССАЖИРСКИЙ</name>
+    </dst>
+    <transport_type>2</transport_type>
+    <dep_date>2018-03-28</dep_date>
+    <arr_date>2018-03-29</arr_date>
+    <dst_arr>06:49</dst_arr>
+    <duration>07:30</duration>
+    <src_dep>23:19</src_dep>
+    <trip>
+      <id>092Л</id>
+      <src>
+        <idx>22218000</idx>
+        <name>ЛЬВОВ</name>
+      </src>
+      <dst>
+        <idx>22200001</idx>
+        <name>КИЕВ-ПАССАЖИРСКИЙ</name>
+      </dst>
+      <transporter>Львівська залізниця</transporter>
+      <nickname>Львів</nickname>
+      <state>0</state>
+      <el>1</el>
+      <boarding_pass>1</boarding_pass>
+    </trip>
+  </travel>
+  <sold_seats>
+    <passenger>
+      <name>Оксана </name>
+      <surname>Плахтій</surname>
+    </passenger>
+    <price>
+      <total>42270</total>
+      <tax>217</tax>
+      <articles>
+        <code>1601</code>
+        <name>Документи</name>
+        <price>40970</price>
+      </articles>
+      <articles>
+        <code>2601</code>
+        <name>Ком.збір</name>
+        <price>1300</price>
+      </articles>
+    </price>
+    <id>15</id>
+    <car_id>5</car_id>
+    <tos_id>1040</tos_id>
+  </sold_seats>
+  <price>
+    <total>42270</total>
+    <tax>217</tax>
+    <articles>
+      <code>1601</code>
+      <name>Документи</name>
+      <price>40970</price>
+    </articles>
+    <articles>
+      <code>2601</code>
+      <name>Ком.збір</name>
+      <price>1300</price>
+    </articles>
+  </price>
+  <owner_id>204</owner_id>
+  <boarding_pass>1</boarding_pass>
+  <counterparts>
+    <transporter>
+      <name>Львівська залізниця</name>
+      <text>Львівська залізниця. Україна, 79000, м.Львів, вул.Гоголя, 1. т.+38(032)226-20-68, +38(044)503-70-05</text>
+    </transporter>
+    <insurer>
+      <name>СК"АРСЕНАЛ СТРАХУВАННЯ"</name>
+      <text>СК"АРСЕНАЛ СТРАХУВАННЯ". КИЇВ БОРЩАГІВСЬКА154, 0800604453</text>
+    </insurer>
+  </counterparts>
+</invoice>
