@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "frontend_start_local": "ng serve -o",
+    "frontend_start_local": "ng serve -o --port 4201",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",

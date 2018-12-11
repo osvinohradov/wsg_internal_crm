@@ -1,6 +1,17 @@
 
 import xml_parser from 'xml-parser';
 
+
+/**
+ * Класс описывает как происходит парсинг файла
+ */
+class TrainArgestParser{
+    constructor(xml_string){
+        this.xml_string = xml_string;
+    }
+
+}
+
 export function parse_ticket(xml_ticket){
     let section = {};
 

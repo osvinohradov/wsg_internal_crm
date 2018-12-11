@@ -6,11 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
-// import { AviaModule } from './Modules/AviaModule/avia.module';
-// import { TrainModule } from './Modules/TrainModule/train.module';
-// import { InsuranceModule } from './Modules/InsuranceModule/insurance.module';
-// import { TourismModule } from './Modules/TourismModule/tourism.module';
-// import { ReferenceModule } from './Modules/ReferenceModule/reference.module';
+import { AviaModule } from './Modules/AviaModule/avia.module';
+import { TrainModule } from './Modules/TrainModule/train.module';
+import { InsuranceModule } from './Modules/InsuranceModule/insurance.module';
+import { TourismModule } from './Modules/TourismModule/tourism.module';
+import { ReferenceModule } from './Modules/ReferenceModule/reference.module';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -36,43 +36,24 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatListModule} from '@angular/material/list';
 
 
-
-/* ********************** Start Customer Routing Modules Section ********************** */
-import { AviaRoutingModule } from './routers/avia-routing.module';
-import { GroupInvoiceRoutingModule } from './routers/group_invoice-routing.module';
-/* ********************** End Customer Routing Modules Section ********************** */
-
-/* ********************** Start Customer Components Section ********************** */
-import { AviaInvoiceComponent } from './components/avia/avia.component';
-import { GroupInvoiceComponent } from './components/group_invoice/group_invoice.component';
-import { AviaInvoiceService } from './services/avia/avia_invoice.service';
-
-/* ********************** End Customer Components Section ********************** */
-
 const routes : Routes = []
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AviaInvoiceComponent,
-    GroupInvoiceComponent,
+    AppComponent
     // AviaPrintInvoicePopupComponent,
     // AviaPrintActPopupComponent,
     // AviaPrintScorePopupComponent,
     // AviaPrintScoreWithStampPopupComponent
   ],
   imports: [
-    // ************
-    AviaRoutingModule,
-    GroupInvoiceRoutingModule,
-    // ************
     FormsModule,
     BrowserModule,
-    // AviaModule,
-    // TrainModule,
-    // InsuranceModule,
-    // TourismModule,
-    // ReferenceModule,
+    AviaModule,
+    TrainModule,
+    InsuranceModule,
+    TourismModule,
+    ReferenceModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     FormsModule,
@@ -102,19 +83,14 @@ const routes : Routes = []
     // AviaPrintActPopupComponent,
     // AviaPrintScorePopupComponent,
     // AviaPrintScoreWithStampPopupComponent,
-    AviaInvoiceComponent,
-    GroupInvoiceComponent
   ],
   exports: [
-    AviaRoutingModule,
-    GroupInvoiceRoutingModule,
     // AviaPrintInvoicePopupComponent,
     // AviaPrintActPopupComponent,
     // AviaPrintScorePopupComponent,
     // AviaPrintScoreWithStampPopupComponent,
-    AviaInvoiceComponent
   ],
-  providers: [AviaInvoiceService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
