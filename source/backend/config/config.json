@@ -1,0 +1,28 @@
+{
+    "dev": {
+        "host": "localhost",
+        "port": "8080",
+        "apiPrefix": "api/",
+        "db": {
+            "host": "localhost",
+            "port": 27017,
+            "database": "wsg_crm",
+            "user": "",
+            "password": ""
+        },
+        "path_to_files":{
+            "root": "D:\\",
+            "dir_name": "wsg_data",
+            "categories":{
+                "avia": {
+                    "amadeus": "amadeus"
+                },
+                "train":{
+                    "argest": "argest",
+                    "amadeus": "amadeus",
+                    "uarails": "uarails"
+                }
+            }            
+        }
+    }
+}

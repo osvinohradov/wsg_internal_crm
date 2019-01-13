@@ -1,17 +1,10 @@
-import * as Avia from './avia';
-import * as Train from './train';
-import * as Tourism from './tourism';
-import * as Insurance from './insurance';
-import * as References from './reference';
+import TrainInvoiceModel from './train_invoice_model';
+import AviaInvoiceModel from './avia_invoice_model';
+import GroupInvoiceModel from './group_invoice_model';
 
-import * as Utils from './utils_model';
 
 export {
-    Avia,
-    Train,
-    Tourism,
-    Insurance,
-    References,
-
-    Utils
+    AviaInvoiceModel,
+    TrainInvoiceModel,
+    GroupInvoiceModel
 }

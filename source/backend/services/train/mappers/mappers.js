@@ -1,10 +1,11 @@
-import { Train } from "../../models";
+import { TrainInvoiceModel } from "../../../models";
+import { PAYMENT_FORMS } from '../../../constants/common';
 
 export function map_ticket_from_argest(ticket_from_xml) {
   let tfx = ticket_from_xml;
-  let t = new Train();
+  let t = new TrainInvoiceModel();
   // Add payment provider date field
-  t.payment_form = get_payment_form(tfx.paymentGateway);
+  t.payment_form = PAYMENT_FORMS[tfx.paymentGateway] // get_payment_form(tfx.paymentGateway);
   t.detail_info.ticket_number = tfx.confirmationNumber;
   t.detail_info.train_number = tfx.trainNumber;
   t.detail_info.carriage_number = tfx.wagonNumber;
@@ -33,19 +34,6 @@ export function map_ticket_from_argest(ticket_from_xml) {
   t.detail_info.other_services.mpe = osm;
 
   return t;
-}
-
-function get_payment_form(value) {
-  if (!value) {
-    return "";
-  }
-  let payment_form = "";
-  switch (value) {
-    case "non-cash": {
-      payment_form = "Безготівковий розрахунок";
-    }
-  }
-  return payment_form;
 }
 
 function parse_date_time(date_string) {

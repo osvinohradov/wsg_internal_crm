@@ -1,15 +1,6 @@
-import * as AviaController from './routes';
-import * as ReferencesController from './reference';
-import { register_routes } from './routes';
-
-
-let Controllers = {
-    AviaController,
-    ReferencesController
-}
+import { router as train_ctrl } from './train';
 
 
 export {
-    register_routes,
-    Controllers
+    train_ctrl
 }

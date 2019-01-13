@@ -4,7 +4,7 @@
   "description": "backend for WSG CRM system",
   "main": "app.js",
   "scripts": {
-    "start_server": "nodemon --exec babel-node --presets env,stage-2 app.js",
+    "start": "nodemon --exec babel-node --presets env,stage-2 app.js",
     "parser": "nodemon --exec babel-node --presets env,stage-2 ./services/file_watcher.js",
     "ticket_parser": "nodemon --exec babel-node --presets env,stage-2 ./services/train/parsers.js"
   },
@@ -17,6 +17,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "html-pdf": "^2.2.0",
     "nodemon": "^1.18.4",
     "xml2js": "^0.4.19"
   },
