@@ -1,7 +1,8 @@
 import * as model from './index';
 
 async function init_db(){
-    console.log('########################### Initialize DB ###########################');
+    console.log('#################################### Initialize DB ####################################');
+    
 
     if(await model.UserModel.count() == 0){
         console.log('======== Create new user ========');
@@ -50,7 +51,7 @@ async function init_db(){
         let reference_unit_classifier = new model.Ref.ReferenceUnitClassifierModel(reference_unit_classifier_obj);
         await reference_unit_classifier.save();
     }
-
+    console.log('#######################################################################################');
 }
 let user_obj = {
     first_name: 'Ігор',
