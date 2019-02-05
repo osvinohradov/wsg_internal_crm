@@ -1,3 +1,9 @@
+class BaseInvoiceModel {
+    constructor(){ }
+}
+
+
+
 export class BaseModel{
     static serialize_from_json(json_obj: any, type: any){
         let tmp_airport = type

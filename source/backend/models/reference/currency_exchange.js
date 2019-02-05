@@ -1,14 +1,17 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Обмін валют
 const ReferenceCurrencyExchangeSchema = new Schema({
-    // Найменування
-    Name            :{ type: String },
-    // Коефіцієнт
-    Сoefficient     :{ type: Number }
-});
+    name:           { type: String, default: '', required: true },  // Найменування
+    coefficient:    { type: Number, default: 0 },  // Коефіцієнт
 
-const ReferenceCurrencyExchange = mongoose.model('ReferenceCurrencyExchange', ReferenceCurrencyExchangeSchema);
+    updated_at:     { type: Date, default: Date.now() },
+    created_at:     { type: Date, default: Date.now() }
+}, { collection: 'ref_currency_exchanges' });
 
-exports.ReferenceCurrencyExchange = ReferenceCurrencyExchange;
+const ReferenceCurrencyExchangeModel = mongoose.model('ReferenceCurrencyExchangeModel', ReferenceCurrencyExchangeSchema);
+
+export {
+    ReferenceCurrencyExchangeModel
+}

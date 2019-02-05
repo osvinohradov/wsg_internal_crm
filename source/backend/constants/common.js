@@ -1,6 +1,6 @@
 export const PAYMENT_FORMS = {
     "cash": "Готівка",
-    "card" : "Платіжна картка",
+    "non-cash" : "Платіжна картка",
     "credit" : "Банківський кредит"
 }
 

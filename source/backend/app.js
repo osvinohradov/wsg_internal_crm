@@ -8,7 +8,9 @@ import cookie_parser from 'cookie-parser';
 import { FileWatcher } from './services';
 
 import { config_init, dir_init, route_init } from './initializers';
+import { initialize_train_ticket_parsers } from './services/train_ticket_parser';
 
+require('./models/initialize_db');
 
 const app = express();
 const port = 8080;
@@ -25,6 +27,8 @@ global.app = app;
 global.app.config = config_init.get_config_data();
 console.log(global.app.config)
 //register_routes(app, baseUrl);
+
+initialize_train_ticket_parsers(global.app.config)
 
 dir_init.directory_initializer(global.app.config['path_to_files'])
 route_init.register_routes(app, baseUrl);

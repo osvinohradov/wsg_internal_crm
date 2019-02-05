@@ -1,6 +1,6 @@
-import { BaseModel } from "./base_model";
+//import { BaseModel } from "./base_model";
 
-export class TrainInvoice extends BaseModel {
+export class TrainInvoiceDetail {// extends BaseModel {
   _id: string = undefined;
   // Номер
   Number: string = "";

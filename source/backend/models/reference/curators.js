@@ -1,14 +1,17 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Куратори
 const ReferenceCuratorSchema = new Schema({
-    // Найменування
-    Name            :{ type: String },
-    // Клієнт (посилання на контагентів)
-    ClientId           :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' }
-});
+    name:       { type: String, default: '' },  // Найменування
+    client_id:  { type: Schema.Types.ObjectId, ref: 'ReferenceCounterpartyModel' },     // Клієнт (посилання на контагентів)
 
-const ReferenceCurator = mongoose.model('ReferenceCurator', ReferenceCuratorSchema);
+    updated_at: { type: Date, default: Date.now() },
+    created_at: { type: Date, default: Date.now() }
+}, { collection: 'ref_curators' });
 
-exports.ReferenceCurator = ReferenceCurator;
+const ReferenceCuratorModel = mongoose.model('ReferenceCuratorModel', ReferenceCuratorSchema);
+
+export {
+    ReferenceCuratorModel
+}

@@ -1,5 +1,5 @@
-import { FileWatcher } from './file_watcher';
+import { FileWatcherFactory } from './file_watcher';
 
 export {
-    FileWatcher
+    FileWatcherFactory
 }

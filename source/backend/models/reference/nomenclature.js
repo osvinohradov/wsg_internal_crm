@@ -1,65 +1,74 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Номенклатура
 const ReferenceNomenclatureSchema = new Schema({
-    // Група Номенлатури
-    NomenclatureGroupId   :{ type: Schema.Types.ObjectId, ref: 'ReferenceNomenclatureGroup' },
-    // Коротка назва
-    NameShort            :{ type: String },
-    // Повна назва
-    NameFull            :{ type: String },
-    // Артикул
-    Article            :{ type: String },
-    // Послуга
-    Service :{ type: Boolean },
-    // Транспортна послуга
-    TransportService :{ type: Boolean },
-    // Банк суворої звітності
-    ReportingBank :{ type: Boolean },
-    // Враховується по номінальній вартості
-    NominalCost :{ type: Boolean },
-    // Базова одиниця виміру
-    BaseUnitId :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
-    // Ставка ПДВ (пеерчислення: 0%, 20%, 7%, Без ПДВ, Не ПДВ)
-    RateOfMPE :{ type: String },
-    // Льгота з ПДВ
-    MPEPrivilege :{ type: String },
-    // Код ПН (по умовчю)
-    PNCode :{ type: String },
-    // Вимірюєтья тільки в сумовому виразі
-    LongExpression :{ type: Boolean },
-    // Текст для друка у колонці кількість податкової Накладної
-    InvoiceCount :{ type: String },
-    // Стаття витрат (посилання на статтю)
-    EmbezzlementId :{ type: Schema.Types.ObjectId, ref: 'ReferenceEmbezzlement' }
-});
+    nomenclature_group_id:  { 
+                                type: Schema.Types.ObjectId,
+                                ref: 'ReferenceNomenclatureGroup',
+                                default: null
+                            },                                  // Група Номенлатури
+    name_short:             { type: String, default: '' },      // Коротка назва
+    name_full:              { type: String, default: '' },      // Повна назва
+    article:                { type: String, default: '' },      // Артикул
+
+    service:                { type: Boolean, default: false },  // Послуга
+    transport_service:      { type: Boolean, default: false },  // Транспортна послуга
+    reporting_bank:         { type: Boolean, default: false },  // Банк суворої звітності
+    nominal_cost:           { type: Boolean, default: false },  // Враховується по номінальній вартості
+    base_unit_id:           { 
+                                type: Schema.Types.ObjectId,
+                                ref: 'ReferenceUnitClassifier',
+                                default: null
+                            },                                  // Базова одиниця виміру
+    rate_of_mpe:            { type: String, default: '' },      // Ставка ПДВ (пеерчислення: 0%, 20%, 7%, Без ПДВ, Не ПДВ)
+    mpe_privilege:          { type: String, default: '' },      // Льгота з ПДВ
+    pn_code:                { type: String, default: '' },      // Код ПН (по умовчю)
+    long_expression:        { type: Boolean, default: false },  // Вимірюєтья тільки в сумовому виразі
+    invoice_count:          { type: String, default: '' },      // Текст для друка у колонці кількість податкової Накладної
+    embezzlement_id:        { 
+                                type: Schema.Types.ObjectId, 
+                                ref: 'ReferenceEmbezzlement',
+                                default: null
+                            },                                  // Стаття витрат (посилання на статтю)
+
+    updated_at:     { type: Date, default: Date.now() },
+    created_at:     { type: Date, default: Date.now() }
+}, { collection: 'ref_nomenclature' });
 
 // Групи номенклатури
 const ReferenceNomenclatureGroupSchema = new Schema({
-    // Найменування номенклатури
-    Name            :{ type: String }
-});
+    name:       { type: String },           // Найменування номенклатури
+
+    updated_at: { type: Date, default: Date.now() },
+    created_at: { type: Date, default: Date.now() }
+}, { collection: 'ref_nomenclature_groups' });
 
 // Статті витрат
 const ReferenceEmbezzlementSchema = new Schema({
-    // Найменування статі витрат
-    Name            :{ type: String }
-});
+    name:       { type: String },           // Найменування статі витрат
+
+    updated_at: { type: Date, default: Date.now() },
+    created_at: { type: Date, default: Date.now() }
+}, { collection: 'ref_embezzlements' });
 
 // Класифікатор одиниць виміру
 const ReferenceUnitClassifierSchema = new Schema({
-    // Найменування класифікатору одиниць виміру
-    Name            :{ type: String }
-});
+    name:       { type: String },// Найменування класифікатору одиниць виміру
+
+    updated_at: { type: Date, default: Date.now() },
+    created_at: { type: Date, default: Date.now() }
+}, { collection: 'ref_unit_classifier' });
 
 
-const ReferenceNomenclature = mongoose.model('ReferenceNomenclature', ReferenceNomenclatureSchema);
-const ReferenceNomenclatureGroup = mongoose.model('ReferenceNomenclatureGroup', ReferenceNomenclatureGroupSchema);
-const ReferenceEmbezzlement = mongoose.model(' ReferenceEmbezzlement', ReferenceEmbezzlementSchema);
-const ReferenceUnitClassifier = mongoose.model(' ReferenceUnitClassifier', ReferenceUnitClassifierSchema);
+const ReferenceNomenclatureModel = mongoose.model('ReferenceNomenclature', ReferenceNomenclatureSchema);
+const ReferenceNomenclatureGroupModel = mongoose.model('ReferenceNomenclatureGroup', ReferenceNomenclatureGroupSchema);
+const ReferenceEmbezzlementModel = mongoose.model(' ReferenceEmbezzlement', ReferenceEmbezzlementSchema);
+const ReferenceUnitClassifierModel = mongoose.model(' ReferenceUnitClassifier', ReferenceUnitClassifierSchema);
 
-exports.ReferenceNomenclature = ReferenceNomenclature;
-exports.ReferenceNomenclatureGroup = ReferenceNomenclatureGroup;
-exports.ReferenceEmbezzlement = ReferenceEmbezzlement;
-exports.ReferenceUnitClassifier = ReferenceUnitClassifier;
+export {
+    ReferenceNomenclatureModel,
+    ReferenceNomenclatureGroupModel,
+    ReferenceEmbezzlementModel,
+    ReferenceUnitClassifierModel
+}

@@ -1,33 +1,47 @@
+import moment from 'moment';
+
 import { TrainInvoiceModel } from "../../../models";
 import { PAYMENT_FORMS } from '../../../constants/common';
+import { generate_random_number } from '../../../helpers';
 
-export function map_ticket_from_argest(ticket_from_xml) {
+export function map_ticket_from_argest(ticket_from_xml, additional_params) {
   let tfx = ticket_from_xml;
   let t = new TrainInvoiceModel();
   // Add payment provider date field
+  t.number = generate_random_number();
   t.payment_form = PAYMENT_FORMS[tfx.paymentGateway] // get_payment_form(tfx.paymentGateway);
-  t.detail_info.ticket_number = tfx.confirmationNumber;
+  
+  t.detail_info = {};
+  // номер поезда
   t.detail_info.train_number = tfx.trainNumber;
+  // номер вагона
   t.detail_info.carriage_number = tfx.wagonNumber;
+  // номер места
   t.detail_info.place = tfx.seats;
+  // Тип сервиса 
   t.detail_info.service_type = tfx.wagonType;
-  t.detail_info.arrival_dt = parse_date_time(tfx.wagonType);
-  t.detail_info.departure_dt = parse_date_time(tfx.departureDate);
+  // Дата отправления
+  t.detail_info.departure_dt = _get_date_time(tfx.departureDate);
   t.detail_info.departure_station = tfx.departureStation;
-  t.detail_info.arrival_dt = parse_date_time(tfx.arrivalDate);
+  // Дата и время прибытия
+  t.detail_info.arrival_dt = _get_date_time(tfx.arrivalDate);
+  t.detail_info.arrival_station = tfx.arrivalStation;
   // Дата покупки у поставщика
-  // ticket.detail_info.payment_provider_dt =
-  t.detail_info.departure_station = tfx.arrivalDate.departureStation;
-  t.detail_info.arrival_station = tfx.arrivalDate.arrivalStation;
-  t.detail_info.surname = tfx.arrivalDate.arrivalStation;
-  t.detail_info.ticket_number = tfx.arrivalDate.arrivalStation;
-
+  t.payment_provider_dt = _get_date_time(additional_params.timeStamp)
+  // Фамилия
+  t.detail_info.surname = `${tfx.passenger.lastName} ${tfx.passenger.firstName}`;
+  // номер билета
+  t.detail_info.ticket_number = tfx.confirmationNumber;
+  
+  // Стоимость поставщика
+  t.detail_info.supplier_cost = {};
   t.detail_info.supplier_cost.sum = parse_number(tfx.documentsPrice);
   // Other service sum
   let vfrc = parse_number(tfx.vatFromRemitCommission);
   let vfm = parse_number(tfx.vatFromMarkup);
   let oss =
     parse_number(tfx.remitCommission) + vfrc + parse_number(tfx.markup) + vfm;
+  t.detail_info.other_services = {}
   t.detail_info.other_services.sum = oss;
   // Other service mpe
   let osm = vfrc + vfm;
@@ -36,40 +50,21 @@ export function map_ticket_from_argest(ticket_from_xml) {
   return t;
 }
 
-function parse_date_time(date_string) {
-  if (!date_string) return null;
-  let date = new Date();
-  // date_string[0] = "30.01.2018"; date_string[1] = "18:05:00"
-  try {
-    date_string = date_string.split(" ");
-    let date_arr = date_string[0].split(".");
-    date_arr.map(x => parseInt(x));
-    date.setDate(date_arr[0]);
-    date.setMonth(date_arr[1] + 1);
-    date.setFullYear(date_arr[2]);
-
-    let time_arr = date_string[1].split(":");
-    date.setHours(time_arr[0]);
-    date.setMinutes(time_arr[1]);
-    date.setSeconds(time_arr[2]);
-  } catch (err) {
-    console.log(`При перетворенні рядка до об'єкта дати виникла помилка!`);
-    console.log(err);
-    date = null;
-  }
-  return date;
+function _get_date_time(dt_string){
+  let value = moment(dt_string, "DD.MM.YYYY HH:mm:ss");
+  return value.toDate();
 }
 
 function parse_number(number, flag = 0) {
-  parse = flag ? parseInt : parseFloat;
+  let parse = flag ? parseInt : parseFloat;
+  let n = 0;
 
-  if (!number) return 0;
   try {
-    let n = parse(number);
+    n = parse(number);
+    console.log(n)
   } catch (err) {
     console.log(`При перетворенні рядка до числа виникла помилка!`);
     console.log(err);
-    n = 0;
   }
   return n;
 }

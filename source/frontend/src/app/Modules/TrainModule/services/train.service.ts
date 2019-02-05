@@ -1,0 +1,41 @@
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+
+import { TrainInvoiceDetail, TrainInvoiceInfo } from "../models";
+import { Observable } from "rxjs";
+import { map, catchError} from 'rxjs/operators';
+
+@Injectable()
+export class TrainService {
+
+  baseUrl: String = "http://localhost:8080/api/v1";
+
+  constructor(private http: HttpClient) {}
+
+  get_train_invoice_count() {
+    return this.http.get<Number>(this.baseUrl + `/train/count/invoices`);
+  }
+
+  get_train_invoices(skip, limit): Observable<TrainInvoiceInfo[]> {
+    return this.http.get<TrainInvoiceInfo[]>(
+      this.baseUrl + `/train/invoices?skip=${skip}&limit=${limit}`
+    );
+  }
+
+  get_train_invoice_by_id(id: string) {
+    return this.http.get<TrainInvoiceDetail>(this.baseUrl + `/train/invoice/${id}`);
+  }
+
+  update_train_invoice(train: TrainInvoiceDetail) {
+    return this.http.put(
+      this.baseUrl + `/train/invoice/${train._id}`, train
+    );
+  }
+
+  create_train_invoice(train: TrainInvoiceDetail) {
+    return this.http.post(this.baseUrl + `/train/invoice`, train);
+  }
+//   remove_train_invoice(id: string) {
+//     return this.http.delete(this.baseUrl + `/references/airport/${id}`);
+//   }
+}

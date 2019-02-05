@@ -1,38 +1,47 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Види сервісів
 const ReferenceServiceTypeSchema = new Schema({
-    // 
-    Number        :{ type: String },
+    name:                       { type: String, required: true },           // Найменування
+    provider_id:                {   
+                                    type: Schema.Types.ObjectId,
+                                    ref: 'ReferenceCounterparty',
+                                    default: null
+                                },                                          // Постачальник (посилання на Контрагентів)
+   
+    additional_provider_id:     { 
+                                    type: Schema.Types.ObjectId,
+                                    ref: 'ReferenceCounterparty',
+                                    default: null
+                                },                                          // Додатковий постачальник (посилання на Контрагентів)
+   
+    nomenclature_catalog_id:    {
+                                    type: Schema.Types.ObjectId,
+                                    ref: 'ReferenceNomenclatureGroup',
+                                    default: null
+                                },                                          // Каталог номенклатури (посилання на Номенклатура)
+    ticket_short_name:          { type: String, default: '' },              // Коротке найменування квитка
+    ticket_full_name:           { type: String, default: '' },              // Повне найменування квитка
+   
+    nomenclature_as_service_id: { 
+                                    type: Schema.Types.ObjectId, 
+                                    ref: 'ReferenceNomenclature',
+                                    default: null
+                                },                                          // Підлегла номенклатура (як послуга)
+    
+    main_services:              { type: String, default: '' },              // Основні послуги
+    agency_services:            { type: String, default: '' },              // Послуги агенства
+    other_services:             { type: String, default: '' },              // Інші сервіси
+    forfeit:                    { type: Number, default: 0 },               // Штрафні санкції
+    mpe:                        { type: Number, default: 0 },               // Ставка ПДВ (перечисление возможно из обмена валют)
 
+    updated_at: { type: Date, default: Date.now() },
+    created_at: { type: Date, default: Date.now() }
+}, {collection: 'ref_service_types' });
 
-    // Найменування
-    Name        :{ type: String },
-    // Постачальник (посилання на Контрагентів)
-    ProviderId     :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
-    // Додатковий постачальник (посилання на Контрагентів)
-    AdditionalProviderId     :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
-    // Каталог номенклатури (посилання на Номенклатура)
-    NomenclatureCatalogId     :{ type: Schema.Types.ObjectId, ref: 'ReferenceNomenclatureGroup' },
-    // Коротке найменування квитка
-    TicketShortName    :{ type: String },
-    // Повне найменування квитка
-    TicketFullName    :{ type: String },
-    // Підлегла номенклатура (як послуга)
-    NomenclatureAsServiceId    :{ type: Schema.Types.ObjectId, ref: 'ReferenceNomenclature' },
-    // Основні послуги
-    MainServices  :{ type: String },
-    // Послуги агенства
-    AgencyServices  :{ type: String },
-    // Інші сервіси
-    OtherServices  :{ type: String },
-    // Штрафні санкції
-    Forfeit    :{ type: Number },
-    // Ставка ПДВ (перечисление возможно из обмена валют)
-    MPE   :{ type: Number }
-});
+const ReferenceServiceTypeModel = mongoose.model('ReferenceServiceType', ReferenceServiceTypeSchema);
 
-const ReferenceServiceType = mongoose.model('ReferenceServiceType', ReferenceServiceTypeSchema);
-
-exports.ReferenceServiceType = ReferenceServiceType;
+export {
+    ReferenceServiceTypeModel
+}

@@ -10,6 +10,7 @@ import chokidar from 'chokidar';
  */
 class _FileWatcher extends EventEmitter{
     constructor(dir_name, handler){
+        super();
         this.dir_name = dir_name;
         this.handler = handler;
         this.watcher = null;
@@ -53,7 +54,7 @@ class _FileWatcher extends EventEmitter{
 }
 
 
-export class FileWatcher{
+export class FileWatcherFactory{
 
     static create_file_watcher(dir_name, handler){
         if(typeof callback !== "function"){
