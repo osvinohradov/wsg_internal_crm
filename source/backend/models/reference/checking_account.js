@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Аеропорти
-const CheckingAccountSchema = new Schema({
+const ReferenceCheckingAccountSchema = new Schema({
     name:                       { type: String, required: true },
     owner:                      { type: String }, // counterparty or organizations
     checking_account_number:    { type: String, default: ''},
@@ -46,10 +46,21 @@ const BankSchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_banks' });
 
-const CheckingAccountModel = mongoose.model('ReferenceCheckingAccount', CheckingAccountSchema);
+
+ReferenceCheckingAccountSchema.statics.get_checking_accounts_names = async function(checking_account_name, options={}){
+    
+    let query = checking_account_name ? 
+                    { name: new RegExp(`${checking_account_name}`, 'i') } :
+                    {};
+
+    let checking_account = ReferenceCheckingAccountModel.find(query, '_id name', options);
+    return checking_account;
+}
+
+const ReferenceCheckingAccountModel = mongoose.model('ReferenceCheckingAccount', ReferenceCheckingAccountSchema);
 const BankModel = mongoose.model('ReferenceBank', BankSchema);
 
 export {
-    CheckingAccountModel,
+    ReferenceCheckingAccountModel,
     BankModel
 }

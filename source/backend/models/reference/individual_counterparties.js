@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 // Фізичні особи контрагентів
 const ReferenceIndividualCounterpartiesSchema = new Schema({
-   
     last_name_eng:          { type: String, default: '' },          // Прізвище (стандарт)
     first_name_eng:         { type: String, default: '' },          // Ім'я (стандарт)
     middle_name_eng:        { type: String, default: '' },          // По-батькові (стандарт)
@@ -27,6 +26,18 @@ const ReferenceIndividualCounterpartiesSchema = new Schema({
     updated_at:     { type: Date, default: Date.now() },
     created_at:     { type: Date, default: Date.now() }
 }, { collection: 'ref_individual_counterparty' });
+
+
+ReferenceIndividualCounterpartiesSchema.statics.get_individual_counterparties_names = async function(individual_counterparty_name, options={}){
+    
+    let query = individual_counterparty_name ? 
+                    { name: new RegExp(`${individual_counterparty_name}`, 'i') } :
+                    {};
+
+    let individual_counterparties = ReferenceIndividualCounterpartiesModel.find(query, '_id first_name_native last_name_native', options);
+    return individual_counterparties;
+}
+
 
 const ReferenceIndividualCounterpartiesPassportSchema = new Schema({
     passport_number:    { type: String, default: '' },          // Серія та номер паспорту

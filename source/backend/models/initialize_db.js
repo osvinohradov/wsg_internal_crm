@@ -1,4 +1,6 @@
 import * as model from './index';
+import { OrganizationModel } from './lib';
+import { DEFAULT_COUNTERPARTY_NAME } from '../constants/common';
 
 async function init_db(){
     console.log('#################################### Initialize DB ####################################');
@@ -51,6 +53,20 @@ async function init_db(){
         let reference_unit_classifier = new model.Ref.ReferenceUnitClassifierModel(reference_unit_classifier_obj);
         await reference_unit_classifier.save();
     }
+
+    if(await OrganizationModel.count() == 0){
+        console.log('======== Create Organization ========');
+        let organization = new OrganizationModel(organization_obj);
+        await organization.save();
+    }
+
+    if((await model.Ref.ReferenceCounterpartyModel.find({ name: DEFAULT_COUNTERPARTY_NAME })).length == 0){
+        console.log('======== Create Counterparty ========');
+        let reference_individual_counterparty = new model.Ref.ReferenceCounterpartyModel(reference_individual_counterparty_obj);
+        await reference_individual_counterparty.save();
+    }
+
+
     console.log('#######################################################################################');
 }
 let user_obj = {
@@ -156,6 +172,14 @@ let reference_counterparty_group_obj = {
 
 let reference_unit_classifier_obj = {
     name: 'ГРН'
+}
+
+let organization_obj = {
+    name: 'ВОРЛДСЕРВІС ГРУП'
+}
+
+let reference_individual_counterparty_obj = {
+    name: 'ФІЗИЧНА ОСОБА'
 }
 
 

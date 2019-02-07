@@ -200,7 +200,7 @@
             <th scope="col">Повернення</th>
             <th scope="col">Void</th>
             <th scope="col">Опл.</th>
-            <th scope="col">Контрагент</th>
+            <th scope="col">Клієнт</th>
             <th scope="col">Групове замовлення</th>
             <th scope="col">Вид сервісу</th>
             <th scope="col">Зміст</th>
@@ -221,36 +221,58 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let invoice of train_invoices" class="main">
-            <td class="text-center" scope="row">{{invoice.date | date: 'dd/MM/yyyy H:mm:ss'}}</td>
-            <td class="text-center">{{invoice.number}}</td>
+          <tr *ngFor="let invoice of train_invoices" (dblclick)="edit_invoice(invoice._id)" class="main">
+            <!-- Date -->
+            <td class="text-center" scope="row">{{ invoice.date | date: 'dd/MM/yyyy H:mm:ss' }}</td>
+            <!-- Number -->
+            <td class="text-center">{{ invoice.number }}</td>
+            <!-- Is returned -->
             <td class="text-center">
               <mat-checkbox class="" primary [(ngModel)]="invoice.is_returned" [disabled]="true"></mat-checkbox>
             </td>
+            <!-- Is void -->
             <td class="text-center">
               <mat-checkbox class="" primary [(ngModel)]="invoice.is_void" [disabled]="true"></mat-checkbox>
             </td>
+            <!-- Is paid -->
             <td class="text-center">
               <mat-checkbox class="" primary [(ngModel)]="invoice.is_paid" [disabled]="true"></mat-checkbox>
             </td>
-            <td class="text-center">{{invoice.ClientId ? invoice.ClientId : ""}}</td>
-            <td class="text-center">{{invoice.GroupInvoiceId ? invoice.GroupInvoiceId.Content : ""}}</td>
-            <td class="text-center">{{invoice.ServiceTypeId ? invoice.ServiceTypeId : ""}}</td>
-            <!-- Авіаційний квиток №(номер) для Біла Олена, за маршрутом: виліт із Київ 18.10.2018, приліт в Пекін 18.10.2018; виліт із Пекін 18.10.2018, приліт в Київ 18.10.2018  -->
-            <td class="text-center" matTooltip=""></td>
-            <td class="text-center">{{invoice.provider_id ? invoice.provider_id : ""}}</td>
-            <td class="text-center">{{invoice.TotalAmount}}</td>
-            <td class="text-center">{{"MPE"}}</td>
-            <td class="text-center">{{invoice.comment}}</td>
-            <td class="text-center">{{invoice.agent}}</td>
-            <td class="text-center">{{invoice.responsible_agent}}</td>
-            <td class="text-center">{{invoice.OfferCurrency}}</td>
-            <td class="text-center">{{invoice.TotalCurrency}}</td>
-            <td class="text-center">{{invoice.Organization}}</td>
-            <td class="text-center">{{invoice.returned_document}}</td>
-            <td class="text-center">{{invoice.detail_info.payment_provider_dt}}</td>
-            <td class="text-center">{{invoice.payment_form}}</td>
-            <td class="text-center">{{invoice.payment_date | date: 'dd/MM/yyyy' }}</td>
+            <!-- Client -->
+            <td class="text-center">{{ invoice.client_id ? invoice.client_id.name : "-" }}</td>
+            <td class="text-center">{{ invoice.group_invoice_id ? invoice.group_invoice_id.group_name : "-" }}</td>
+            <td class="text-center">{{ invoice.service_type_id ? invoice.service_type_id.name : "-" }}</td>
+            <!-- Оплата залізничного квитка Бірюкова Анастасія. Маршрут: від Київ-Пасажирський до Івано-Франківськ. 
+              Дата та час відправлення: 18.03.2019 19:05:00; Дата та час прибуття: 19.03.2019 05:43:00;
+              Потяг: 043К; Вагон 05; Місце 15; Код підтвердження: ШЯП-Е1-30887. -->
+            <td class="text-center" matTooltip="{{__get_invoice_content(invoice)}}">{{ __get_invoice_content(invoice) }}</td>
+            <!-- Provider id -->
+            <td class="text-center">{{ invoice.provider_id ? invoice.provider_id : "-" }}</td>
+            <!-- Total amount -->
+            <td class="text-center">{{ invoice.detail_info.total_amount.sum }}</td>
+            <!-- MPE -->
+            <td class="text-center">{{ invoice.detail_info.total_amount.mpe }}</td>
+            <!-- Comment -->
+            <td class="text-center">{{ invoice.comment }}</td>
+            <!-- Agent -->
+            <td class="text-center">{{ invoice.agent ? invoice.agent.first_name + " " + invoice.agent.last_name  : "-" }}</td>
+            <!-- Responsible Agent -->
+            <td class="text-center">{{ invoice.responsible_agent ? invoice.responsible_agent.first_name + " " + invoice.responsible_agent.last_name  : "-" }}</td>
+            <!-- Offer Currency -->
+            <td class="text-center">{{ invoice.offer_currency_id ? invoice.offer_currency_id.name : "-" }}</td>
+            <!-- Total Currency -->
+            <td class="text-center">{{ invoice.total_currency_id ? invoice.total_currency_id.name : "-" }}</td>
+            <!-- Organization -->
+            <td class="text-center">{{ invoice.organization ? invoice.organization.name : "-" }}</td>
+            <!-- Returned document -->
+            <td class="text-center">{{ invoice.returned_document }}</td>
+            <!-- Provider payment date -->
+            <td class="text-center">{{ invoice.detail_info.payment_provider_dt }}</td>
+            <!-- Payment form -->
+            <td class="text-center">{{ invoice.payment_form }}</td>
+            <!-- Payment date -->
+            <td class="text-center">{{ invoice.payment_date | date: 'dd/MM/yyyy' }}</td>
+
             <td class="text-center">
               <mat-checkbox class="" primary [(ngModel)]="invoice.is_processed" [disabled]="true"></mat-checkbox>
             </td>

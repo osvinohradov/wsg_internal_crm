@@ -40,6 +40,18 @@ const ReferenceServiceTypeSchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, {collection: 'ref_service_types' });
 
+
+ReferenceServiceTypeSchema.statics.get_service_types_names = async function(service_type_name, options={}){
+    
+    let query = service_type_name ? 
+                    { name: new RegExp(`${service_type_name}`, 'i') } :
+                    {};
+
+    let service_types = ReferenceServiceTypeModel.find(query, '_id name', options);
+    return service_types;
+}
+
+
 const ReferenceServiceTypeModel = mongoose.model('ReferenceServiceType', ReferenceServiceTypeSchema);
 
 export {

@@ -10,7 +10,19 @@ const ReferenceCuratorSchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_curators' });
 
-const ReferenceCuratorModel = mongoose.model('ReferenceCuratorModel', ReferenceCuratorSchema);
+
+ReferenceCuratorSchema.statics.get_curators_names = async function(curator_name, options={}){
+    
+    let query = curator_name ? 
+                    { name: new RegExp(`${curator_name}`, 'i') } :
+                    {};
+
+    let curator = ReferenceCuratorModel.find(query, '_id name', options);
+    return curator;
+}
+
+
+const ReferenceCuratorModel = mongoose.model('ReferenceCurator', ReferenceCuratorSchema);
 
 export {
     ReferenceCuratorModel

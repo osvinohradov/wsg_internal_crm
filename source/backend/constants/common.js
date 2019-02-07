@@ -7,3 +7,5 @@ export const PAYMENT_FORMS = {
 export const CURRENCY = {
     "": ""
 }
+
+export const DEFAULT_COUNTERPARTY_NAME = 'ФІЗИЧНА ОСОБА';

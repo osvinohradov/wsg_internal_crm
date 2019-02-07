@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 
 import { TrainService } from "../../services";
-import { TrainInvoiceInfo } from "../../models";
+import { TrainInvoiceInfo, TrainInvoiceDetail } from "../../models";
 import { TrainInvoiceDialogComponent } from "../invoice_popup/invoice_popup.component";
 
 
@@ -29,7 +29,6 @@ export class TrainInvoiceComponent implements OnInit {
   ngOnInit() {
     this.load_invoices_data();
     this.get_invoice_count();
-    this.get_train_invoices(0, 0);
   }
 
   load_invoices_data(){
@@ -42,22 +41,39 @@ export class TrainInvoiceComponent implements OnInit {
       this.is_loader_displayed = false;
     })
   }
-
-  get_train_invoices(skip: Number, limit: Number){
-    skip = 0;
-    limit = 10;
-    this.is_loader_displayed = true;
-    this.TrainService.get_train_invoices(skip, limit).subscribe((data) => {
-      //this.train_invoices = data;
-      console.log(data);
-      this.is_loader_displayed = false;
-    })
-  }
+  
   get_invoice_count(){
     console.log('Get invoice count');
   }
 
+  edit_invoice(invoice_id) {
+    this.is_loader_displayed = true;
+    this.TrainService.get_train_invoice_by_id(invoice_id).subscribe((data: TrainInvoiceDetail) => {
+      if(!data){
+        // connect toaster library and show notification
+        console.log('Invoice not found.');
+      }
 
+      this.open_dialog(data).afterClosed().subscribe((dialog_response) => {
+        console.log('Dialog closed.')
+      });
+    })
+  }
+
+
+  __get_invoice_content(invoice){
+    let passanger = invoice.detail_info.surname;
+    if(!passanger)
+      return ``;
+
+    let content = `Оплата залізничного квитка ${passanger.last_name_native} ${passanger.first_name_native}.
+            Маршрут: від ${invoice.detail_info.departure_station} до ${invoice.detail_info.arrival_station}. 
+            Дата та час відправлення: ${invoice.detail_info.departure_dt}; Дата та час прибуття: ${invoice.detail_info.arrival_dt};
+            Потяг: ${invoice.detail_info.train_number}; Вагон ${invoice.detail_info.carriage_number};
+            Місце ${invoice.detail_info.place}; Код підтвердження: ????? ШЯП-Е1-30887 ?????.`;
+    console.log('Content: ', content);
+    return content;
+  }
 
 
   create_invoice(){

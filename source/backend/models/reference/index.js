@@ -10,7 +10,7 @@ import { ReferenceNomenclatureModel,
          ReferenceUnitClassifierModel,
          ReferenceEmbezzlementModel } from './nomenclature';
 import { ReferenceCurrencyExchangeModel } from './currency_exchange';
-import { CheckingAccountModel, BankModel } from './checking_account';
+import { ReferenceCheckingAccountModel, BankModel } from './checking_account';
 import { ReferenceIndividualCounterpartiesModel,
          ReferenceIndividualCounterpartiesPassportModel } from './individual_counterparties';
 import { ReferenceCounterpartyContractModel } from './counterparty_contract';
@@ -19,7 +19,7 @@ import { ReferenceCounterpartyContractModel } from './counterparty_contract';
 
 export {
     ReferenceAirportModel,
-    CheckingAccountModel,
+    ReferenceCheckingAccountModel,
     BankModel,
     ReferenceAviaCompanyModel,
     ReferenceServiceTypeModel,

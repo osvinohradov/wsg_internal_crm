@@ -67,6 +67,17 @@ const ReferenceCounterpartySchema = new Schema({
     created_at:         { type: Date, default: Date.now() }
 }, { collection: 'ref_counterparties' });
 
+
+ReferenceCounterpartySchema.statics.get_counterparties_names = async function(counterparty_name, options={}){
+    
+    let query = counterparty_name ? 
+                    { name: new RegExp(`${counterparty_name}`, 'i') } :
+                    {};
+
+    let counterparties = ReferenceCounterpartyModel.find(query, '_id name', options);
+    return counterparties;
+}
+
 // Групи контрагентів
 const ReferenceCounterpartiesGroupSchema = new Schema({
     name:               { type: String },   // Найменування групи

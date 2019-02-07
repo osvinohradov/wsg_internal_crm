@@ -4,9 +4,11 @@ const Schema = mongoose.Schema;
 const GroupInvoiceSchema = new Schema({
     // Номер
     number:             { type: Number, default: 0 },
+    // 
+    group_name:         { type: String, required: true },
     // Дата
     date:               { type: Date },
-    organization:       { type: String, default: 'ВОРЛДСЕРВІС ГРУП'},
+    organization_id:    { type: Schema.Types.ObjectId, ref: 'Organization', default: null },
     is_paid:            { type: Boolean, default: false }, // Сплачено
     client_id:          { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null  },// Клієнт (посилання на Контрагентів)
     payment_form:       { type: String, default: 'Готівка' }, // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
@@ -28,6 +30,19 @@ const GroupInvoiceSchema = new Schema({
     updated_at          :{ type: Date, default: Date.now() },
     created_at          :{ type: Date, default: Date.now() },
 });
+
+
+
+
+GroupInvoiceSchema.statics.get_group_invoices_names = async function(group_invoice_name, options={}){
+    
+    let query = group_invoice_name ? 
+                    { group_name: new RegExp(`^${group_invoice_name}$`, 'i') } :
+                    {};
+
+    let invoices = GroupInvoiceModel.find(query, '_id name', options);
+    return invoices;
+}
 
 const GroupInvoiceModel = mongoose.model('GroupInvoice', GroupInvoiceSchema);
 

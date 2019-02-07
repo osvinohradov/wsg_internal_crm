@@ -60,11 +60,22 @@ const ReferenceUnitClassifierSchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_unit_classifier' });
 
+ReferenceUnitClassifierSchema.statics.get_unit_classifiers_names = async function(unit_classifier_name, options={}){
+    
+    let query = unit_classifier_name ? 
+                    { name: new RegExp(`${unit_classifier_name}`, 'i') } :
+                    {};
+
+    let unit_classifier = ReferenceUnitClassifierModel.find(query, '_id name', options);
+    return unit_classifier;
+}
+
+
 
 const ReferenceNomenclatureModel = mongoose.model('ReferenceNomenclature', ReferenceNomenclatureSchema);
 const ReferenceNomenclatureGroupModel = mongoose.model('ReferenceNomenclatureGroup', ReferenceNomenclatureGroupSchema);
-const ReferenceEmbezzlementModel = mongoose.model(' ReferenceEmbezzlement', ReferenceEmbezzlementSchema);
-const ReferenceUnitClassifierModel = mongoose.model(' ReferenceUnitClassifier', ReferenceUnitClassifierSchema);
+const ReferenceEmbezzlementModel = mongoose.model('ReferenceEmbezzlement', ReferenceEmbezzlementSchema);
+const ReferenceUnitClassifierModel = mongoose.model('ReferenceUnitClassifier', ReferenceUnitClassifierSchema);
 
 export {
     ReferenceNomenclatureModel,

@@ -12,7 +12,7 @@ const TrainInvoiceSchema = new BaseModel({
   // Дата
   date: { type: Date },
   // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
-  payment_form: { type: String, default: 'cash' },
+  payment_form: { type: String, default: 'Готівка' },
   // Дата сплати
   payment_date: { type: Date },
   // Кількість квитків
@@ -70,9 +70,9 @@ const TrainInvoiceSchema = new BaseModel({
   // Показую відкривався киток чи ні
   is_processed: { type: Boolean, default: false },
   // Документ що повертається
-  returned_document    :{ type: String },
+  returned_document:    { type: String },
   // Організація
-  // organization        :{ type: String, default: "ВОРЛДСЕРВІС ГРУП"},
+  organization_id:         { type: Schema.Types.ObjectId, ref: 'Organization', default: null },
   // Детальна інформація
   detail_info: {
     type: {
@@ -190,28 +190,50 @@ const TrainInvoiceSchema = new BaseModel({
 },  { minimize: false, versionKey: false, collection: 'train_invoice' });
 
 
-TrainInvoiceSchema.statics.create_object_by_schema = function(target){
-  
-  return target;
-   //let result = Object.assign(TrainSchemas.train_invoice_schema, target);
-  let result = deep_copy(TrainSchemas.train_invoice_schema, target);
-
-  console.log('============================ Create Train Invoice Object ============================');
-  console.log(result)
-  console.log('=====================================================================================');
-  return result
-}
-
-TrainInvoiceSchema.statics.get_train_invoices_info = async function(){
+TrainInvoiceSchema.statics.get_train_invoices_info = async function(params){
   let invoices = await TrainInvoiceModel.find({})
-    .populate({ path: '', select: 'name'})
-    .populate({ path: '', select: 'name'})
-    .populate({ path: '', select: 'name'})
-    .populate({ path: '', select: 'name'})
-    .populate({ path: '', select: 'name'})
-    .populate({ path: '', select: 'name'})
+                      .populate({ path: 'client_id', select: 'name' })
+                      .populate({ path: 'group_invoice_id', select: 'group_name'})
+                      .populate({ path: 'service_type_id', select: 'name'})
+                      .populate({ path: 'provider_id', select: 'name'})
+                      .populate({ path: 'responsible_agent', select: 'name'})
+                      .populate({ path: 'agent', select: 'name'})
+                      .populate({ path: 'offer_currency_id', select: 'name'})
+                      .populate({ path: 'total_currency_id', select: 'name'})
+                      .populate({ path: 'organization_id', select: 'name'})
+                      .populate({ path: 'detail_info.surname', model: 'ReferenceIndividualCounterparties' })
+                      .populate({ path: 'detail_info.total_amount.currency_id', model: 'ReferenceUnitClassifier' });
+  return invoices;
 }
 
+TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, projection, options){
+  let invoices = await TrainInvoiceModel.findOne(query, projection, options)
+                      .populate({ path: 'client_id' })
+                      .populate({ path: 'group_invoice_id' })
+                      .populate({ path: 'offer_currency_id' })
+                      .populate({ path: 'total_currency_id' })
+                      .populate({ path: 'provider_id' })
+                      .populate({ path: 'taxes_payment' })
+                      .populate({ path: 'curator_id' })
+                      .populate({ path: 'currency_exchange_id' })
+                      .populate({ path: 'service_type_id' })
+                      .populate({ path: 'checking_account' })
+                      .populate({ path: 'responsible_agent' })
+                      .populate({ path: 'agent' })
+                      .populate({ path: 'organization_id'})
+                      .populate({ path: 'detail_info.surname', model: 'ReferenceIndividualCounterparties' })
+                      .populate({ path: 'detail_info.supplier_cost.currency_id', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.supplier_commision.currency_id', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.forfeit.currency_id', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.agency_services.currency_id', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.other_services.currency_id', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.total_amount.currency_id', model: 'ReferenceUnitClassifier' });
+  return invoices;
+}
+
+TrainInvoiceSchema.statics.create_train_invoice = function(data){
+  
+}
 
 const TrainInvoiceModel = mongoose.model("TrainInvoice", TrainInvoiceSchema);
 

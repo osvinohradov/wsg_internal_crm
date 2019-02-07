@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 // import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
 import { CounterpartyService } from "../../../ReferenceModule/services";
 import { FormControl } from "@angular/forms";
+import { TrainInvoiceDetail } from "../../models";
 
 @Component({
   selector: "app-invoice-popup",
@@ -18,10 +19,10 @@ import { FormControl } from "@angular/forms";
 export class TrainInvoiceDialogComponent implements OnInit {
   // public is_saved: Boolean = false;
   // В переменной ханится обьект накладной
-  public train_invoice = {};
 
-  constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,){
-
+  constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail){
+    console.log('[ Edit Train Invoice ]: ', train_invoice);
   }
 
   // public test_date = "12.09.2018 17:45:00";

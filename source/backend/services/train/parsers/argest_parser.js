@@ -1,6 +1,8 @@
 import xml_parser from 'xml-parser';
 import { map_ticket_from_argest } from '../mappers/mappers';
 
+import * as models from '../../../models';
+
 function parse_ticket_from_argest(xml_ticket){
     let section = {};
 
@@ -16,19 +18,17 @@ function parse_ticket_from_argest(xml_ticket){
     return section;
 }
 
-export function parse_ticket(xml_ticket){
+export async function parse_ticket(xml_ticket){
     let ticket = xml_ticket.root.children
     let json_ticket = parse_ticket_from_argest(ticket);
     let json_for_parsing = json_ticket['ReservationsList'];
     
     let additional_params = {
-        timeStamp: xml_ticket.root.children[0].attributes.Timestamp
+        time_stamp: xml_ticket.root.children[0].attributes.Timestamp
     }
-    let train_ticket = map_ticket_from_argest(json_for_parsing, additional_params);
+    let train_ticket = await map_ticket_from_argest(json_for_parsing, additional_params);
     
-
-    //train_ticket.save();
-
+    await train_ticket.save();
 
     console.log('##################################################################################')
     console.log(train_ticket)

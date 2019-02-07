@@ -152,6 +152,8 @@
 </div>
 <!--Row MENU Buttons End-->
 
+
+
 <!-- Invoice Popup Form Container -->
 <div class="ml-4 mr-4 mt-4 mb-4">
   <form class="form-horizontal" role="form">
@@ -159,13 +161,13 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Номер:" value="" name="Number" disabled>
+          <input value="{{train_invoice.number}}" matInput placeholder="Номер:" name="number" disabled>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Дата:" name="">
+          <input [(ngModel)]="train_invoice.date" matInput [matDatepicker]="picker" placeholder="Дата:" name="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
