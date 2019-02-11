@@ -1,94 +1,127 @@
 //import { BaseModel } from "./base_model";
 
-export class TrainInvoiceDetail {// extends BaseModel {
+export class TrainInvoiceDetail {
+  // extends BaseModel {
   _id: string = undefined;
   // Номер
-  Number: string = "";
+  number: string = "";
   // Дата
-  Date: Date = null;
+  date: Date = null;
   // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
-  PaymentForm: string = null;
+  payment_form: string = "";
   // Дата сплати
-  PaymentDate: Date = null;
+  payment_date: Date = new Date();
   // Кількість квитків
-  TicketsCount: number = 1;
-  // Всього
-  TotalAmount: number = 0;
+  tickets_count: number = 0;
   // Клієнт (посилання на Контрагентів)
-  ClientId: any = null; // { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
+  client_id: any = null; // { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
   // Дата послуг
-  ServiceDate: Date = null;
+  service_date: Date = new Date();
   // Без реалізації
-  IsVoid: boolean = false;
+  is_void: boolean = false;
   // Повернення
-  IsReturned: boolean = false;
+  is_returned: boolean = false;
   // Сплачено
-  IsPaid: boolean = false;
+  is_paid: boolean = false;
   // Групове замовлення
-  GroupInvoiceId: any = {}; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
+  group_invoice_id: any = null; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
   // Валюта пропозиції
-  OfferCurrency: string = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
+  offer_currency_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Підсумкова валюта
-  TotalCurrency: string = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
+  total_currency_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Постачальник
-  ProviderId: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
+  provider_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
   // Сплата такси
-  TaxesPayment: string = null;
+  taxes_payment: any = null;
   // Куратор
-  CuratorId: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCurator' },
-  // Код бронювання
-  BookingCode: string = null;
+  curator_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCurator' },
   // Обмін валют
-  CurrencyExchangeId: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCurrencyExchange' },
+  currency_exchange_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCurrencyExchange' },
   // Вид сервісу
-  ServiceTypeId: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceServiceType' },
+  service_type_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceServiceType' },
   // Розрахунковий рахунок (посилання на Банківські рахунки)
-  CheckingAccount: string = null;
+  checking_account_id: any = null;
   // Коментар
-  Comment: string = null;
+  comment: string = "";
   // Відповідальний
-  ResponsibleAgent: string = null;
+  responsible_agent_id: any = null;
   // Агент
-  Agent: string = null;
-  // Код РМ
-  PmCode: string = null;
+  agent_id: any = null;
   // Открывался билет или нет
-  IsProcessed: boolean = false;
-  // Документ що повертається
-  ReturnedDocument: string = null;
-  // Організація
-  Organization: string = null;
+  is_processed: boolean = false;
   // Детальна інформація
-  DetailInfo: DetailInfo = null;
-  created_at: Date = null;
+  detail_info: any = new DetailInfo();
 }
 
 class DetailInfo {
-//   NameId: string = null; // ref: 'ReferenceIndividualCounterparties' },
-//   TicketNumber: string = null;
-//   PurchaseDate: Date = null;
+  //  Номер поезда
+  train_number: string = "";
+  // Номер вагона
+  carriage_number: string = "";
+  // место
+  place: string = "";
+  // Вид сервиса
+  service_type: string = "";
+  // Дата и время прибытия
+  arrival_dt: Date = new Date();
+  // Дата и время отправления
+  departure_dt: Date = new Date();
+  // Дата покупки у поставщика
+  payment_provider_dt: Date = new Date();
+  // откуда добавить таблицу
+  departure_station_id: string = null;
+  // куда добавить таблицу
+  arrival_station_id: string = null;
+  // ReferenceIndividualCounterparties
+  surname_id: string = null;
+  //
+  ticket_number: string = '';
 
-//   SupplierCost: SupplierCost = null;
-//   SupplierCommision: SupplierCommision = null;
-//   Forfeit: Forfeit = null;
-//   UsedSupplierRate: UsedSupplierRate = null;
-//   AdditionalSupplierComission: AdditionalSupplierComission = null;
-//   UsedTaxes: UsedTaxes = null;
-//   AgencyServices: AgencyServices = null;
-//   OtherServices: OtherServices = null;
-//   TotalAmount: TotalAmount = null;
+  // Секція "Вартість постачальника"
+  supplier_cost: any = {
+    sum: 0,
+    mpe: 0,
+    currency_id: null
+  };
+  // Секція "Комісія постачальника"
+  supplier_commision: any = {
+    sum: 0,
+    mpe: 0,
+    percent: 0,
+    currency_id: null
+  };
 
-//   AdditionalInfo: string = "";
+  // Секція "Штраф"
+  forfeit: any = {
+    sum: 0,
+    mpe: 0,
+    currency_id: null
+  };
 
-//   constructor(){
-//       this.SupplierCost = new SupplierCost();
-//       this.SupplierCommision = new SupplierCommision();
-//       this.Forfeit = new Forfeit();
-//       this.UsedSupplierRate = new UsedSupplierRate();
-//       this.AdditionalSupplierComission = new AdditionalSupplierComission();
-//       this.UsedTaxes = new UsedTaxes();
-//       this.AgencyServices = new AgencyServices();
-//       this.OtherServices = new OtherServices();
-//       this.TotalAmount = new TotalAmount();
-//   }
+  // Секція "Послуги агенції"
+  agency_services: any = {
+    sum: 0,
+    mpe: 0,
+    percent: 0,
+    bank_percent: 0,
+    currency_id: null
+  };
+
+  // Секція "Інші послуги"
+  other_services: any = {
+    sum: 0,
+    mpe: 0,
+    currency_id: null
+  };
+
+  // Секція "Всього"
+  total_amount: any = {
+    sum: 0,
+    mpe: 0,
+    currency_id: null
+  };
+  // Додаткова інформація
+  additional_info: string = "";
+  total_amount_ucop: number = 0;
+  ucop_mpe: number = 0;
 }

@@ -4,10 +4,18 @@ import { CounterpartyReference } from "../models";
 import { __core_private_testing_placeholder__ } from "@angular/core/testing";
 
 @Injectable()
-export class CounterpartyService {
+export class RefCounterpartyService {
   baseUrl: String = "http://localhost:8080/api/v1";
 
   constructor(private http: HttpClient) {}
+
+
+  get_counterparties_names(counterparty_name='') {
+    return this.http.get(this.baseUrl + `/ref/counterparties/names`, { params: {
+      counterparty_name: counterparty_name
+    }}).toPromise();
+  }
+
 
   // Start Service Type Service Block
   get_counterparties_count() {

@@ -14,14 +14,14 @@ const GroupInvoiceSchema = new Schema({
     payment_form:       { type: String, default: 'Готівка' }, // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
     payment_date:       { type: Date, default: null }, // Дата сплати
     service_date:       { type: Date, default: null },
-    checking_account:   { type: Schema.Types.ObjectId, ref: 'ReferenceCheckingAccount' },
+    checking_account_id:{ type: Schema.Types.ObjectId, ref: 'ReferenceCheckingAccount' },
     total_currency:     { type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
     total_amount:       { type: Number, default: 0 },
     content:            { type: String, default: '' },
     comment:            { type: String, default: '' },// Коментар
     curator_id:         { type: Schema.Types.ObjectId, ref: 'ReferenceCurator', default: null },
-    responsible_agent:  { type: Schema.Types.ObjectId, ref: 'User' },
-    agent:              { type: Schema.Types.ObjectId, ref: 'User' }, // Агент (посилання на Користувачі)
+    responsible_agent_id:  { type: Schema.Types.ObjectId, ref: 'User' },
+    agent_id:              { type: Schema.Types.ObjectId, ref: 'User' }, // Агент (посилання на Користувачі)
     is_void:            { type: Boolean, default: false },
     general_checking_account:               { type: Boolean, default: false },
     content_of_general_checking_account:    { type: String, default: '' },

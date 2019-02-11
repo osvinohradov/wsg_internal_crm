@@ -30,17 +30,21 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   t.is_returned = false;
   t.is_paid = false;
   t.group_invoice_id = null;
-  t.offer_currency_id = null;
-  t.total_currency_id = null;
+
+  let currency = await Ref.ReferenceUnitClassifierModel.findOne({ name: 'ГРН' });
+  currency = currency._id || null;
+
+  t.offer_currency_id = currency;
+  t.total_currency_id = currency;
   t.provider_id = null;
   t.taxes_payment = null;
   t.curator_id = null;
   t.currency_exchange_id = null;
   t.service_type_id = null;
-  t.checking_account = null;
+  t.checking_account_id = null;
   t.comment = '';
-  t.responsible_agent = null;
-  t.agent = null;
+  t.responsible_agent_id = null;
+  t.agent_id = null;
   t.is_processed = false;
   t.returned_document = '';
 
@@ -77,20 +81,20 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
 
   t.detail_info.supplier_cost.sum = parse_number(tfx.documentsPrice);
   t.detail_info.supplier_cost.mpe = 0;
-  t.detail_info.supplier_cost.currency_id = null;
+  t.detail_info.supplier_cost.currency_id = currency;
 
   // // Секція "Комісія постачальника"
   t.detail_info.supplier_commision = {};
   t.detail_info.supplier_commision.sum = 0;
   t.detail_info.supplier_commision.mpe = 0;
   t.detail_info.supplier_commision.percent = 0;
-  t.detail_info.supplier_commision.currency_id = null;
+  t.detail_info.supplier_commision.currency_id = currency;
 
   // Секція "Штраф"
   t.detail_info.forfeit = {};
   t.detail_info.forfeit.sum = 0;
   t.detail_info.forfeit.mpe = 0;
-  t.detail_info.forfeit.currency_id = null;
+  t.detail_info.forfeit.currency_id = currency;
 
   // Секція "Послуги агенції"
   t.detail_info.agency_services = {};
@@ -98,19 +102,19 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   t.detail_info.agency_services.mpe = 0;
   t.detail_info.agency_services.percent = 0;
   t.detail_info.agency_services.bank_percent = 0;
-  t.detail_info.agency_services.currency_id = null;
+  t.detail_info.agency_services.currency_id = currency;
 
   // Секція "Інші послуги"
   t.detail_info.other_services = {};
   t.detail_info.other_services.sum = 0;
   t.detail_info.other_services.mpe = 0;
-  t.detail_info.other_services.currency_id = null;
+  t.detail_info.other_services.currency_id = currency;
 
   // Секція "Всього"
   t.detail_info.total_amount = {};
   t.detail_info.total_amount.sum = 0;
   t.detail_info.total_amount.mpe = 0;
-  t.detail_info.total_amount.currency_id = null;
+  t.detail_info.total_amount.currency_id = currency;
 
 
   t.detail_info.additional_info = '';
@@ -133,7 +137,7 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
 }
 
 function _get_date_time(dt_string){
-  let value = moment(dt_string, ["YYYY-MM-DDTHH:mm:ss"]);
+  let value = moment(dt_string, ['YYYY-MM-DDTHH:mm:ss', 'DD.MM.YYYY HH:mm:ss']);
   return value.toDate();
 }
 

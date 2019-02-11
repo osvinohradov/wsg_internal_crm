@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { NomenclatureReference } from "../../models";
-import { NomenclatureService } from "../../services";
+import { RefNomenclatureService } from "../../services";
 
 @Component({
   selector: 'nomenclature-popup-ref',
@@ -16,7 +16,7 @@ export class NomenclaturePopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<NomenclaturePopupReferencesComponent>,
     @Inject(MAT_DIALOG_DATA) public nomenclature: NomenclatureReference,
-    public NomenclatureService: NomenclatureService
+    public NomenclatureService: RefNomenclatureService
   ) {
     if (!this.nomenclature) {
       this.nomenclature = new NomenclatureReference();
@@ -26,33 +26,33 @@ export class NomenclaturePopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_nomenclature(nomenclature: NomenclatureReference) {
-    this.NomenclatureService.update_nomenclature(nomenclature).subscribe(data => {
-      this.nomenclature = data as NomenclatureReference;
-    });
+    // this.NomenclatureService.update_nomenclature(nomenclature).subscribe(data => {
+    //   this.nomenclature = data as NomenclatureReference;
+    // });
   }
 
   save_nomenclature(nomenclature: NomenclatureReference) {
-    this.NomenclatureService.save_nomenclature(nomenclature).subscribe(data => {
-      let tmp = data as NomenclatureReference;
-      if (!tmp._id) {
-        this.is_saved = false;
-      } else {
-        this.nomenclature = tmp;
-        this.is_saved = true;
-      }
-    });
+    // this.NomenclatureService.save_nomenclature(nomenclature).subscribe(data => {
+    //   let tmp = data as NomenclatureReference;
+    //   if (!tmp._id) {
+    //     this.is_saved = false;
+    //   } else {
+    //     this.nomenclature = tmp;
+    //     this.is_saved = true;
+    //   }
+    // });
   }
 
   remove_nomenclature(nomenclature_id: string) {
-    if (!nomenclature_id) {
-      console.log(`nomenclature_id не передано.`);
-      // Show error dialog
-      return;
-    }
+    // if (!nomenclature_id) {
+    //   console.log(`nomenclature_id не передано.`);
+    //   // Show error dialog
+    //   return;
+    // }
 
-    this.NomenclatureService.remove_nomenclature(nomenclature_id).subscribe(() => {
-      this.dialogRef.close({ action: "remove", id: nomenclature_id, element: null });
-    });
+    // this.NomenclatureService.remove_nomenclature(nomenclature_id).subscribe(() => {
+    //   this.dialogRef.close({ action: "remove", id: nomenclature_id, element: null });
+    // });
   }
 
   save_and_close(nomenclature: NomenclatureReference) {
@@ -62,12 +62,12 @@ export class NomenclaturePopupReferencesComponent implements OnInit {
   }
 
   save_update_nomenclature(nomenclature: NomenclatureReference) {
-    if (!nomenclature._id) {
-      this.save_nomenclature(nomenclature);
-    } else {
-      this.update_nomenclature(nomenclature);
-      this.is_saved = true;
-    }
+    // if (!nomenclature._id) {
+    //   this.save_nomenclature(nomenclature);
+    // } else {
+    //   this.update_nomenclature(nomenclature);
+    //   this.is_saved = true;
+    // }
   }
 
   /**

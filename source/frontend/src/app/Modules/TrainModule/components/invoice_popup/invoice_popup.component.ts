@@ -1,11 +1,19 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, ViewContainerRef } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-
+import * as moment from 'moment';
 // import { AviaInvoice } from "../../models";
 // import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { CounterpartyService } from "../../../ReferenceModule/services";
-import { FormControl } from "@angular/forms";
+import { RefCounterpartyService, RefRailwayStationService } from "../../../ReferenceModule/services";
+import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { TrainInvoiceDetail } from "../../models";
+
+
+import { GroupInvoiceService } from "../../../GroupInvoice/services";
+import { RefNomenclatureService } from "../../../ReferenceModule/services";
+import { TrainService } from "../../services";
+
+
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: "app-invoice-popup",
@@ -20,11 +28,187 @@ export class TrainInvoiceDialogComponent implements OnInit {
   // public is_saved: Boolean = false;
   // В переменной ханится обьект накладной
 
+  // Fields for data from input
+  public client_id_form_field;
+  public group_invoice_form_field;
+  public offer_currency_form_field;
+  public total_currency_form_field;
+  public provider_form_field;
+  public taxes_payment_form_field;
+  public curator_form_field;
+  public currency_exchange_form_field;
+  public service_type_form_field;
+  public checking_account_form_field;
+  
+  // Fields for stored data from DB
+  public ref_counterparties_names = [];
+  public group_invoices_names;
+  public ref_unit_classifier_names;
+  public ref_curators_names;
+  public ref_currency_exchanges_names;
+  public ref_service_types_names;
+  public ref_checking_accounts_names;
+  public users_names;
+  public organizations_names;
+  public ref_individual_counterparties_names;
+  public ref_railway_stations_names = [];
+
+  private my_data: any = {};
+
   constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail){
-    console.log('[ Edit Train Invoice ]: ', train_invoice);
+              private fb: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail,
+              private GroupInvoiceService: GroupInvoiceService,
+              private RefCounterpartyService: RefCounterpartyService,
+              private TrainService: TrainService,
+              private RefNomenclatureService: RefNomenclatureService,
+              private RefRailwayStationService: RefRailwayStationService,
+              public toastr: ToastrManager){
+    this.client_id_form_field = train_invoice.client_id;
+
+   
+
   }
 
+  ngOnInit() {
+    this._fetch_data(this._initialize_data, this)
+    this.ref_railway_stations_names.push(this.train_invoice.detail_info.departure_station_id);
+    console.log(this.ref_railway_stations_names)
+  }
+
+  _initialize_data(data: any, context){
+    context.ref_counterparties_names = data['counterparty_name'];
+    context.group_invoices_names = data['group_invoice'];
+    context.ref_unit_classifier_names = data['unit_clasifier_name'];
+    context.ref_railway_stations_names = data['railway_station'];
+  }
+
+  _fetch_data(callback, context){
+    let data = {};
+    this.GroupInvoiceService.get_group_invoices_names()
+      .then((group_invoice_name) => {
+        data['group_invoice'] = group_invoice_name;
+
+        return this.RefCounterpartyService.get_counterparties_names();
+      })
+      .then((counterparties_names) => {
+        data['counterparty_name'] = counterparties_names;
+
+        return this.RefNomenclatureService.get_ref_unit_clasifiers_names();
+      })
+      .then((unit_clasifier_names) => {
+        data['unit_clasifier_name'] = unit_clasifier_names;
+
+        return this.RefRailwayStationService.get_railway_stations_names();
+      })
+      .then((railway_stations) => {
+        data['railway_station'] = railway_stations;
+      })
+      .then(() => {
+        callback(data, context);
+      })
+  }
+
+  _get_date(dt){
+    let date  = moment(dt).format('YYYY-MM-DD');
+    return date;
+  }
+  
+  _get_date_time(dt){
+    let date_time = moment(dt, 'MM/DD/YYYY');
+    if(!date_time.isValid()){
+      return moment().format('DD-MM-YYYY');
+    }
+    return date_time.format('DD-MM-YYYY');
+  }
+
+  _get_time(dt){
+    let time = moment(dt).format('HH:mm');
+    return time;
+  }
+
+  _get_total_amount_sum(){
+    if(!this.train_invoice){
+      return 0;
+    }
+    let supplier_cost = parseFloat(this.train_invoice.detail_info.supplier_cost.sum) || 0;
+    let supplier_commision = parseFloat(this.train_invoice.detail_info.supplier_commision.sum) || 0;
+    let forfeit = parseFloat(this.train_invoice.detail_info.forfeit.sum) || 0;
+    let agency_services = parseFloat(this.train_invoice.detail_info.agency_services.sum) || 0;
+    let other_services = parseFloat(this.train_invoice.detail_info.other_services.sum) || 0;
+
+    let sum = supplier_cost + supplier_commision + forfeit + agency_services + other_services;
+    this.train_invoice.detail_info.total_amount.sum = sum;
+    return sum.toFixed(3);
+  }
+
+  _get_total_amount_mpe(){
+    if(!this.train_invoice){
+      return 0;
+    }
+    let supplier_cost = parseFloat(this.train_invoice.detail_info.supplier_cost.mpe) || 0;
+    let supplier_commision = parseFloat(this.train_invoice.detail_info.supplier_commision.mpe) || 0;
+    let forfeit = parseFloat(this.train_invoice.detail_info.forfeit.mpe) || 0;
+    let agency_services = parseFloat(this.train_invoice.detail_info.agency_services.mpe) || 0;
+    let other_services = parseFloat(this.train_invoice.detail_info.other_services.mpe) || 0;
+
+    let mpe = supplier_cost + supplier_commision + forfeit + agency_services + other_services;
+    this.train_invoice.detail_info.total_amount.mpe = mpe;
+    return mpe.toFixed(3);
+  }
+
+  save_ticket(ticket){
+    console.log('Save ticket');   
+    this.TrainService.create_train_invoice(ticket)
+      .then((data: TrainInvoiceDetail) => {
+        this.toastr.successToastr('Залізничний квиток успішно збереженно.', 'Успішно!');
+        this.train_invoice = data;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.toastr.errorToastr('Під час збереження залізничного квитка, виникла помилка.', 'Помилка!');
+      });
+  }
+  
+  update_ticket(ticket){
+    console.log('Update ticket');
+    this.TrainService.update_train_invoice(ticket)
+      .then((data: TrainInvoiceDetail) => {
+        this.toastr.successToastr('Залізничний квиток успішно змінено.', 'Успішно!');
+        this.train_invoice = data;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.toastr.errorToastr('Під час оновленення залізничного квитка, виникла помилка.', 'Помилка!');
+      });
+  }
+
+  save_update(ticket){
+    if(ticket._id){
+      this.update_ticket(ticket);
+    }
+    else{
+      this.save_ticket(ticket);
+    }
+  }
+
+  display_fn(item){
+    console.log('Client id: ', item)
+    return item.name;
+  }
+
+  fetch_departure_station(value){
+    this.RefRailwayStationService.get_railway_stations_names(value)
+      .then((railway_station) => {
+        this.ref_railway_stations_names = railway_station;
+      });
+  }
+
+
+
+  show_data(){
+    console.log('==== Date: ', this.train_invoice.service_date)
+  }
   // public test_date = "12.09.2018 17:45:00";
   // // Currencies inputs
   // public payment_form_input_autocomplete = new FormControl();
@@ -82,7 +266,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
   //   this.get_avia_group_invoice_content(null);
   //   console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
   // }
-  ngOnInit() {}
+  
 
   // update_avia_invoice(avia_invoice: AviaInvoice) {
   //   this.AviaInvoiceService.update_avia_invoice(avia_invoice).subscribe(data => {

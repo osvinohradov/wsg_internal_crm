@@ -18,10 +18,10 @@ let train_invoice_schema = {
     curator_id: null,
     currency_exchange_id: null,
     service_type_id: null,
-    checking_account: '',
+    checking_account_id: null,
     comment: '',
-    responsible_agent: '',
-    agent: '',
+    responsible_agent_id: null,
+    agent_id: null,
     is_processed: false,
     returned_document: '',
     detail_info: {

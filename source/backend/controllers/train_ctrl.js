@@ -9,10 +9,15 @@ router.route('/train/invoices')
     .get(async (req, res) => {
         train_handler.get_train_invoices(req, res);
     })
+
+router.route('/train/invoice')
     // Створити новий рахунок
     .post(async (req, res) => {
         train_handler.create_train_invoice(req, res);
-    });
+    })
+    .put(async (req, res) => {
+        train_handler.update_train_invoice(req, res);
+    })
 
 router.route('/train/invoice/:id')
     // Отримати рахунок по id

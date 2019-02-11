@@ -12,6 +12,8 @@ import { initialize_train_ticket_parsers } from './services/train_ticket_parser'
 
 require('./models/initialize_db');
 
+require('./service_db_init/initialize_zhd_station');
+
 const app = express();
 const port = 8080;
 const baseUrl = '/api/v1';

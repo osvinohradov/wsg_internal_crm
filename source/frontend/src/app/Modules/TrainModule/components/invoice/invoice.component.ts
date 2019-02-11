@@ -71,7 +71,7 @@ export class TrainInvoiceComponent implements OnInit {
             Дата та час відправлення: ${invoice.detail_info.departure_dt}; Дата та час прибуття: ${invoice.detail_info.arrival_dt};
             Потяг: ${invoice.detail_info.train_number}; Вагон ${invoice.detail_info.carriage_number};
             Місце ${invoice.detail_info.place}; Код підтвердження: ????? ШЯП-Е1-30887 ?????.`;
-    console.log('Content: ', content);
+    // console.log('Content: ', content);
     return content;
   }
 

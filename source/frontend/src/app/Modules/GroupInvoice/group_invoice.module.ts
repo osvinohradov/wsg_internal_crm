@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
-import { TrainInvoiceComponent } from './components/invoice/invoice.component';
-import { TrainRoutingModule } from './train-routing.module';
+// import { TrainInvoiceComponent } from './components/invoice/invoice.component';
+// import { TrainRoutingModule } from './train-routing.module';
 
 // materials modules
 import { MatTabsModule, MatNativeDateModule, MatAutocompleteModule } from '@angular/material';
@@ -25,31 +25,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatListModule} from '@angular/material/list';
 
 
-
-import { TrainService } from './services';
-import { TrainInvoiceDialogComponent } from './components/invoice_popup/invoice_popup.component';
-import { BrowserModule } from '@angular/platform-browser';
-
-//import { GroupInvoiceModule } from '../GroupInvoice/group_invoice.module';
-import { GroupInvoiceService } from '../GroupInvoice/services';
-import { RefCounterpartyService, RefNomenclatureService, RefRailwayStationService } from '../ReferenceModule/services';
-//import { RefCounterpartyService } from '../ReferenceModule/services';
-// import { ReferenceModule } from '../ReferenceModule/reference.module';
-import { ToastrModule } from 'ng6-toastr-notifications';
+import { GroupInvoiceService } from './services';
 
 @NgModule({
   declarations: [
-    TrainInvoiceComponent,
-    TrainInvoiceDialogComponent
+
   ],
   imports: [
-    ToastrModule.forRoot(),
-    //GroupInvoiceModule,
     FormsModule,
-    BrowserModule,
     ReactiveFormsModule,
     CommonModule,
-    TrainRoutingModule,
+    //TrainRoutingModule,
     MatAutocompleteModule,
     MatTabsModule,
     MatInputModule,
@@ -71,13 +57,13 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 
   ],
   entryComponents: [
-    TrainInvoiceDialogComponent
   ],
   exports: [
-    TrainInvoiceComponent,
-    TrainRoutingModule
+    // TrainInvoiceComponent,
+    //TrainRoutingModule
+    GroupInvoiceService
   ],
-  providers: [TrainService, GroupInvoiceService, RefCounterpartyService, RefNomenclatureService, RefRailwayStationService],
+  providers: [GroupInvoiceService],
   bootstrap: []
 })
-export class TrainModule { } 
+export class GroupInvoiceModule { } 

@@ -14,6 +14,7 @@ import { ReferenceCheckingAccountModel, BankModel } from './checking_account';
 import { ReferenceIndividualCounterpartiesModel,
          ReferenceIndividualCounterpartiesPassportModel } from './individual_counterparties';
 import { ReferenceCounterpartyContractModel } from './counterparty_contract';
+import { RefRailwayStationModel } from './railway_stations';
 
 
 
@@ -34,5 +35,6 @@ export {
     ReferenceCurrencyExchangeModel,
     ReferenceIndividualCounterpartiesModel,
     ReferenceIndividualCounterpartiesPassportModel,
-    ReferenceCounterpartyContractModel
+    ReferenceCounterpartyContractModel,
+    RefRailwayStationModel
 }

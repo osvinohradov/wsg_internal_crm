@@ -28,4 +28,5 @@ export function register_routes(app, base_route){
     app.use(base_route, ref.ref_checking_account_ctrl);
     app.use(base_route, ref.ref_individual_counterparty_ctrl);
     app.use(base_route, ref.ref_service_type_ctrl);
+    app.use(base_route, ref.ref_railway_station_ctrl);
 }

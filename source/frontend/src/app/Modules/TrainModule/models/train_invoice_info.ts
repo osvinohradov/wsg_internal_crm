@@ -1,7 +1,7 @@
 export class TrainInvoiceInfo {
   _id: string = null;
   // Номер
-  number: string = "";
+  number: string = '';
   // Дата
   date: Date = null;
   // Без реалізації
@@ -17,27 +17,25 @@ export class TrainInvoiceInfo {
   // Вид сервісу
   service_type_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceServiceType' },
   // Content
-  content: string = "";
+  content: string = '';
   // Постачальник
   provider_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
   //
-  total_amount: number = 0;
-  //
-  mpe: number = 0;
+  total_amount: any = {};
   // Агент
-  agent: string = null;
+  agent_id: any = null;
   // Відповідальний
-  responsible_agent: string = null;
+  responsible_agent_id: any = null;
   // Валюта пропозиції
-  offer_currency_id: string = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
+  offer_currency_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Підсумкова валюта
-  total_currency_id: string = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
-  organization: any = null;
+  total_currency_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
+  organization_id: any = null;
   // Документ що повертається
-  returned_document: string = null;
+  returned_document: string = '';
   payment_provider_dt: Date = null;
   // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
-  payment_form: string = null;
+  payment_form: string = '';
   // Дата сплати
   payment_date: Date = null;
   // Открывался билет или нет

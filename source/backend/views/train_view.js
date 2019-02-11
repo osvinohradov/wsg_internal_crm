@@ -47,6 +47,13 @@ class TrainView extends BaseView{
 
     async create_train_invoice(req, res){ 
         let invoice = req.body;
+
+
+        console.log('================================= Train invoice =================================');
+        console.log(invoice)
+        console.log('=================================================================================');
+
+
         if(!invoice){
             this.send_error_response(req, 400, {
                 "description": "Bad request params. Request must contains body."
@@ -70,7 +77,16 @@ class TrainView extends BaseView{
         }
     }
 
-    async update_train_invoice(req, res){ }
+    async update_train_invoice(req, res){
+        let train = req.body;
+        try{
+            console.log(train);
+        }
+        catch(err){
+
+        }
+
+     }
 
     async delete_train_invoice(req, res){ 
         const id = req.query.id;

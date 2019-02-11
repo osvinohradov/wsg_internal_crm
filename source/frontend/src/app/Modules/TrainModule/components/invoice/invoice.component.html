@@ -255,9 +255,9 @@
             <!-- Comment -->
             <td class="text-center">{{ invoice.comment }}</td>
             <!-- Agent -->
-            <td class="text-center">{{ invoice.agent ? invoice.agent.first_name + " " + invoice.agent.last_name  : "-" }}</td>
+            <td class="text-center">{{ invoice.agent_id ? invoice.agent_id.first_name + " " + invoice.agent_id.last_name  : "-" }}</td>
             <!-- Responsible Agent -->
-            <td class="text-center">{{ invoice.responsible_agent ? invoice.responsible_agent.first_name + " " + invoice.responsible_agent.last_name  : "-" }}</td>
+            <td class="text-center">{{ invoice.responsible_agent_id ? invoice.responsible_agent_id.first_name + " " + invoice.responsible_agent_id.last_name  : "-" }}</td>
             <!-- Offer Currency -->
             <td class="text-center">{{ invoice.offer_currency_id ? invoice.offer_currency_id.name : "-" }}</td>
             <!-- Total Currency -->

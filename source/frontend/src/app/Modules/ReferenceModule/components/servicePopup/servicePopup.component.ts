@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import { ServiceTypeService, CounterpartyService } from '../../services';
+import { ServiceTypeService, RefCounterpartyService } from '../../services';
 import { ServiceTypeReference } from '../../models';
 import { FormControl } from '@angular/forms';
 
@@ -21,7 +21,7 @@ export class ServicePopupReferencesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ServiceTypeReference>,
     @Inject(MAT_DIALOG_DATA) public service_type: ServiceTypeReference,
-    public ServiceTypeService: ServiceTypeService, public CounterpartyService: CounterpartyService
+    public ServiceTypeService: ServiceTypeService, public RefCounterpartyService: RefCounterpartyService
   ) {
     this.get_counterparties_names_ids(null);
     if (!this.service_type) {
@@ -97,7 +97,7 @@ export class ServicePopupReferencesComponent implements OnInit {
 
   get_counterparties_names_ids(pattern: string){
     console.log(pattern)
-    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
+    this.RefCounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
       console.log('Data:', data)
       this.counterparties_names_ids = data;
       console.log(this.counterparties_names_ids)

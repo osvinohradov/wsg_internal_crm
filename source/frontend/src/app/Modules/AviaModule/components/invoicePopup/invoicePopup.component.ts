@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { AviaInvoice } from "../../models";
 import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { CounterpartyService } from "../../../ReferenceModule/services";
+import { RefCounterpartyService } from "../../../ReferenceModule/services";
 import { FormControl } from "@angular/forms";
 
 @Component({
@@ -41,134 +41,134 @@ export class AviaInvoicePopupComponent implements OnInit {
     "Банківський кредит"
   ];
 
-  public counterparties_name_id: any = [];
-  get_counterparties_names_id(pattern){
-    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
-      console.log(data)
-    });
-  }
-  public avia_group_invoices: any = []
+  // public counterparties_name_id: any = [];
+  // get_counterparties_names_id(pattern){
+  //   this.RefCounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
+  //     console.log(data)
+  //   });
+  // }
+  // public avia_group_invoices: any = []
 
-  _set_date(field, event){
-    field = event.value;
-  }
+  // _set_date(field, event){
+  //   field = event.value;
+  // }
   
 
-  // Валюту - временно сделать внутренним массивом (CAD, CHF, CZK, EUR, GBP, JPY, RUB, SEK, USD, grn)
-  // окончательная валюта - то же самое
-  // Используем currency для выбора значений в полях 
-  public currencies: string[] = [
-    "CAD", "CHF", "CZK", "EUR", "GBP", "JPY", "RUB", "SEK", "USD", "грн"
-  ];
+  // // Валюту - временно сделать внутренним массивом (CAD, CHF, CZK, EUR, GBP, JPY, RUB, SEK, USD, grn)
+  // // окончательная валюта - то же самое
+  // // Используем currency для выбора значений в полях 
+  // public currencies: string[] = [
+  //   "CAD", "CHF", "CZK", "EUR", "GBP", "JPY", "RUB", "SEK", "USD", "грн"
+  // ];
 
-  constructor(
-    public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
-    public AviaInvoiceService: AviaInvoiceService,
-    public CounterpartyService: CounterpartyService,
-    public AviaGroupInvoiceService: AviaGroupInvoiceService
-  ) {
-    if (!this.avia_invoice) {
-      this.avia_invoice = new AviaInvoice();
-    }
-    this.get_avia_group_invoice_content(null);
-    console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
-  }
+  // constructor(
+  //   public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
+  //   @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
+  //   public AviaInvoiceService: AviaInvoiceService,
+  //   public RefCounterpartyService: RefCounterpartyService,
+  //   public AviaGroupInvoiceService: AviaGroupInvoiceService
+  // ) {
+  //   if (!this.avia_invoice) {
+  //     this.avia_invoice = new AviaInvoice();
+  //   }
+  //   this.get_avia_group_invoice_content(null);
+  //   console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
+  // }
   ngOnInit() {}
 
-  update_avia_invoice(avia_invoice: AviaInvoice) {
-    this.AviaInvoiceService.update_avia_invoice(avia_invoice).subscribe(data => {
-      this.avia_invoice = data as AviaInvoice;
-    });
-  }
+  // update_avia_invoice(avia_invoice: AviaInvoice) {
+  //   this.AviaInvoiceService.update_avia_invoice(avia_invoice).subscribe(data => {
+  //     this.avia_invoice = data as AviaInvoice;
+  //   });
+  // }
 
-  save_avia_invoice(avia_invoice: AviaInvoice) {
-    console.log("Save avia invoice:", avia_invoice);
-    this.AviaInvoiceService.save_avia_invoice(avia_invoice).subscribe(data => {
-      let tmp = data as AviaInvoice;
-      if (!tmp._id) {
-        this.is_saved = false;
-      } else {
-        this.avia_invoice = tmp;
-        this.is_saved = true;
-      }
-    });
-  }
+  // save_avia_invoice(avia_invoice: AviaInvoice) {
+  //   console.log("Save avia invoice:", avia_invoice);
+  //   this.AviaInvoiceService.save_avia_invoice(avia_invoice).subscribe(data => {
+  //     let tmp = data as AviaInvoice;
+  //     if (!tmp._id) {
+  //       this.is_saved = false;
+  //     } else {
+  //       this.avia_invoice = tmp;
+  //       this.is_saved = true;
+  //     }
+  //   });
+  // }
 
-  remove_avia_invoice(avia_invoice_id: string) {
-    if (!avia_invoice_id) {
-      console.log(`avia_invoice_id не передано.`);
-      // Show error dialog
-      return;
-    }
+  // remove_avia_invoice(avia_invoice_id: string) {
+  //   if (!avia_invoice_id) {
+  //     console.log(`avia_invoice_id не передано.`);
+  //     // Show error dialog
+  //     return;
+  //   }
 
-    this.AviaInvoiceService.remove_avia_invoice(avia_invoice_id).subscribe(() => {
-      this.dialogRef.close({
-        action: "remove",
-        id: avia_invoice_id,
-        element: null
-      });
-    });
-  }
+  //   this.AviaInvoiceService.remove_avia_invoice(avia_invoice_id).subscribe(() => {
+  //     this.dialogRef.close({
+  //       action: "remove",
+  //       id: avia_invoice_id,
+  //       element: null
+  //     });
+  //   });
+  // }
 
-  save_and_close(avia_invoice: AviaInvoice) {
-    // Save ticket
-    this.save_update_avia_invoice(avia_invoice);
-    this.close_dialog(avia_invoice);
-  }
+  // save_and_close(avia_invoice: AviaInvoice) {
+  //   // Save ticket
+  //   this.save_update_avia_invoice(avia_invoice);
+  //   this.close_dialog(avia_invoice);
+  // }
 
-  save_update_avia_invoice(avia_invoice: AviaInvoice) {
-    if (!avia_invoice._id) {
-      this.save_avia_invoice(avia_invoice);
-    } else {
-      this.update_avia_invoice(avia_invoice);
-      this.is_saved = true;
-    }
-  }
+  // save_update_avia_invoice(avia_invoice: AviaInvoice) {
+  //   if (!avia_invoice._id) {
+  //     this.save_avia_invoice(avia_invoice);
+  //   } else {
+  //     this.update_avia_invoice(avia_invoice);
+  //     this.is_saved = true;
+  //   }
+  // }
 
-  get_avia_group_invoice_content(pattent){
-    this.AviaGroupInvoiceService.get_avia_group_invoice_content(pattent).subscribe((data) => {
-      this.avia_group_invoices = data;
-      console.log(data)
-    });
-  }
+  // get_avia_group_invoice_content(pattent){
+  //   this.AviaGroupInvoiceService.get_avia_group_invoice_content(pattent).subscribe((data) => {
+  //     this.avia_group_invoices = data;
+  //     console.log(data)
+  //   });
+  // }
 
-  /**
-   *
-   * data = {
-   * action: "" (create, update, remove),
-   * id: "",
-   * element: Object
-   * }
-   *
-   * @param data
-   */
-  close_dialog(data): void {
-    console.log("Close dialog:", data);
-    if (!this.is_saved) {
-      this.dialogRef.close(null);
-    } else {
-      this.dialogRef.close(data);
-    }
-  }
+  // /**
+  //  *
+  //  * data = {
+  //  * action: "" (create, update, remove),
+  //  * id: "",
+  //  * element: Object
+  //  * }
+  //  *
+  //  * @param data
+  //  */
+  // close_dialog(data): void {
+  //   console.log("Close dialog:", data);
+  //   if (!this.is_saved) {
+  //     this.dialogRef.close(null);
+  //   } else {
+  //     this.dialogRef.close(data);
+  //   }
+  // }
 
-  /**
-   * Additional Section
-   *
-   */
+  // /**
+  //  * Additional Section
+  //  *
+  //  */
 
-  get_counterparty_names(pattern) {
-    this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
-      console.log(data);
-    });
-  }
-  get_total_amount_cost(avia_invoice){
-    let result = parseInt(avia_invoice.DetailInfo.SupplierCost.Sum) + parseInt(avia_invoice.DetailInfo.AgencyServices.Sum) +
-    parseInt(avia_invoice.DetailInfo.AgencyServices.MPE) + parseInt(avia_invoice.DetailInfo.OtherServices.Sum) + parseInt(avia_invoice.DetailInfo.OtherServices.MPE);
-    console.log('Result: ', result)
-    if(!result) result = -1;
-    return result;
-  }
+  // get_counterparty_names(pattern) {
+  //   this.RefCounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
+  //     console.log(data);
+  //   });
+  // }
+  // get_total_amount_cost(avia_invoice){
+  //   let result = parseInt(avia_invoice.DetailInfo.SupplierCost.Sum) + parseInt(avia_invoice.DetailInfo.AgencyServices.Sum) +
+  //   parseInt(avia_invoice.DetailInfo.AgencyServices.MPE) + parseInt(avia_invoice.DetailInfo.OtherServices.Sum) + parseInt(avia_invoice.DetailInfo.OtherServices.MPE);
+  //   console.log('Result: ', result)
+  //   if(!result) result = -1;
+  //   return result;
+  // }
 
   get_counterparties_name(pattern) {
     // Клієнт - выбор клиннта из списка контрагентов (выбрать только имена)

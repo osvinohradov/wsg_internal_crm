@@ -27,13 +27,11 @@ export class TrainService {
   }
 
   update_train_invoice(train: TrainInvoiceDetail) {
-    return this.http.put(
-      this.baseUrl + `/train/invoice/${train._id}`, train
-    );
+    return this.http.put(this.baseUrl + `/train/invoice`, train).toPromise();
   }
 
   create_train_invoice(train: TrainInvoiceDetail) {
-    return this.http.post(this.baseUrl + `/train/invoice`, train);
+    return this.http.post(this.baseUrl + `/train/invoice`, train).toPromise();
   }
 //   remove_train_invoice(id: string) {
 //     return this.http.delete(this.baseUrl + `/references/airport/${id}`);

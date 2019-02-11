@@ -1,30 +1,40 @@
 <!-- Modal content-->
 
-<h2 class="ml-4 title_main_page_margin">Накладна залізничних квитків:
-  <span> від </span>
+<h2 class="ml-4 title_main_page_margin">
+  Накладна залізничних квитків:
+  {{ train_invoice.number ? train_invoice.number : 0 }}
+  <span> від </span> 
+  {{ _get_date_time(train_invoice.data) }}
 </h2>
 
 <!--Row MENU Buttons -->
 <div id="invoicePopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
   <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+
     <div class="d-inline pl-0 mr-my-1">
       <button type="button" class="btn btn-default my_button_style bold">
         <span class="my_button_label font-weight-bold">Провести та закрити</span>
       </button>
     </div>
+
     <div class="d-inline mr-my-1">
-      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="PrintMenu">Друк
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="PrintMenu">
+        Друк
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
       <mat-menu #PrintMenu="matMenu">
         <button mat-menu-item class="my_menu_label">Друк акта</button>
         <button mat-menu-item class="my_menu_label">Друк накладної</button>
         <button mat-menu-item class="my_menu_label">Друк рахунка</button>
-        <button mat-menu-item class="my_menu_label">Друк рахунка з печаткою</button>
+        <button mat-menu-item class="my_menu_label">
+          Друк рахунка з печаткою
+        </button>
       </mat-menu>
     </div>
+
     <div class="d-inline mr-my-1">
-      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="ChoiceMenu">Підбір
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="ChoiceMenu">
+        Підбір
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
       <mat-menu #ChoiceMenu="matMenu">
@@ -32,24 +42,22 @@
         <button mat-menu-item class="my_menu_label">Choice 2</button>
       </mat-menu>
     </div>
+
     <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
+      <button (click)="save_update(train_invoice)" type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
         <span class="material-icons">save</span>
       </button>
     </div>
+
     <div class="d-inline mr-my-1">
       <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Провести">
         <span class="material-icons">offline_pin</span>
       </button>
     </div>
+
     <div class="d-inline mr-my-1">
       <button (click)="close_dialog()" type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Закрити">
         <span class="material-icons">close</span>
-      </button>
-    </div>
-    <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Завантаження ONLINE бронювання">
-        <span class="material-icons">vertical_align_bottom</span>
       </button>
     </div>
   </div>
@@ -58,93 +66,114 @@
   <!-- DropDown ALL Actions -->
   <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
     <div id="referencesButton" class="d-xl-inline d-none float-right">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+      <button
+        type="button"
+        class="btn btn-default my_button_style my_square_button"
+        matTooltip="Довідка"
+      >
         <span class="material-icons">help_outline</span>
       </button>
     </div>
     <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
-      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+      
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">
+        Всі дії
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
+
       <mat-menu #menu="matMenu">
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">offline_pin</span>
           </div>
           <span class="d-inline my_menu_label">Провести та закрити</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">library_books</span>
           </div>
           <span class="d-inline my_menu_label">Перечитати</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">filter_none</span>
           </div>
           <span class="d-inline my_menu_label">Скопіювати</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">remove_from_queue</span>
           </div>
           <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">playlist_play</span>
           </div>
           <span class="d-inline my_menu_label">Показати у списку</span>
         </button>
+
         <button mat-menu-item>
           <span class="empty-icon d-inline my_menu_label">Друк</span>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">chevron_right</span>
           </div>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons"> filter_tilt_shift</span>
           </div>
           <span class="d-inline my_menu_label">Підбір</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">save</span>
           </div>
           <span class="d-inline my_menu_label">Записати</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">offline_pin</span>
           </div>
           <span class="d-inline my_menu_label">Провести</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">close</span>
           </div>
           <span class="d-inline my_menu_label">Закрити</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">cloud_download</span>
           </div>
           <span class="d-inline my_menu_label">Завантаження ONLINE бронювання</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">transform</span>
           </div>
           <span class="d-inline my_menu_label">Змінити форму...</span>
         </button>
+
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
             <span class="material-icons">help_outline</span>
           </div>
           <span class="d-inline my_menu_label">Довідка</span>
         </button>
+
       </mat-menu>
     </div>
   </div>
@@ -153,283 +182,324 @@
 <!--Row MENU Buttons End-->
 
 
-
 <!-- Invoice Popup Form Container -->
 <div class="ml-4 mr-4 mt-4 mb-4">
   <form class="form-horizontal" role="form">
-
     <div class="row mr-0 ml-0">
+
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input value="{{train_invoice.number}}" matInput placeholder="Номер:" name="number" disabled>
+          <input
+            [value]="train_invoice.number"
+            matInput
+            placeholder="Номер:"
+            name="number"
+            disabled />
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field>
-          <input [(ngModel)]="train_invoice.date" matInput [matDatepicker]="picker" placeholder="Дата:" name="date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <input
+            [(ngModel)]="train_invoice.date"
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Дата:"
+            name="date" />
+          <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Форма сплати:" aria-label="PaymentForm" matInput>
-          <!-- <mat-autocomplete #PaymentForm="matAutocomplete">
-            <mat-option *ngFor="let payment_form of payment_forms" [value]="payment_form">
-              {{payment_form}}
-            </mat-option>
-          </mat-autocomplete> -->
+          <input
+            type="text"
+            placeholder="Форма сплати:"
+            aria-label="PaymentForm"
+            matInput />
           <button mat-button matSuffix mat-icon-button aria-label="Settings">
             <mat-icon>more_horiz</mat-icon>
           </button>
         </mat-form-field>
       </div>
 
-      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker1" placeholder="Дата сплати:" >
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <input
+          [(ngModel)]="train_invoice.payment_date"
+          matInput
+          [matDatepicker]="picker1"
+          placeholder="Дата сплати:"
+          name="date" />
+        <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Квитків:" >
+          <input [value]="train_invoice.tickets_count" disabled matInput placeholder="Квитків:"/>
         </mat-form-field>
       </div>
 
+      <!-- TODO: Add total amount cost -->
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Всього:" disabled>
+          <input [value]="_get_total_amount_sum()" matInput placeholder="Всього:" disabled />
         </mat-form-field>
       </div>
     </div>
 
-
+    <!-- Client_id -->
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Клієнт:" name="ClientId" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.client_id"
+            placeholder="Клієнт: "
+            name="client_id" >
+            <mat-option
+              *ngFor="let item of ref_counterparties_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
-      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
+      <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style" >
         <mat-form-field>
-          <input matInput [matDatepicker]="picker2" placeholder="Дата послуг:" name="ServiceDate">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <input
+            [(ngModel)]="train_invoice.service_date"
+            matInput
+            [matDatepicker]="picker2"
+            placeholder="Дата послуг:"
+            
+            name="ServiceDate" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
-        <mat-checkbox class="" primary name="IsVoid">Без реалізації:</mat-checkbox>
+        <mat-checkbox [(ngModel)]="train_invoice.is_void" class="" primary name="IsVoid">Без реалізації:</mat-checkbox>
       </div>
+
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
-        <mat-checkbox class="" primary  name="IsReturned">Повернення:</mat-checkbox>
+        <mat-checkbox [(ngModel)]="train_invoice.is_returned" class="" primary name="IsReturned" >Повернення:</mat-checkbox>
       </div>
+
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style my_ng_checkbox">
-        <mat-checkbox class="" primary  name="IsPaid">Сплачено:</mat-checkbox>
+        <mat-checkbox [(ngModel)]="train_invoice.is_paid" class="" primary name="IsPaid">Сплачено:</mat-checkbox>
       </div>
     </div>
-
 
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 p-2 form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Групове замовлення:" aria-label="GroupInvoiceId" matInput  name="GroupInvoiceId" >
-          <mat-autocomplete #GroupInvoiceId="matAutocomplete">
-            <mat-option *ngFor="let group_invoice of avia_group_invoices" [value]="group_invoice">
-             
-            </mat-option>
-          </mat-autocomplete>
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+            <mat-select
+              [(ngModel)]="train_invoice.group_invoice_id"
+              (selectedChanged)="show_data()"
+              placeholder="Групове замовлення: "
+              name="group_invoice_id" >
+              <mat-option *ngFor="let item of group_invoice_form_field" [value]="item._id" >{{ item.name }}</mat-option>
+            </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Валюта пропозиції:" aria-label="OfferCurrency" matInput [matAutocomplete]="OfferCurrency" name="OfferCurrency">
-          <mat-autocomplete #OfferCurrency="matAutocomplete">
-            <mat-option *ngFor="let currency of currencies" [value]="currency" >
-             
-            </mat-option>
-          </mat-autocomplete>
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+            <input [(ngModel)]="train_invoice.offer_currency_id.name" matInput placeholder="Валюта пропозиції: " list="offer_currency_id" name="offer_currency_id">
+            <datalist id="offer_currency_id">
+              <option *ngFor="let item of ref_unit_classifier_names" [value]="item.name"></option>
+            </datalist>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Підсумкова валюта:" aria-label="TotalCurrency" matInput 
-            [matAutocomplete]="TotalCurrency" name="TotalCurrency">
-          <mat-autocomplete #TotalCurrency="matAutocomplete">
-            <mat-option *ngFor="let currency of currencies" [value]="currency">
-             
-            </mat-option>
-          </mat-autocomplete>
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.total_currency_id"
+            placeholder="Підсумкова валюта: "
+            name="group_invoice_id" >
+            <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
-
-
 
     <div class="row mr-0 ml-0">
-      <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
+      <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style" >
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Постачальник:" name="ProviderId" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.provider_id"
+            placeholder="Постачальник: "
+            name="provider_id" >
+            <mat-option *ngFor="let item of ref_counterparties_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Сплата такси:" name="TaxesPayment" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.taxes_payment"
+            placeholder="Сплата такси: "
+            name="txes_payment_id" >
+            <mat-option *ngFor="let item of ref_counterparties_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Куратор:" name="CuratorId" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.curator_id"
+            placeholder="Куратор: "
+            name="curator_id" >
+            <mat-option *ngFor="let item of ref_curators_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
-
 
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
-          <mat-select placeholder="Обмін валют:">
-            <mat-option *ngFor="let currency of currencyExchange" >
-             
-            </mat-option>
+          <mat-select
+            [(ngModel)]="train_invoice.currency_exchange_id"
+            placeholder="Обмін валют: "
+            name="currency_exchange_id" >
+            <mat-option *ngFor="let item of ref_currency_exchanges_names" [value]="item._id" >{{ item.name }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker3" placeholder="На дату:">
-          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="picker3" placeholder="На дату:" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker3"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Вид сервісу:"  name="ServiceTypeId" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.service_type_id"
+            placeholder="Вид сервісу: "
+            name="service_type_id">
+            <mat-option *ngFor="let item of ref_service_types_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Розрахунковий рахунок:" name="CheckingAccount" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-          <button mat-button matSuffix mat-icon-button aria-label="Search">
-            <mat-icon>search</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.checking_account_id"
+            placeholder="Розрахунковий рахунок: "
+            name="checking_account_id">
+            <mat-option *ngFor="let item of ref_checking_accounts_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
-
 
     <div class="row mr-0 ml-0 mb-4">
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Коментар:" name="Comment">
+          <input [(ngModel)]="train_invoice.comment" matInput placeholder="Коментар:" name="comment" />
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Відповідальний:" name="ResponsibleAgent" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.responsible_agent_id"
+            placeholder="Відповідальний: "
+            name="responsible_agent_id">
+            <mat-option *ngFor="let item of users_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Агент:" name="Agent" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select
+            [(ngModel)]="train_invoice.agent_id"
+            placeholder="Агент: "
+            name="agent_id">
+            <mat-option *ngFor="let item of users_names" [value]="item._id" >{{ item.name }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
 
-
+<!-- TODO: Add table for stations -->
     <!-- Angular Material Tabs -->
     <mat-tab-group>
       <mat-tab activelabel label="Детальна інформація">
         <div id="document_content" class="mb-4 mt-4">
+          <div class="row ml-0 mr-0">
+            <div class="form-group col-6 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input [(ngModel)]="train_invoice.detail_info.departure_station_id.name_urk"
+                       (keydown)="fetch_departure_station(train_invoice.detail_info.departure_station_id.name_urk)"
+                       matInput
+                       placeholder="Відправлення: "
+                       list="departure_station_id" 
+                       name="departure_station_id">
+                <datalist id="departure_station_id">
+                  <option *ngFor="let item of ref_railway_stations_names" [value]="item.name_ukr"></option>
+                </datalist>
+              </mat-form-field> 
+            </div>
 
-            <div class="row ml-0 mr-0">
-                <div class="form-group col-6 p-2 my_input_style">
-                  <mat-form-field class="example-form-field">
-                    <input matInput type="text" placeholder="Відправлення:"  name="DetailInfoNameId" />
-                    <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                      <mat-icon>more_horiz</mat-icon>
-                    </button>
-                  </mat-form-field>
-                </div>
-    
-                <div class="form-group col-6 p-2 my_input_style">
-                  <mat-form-field class="example-form-field">
-                    <input matInput type="text" placeholder="Прибуття:" name="TicketNumber" />
-                  </mat-form-field>
-                </div>
-              </div>
+            <div class="form-group col-6 p-2 my_input_style">
+              <mat-form-field class="example-form-field">
+                <input [(ngModel)]="train_invoice.detail_info.arrival_station_id.name_urk"
+                      (keydown)="fetch_departure_station(train_invoice.detail_info.arrival_station_id.name_urk)"
+                      matInput
+                      autocomplete="false"
+                      placeholder="Прибуття: "
+                      list="arrival_station_id" 
+                      name="arrival_station_id">
+                <datalist id="arrival_station_id">
+                  <option *ngFor="let item of ref_railway_stations_names" [value]="item.name_ukr"></option>
+                </datalist>
+              </mat-form-field>
+            </div>
+          </div>
 
           <div class="row ml-0 mr-0">
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Прізвище:"  name="DetailInfoNameId" />
-                <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                  <mat-icon>more_horiz</mat-icon>
-                </button>
+                <input
+                  value="{{train_invoice.detail_info.surname.last_name_native}} {{train_invoice.detail_info.surname.first_name_native}}"
+                  matInput
+                  type="text"
+                  placeholder="Прізвище:"
+                  name="surname_id"
+                />
               </mat-form-field>
             </div>
 
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Номер квитка:" name="TicketNumber" />
+                <input
+                  [value]="train_invoice.detail_info.ticket_number"
+                  matInput
+                  type="text"
+                  placeholder="Номер квитка:"
+                  name="TicketNumber"
+                />
               </mat-form-field>
             </div>
-
-            <!-- <div class="form-group col-4 p-2 my_input_style">
-              <mat-form-field>
-                <input matInput [matDatepicker]="picker4" placeholder="Дата покупки:">
-                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                <mat-datepicker #picker3></mat-datepicker>
-              </mat-form-field>
-            </div> -->
           </div>
 
           <!-- Fieldsets -->
@@ -437,135 +507,185 @@
             <!-- Fieldset 1 -->
             <div class="mr-0 ml-0 col-12 pl-0 pr-0">
               <div class="row mr-0 ml-0">
-
-
                 <!-- Section 1 -->
                 <div class="col-lg-5 col-md-5 col-sm-6 col-12">
-                    <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                      <h4 class="control-label float-left">Інформація про потяг:</h4>
-                    </div>
-
-                    <div class="row mr-0 ml-0">
-                      <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Номер потягу:"  name="SupplierCost.Sum">
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="№ вагона:"  name="SupplierCost.MPE">
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-lg-2 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Місце:"  name="SupplierCost.MPE">
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-lg-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 mr-0 ml-0 my_input_style">
-                          <mat-form-field class="example-full-width">
-                            <input type="text" placeholder="Тип сервісу:" aria-label="SupplierCostCurrency" matInput [matAutocomplete]="SupplierCostCurrency"
-                              name="SupplierCostCurrency">
-                            <mat-autocomplete #SupplierCostCurrency="matAutocomplete">
-                              <mat-option *ngFor="let currency of currencies" [value]="currency">
-                               
-                              </mat-option>
-                            </mat-autocomplete>
-                            <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                              <mat-icon>more_horiz</mat-icon>
-                            </button>
-                          </mat-form-field>
-                    </div>
-                  </div>
-                </div>
-                  <!-- END Section 1 -->
-
-
-                <!-- Section 2 -->
-                 <div class="col-lg-5 col-md-4 col-sm-6 col-12">
-                    <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                      <h4 class="control-label float-left">Дата та час:</h4>
-                    </div>
-
-                    <div class="row mr-0 ml-0">
-                      <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Відправлення:"  name="SupplierCost.Sum">
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder=""  name="SupplierCost.MPE">
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Прибуття:"  name="SupplierCost.MPE">
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                          <mat-form-field class="example-full-width">
-                            <input matInput placeholder=""  name="SupplierCost.MPE">
-                          </mat-form-field>
-                        </div>
-                    </div>
-                  </div>
-                <!-- END Section 2 -->
-
-
-                <!-- Section 3 -->
-                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-                    <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                      <h4 class="control-label float-left">Дата покупки квитка...:</h4>
-                    </div>
-
-                    <div class="row mr-0 ml-0">
-                      <div class="form-group col-lg-12 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="У постачальника:"  name="SupplierCost.Sum">
-                        </mat-form-field>
-                      </div>
-                  </div>
-                </div>
-                <!-- END Section 3 -->
-
-
-                <!-- Section 4 -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                   <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                    <h4 class="control-label float-left">Вартість постачальника:</h4>
+                    <h4 class="control-label float-left">
+                      Інформація про потяг:
+                    </h4>
                   </div>
 
                   <div class="row mr-0 ml-0">
-                    <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                    <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума постач.:"  name="SupplierCost.Sum">
+                        <input
+                          [value]="train_invoice.detail_info.train_number"
+                          matInput
+                          type="text"
+                          placeholder="Номер потягу: "
+                          name="train_number"
+                        />
                       </mat-form-field>
                     </div>
 
-                    <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                    <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:"  name="SupplierCost.MPE">
+                        <input
+                          [value]="train_invoice.detail_info.carriage_number"
+                          matInput
+                          type="text"
+                          placeholder="№ вагона: "
+                          name="carriage_number"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-2 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [value]="train_invoice.detail_info.place"
+                          matInput
+                          type="text"
+                          placeholder="Місце: "
+                          name="place"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Валюта:" aria-label="SupplierCostCurrency" matInput [matAutocomplete]="SupplierCostCurrency"
-                          name="SupplierCostCurrency">
-                        <mat-autocomplete #SupplierCostCurrency="matAutocomplete">
-                          <mat-option *ngFor="let currency of currencies" [value]="currency">
-                           
-                          </mat-option>
-                        </mat-autocomplete>
-                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                          <mat-icon>more_horiz</mat-icon>
-                        </button>
+                        <input
+                          [value]="train_invoice.detail_info.service_type"
+                          matInput
+                          type="text"
+                          placeholder="Тип сервісу: "
+                          name="service_type"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 1 -->
+
+                <!-- Section 2 -->
+                <div class="col-lg-5 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Дата та час:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [value]="_get_date(train_invoice.detail_info.departure_dt)"
+                          matInput
+                          type="text"
+                          placeholder="Відправлення: "
+                          name="service_type"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [value]="_get_time(train_invoice.detail_info.departure_dt)"
+                          matInput
+                          type="text"
+                          name="service_type"
+                        />
+                      </mat-form-field>
+                    </div>
+
+
+                    <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [value]="_get_date(train_invoice.detail_info.arrival_dt)"
+                          matInput
+                          type="text"
+                          placeholder="Прибуття: "
+                          name="service_type"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [value]="_get_time(train_invoice.detail_info.arrival_dt)"
+                          matInput
+                          type="text"
+                          name="service_type"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 2 -->
+
+                <!-- Section 3 -->
+                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">
+                      Дата покупки квитка...:
+                    </h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-12 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [value]="_get_date(train_invoice.detail_info.payment_provider_dt)"
+                          matInput
+                          placeholder="У постачальника:"
+                          name="payment_provider_dt"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Section 3 -->
+
+                <!-- Section 4 -->
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">
+                      Вартість постачальника:
+                    </h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.supplier_cost.sum"
+                          matInput
+                          placeholder="Сума постач.: "
+                          name="supplier_cost.sum"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.supplier_cost.mpe"
+                          matInput
+                          placeholder="В т.ч. ПДВ: "
+                          name="supplier_cost.mpe"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <mat-select
+                          [(ngModel)]="train_invoice.detail_info.supplier_cost.currency_id"
+                          placeholder="Валюта: "
+                          name="supplier_cost.currency_id" >
+                          <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
@@ -575,41 +695,54 @@
 
                 <!-- Section 5 -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                    <h4 class="control-label float-left">Комісія постачальника:</h4>
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style" >
+                    <h4 class="control-label float-left">
+                      Комісія постачальника:
+                    </h4>
                   </div>
 
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="%:"  name="SupplierCommision.Percent">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.supplier_commision.percent"
+                          matInput
+                          placeholder="%: "
+                          name="supplier_commision.percent"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:"  name="SupplierCommision.Sum">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.supplier_commision.sum"
+                          matInput
+                          placeholder="Сума: "
+                          name="supplier_commision.sum"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:"  name="SupplierCommision.MPE">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.supplier_commision.mpe"
+                          matInput
+                          placeholder="В т.ч. ПДВ: "
+                          name="supplier_commision.mpe"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Валюта:" aria-label="SupplierCommisionCurrency" matInput 
-                          [matAutocomplete]="SupplierCommisionCurrency" name="SupplierCommisionCurrency">
-                        <mat-autocomplete #SupplierCommisionCurrency="matAutocomplete">
-                          <mat-option *ngFor="let currency of currencies" [value]="currency" >
-                            
-                          </mat-option>
-                        </mat-autocomplete>
-                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                          <mat-icon>more_horiz</mat-icon>
-                        </button>
+                        <mat-select
+                          [(ngModel)]="train_invoice.detail_info.supplier_commision.currency_id"
+                          placeholder="Валюта: "
+                          name="supplier_commision.currency_id" >
+                          <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
@@ -626,28 +759,34 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:"  name="Forfeit.Sum">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.forfeit.sum"
+                          matInput
+                          placeholder="Сума: "
+                          name="forfeit.sum"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" name="Forfeit.MPE">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.forfeit.mpe"
+                          matInput
+                          placeholder="В т.ч. ПДВ: "
+                          name="forfeit.mpe"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Валюта:" aria-label="ForfeitCurrency" matInput  [matAutocomplete]="ForfeitCurrency"
-                          name="ForfeitCurrency">
-                        <mat-autocomplete #ForfeitCurrency="matAutocomplete">
-                          <mat-option *ngFor="let currency of currencies" [value]="currency">
-                          
-                          </mat-option>
-                        </mat-autocomplete>
-                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                          <mat-icon>more_horiz</mat-icon>
-                        </button>
+                        <mat-select
+                          [(ngModel)]="train_invoice.detail_info.forfeit.currency_id"
+                          placeholder="Валюта: "
+                          name="forfeit.currency_id" >
+                          <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
@@ -664,39 +803,56 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="%:"  name="AgencyServices.Percent">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.agency_services.percent"
+                          matInput
+                          placeholder="%: "
+                          name="agency_services.percent"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:" name="AgencyServices.Sum">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.agency_services.sum"
+                          matInput
+                          placeholder="Сума: "
+                          name="agency_services.sum"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="% банку:"name="AgencyServices.BankPercent">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.agency_services.bank_percent"
+                          matInput
+                          placeholder="% банку: "
+                          name="agency_services.bank_percent"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-3 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:"  name="AgencyServices.MPE">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.agency_services.mpe"
+                          matInput
+                          placeholder="В т.ч. ПДВ: "
+                          name="agency_services.bank_percent"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-2 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Валюта:" aria-label="AgencyServicesCurrency" matInput
-                          [matAutocomplete]="AgencyServicesCurrency" name="AgencyServicesCurrency">
-                        <mat-autocomplete #AgencyServicesCurrency="matAutocomplete">
-                          <mat-option *ngFor="let currency of currencies" [value]="currency">
-                          </mat-option>
-                        </mat-autocomplete>
-                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                          <mat-icon>more_horiz</mat-icon>
-                        </button>
+                        <mat-select
+                          [(ngModel)]="train_invoice.detail_info.agency_services.currency_id"
+                          placeholder="Валюта: "
+                          name="forfeit.currency_id" >
+                          <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
@@ -713,28 +869,35 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:"  name="OtherServices.Sum">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.other_services.sum"
+                          (change)="_change_total_sum()"
+                          matInput
+                          placeholder="Сума: "
+                          name="other_services.sum"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" name="OtherServices.MPE">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.other_services.mpe"
+                          matInput
+                          placeholder="В т.ч. ПДВ: "
+                          name="other_services.mpe"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Валюта:" aria-label="OtherServicesCurrency" matInput [matAutocomplete]="OtherServicesCurrency"
-                          name="OtherServicesCurrency">
-                        <mat-autocomplete #OtherServicesCurrency="matAutocomplete">
-                          <mat-option *ngFor="let currency of currencies" [value]="currency" >
-                           
-                          </mat-option>
-                        </mat-autocomplete>
-                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                          <mat-icon>more_horiz</mat-icon>
-                        </button>
+                        <mat-select
+                          [(ngModel)]="train_invoice.detail_info.other_services.currency_id"
+                          placeholder="Валюта: "
+                          name="forfeit.currency_id" >
+                          <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
@@ -751,61 +914,83 @@
                   <div class="row mr-0 ml-0">
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Сума:" value="" disabled name="TotalAmount.MPE">
+                        <input
+                          [value]="_get_total_amount_sum()"
+                          matInput
+                          placeholder="Сума: "
+                          name="total_amount.sum"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="В т.ч. ПДВ:" name="TotalAmount.MPE">
+                        <input
+                          [value]="_get_total_amount_mpe()"
+                          matInput
+                          placeholder="В т.ч. ПДВ: "
+                          name="total_amount.mpe"
+                        />
                       </mat-form-field>
                     </div>
 
                     <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Валюта:" aria-label="TotalAmountCurrency" matInput [matAutocomplete]="TotalAmountCurrency"
-                          name="TotalAmountCurrency">
-                        <mat-autocomplete #TotalAmountCurrency="matAutocomplete">
-                          <mat-option *ngFor="let currency of currencies" [value]="currency" >
-                            
-                          </mat-option>
-                        </mat-autocomplete>
-                        <button mat-button matSuffix mat-icon-button aria-label="Settings">
-                          <mat-icon>more_horiz</mat-icon>
-                        </button>
+                        <mat-select
+                          [(ngModel)]="train_invoice.detail_info.total_amount.currency_id"
+                          placeholder="Валюта: "
+                          name="forfeit.currency_id" >
+                          <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <!-- END Section 9 -->
 
+
                 <!-- Section 10 -->
                 <div class="col-lg-12 col-md-12">
-                    <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
-                      <h4 class="control-label float-left">Каса УЦОП:</h4>
+                  <div class="form-group col-12 p-2 mr-0 ml-0 clearfix my_input_style">
+                    <h4 class="control-label float-left">Каса УЦОП:</h4>
+                  </div>
+
+                  <div class="row mr-0 ml-0">
+                    <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.total_amount_ucop"
+                          matInput
+                          placeholder="Сума послуг каси УЦОП: "
+                          name="total_amount_ucop"
+                        />
+                      </mat-form-field>
                     </div>
-  
-                    <div class="row mr-0 ml-0">
-                      <div class="form-group col-lg-4 col-xs-12 p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Сума послуг каси УЦОП:" value="" name="TotalAmount.MPE">
-                        </mat-form-field>
-                      </div>
-  
-                      <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="ПДВ послуг каси УЦОП:" name="TotalAmount.MPE">
-                        </mat-form-field>
-                      </div>
-  
-                      <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
-                          <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Додаткова інформація:" name="TotalAmount.MPE">
-                          </mat-form-field>
-                        </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.ucop_mpe"
+                          matInput
+                          placeholder="ПДВ послуг каси УЦОП: "
+                          name="ucop_mpe"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-xs-12  p-2 mr-0 ml-0 my_input_style">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          [(ngModel)]="train_invoice.detail_info.additional_info"
+                          matInput
+                          placeholder="Додаткова інформація: "
+                          name="additional_info"
+                        />
+                      </mat-form-field>
                     </div>
                   </div>
-                  <!-- END Section 10 -->
+                </div>
+                <!-- END Section 10 -->
               </div>
             </div>
           </div>
@@ -814,31 +999,45 @@
       </mat-tab>
       <!-- TAB 1 - END -->
 
-
       <!-- TAB 2 - START -->
       <mat-tab label="Таблиця">
         <div class="mb-4 mt-4">
-
           <!-- Table Controls -->
           <div class="pl-0 mt-4 pr-0 clearfix">
             <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
               <div class="d-inline mr-my-1">
-                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Скопіювати"
+                >
                   <span class="material-icons">filter_none</span>
                 </button>
               </div>
               <div class="d-inline mr-my-1">
-                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Вилучити">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Вилучити"
+                >
                   <span class="material-icons">delete_sweep</span>
                 </button>
               </div>
               <div class="d-inline mr-my-1">
-                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вверх">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Перемістити вверх"
+                >
                   <span class="material-icons">arrow_upward</span>
                 </button>
               </div>
               <div class="d-inline mr-my-1">
-                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Перемістити вниз">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Перемістити вниз"
+                >
                   <span class="material-icons">arrow_downward</span>
                 </button>
               </div>
@@ -847,12 +1046,23 @@
             <!-- DropDown ALL Actions -->
             <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
               <div id="referencesButton" class="d-lg-inline d-none float-right">
-                <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Довідка"
+                >
                   <span class="material-icons">help_outline</span>
                 </button>
               </div>
-              <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
-                <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+              <div
+                class="allActionsMenu d-inline mr-my-1 float-left float-lg-right"
+              >
+                <button
+                  class="btn btn-default my_button_style"
+                  mat-button
+                  [matMenuTriggerFor]="menu"
+                >
+                  Всі дії
                   <span class="material-icons">keyboard_arrow_down</span>
                 </button>
                 <mat-menu #menu="matMenu">
@@ -872,13 +1082,17 @@
                     <div class="d-inline mr-3 my_menu_icon">
                       <span class="material-icons">settings</span>
                     </div>
-                    <span class="d-inline my_menu_label">Настроїти список...</span>
+                    <span class="d-inline my_menu_label"
+                      >Настроїти список...</span
+                    >
                   </button>
                   <button mat-menu-item>
                     <div class="d-inline mr-3 my_menu_icon">
                       <span class="material-icons">done_all</span>
                     </div>
-                    <span class="d-inline my_menu_label">Вивести список...</span>
+                    <span class="d-inline my_menu_label"
+                      >Вивести список...</span
+                    >
                   </button>
                   <button mat-menu-item>
                     <div class="d-inline mr-3 my_menu_icon">
@@ -907,24 +1121,31 @@
                     <th scope="col" class="code_column">Тип сервісу</th>
                     <th scope="col">Час відправлення</th>
                     <th scope="col">Час прибуття</th>
+                  </tr>
                 </thead>
+
                 <tbody>
-                  <tr class="main" *ngFor="let invoice of train_invoice.FlightInfo; let i = index;">
-                    <td class="text-center" scope="row">{{i + 1}}</td>
-                    <td class="text-center">{{invoice.FlightNumber}}</td>
-                    <td class="text-center">{{invoice.Place}}</td>
-                    <td class="text-center">{{invoice.DeparturePlace}}</td>
-                    <td class="text-center">{{invoice.ArrivalPlace}}</td>
-                    <td class="text-center">{{invoice.ServiceType}}</td>
-                    <td class="text-center">{{invoice.DepartureTime}}</td>
-                    <td class="text-center">{{invoice.ArrivalTime}}</td>
+                  <tr
+                    class="main"
+                    *ngFor="
+                      let invoice of train_invoice.FlightInfo;
+                      let i = index
+                    "
+                  >
+                    <td class="text-center" scope="row">{{ i + 1 }}</td>
+                    <td class="text-center">{{ invoice.FlightNumber }}</td>
+                    <td class="text-center">{{ invoice.Place }}</td>
+                    <td class="text-center">{{ invoice.DeparturePlace }}</td>
+                    <td class="text-center">{{ invoice.ArrivalPlace }}</td>
+                    <td class="text-center">{{ invoice.ServiceType }}</td>
+                    <td class="text-center">{{ invoice.DepartureTime }}</td>
+                    <td class="text-center">{{ invoice.ArrivalTime }}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <!-- Popup Table - End -->
-
         </div>
       </mat-tab>
       <!-- TAB 2 - END -->
@@ -937,7 +1158,11 @@
 
 <div id="invoiceModalFooter">
   <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="close_dialog()">
+    <button
+      type="button"
+      class="btn btn-default my_button_style"
+      (click)="close_dialog()"
+    >
       <span class="pr-3 my_button_label">Закрити</span>
     </button>
   </div>

@@ -9,6 +9,7 @@ class ReferenceCounterpartyView extends BaseView{
     }
 
     async get_counterparties_names(req, res){
+        console.log('Get counterparties names')
        let counterparties = null;
 
        let counterparty_name = req.query.counterparty_name;

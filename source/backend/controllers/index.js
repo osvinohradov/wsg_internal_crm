@@ -12,6 +12,7 @@ import { router as ref_unit_classifier_ctrl } from './ref_unit_classifier_ctrl';
 import { router as ref_checking_account_ctrl } from './ref_checking_account_ctrl';
 import { router as ref_individual_counterparty_ctrl } from './ref_individual_counterparty_ctrl';
 import { router as ref_service_type_ctrl } from './ref_service_type_ctrl';
+import { router as ref_railway_station_ctrl } from './ref_railway_station_ctrl';
 
 const ref = {
     ref_counterparty_ctrl,
@@ -19,7 +20,8 @@ const ref = {
     ref_unit_classifier_ctrl,
     ref_checking_account_ctrl,
     ref_individual_counterparty_ctrl,
-    ref_service_type_ctrl
+    ref_service_type_ctrl,
+    ref_railway_station_ctrl
 }
 
 export {

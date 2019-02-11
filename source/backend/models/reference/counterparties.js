@@ -73,7 +73,7 @@ ReferenceCounterpartySchema.statics.get_counterparties_names = async function(co
     let query = counterparty_name ? 
                     { name: new RegExp(`${counterparty_name}`, 'i') } :
                     {};
-
+console.log(query)
     let counterparties = ReferenceCounterpartyModel.find(query, '_id name', options);
     return counterparties;
 }
