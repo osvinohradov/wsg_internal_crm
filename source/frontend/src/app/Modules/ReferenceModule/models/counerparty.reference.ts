@@ -1,5 +1,10 @@
 import { BaseModel } from './base_model';
 
+export class RefCounterpartyNameModel {
+    _id: string = null;
+    name: string = '';
+}
+
 export class CounterpartyReference extends BaseModel{
     _id: string = undefined;
     // 

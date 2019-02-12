@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference } from "../models";
+import { RefRailwayStationNameModel } from "../models";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class RefRailwayStationService {
@@ -8,7 +9,13 @@ export class RefRailwayStationService {
 
   constructor(private http: HttpClient) {}
 
-  get_railway_stations_names(name) {
-    return this.http.get<number>(this.baseUrl + `/ref/railway_station/names?railway_station_name=${name}`).toPromise();
+  get_railway_stations_names(railway_station_name: string): Observable<RefRailwayStationNameModel[]> {
+    const url = `${this.baseUrl}/ref/railway_station/names`;
+
+    return this.http.get<RefRailwayStationNameModel[]>(url, {
+      params: {
+        railway_station_name: railway_station_name
+      }
+    });
   }
 }

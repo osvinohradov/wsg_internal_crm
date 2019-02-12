@@ -208,28 +208,30 @@ TrainInvoiceSchema.statics.get_train_invoices_info = async function(params){
 
 TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, projection, options){
   let invoices = await TrainInvoiceModel.findOne(query, projection, options)
-                      //.populate({ path: 'client_id', select: 'name' })
-                      // .populate({ path: 'group_invoice_id' })
+                      .populate({ path: 'client_id', select: 'name' })
+                      .populate({ path: 'group_invoice_id', select: 'group_name' })
                       .populate({ path: 'offer_currency_id', select: 'name' })
-                      //.populate({ path: 'total_currency_id' })
-                      //.populate({ path: 'provider_id' })
-                      //.populate({ path: 'taxes_payment' })
-                      //.populate({ path: 'curator_id' })
-                      // .populate({ path: 'currency_exchange_id' })
-                     // .populate({ path: 'service_type_id' })
-                      //.populate({ path: 'checking_account_id' })
-                      //.populate({ path: 'responsible_agent_id' })
-                      //.populate({ path: 'agent_id' })
-                      //.populate({ path: 'organization_id'})
-                        .populate({ path: 'detail_info.surname', model: 'ReferenceIndividualCounterparties' })
-                        .populate({ path: 'detail_info.departure_station_id', model: 'RefRailwayStationModel', select: 'name_ukr' })
-                        .populate({ path: 'detail_info.arrival_station_id', model: 'RefRailwayStationModel', select: 'name_ukr' })
-                      //.populate({ path: 'detail_info.supplier_cost.currency_id', model: 'ReferenceUnitClassifier' })
-                      //.populate({ path: 'detail_info.supplier_commision.currency_id', model: 'ReferenceUnitClassifier' })
-                      //.populate({ path: 'detail_info.forfeit.currency_id', model: 'ReferenceUnitClassifier' })
-                      //.populate({ path: 'detail_info.agency_services.currency_id', model: 'ReferenceUnitClassifier' })
-                      //.populate({ path: 'detail_info.other_services.currency_id', model: 'ReferenceUnitClassifier' })
-                      //.populate({ path: 'detail_info.total_amount.currency_id', model: 'ReferenceUnitClassifier' });
+                      .populate({ path: 'total_currency_id', select: 'name' })
+                      .populate({ path: 'provider_id', select: 'name' })
+                      .populate({ path: 'taxes_payment', select: 'name' })
+                      .populate({ path: 'curator_id', select: 'name' })
+                      .populate({ path: 'currency_exchange_id', select: 'name' })
+                      .populate({ path: 'service_type_id', select: 'name' })
+                      .populate({ path: 'checking_account_id', select: 'name' })
+                      .populate({ path: 'responsible_agent_id', select: 'first_name last_name' })
+                      .populate({ path: 'agent_id', select: 'first_name last_name' })
+                      .populate({ path: 'organization_id', select: 'name' })
+
+                      .populate({ path: 'detail_info.surname_id', select: 'first_native_name last_native_name middle_native_name', model: 'ReferenceIndividualCounterparties' })
+                      .populate({ path: 'detail_info.departure_station_id', select: 'name_ukr', model: 'RefRailwayStationModel' })
+                      
+                      .populate({ path: 'detail_info.arrival_station_id', select: 'name_ukr', model: 'RefRailwayStationModel' })
+                      .populate({ path: 'detail_info.supplier_cost.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.supplier_commision.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.forfeit.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.agency_services.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.other_services.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
+                      .populate({ path: 'detail_info.total_amount.currency_id', select: 'name', model: 'ReferenceUnitClassifier' });
   return invoices;
 }
 

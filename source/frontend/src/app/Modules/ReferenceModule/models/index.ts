@@ -2,12 +2,14 @@
 import { AirportReference } from './airport.reference';
 import { AviaCompanyReference } from './avia_company.reference';
 import { CityReference } from './city.reference';
-import { CounterpartyReference } from './counerparty.reference';
+import { CounterpartyReference, RefCounterpartyNameModel } from './counerparty.reference';
 import { CuratorReference } from './curator.reference';
 import { CurrencyExchangeReference } from './currency_exchange.reference';
 import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference } from './individual_counterparties.reference';
 import { NomenclatureReference } from './nomenclature.reference';
 import { ServiceTypeReference } from './service_type.reference';
+
+import { RefRailwayStationNameModel } from './railway_station';
 
 
 
@@ -21,5 +23,8 @@ export {
     IndividualCounterpartyReference,
     IndividualCounterpartiesPassportReference,
     NomenclatureReference,
-    ServiceTypeReference
+    ServiceTypeReference,
+
+    RefCounterpartyNameModel,
+    RefRailwayStationNameModel
 }
