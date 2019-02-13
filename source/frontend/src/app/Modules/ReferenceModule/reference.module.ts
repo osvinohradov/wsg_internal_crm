@@ -161,6 +161,7 @@ import { RefUnitClassifierNameModel } from "./models";
     RefCounterpartyService,
     RefNomenclatureService,
     RefUnitClassifierService,
+    RefCuratorService,
 
     //
     AirportService,
