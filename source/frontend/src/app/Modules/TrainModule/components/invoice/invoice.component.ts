@@ -5,6 +5,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { TrainService } from "../../services";
 import { TrainInvoiceInfo, TrainInvoiceDetail } from "../../models";
 import { TrainInvoiceDialogComponent } from "../invoice_popup/invoice_popup.component";
+import { GroupInvoiceNameModel } from "../../../GroupInvoice/models";
+import { RefCounterpartyNameModel, RefRailwayStationNameModel } from "../../../ReferenceModule/models";
 
 
 @Component({
@@ -53,6 +55,11 @@ export class TrainInvoiceComponent implements OnInit {
         // connect toaster library and show notification
         console.log('Invoice not found.');
       }
+
+      // TODO: Refactoring. Change method of getting null properties
+      data.client_id = data.client_id ? data.client_id : new RefCounterpartyNameModel();
+      data.group_invoice_id = data.group_invoice_id ? data.group_invoice_id : new GroupInvoiceNameModel();
+      data.detail_info.departure_station_id = data.detail_info.departure_station_id ? data.detail_info.departure_station_id : new RefRailwayStationNameModel();
 
       this.open_dialog(data).afterClosed().subscribe((dialog_response) => {
         console.log('Dialog closed.')

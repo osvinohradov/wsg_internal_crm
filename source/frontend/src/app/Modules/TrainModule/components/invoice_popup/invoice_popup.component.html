@@ -267,19 +267,16 @@
         </mat-form-field> 
       </div>
 
+      <!-- Service Date -->
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style" >
         <mat-form-field>
           <input
             [(ngModel)]="train_invoice.service_date"
             matInput
             [matDatepicker]="picker2"
-            placeholder="Дата послуг:"
-            
+            placeholder="Дата послуг:"            
             name="ServiceDate" />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker2"
-          ></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
@@ -300,57 +297,71 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 p-2 form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-            <mat-select
-              [(ngModel)]="train_invoice.group_invoice_id"
-              (selectedChanged)="show_data()"
-              placeholder="Групове замовлення: "
-              name="group_invoice_id" >
-              <mat-option *ngFor="let item of group_invoice_form_field" [value]="item._id" >{{ item.name }}</mat-option>
-            </mat-select>
+          <input [(ngModel)]="train_invoice.group_invoice_id.group_name"
+            [formControl]="groupInvoiceFromControl" name="group_invoice_id" type="text" 
+            placeholder="Групове замовлення: " matInput [matAutocomplete]="group_invoice_id">
+          
+          <mat-autocomplete autoActiveFirstOption #group_invoice_id="matAutocomplete">
+            <mat-option *ngFor="let item of groupInvoiceAutoComplete | async" [value]="item.group_name">
+              {{ item.group_name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-            <input [(ngModel)]="train_invoice.offer_currency_id.name" matInput placeholder="Валюта пропозиції: " list="offer_currency_id" name="offer_currency_id">
-            <datalist id="offer_currency_id">
-              <option *ngFor="let item of ref_unit_classifier_names" [value]="item.name"></option>
-            </datalist>
+          <input [(ngModel)]="train_invoice.offer_currency_id.name"
+            [formControl]="offerCurrencyFromControl" name="offer_currency_id" type="text" 
+            placeholder="Валюта пропозиції: " matInput [matAutocomplete]="offer_currency_id">
+          
+          <mat-autocomplete autoActiveFirstOption #offer_currency_id="matAutocomplete">
+            <mat-option *ngFor="let item of offerCurrencyAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <mat-select
-            [(ngModel)]="train_invoice.total_currency_id"
-            placeholder="Підсумкова валюта: "
-            name="group_invoice_id" >
-            <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input [(ngModel)]="train_invoice.total_currency_id.name"
+            [formControl]="totalCurrencyFromControl" name="total_currency_id" type="text" 
+            placeholder="Підсумкова валюта: " matInput [matAutocomplete]="total_currency_id">
+          
+          <mat-autocomplete autoActiveFirstOption #total_currency_id="matAutocomplete">
+            <mat-option *ngFor="let item of totalCurrencyAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>
 
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style" >
-        <!-- <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.provider_id"
-            placeholder="Постачальник: "
-            name="provider_id" >
-            <mat-option *ngFor="let item of ref_counterparties_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
-        </mat-form-field> -->
+        <mat-form-field class="example-form-field">
+          <input [(ngModel)]="train_invoice.provider_id.name"
+            [formControl]="providerFromControl" name="provider_id" type="text" 
+            placeholder="Постачальник: " matInput [matAutocomplete]="provider_id">
+          
+          <mat-autocomplete autoActiveFirstOption #provider_id="matAutocomplete">
+            <mat-option *ngFor="let item of providerAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+          </mat-option>
+        </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.taxes_payment"
-            placeholder="Сплата такси: "
-            name="txes_payment_id" >
-            <mat-option *ngFor="let item of ref_counterparties_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input [(ngModel)]="train_invoice.taxes_payment.name"
+            [formControl]="taxesPaymentFromControl" name="taxes_payment" type="text" 
+            placeholder="Сплата такси: " matInput [matAutocomplete]="taxes_payment">
+          
+          <mat-autocomplete autoActiveFirstOption #taxes_payment="matAutocomplete">
+            <mat-option *ngFor="let item of taxesPaymentAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+          </mat-option>
         </mat-form-field>
       </div>
 

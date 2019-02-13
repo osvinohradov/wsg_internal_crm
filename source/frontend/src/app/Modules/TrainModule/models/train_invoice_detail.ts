@@ -1,4 +1,6 @@
 //import { BaseModel } from "./base_model";
+import { GroupInvoiceNameModel } from '../../GroupInvoice/models';
+
 
 export class TrainInvoiceDetail {
   // extends BaseModel {
@@ -24,7 +26,7 @@ export class TrainInvoiceDetail {
   // Сплачено
   is_paid: boolean = false;
   // Групове замовлення
-  group_invoice_id: any = null; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
+  group_invoice_id: GroupInvoiceNameModel = null; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
   // Валюта пропозиції
   offer_currency_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Підсумкова валюта

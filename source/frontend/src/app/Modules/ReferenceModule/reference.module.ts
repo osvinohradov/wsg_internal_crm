@@ -56,8 +56,9 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatListModule } from "@angular/material/list";
 import { AirportService, AviaCompanyService, CityService,
-  RefCounterpartyService, CuratorService, CurrencyExchangeService,
-         IndividualCounterpartyService, RefNomenclatureService, ServiceTypeService } from "./services";
+  RefCounterpartyService, RefCuratorService, CurrencyExchangeService,
+         IndividualCounterpartyService, RefNomenclatureService, ServiceTypeService, RefUnitClassifierService } from "./services";
+import { RefUnitClassifierNameModel } from "./models";
 
 
 // print components
@@ -159,11 +160,14 @@ import { AirportService, AviaCompanyService, CityService,
   providers: [
     RefCounterpartyService,
     RefNomenclatureService,
+    RefUnitClassifierService,
+
+    //
     AirportService,
     AviaCompanyService,
     CityService,
     
-    CuratorService,
+    RefCuratorService,
     CurrencyExchangeService,
     IndividualCounterpartyService,
     ServiceTypeService,

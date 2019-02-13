@@ -1,12 +1,25 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CuratorReference } from "../models";
+import { CuratorReference, RefCuratorNameModel } from "../models";
+import { Observable } from "rxjs";
 
 @Injectable()
-export class CuratorService {
+export class RefCuratorService {
   baseUrl: String = "http://localhost:8080/api/v1";
 
   constructor(private http: HttpClient) {}
+
+
+  get_curators_names(curator_name=''): Observable<RefCuratorNameModel[]>{
+    const url = `${this.baseUrl}/ref/curator/names`;
+    
+    return this.http.get<RefCuratorNameModel[]>(url, { params: {
+      curator_name: curator_name
+    }});
+  }
+
+
+
 
   get_curators_count() {
     return this.http.get<number>(this.baseUrl + `/references/count/curator`);

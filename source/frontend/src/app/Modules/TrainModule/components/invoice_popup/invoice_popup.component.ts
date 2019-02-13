@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import * as moment from 'moment';
 // import { AviaInvoice } from "../../models";
 // import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { RefCounterpartyService, RefRailwayStationService } from "../../../ReferenceModule/services";
+import { RefCounterpartyService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService } from "../../../ReferenceModule/services";
 import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { TrainInvoiceDetail } from "../../models";
 
@@ -12,9 +12,9 @@ import { GroupInvoiceService } from "../../../GroupInvoice/services";
 import { RefNomenclatureService } from "../../../ReferenceModule/services";
 import { TrainService } from "../../services";
 
-
-import { RefRailwayStationNameModel, RefCounterpartyNameModel } from '../../../ReferenceModule/models';
-
+// TODO: Put out to outer file
+import { RefRailwayStationNameModel, RefCounterpartyNameModel, RefUnitClassifierNameModel, RefCuratorNameModel } from '../../../ReferenceModule/models';
+import { GroupInvoiceNameModel } from '../../../GroupInvoice/models';
 
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from "rxjs";
@@ -67,13 +67,22 @@ export class TrainInvoiceDialogComponent implements OnInit {
               private TrainService: TrainService,
               private RefNomenclatureService: RefNomenclatureService,
               private RefRailwayStationService: RefRailwayStationService,
+              private RefUnitClassifierService: RefUnitClassifierService,
+              private RefCuratorService: RefCuratorService,
               public toastr: ToastrManager){
   
   }
 
-  // Departure stations
+  // Client (counterparty)
   public clientAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
   public clientFromControl = new FormControl();
+  // TODO: 
+  public providerAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public providerFromControl = new FormControl();
+
+  public taxesPaymentAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public taxesPaymentFromControl = new FormControl();
+
 
   fetchRefCounterparties(value: string): Observable<RefCounterpartyNameModel[]>{
     return this.RefCounterpartyService
@@ -84,6 +93,18 @@ export class TrainInvoiceDialogComponent implements OnInit {
     );
   }
 
+  // Group Invoice
+  public groupInvoiceAutoComplete: Observable<GroupInvoiceNameModel[]> = null;
+  public groupInvoiceFromControl = new FormControl();
+
+  fetchGroupInvoiceNames(value: string): Observable<GroupInvoiceNameModel[]>{
+    return this.GroupInvoiceService
+      .get_group_invoices_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
 
   // Departure stations
   public departureStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
@@ -93,7 +114,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
   public arrivalStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
   public arrivalStationFromControl = new FormControl();
 
-  fetchRailwayStations(value: string): Observable<RefRailwayStationNameModel[]>{
+  fetchRailwayStationsNames(value: string): Observable<RefRailwayStationNameModel[]>{
     return this.RefRailwayStationService
       .get_railway_stations_names(value)
       .pipe(map(result => {
@@ -101,6 +122,36 @@ export class TrainInvoiceDialogComponent implements OnInit {
       })
     );
   }
+
+  // Reference unit Classifier
+  public offerCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
+  public offerCurrencyFromControl = new FormControl();
+
+  public totalCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
+  public totalCurrencyFromControl = new FormControl();
+
+  fetchRefUnitClassifiersNames(value: string): Observable<RefUnitClassifierNameModel[]>{
+    return this.RefUnitClassifierService
+      .get_ref_unit_clasifiers_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+
+  
+  public curatorAutoComplete: Observable<RefCuratorNameModel[]> = null;
+  public curatorPaymentFromControl = new FormControl();
+
+  fetchCuratorsNames(value: string): Observable<RefCuratorNameModel[]>{
+    return this.RefCuratorService
+      .get_curators_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+
 
 
   initializeForm(){
@@ -110,7 +161,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
       debounceTime(300),
       switchMap(value => {
         console.log('value: ', value);
-        return this.fetchRailwayStations(value);
+        return this.fetchRailwayStationsNames(value);
       })
     );
 
@@ -120,7 +171,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
       debounceTime(300),
       switchMap(value => {
         console.log('value: ', value);
-        return this.fetchRailwayStations(value);
+        return this.fetchRailwayStationsNames(value);
       })
     );
 
@@ -137,8 +188,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
 
 
   ngOnInit() {
-    this.initializeForm()
-    this._fetch_data(this._initialize_data, this);
+    this.initializeForm();
   }
 
   _initialize_data(data: any, context){
@@ -151,33 +201,6 @@ export class TrainInvoiceDialogComponent implements OnInit {
       data['railway_station'].push(context.train_invoice.detail_info.departure_station_id);
       console.log(data['railway_station'])
     }
-  }
-
-  _fetch_data(callback, context){
-    let data = {};
-    this.GroupInvoiceService.get_group_invoices_names()
-      .then((group_invoice_name) => {
-        data['group_invoice'] = group_invoice_name;
-
-        return this.RefCounterpartyService.get_counterparties_names();
-      })
-      .then((counterparties_names) => {
-        //data['counterparty_name'] = counterparties_names;
-
-        return this.RefNomenclatureService.get_ref_unit_clasifiers_names();
-      })
-      .then((unit_clasifier_names) => {
-        data['unit_clasifier_name'] = unit_clasifier_names;
-
-        return this.RefRailwayStationService.get_railway_stations_names('');
-      })
-      .then((railway_stations) => {
-
-        data['railway_station'] = railway_stations;        
-      })
-      .then(() => {
-        callback(data, context);
-      })
   }
 
   _get_date(dt){

@@ -10,6 +10,8 @@ import { NomenclatureReference } from './nomenclature.reference';
 import { ServiceTypeReference } from './service_type.reference';
 
 import { RefRailwayStationNameModel } from './railway_station';
+import { RefUnitClassifierNameModel } from './ref_unit_classifier_name';
+import { RefCuratorNameModel } from './curator_name';
 
 
 
@@ -26,5 +28,7 @@ export {
     ServiceTypeReference,
 
     RefCounterpartyNameModel,
-    RefRailwayStationNameModel
+    RefRailwayStationNameModel,
+    RefUnitClassifierNameModel,
+    RefCuratorNameModel
 }

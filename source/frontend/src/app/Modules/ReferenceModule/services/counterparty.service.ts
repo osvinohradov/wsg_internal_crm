@@ -14,7 +14,9 @@ export class RefCounterpartyService {
 
 
   get_counterparties_names(counterparty_name=''): Observable<RefCounterpartyNameModel[]> {
-    return this.http.get<RefCounterpartyNameModel[]>(this.baseUrl + `/ref/counterparties/names`, { params: {
+    const url = `${this.baseUrl}/ref/counterparties/names`;
+    
+    return this.http.get<RefCounterpartyNameModel[]>(url, { params: {
       counterparty_name: counterparty_name
     }});
   }

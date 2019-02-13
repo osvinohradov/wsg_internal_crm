@@ -32,7 +32,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 //import { GroupInvoiceModule } from '../GroupInvoice/group_invoice.module';
 import { GroupInvoiceService } from '../GroupInvoice/services';
-import { RefCounterpartyService, RefNomenclatureService, RefRailwayStationService } from '../ReferenceModule/services';
+import { RefCounterpartyService, RefNomenclatureService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService } from '../ReferenceModule/services';
 //import { RefCounterpartyService } from '../ReferenceModule/services';
 // import { ReferenceModule } from '../ReferenceModule/reference.module';
 import { ToastrModule } from 'ng6-toastr-notifications';
@@ -77,7 +77,16 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     TrainInvoiceComponent,
     TrainRoutingModule
   ],
-  providers: [TrainService, GroupInvoiceService, RefCounterpartyService, RefNomenclatureService, RefRailwayStationService],
+  providers: [
+    TrainService,
+    //
+    GroupInvoiceService,
+    RefCounterpartyService,
+    RefNomenclatureService,
+    RefRailwayStationService,
+    RefUnitClassifierService,
+    RefCuratorService
+  ],
   bootstrap: []
 })
 export class TrainModule { } 
