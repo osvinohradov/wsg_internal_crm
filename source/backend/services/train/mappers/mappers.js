@@ -1,4 +1,5 @@
 import moment from 'moment';
+import mongoose from 'mongoose';
 
 import { TrainInvoiceModel, Ref } from "../../../models";
 import { PAYMENT_FORMS } from '../../../constants/common';
@@ -58,14 +59,16 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   // Тип сервиса 
   t.detail_info.service_type = tfx.wagonType;
 
-  let st_code = tfx.departureStationCode ? tfx.departureStationCode : '';
+  let st_code = tfx.departureStationCode ? new RegExp(`.*${tfx.departureStationCode}.*`, 'i') : '';
+  
   let departure = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
   if(departure){
     t.detail_info.departure_station_id = departure._id;
   }
 
-  st_code = tfx.arrivalStationCode ? tfx.arrivalStationCode : '';
+  st_code = tfx.arrivalStationCode ? new RegExp(`.*${tfx.arrivalStationCode}.*`, 'i') : '';
   let arrival = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
+  
   if(arrival){
     t.detail_info.arrival_station_id = arrival._id;
   }

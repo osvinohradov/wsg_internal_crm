@@ -494,6 +494,7 @@
 
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
+                <!-- [value]="train_invoice.detail_info.departure_station_id.name_ukr" -->
                 <input [value]="train_invoice.detail_info.departure_station_id.name_ukr"
                   [formControl]="departureStationFromControl" name="departure_station_id" type="text" 
                   placeholder="Відправлення: " matInput [matAutocomplete]="departure_station_id">
@@ -509,6 +510,7 @@
 
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
+                <!-- [value]="train_invoice.detail_info.arrival_station_id.name_ukr" -->
                 <input [value]="train_invoice.detail_info.arrival_station_id.name_ukr"
                   [formControl]="arrivalStationFromControl" name="arrival_station_id" type="text" 
                   placeholder="Прибуття: " matInput [matAutocomplete]="arrival_station_id">
