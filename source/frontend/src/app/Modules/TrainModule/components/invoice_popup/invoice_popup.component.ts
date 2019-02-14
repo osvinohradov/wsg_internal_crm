@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import * as moment from 'moment';
 // import { AviaInvoice } from "../../models";
 // import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { RefCounterpartyService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService } from "../../../ReferenceModule/services";
+import { RefCounterpartyService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService, RefCurrencyExchangeService, RefServiceTypeService, RefCheckingAccountService, RefIndividualCounterpartyService, RefOrganizationService, RefUserService } from "../../../ReferenceModule/services";
 import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { TrainInvoiceDetail } from "../../models";
 
@@ -13,7 +13,18 @@ import { RefNomenclatureService } from "../../../ReferenceModule/services";
 import { TrainService } from "../../services";
 
 // TODO: Put out to outer file
-import { RefRailwayStationNameModel, RefCounterpartyNameModel, RefUnitClassifierNameModel, RefCuratorNameModel } from '../../../ReferenceModule/models';
+import { RefRailwayStationNameModel,
+         RefCounterpartyNameModel,
+         RefUnitClassifierNameModel,
+         RefCuratorNameModel,
+         RefCurrencyExchangeNameModel, 
+         RefServiceTypeNameModel,
+         RefCheckingAccountNameModel,
+         RefUserNameModel,
+         RefOrganizationNameModel,
+         RefIndividualCounterpartyNameModel} from '../../../ReferenceModule/models';
+
+
 import { GroupInvoiceNameModel } from '../../../GroupInvoice/models';
 
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -31,34 +42,60 @@ import { map, startWith, catchError, debounceTime, switchMap } from "rxjs/operat
 })
 export class TrainInvoiceDialogComponent implements OnInit {
   // public is_saved: Boolean = false;
-  // В переменной ханится обьект накладной
+  // Client (counterparty)
+  public clientAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public clientFromControl = new FormControl();
+  // Group Invoice
+  public groupInvoiceAutoComplete: Observable<GroupInvoiceNameModel[]> = null;
+  public groupInvoiceFromControl = new FormControl();
+  // Offer currency ID
+  public offerCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
+  public offerCurrencyFromControl = new FormControl();
+  // Total currency ID
+  public totalCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
+  public totalCurrencyFromControl = new FormControl();
+  // Provider ID 
+  public providerAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public providerFromControl = new FormControl();
+  // Taxes payment ID
+  public taxesPaymentAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public taxesPaymentFromControl = new FormControl();
+  // Curator ID
+  public curatorAutoComplete: Observable<RefCuratorNameModel[]> = null;
+  public curatorFromControl = new FormControl();
+  // Currency Exchange
+  public currencyExchangeAutoComplete: Observable<RefCurrencyExchangeNameModel[]> = null;
+  public currencyExchangeFromControl = new FormControl();
+  // Service Type
+  public serviceTypeAutoComplete: Observable<RefServiceTypeNameModel[]> = null;
+  public serviceTypeFromControl = new FormControl();
+  // Checking Account
+  public checkingAccountAutoComplete: Observable<RefCheckingAccountNameModel[]> = null;
+  public checkingAccountFromControl = new FormControl();
+  // User
+  public responsibleAgentAutoComplete: Observable<RefUserNameModel[]> = null;
+  public responsibleAgentFromControl = new FormControl();
+  public agentAutoComplete: Observable<RefUserNameModel[]> = null;
+  public agentFromControl = new FormControl();
 
-  // Fields for data from input
-  public client_id_form_field;
-  public group_invoice_form_field;
-  public offer_currency_form_field;
-  public total_currency_form_field;
-  public provider_form_field;
-  public taxes_payment_form_field;
-  public curator_form_field;
-  public currency_exchange_form_field;
-  public service_type_form_field;
-  public checking_account_form_field;
-  
-  // Fields for stored data from DB
-  public ref_counterparties_names = [];
-  public group_invoices_names;
-  public ref_unit_classifier_names;
-  public ref_curators_names;
-  public ref_currency_exchanges_names;
-  public ref_service_types_names;
-  public ref_checking_accounts_names;
-  public users_names;
-  public organizations_names;
-  public ref_individual_counterparties_names;
-  public ref_railway_stations_names;
+  // Organization ID
+  public organizationAutoComplete: Observable<RefOrganizationNameModel[]> = null;
+  public organizationFromControl = new FormControl();
+  // Departure stations
+  public departureStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
+  public departureStationFromControl = new FormControl();
+  // Arrival stations
+  public arrivalStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
+  public arrivalStationFromControl = new FormControl();
+  // Individual Counterparty
+  public individualCounterpartyAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
+  public individualCounterpartyFromControl = new FormControl();
 
-  
+  public PAYMENT_FORMS = {
+    "cash": "Готівка",
+    "non-cash" : "Платіжна картка",
+    "credit" : "Банківський кредит"
+  }
 
   constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail,
@@ -69,20 +106,15 @@ export class TrainInvoiceDialogComponent implements OnInit {
               private RefRailwayStationService: RefRailwayStationService,
               private RefUnitClassifierService: RefUnitClassifierService,
               private RefCuratorService: RefCuratorService,
+              private RefCurrencyExchangeService: RefCurrencyExchangeService,
+              private RefServiceTypeService: RefServiceTypeService,
+              private RefCheckingAccountService: RefCheckingAccountService,
+              private RefIndividualCounterpartyService: RefIndividualCounterpartyService,
+              private RefOrganizationService: RefOrganizationService,
+              private RefUserService: RefUserService,
               public toastr: ToastrManager){
   
-  }
-
-  // Client (counterparty)
-  public clientAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
-  public clientFromControl = new FormControl();
-  // TODO: 
-  public providerAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
-  public providerFromControl = new FormControl();
-
-  public taxesPaymentAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
-  public taxesPaymentFromControl = new FormControl();
-
+  }  
 
   fetchRefCounterparties(value: string): Observable<RefCounterpartyNameModel[]>{
     return this.RefCounterpartyService
@@ -91,44 +123,18 @@ export class TrainInvoiceDialogComponent implements OnInit {
         return result;
       })
     );
-  }
-
-  // Group Invoice
-  public groupInvoiceAutoComplete: Observable<GroupInvoiceNameModel[]> = null;
-  public groupInvoiceFromControl = new FormControl();
+  } 
 
   fetchGroupInvoiceNames(value: string): Observable<GroupInvoiceNameModel[]>{
     return this.GroupInvoiceService
       .get_group_invoices_names(value)
       .pipe(map(result => {
+        console.log('===================== Group Invoices =====================');
+        console.log(result);
         return result;
       })
     );
   }
-
-  // Departure stations
-  public departureStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
-  public departureStationFromControl = new FormControl();
-
-  // Arrival stations
-  public arrivalStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
-  public arrivalStationFromControl = new FormControl();
-
-  fetchRailwayStationsNames(value: string): Observable<RefRailwayStationNameModel[]>{
-    return this.RefRailwayStationService
-      .get_railway_stations_names(value)
-      .pipe(map(result => {
-        return result;
-      })
-    );
-  }
-
-  // Reference unit Classifier
-  public offerCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
-  public offerCurrencyFromControl = new FormControl();
-
-  public totalCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
-  public totalCurrencyFromControl = new FormControl();
 
   fetchRefUnitClassifiersNames(value: string): Observable<RefUnitClassifierNameModel[]>{
     return this.RefUnitClassifierService
@@ -139,11 +145,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     );
   }
 
-  
-  public curatorAutoComplete: Observable<RefCuratorNameModel[]> = null;
-  public curatorPaymentFromControl = new FormControl();
-
-  fetchCuratorsNames(value: string): Observable<RefCuratorNameModel[]>{
+  fetchRefCuratorsNames(value: string): Observable<RefCuratorNameModel[]>{
     return this.RefCuratorService
       .get_curators_names(value)
       .pipe(map(result => {
@@ -152,29 +154,128 @@ export class TrainInvoiceDialogComponent implements OnInit {
     );
   }
 
+  fetchRefCurrencyExchangesNames(value: string): Observable<RefCurrencyExchangeNameModel[]>{
+    return this.RefCurrencyExchangeService
+      .get_currency_exchanges_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
 
+  fetchRefServiceTypesNames(value: string): Observable<RefServiceTypeNameModel[]>{
+    return this.RefServiceTypeService
+      .get_service_types_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+
+  fetchRefCheckingAccountsNames(value: string): Observable<RefCheckingAccountNameModel[]>{
+    return this.RefCheckingAccountService
+      .get_checking_accounts_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+
+  fetchRefUsersNames(value: string): Observable<RefUserNameModel[]>{
+    return this.RefUserService
+      .get_users_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+
+  fetchRefOrganizationsNames(value: string): Observable<RefOrganizationNameModel[]>{
+    return this.RefOrganizationService
+      .get_organizations_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+  
+  fetchRefRailwayStationsNames(value: string): Observable<RefRailwayStationNameModel[]>{
+    return this.RefRailwayStationService
+      .get_railway_stations_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  }
+
+  fetchRefIndividualCounterpartiesNames(value: string): Observable<RefIndividualCounterpartyNameModel[]>{
+    return this.RefIndividualCounterpartyService
+      .get_individual_counterparties_names(value)
+      .pipe(map(result => {
+        return result;
+      })
+    );
+  } 
+
+  setClientValue(event, value){
+    this.train_invoice.client_id = value;
+  }
+  setGroupInvoiceValue(event, value){
+    this.train_invoice.group_invoice_id = value;
+  }
+  setOfferCurrencyValue(event, value){
+    this.train_invoice.offer_currency_id = value;
+  }
+  setTotalCurrencyValue(event, value){
+    this.train_invoice.total_currency_id = value;
+  }
+  setProviderValue(event, value){
+    this.train_invoice.provider_id = value;
+  }
+  setTaxesPaymentValue(event, value){
+    this.train_invoice.taxes_payment_id = value;
+  }
+  setCuratorValue(event, value){
+    this.train_invoice.curator_id = value;
+  }
+  setCurrencyExchangeValue(event, value){
+    this.train_invoice.currency_exchange_id = value;
+  }
+  setServiceTypeValue(event, value){
+    this.train_invoice.service_type_id = value;
+  }
+  setCheckingAccountValue(event, value){
+    this.train_invoice.checking_account_id = value;
+  }
+  setResponsibleAgentValue(event, value){
+    this.train_invoice.responsible_agent_id = value;
+  }
+  setAgentValue(event, value){
+    this.train_invoice.agent_id = value;
+  }
+  setOrganizationValue(event, value){
+    this.train_invoice.organization_id = value;
+  }
+  setDepartureStationValue(event, value){
+    this.train_invoice.detail_info.departure_station_id = value;
+  }
+  setArrivalStationValue(event, value){
+    this.train_invoice.detail_info.arrival_station_id = value;
+  }
+  setIndividualCounterpartyValue(event, value){
+    this.train_invoice.detail_info.surname_id = value;
+  }
+  setSupplierCostCurrencyValue(event, value){
+    this.train_invoice.detail_info.supplier_cost.currency_id = value;
+  }
+
+  // TODO: Add data fetching 
+
+  showError(err, msg){
+    this.toastr.errorToastr('Щось пішло не так!', 'Помилка!')
+  }
 
   initializeForm(){
-    // Fill departure station auto complete field
-    this.departureStationAutoComplete = this.departureStationFromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap(value => {
-        console.log('value: ', value);
-        return this.fetchRailwayStationsNames(value);
-      })
-    );
-
-    // Fill arrival station auto complete field
-    this.arrivalStationAutoComplete = this.arrivalStationFromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap(value => {
-        console.log('value: ', value);
-        return this.fetchRailwayStationsNames(value);
-      })
-    );
-
     // Fill client auto complete field
     this.clientAutoComplete = this.clientFromControl.valueChanges.pipe(
       startWith(''),
@@ -184,23 +285,62 @@ export class TrainInvoiceDialogComponent implements OnInit {
         return this.fetchRefCounterparties(value);
       })
     );
+    this.groupInvoiceAutoComplete = this.groupInvoiceFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchGroupInvoiceNames(value);
+      })
+    );
+
+
+
+    // Fill departure station auto complete field
+    this.departureStationAutoComplete = this.departureStationFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefRailwayStationsNames(value);
+      })
+    );
+
+    // Fill arrival station auto complete field
+    this.arrivalStationAutoComplete = this.arrivalStationFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefRailwayStationsNames(value);
+      })
+    );    
   }
 
 
   ngOnInit() {
-    this.initializeForm();
-  }
+    console.log('====================================== ngOnInit called ======================================')
+    console.log(this.train_invoice);
+    this.clientFromControl.setValue(this.train_invoice.client_id.name);
+    this.groupInvoiceFromControl.setValue(this.train_invoice.group_invoice_id.group_name);
+    this.offerCurrencyFromControl.setValue(this.train_invoice.offer_currency_id.name);
+    this.totalCurrencyFromControl.setValue(this.train_invoice.total_currency_id.name);
+    this.providerFromControl.setValue(this.train_invoice.provider_id.name);
+    this.providerFromControl.setValue(this.train_invoice.provider_id.name);
+    this.taxesPaymentFromControl.setValue(this.train_invoice.taxes_payment_id.name);
+    this.curatorFromControl.setValue(this.train_invoice.curator_id.name);
+    this.currencyExchangeFromControl.setValue(this.train_invoice.currency_exchange_id.name);
+    this.serviceTypeFromControl.setValue(this.train_invoice.service_type_id.name);
+    this.checkingAccountFromControl.setValue(this.train_invoice.checking_account_id.name);
+    this.responsibleAgentFromControl.setValue(`${this.train_invoice.responsible_agent_id.first_name} ${this.train_invoice.responsible_agent_id.last_name}`);
+    this.agentFromControl.setValue(`${this.train_invoice.agent_id.first_name} ${this.train_invoice.agent_id.last_name}`);
+    this.organizationFromControl.setValue(this.train_invoice.organization_id.group_name);
+    this.departureStationFromControl.setValue(this.train_invoice.detail_info.departure_station_id.name_ukr);
+    this.arrivalStationFromControl.setValue(this.train_invoice.detail_info.arrival_station_id.name_ukr);
+    this.individualCounterpartyFromControl.setValue(`${this.train_invoice.detail_info.surname_id.last_name_native} ${this.train_invoice.detail_info.surname_id.first_name_native}`);
 
-  _initialize_data(data: any, context){
-    //context.ref_counterparties_names = data['counterparty_name'];
-    context.group_invoices_names = data['group_invoice'];
-    context.ref_unit_classifier_names = data['unit_clasifier_name'];
-    context.ref_railway_stations_names = data['railway_station'];
-    context.states = data['railway_station'];
-    if(Array.isArray(data['railway_station']) && context.train_invoice.detail_info.departure_station_id){
-      data['railway_station'].push(context.train_invoice.detail_info.departure_station_id);
-      console.log(data['railway_station'])
-    }
+
+    this.initializeForm();
   }
 
   _get_date(dt){
@@ -251,8 +391,8 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return mpe.toFixed(3);
   }
 
-  save_ticket(ticket){
-    console.log('Save ticket');   
+  save_ticket(ticket: TrainInvoiceDetail){
+    console.log('Save ticket');
     this.TrainService.create_train_invoice(ticket)
       .then((data: TrainInvoiceDetail) => {
         this.toastr.successToastr('Залізничний квиток успішно збереженно.', 'Успішно!');
@@ -286,129 +426,10 @@ export class TrainInvoiceDialogComponent implements OnInit {
     }
   }
 
-  display_fn(item){
-    console.log('Client id: ', item)
-    return item.name;
-  }
-
   show_data(){
     console.log('==== Date: ', this.train_invoice.service_date)
   }
-  // public test_date = "12.09.2018 17:45:00";
-  // // Currencies inputs
-  // public payment_form_input_autocomplete = new FormControl();
-  // public offer_currency_input_autocomplete = new FormControl();
-  // public total_currency_input_autocomplete = new FormControl();
-  // public avia_group_input_autocomplete = new FormControl();
-  // public supplier_cost_input_autocomplete = new FormControl();
-  // public supplier_commission_input_autocomplete = new FormControl();
-  // public forfeit_input_autocomplete = new FormControl();
-  // public used_supplier_rate_input_autocomplete = new FormControl();
-  // public additional_supplier_commission_input_autocomplete = new FormControl();
-  // public used_taxes_input_autocomplete = new FormControl();
-  // public agency_services_input_autocomplete = new FormControl();
-  // public other_services_input_autocomplete = new FormControl();
-  // public total_amount_input_autocomplete = new FormControl();
-  // public input_autocomplete = new FormControl();
-
-  // // Вынести в БД и получать формы оплаты по запросу
-  // public payment_forms: string[] = [
-  //   "Банківська картка",
-  //   "Безготівковий розрахунок",
-  //   "Банківський кредит"
-  // ];
-
-  // public counterparties_name_id: any = [];
-  // get_counterparties_names_id(pattern){
-  //   this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
-  //     console.log(data)
-  //   });
-  // }
-  // public avia_group_invoices: any = []
-
-  // _set_date(field, event){
-  //   field = event.value;
-  // }
   
-
-  // // Валюту - временно сделать внутренним массивом (CAD, CHF, CZK, EUR, GBP, JPY, RUB, SEK, USD, grn)
-  // // окончательная валюта - то же самое
-  // // Используем currency для выбора значений в полях 
-  // public currencies: string[] = [
-  //   "CAD", "CHF", "CZK", "EUR", "GBP", "JPY", "RUB", "SEK", "USD", "грн"
-  // ];
-
-  // constructor(
-  //   public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
-  //   @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
-  //   public AviaInvoiceService: AviaInvoiceService,
-  //   public CounterpartyService: CounterpartyService,
-  //   public AviaGroupInvoiceService: AviaGroupInvoiceService
-  // ) {
-  //   if (!this.avia_invoice) {
-  //     this.avia_invoice = new AviaInvoice();
-  //   }
-  //   this.get_avia_group_invoice_content(null);
-  //   console.log('[Avia Invoice Editor]: ', avia_invoice.FlightInfo)
-  // }
-  
-
-  // update_avia_invoice(avia_invoice: AviaInvoice) {
-  //   this.AviaInvoiceService.update_avia_invoice(avia_invoice).subscribe(data => {
-  //     this.avia_invoice = data as AviaInvoice;
-  //   });
-  // }
-
-  // save_avia_invoice(avia_invoice: AviaInvoice) {
-  //   console.log("Save avia invoice:", avia_invoice);
-  //   this.AviaInvoiceService.save_avia_invoice(avia_invoice).subscribe(data => {
-  //     let tmp = data as AviaInvoice;
-  //     if (!tmp._id) {
-  //       this.is_saved = false;
-  //     } else {
-  //       this.avia_invoice = tmp;
-  //       this.is_saved = true;
-  //     }
-  //   });
-  // }
-
-  // remove_avia_invoice(avia_invoice_id: string) {
-  //   if (!avia_invoice_id) {
-  //     console.log(`avia_invoice_id не передано.`);
-  //     // Show error dialog
-  //     return;
-  //   }
-
-  //   this.AviaInvoiceService.remove_avia_invoice(avia_invoice_id).subscribe(() => {
-  //     this.dialogRef.close({
-  //       action: "remove",
-  //       id: avia_invoice_id,
-  //       element: null
-  //     });
-  //   });
-  // }
-
-  // save_and_close(avia_invoice: AviaInvoice) {
-  //   // Save ticket
-  //   this.save_update_avia_invoice(avia_invoice);
-  //   this.close_dialog(avia_invoice);
-  // }
-
-  // save_update_avia_invoice(avia_invoice: AviaInvoice) {
-  //   if (!avia_invoice._id) {
-  //     this.save_avia_invoice(avia_invoice);
-  //   } else {
-  //     this.update_avia_invoice(avia_invoice);
-  //     this.is_saved = true;
-  //   }
-  // }
-
-  // get_avia_group_invoice_content(pattent){
-  //   this.AviaGroupInvoiceService.get_avia_group_invoice_content(pattent).subscribe((data) => {
-  //     this.avia_group_invoices = data;
-  //     console.log(data)
-  //   });
-  // }
 
   /**
    *
@@ -430,23 +451,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     // }
   }
 
-  /**
-   * Additional Section
-   *
-   */
-
-  // get_counterparty_names(pattern) {
-  //   this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
-  //     console.log(data);
-  //   });
-  // }
-  // get_total_amount_cost(avia_invoice){
-  //   let result = parseInt(avia_invoice.DetailInfo.SupplierCost.Sum) + parseInt(avia_invoice.DetailInfo.AgencyServices.Sum) +
-  //   parseInt(avia_invoice.DetailInfo.AgencyServices.MPE) + parseInt(avia_invoice.DetailInfo.OtherServices.Sum) + parseInt(avia_invoice.DetailInfo.OtherServices.MPE);
-  //   console.log('Result: ', result)
-  //   if(!result) result = -1;
-  //   return result;
-  // }
+ 
 
   get_counterparties_name(pattern) {
     // Клієнт - выбор клиннта из списка контрагентов (выбрать только имена)

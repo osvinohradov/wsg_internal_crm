@@ -47,12 +47,7 @@ class TrainView extends BaseView{
 
     async create_train_invoice(req, res){ 
         let invoice = req.body;
-
-
-        console.log('================================= Train invoice =================================');
-        console.log(invoice)
-        console.log('=================================================================================');
-
+        
 
         if(!invoice){
             this.send_error_response(req, 400, {
@@ -60,6 +55,8 @@ class TrainView extends BaseView{
             });
         }
         try{
+            invoice = await TrainInvoiceModel.get_normalize_invoice(invoice);
+            // TODO:
             invoice = new TrainInvoiceModel(invoice);
             let err = invoice.validateSync();
             if(err){
@@ -68,6 +65,9 @@ class TrainView extends BaseView{
                 });
                 return;
             }
+            console.log('================================= Train invoice =================================');
+            console.log(invoice)
+            console.log('=================================================================================');
             invoice = await invoice.save();
             this.send_success_response(res, 200, invoice);
         }
@@ -78,12 +78,28 @@ class TrainView extends BaseView{
     }
 
     async update_train_invoice(req, res){
-        let train = req.body;
+        let invoice = req.body;
+        let invoice_id = null;
+
+        if(!invoice){
+            this.send_error_response(req, 400, {
+                "description": "Bad request params. Request must contains body."
+            });
+        }
         try{
-            console.log(train);
+            invoice = await TrainInvoiceModel.get_normalize_invoice(invoice);
+            invoice_id = invoice._id;
+            // TODO: return updated object
+            invoice = await TrainInvoiceModel.update({ _id: invoice_id }, invoice);
+            
+            console.log('================================= Train invoice =================================');
+            console.log(invoice)
+            console.log('=================================================================================');
+            this.send_success_response(res, 200, invoice);
         }
         catch(err){
-
+            console.log(err);
+            this.send_error_response(res, 500);
         }
 
      }

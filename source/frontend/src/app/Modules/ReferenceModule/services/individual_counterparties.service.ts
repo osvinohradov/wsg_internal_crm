@@ -1,12 +1,33 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference } from "../models";
+import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference, RefIndividualCounterpartyNameModel } from "../models";
+import { Observable } from "rxjs";
 
 @Injectable()
-export class IndividualCounterpartyService {
+export class RefIndividualCounterpartyService {
   baseUrl: String = "http://localhost:8080/api/v1";
 
   constructor(private http: HttpClient) {}
+
+  get_individual_counterparties_names(individual_counterparty_name=''): Observable<RefIndividualCounterpartyNameModel[]> {
+    const url = `${this.baseUrl}/ref/individual_counterparties/names`;
+    
+    return this.http.get<RefIndividualCounterpartyNameModel[]>(url, { params: {
+      individual_counterparty_name: individual_counterparty_name
+    }});
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   get_individual_counterparties_count() {
     return this.http.get<number>(this.baseUrl + `/references/count/individual_counterparty`);

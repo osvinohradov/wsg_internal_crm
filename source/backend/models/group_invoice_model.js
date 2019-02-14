@@ -29,7 +29,7 @@ const GroupInvoiceSchema = new Schema({
 
     updated_at          :{ type: Date, default: Date.now() },
     created_at          :{ type: Date, default: Date.now() },
-});
+}, { collection: 'group_invoices'});
 
 
 
@@ -40,7 +40,7 @@ GroupInvoiceSchema.statics.get_group_invoices_names = async function(group_invoi
                     { group_name: new RegExp(`^${group_invoice_name}$`, 'i') } :
                     {};
 
-    let invoices = GroupInvoiceModel.find(query, '_id name', options);
+    let invoices = GroupInvoiceModel.find(query, '_id group_name', options);
     return invoices;
 }
 

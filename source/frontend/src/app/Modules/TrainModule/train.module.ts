@@ -32,7 +32,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 //import { GroupInvoiceModule } from '../GroupInvoice/group_invoice.module';
 import { GroupInvoiceService } from '../GroupInvoice/services';
-import { RefCounterpartyService, RefNomenclatureService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService } from '../ReferenceModule/services';
+import { RefCounterpartyService, RefNomenclatureService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService, RefCurrencyExchangeService, RefServiceTypeService, RefCheckingAccountService, RefIndividualCounterpartyService, RefOrganizationService, RefUserService } from '../ReferenceModule/services';
 //import { RefCounterpartyService } from '../ReferenceModule/services';
 // import { ReferenceModule } from '../ReferenceModule/reference.module';
 import { ToastrModule } from 'ng6-toastr-notifications';
@@ -85,7 +85,13 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     RefNomenclatureService,
     RefRailwayStationService,
     RefUnitClassifierService,
-    RefCuratorService
+    RefCuratorService,
+    RefCurrencyExchangeService,
+    RefServiceTypeService,
+    RefCheckingAccountService,
+    RefIndividualCounterpartyService,
+    RefOrganizationService,
+    RefUserService
   ],
   bootstrap: []
 })

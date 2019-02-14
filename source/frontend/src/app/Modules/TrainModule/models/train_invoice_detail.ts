@@ -1,5 +1,6 @@
 //import { BaseModel } from "./base_model";
 import { GroupInvoiceNameModel } from '../../GroupInvoice/models';
+import { RefRailwayStationNameModel } from '../../ReferenceModule/models';
 
 
 export class TrainInvoiceDetail {
@@ -34,7 +35,7 @@ export class TrainInvoiceDetail {
   // Постачальник
   provider_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
   // Сплата такси
-  taxes_payment: any = null;
+  taxes_payment_id: any = null;
   // Куратор
   curator_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceCurator' },
   // Обмін валют
@@ -51,15 +52,17 @@ export class TrainInvoiceDetail {
   agent_id: any = null;
   // Открывался билет или нет
   is_processed: boolean = false;
+  // 
+  organization_id: any = null;
   // Детальна інформація
   detail_info: any = new DetailInfo();
 }
 
 class DetailInfo {
   //  Номер поезда
-  train_number: string = "";
+  train_number: string = '';
   // Номер вагона
-  carriage_number: string = "";
+  carriage_number: string = '';
   // место
   place: string = "";
   // Вид сервиса
@@ -71,9 +74,9 @@ class DetailInfo {
   // Дата покупки у поставщика
   payment_provider_dt: Date = new Date();
   // откуда добавить таблицу
-  departure_station_id: string = null;
+  departure_station_id: RefRailwayStationNameModel = null;
   // куда добавить таблицу
-  arrival_station_id: string = null;
+  arrival_station_id: RefRailwayStationNameModel = null;
   // ReferenceIndividualCounterparties
   surname_id: string = null;
   //

@@ -255,12 +255,13 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input [(ngModel)]="train_invoice.client_id.name"
+          <input [value]="train_invoice.client_id.name"
             [formControl]="clientFromControl" name="departure_station_id" type="text" 
             placeholder="Клієнт: " matInput [matAutocomplete]="client_id">
           
           <mat-autocomplete autoActiveFirstOption #client_id="matAutocomplete">
-            <mat-option *ngFor="let item of clientAutoComplete | async" [value]="item.name">
+            <mat-option (onSelectionChange)="setClientValue($event, item)"
+                        *ngFor="let item of clientAutoComplete | async" [value]="item.name">
               {{ item.name }}
             </mat-option>
           </mat-autocomplete>
@@ -297,12 +298,13 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 p-2 form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="train_invoice.group_invoice_id.group_name"
+          <input [value]="train_invoice.group_invoice_id.group_name" 
             [formControl]="groupInvoiceFromControl" name="group_invoice_id" type="text" 
             placeholder="Групове замовлення: " matInput [matAutocomplete]="group_invoice_id">
           
           <mat-autocomplete autoActiveFirstOption #group_invoice_id="matAutocomplete">
-            <mat-option *ngFor="let item of groupInvoiceAutoComplete | async" [value]="item.group_name">
+            <mat-option (onSelectionChange)="setGroupInvoiceValue($event, item)"
+                        *ngFor="let item of groupInvoiceAutoComplete | async" [value]="item._id">
               {{ item.group_name }}
             </mat-option>
           </mat-autocomplete>
@@ -311,12 +313,13 @@
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="train_invoice.offer_currency_id.name"
+          <input [value]="train_invoice.offer_currency_id.name"
             [formControl]="offerCurrencyFromControl" name="offer_currency_id" type="text" 
             placeholder="Валюта пропозиції: " matInput [matAutocomplete]="offer_currency_id">
           
           <mat-autocomplete autoActiveFirstOption #offer_currency_id="matAutocomplete">
-            <mat-option *ngFor="let item of offerCurrencyAutoComplete | async" [value]="item.name">
+            <mat-option (onSelectionChange)="setOfferCurrencyValue($event, item)"
+                        *ngFor="let item of offerCurrencyAutoComplete | async" [value]="item.name">
               {{ item.name }}
             </mat-option>
           </mat-autocomplete>
@@ -325,12 +328,13 @@
 
       <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="train_invoice.total_currency_id.name"
+          <input [value]="train_invoice.total_currency_id.name"
             [formControl]="totalCurrencyFromControl" name="total_currency_id" type="text" 
             placeholder="Підсумкова валюта: " matInput [matAutocomplete]="total_currency_id">
           
           <mat-autocomplete autoActiveFirstOption #total_currency_id="matAutocomplete">
-            <mat-option *ngFor="let item of totalCurrencyAutoComplete | async" [value]="item.name">
+            <mat-option (onSelectionChange)="setTotalCurrencyValue($event, item)"
+                        *ngFor="let item of totalCurrencyAutoComplete | async" [value]="item.name">
               {{ item.name }}
             </mat-option>
           </mat-autocomplete>
@@ -341,38 +345,46 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style" >
         <mat-form-field class="example-form-field">
-          <input [(ngModel)]="train_invoice.provider_id.name"
+          <input [value]="train_invoice.provider_id.name"
             [formControl]="providerFromControl" name="provider_id" type="text" 
             placeholder="Постачальник: " matInput [matAutocomplete]="provider_id">
           
           <mat-autocomplete autoActiveFirstOption #provider_id="matAutocomplete">
-            <mat-option *ngFor="let item of providerAutoComplete | async" [value]="item.name">
+            <mat-option (onSelectionChange)="setProviderValue($event, item)"
+                        *ngFor="let item of providerAutoComplete | async" [value]="item.name">
               {{ item.name }}
-          </mat-option>
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <input [(ngModel)]="train_invoice.taxes_payment.name"
-            [formControl]="taxesPaymentFromControl" name="taxes_payment" type="text" 
-            placeholder="Сплата такси: " matInput [matAutocomplete]="taxes_payment">
+          <input [value]="train_invoice.taxes_payment_id.name"
+            [formControl]="taxesPaymentFromControl" name="taxes_payment_id" type="text" 
+            placeholder="Сплата такси: " matInput [matAutocomplete]="taxes_payment_id">
           
-          <mat-autocomplete autoActiveFirstOption #taxes_payment="matAutocomplete">
-            <mat-option *ngFor="let item of taxesPaymentAutoComplete | async" [value]="item.name">
+          <mat-autocomplete autoActiveFirstOption #taxes_payment_id="matAutocomplete">
+            <mat-option  (onSelectionChange)="setTaxesPaymentValue($event, item)"
+                        *ngFor="let item of taxesPaymentAutoComplete | async" [value]="item.name">
               {{ item.name }}
-          </mat-option>
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.curator_id"
-            placeholder="Куратор: "
-            name="curator_id" >
-            <mat-option *ngFor="let item of ref_curators_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input [value]="train_invoice.curator_id.name"
+            [formControl]="curatorFromControl" name="curator_id" type="text" 
+            placeholder="Куратор: " matInput [matAutocomplete]="curator_id">
+          
+          <mat-autocomplete autoActiveFirstOption #curator_id="matAutocomplete">
+            <mat-option (onSelectionChange)="setCuratorValue($event, item)"
+                        *ngFor="let item of curatorAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>
@@ -380,12 +392,16 @@
     <div class="row mr-0 ml-0">
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field>
-          <mat-select
-            [(ngModel)]="train_invoice.currency_exchange_id"
-            placeholder="Обмін валют: "
-            name="currency_exchange_id" >
-            <mat-option *ngFor="let item of ref_currency_exchanges_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input [value]="train_invoice.currency_exchange_id.name"
+            [formControl]="currencyExchangeFromControl" name="currency_exchange_id" type="text" 
+            placeholder="Обмін валют: " matInput [matAutocomplete]="currency_exchange_id">
+          
+          <mat-autocomplete autoActiveFirstOption #currency_exchange_id="matAutocomplete">
+            <mat-option (onSelectionChange)="setCurrencyExchangeValue($event, item)"
+                        *ngFor="let item of currencyExchangeAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
@@ -402,23 +418,31 @@
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.service_type_id"
-            placeholder="Вид сервісу: "
-            name="service_type_id">
-            <mat-option *ngFor="let item of ref_service_types_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input [value]="train_invoice.service_type_id.name"
+            [formControl]="serviceTypeFromControl" name="service_type_id" type="text" 
+            placeholder="Вид сервісу: " matInput [matAutocomplete]="service_type_id">
+          
+          <mat-autocomplete autoActiveFirstOption #service_type_id="matAutocomplete">
+            <mat-option (onSelectionChange)="setServiceTypeValue($event, item)"
+                        *ngFor="let item of serviceTypeAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.checking_account_id"
-            placeholder="Розрахунковий рахунок: "
-            name="checking_account_id">
-            <mat-option *ngFor="let item of ref_checking_accounts_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input [value]="train_invoice.checking_account_id.name"
+            [formControl]="checkingAccountFromControl" name="checking_account_id" type="text" 
+            placeholder="Розрахунковий рахунок: " matInput [matAutocomplete]="checking_account_id">
+          
+          <mat-autocomplete autoActiveFirstOption #checking_account_id="matAutocomplete">
+            <mat-option (onSelectionChange)="setCheckingAccountValue($event, item)"
+                        *ngFor="let item of checkingAccountAutoComplete | async" [value]="item.name">
+              {{ item.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>
@@ -432,23 +456,31 @@
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.responsible_agent_id"
-            placeholder="Відповідальний: "
-            name="responsible_agent_id">
-            <mat-option *ngFor="let item of users_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input value="{{train_invoice.responsible_agent_id.first_name + ' ' +train_invoice.responsible_agent_id.last_name}}"
+            [formControl]="responsibleAgentFromControl" name="responsible_agent_id" type="text" 
+            placeholder="Відповідальний: " matInput [matAutocomplete]="responsible_agent_id">
+          
+          <mat-autocomplete autoActiveFirstOption #responsible_agent_id="matAutocomplete">
+            <mat-option (onSelectionChange)="setResponsibleAgentValue($event, item)"
+                        *ngFor="let item of responsibleAgentAutoComplete | async" [value]="item.last_name">
+              {{ item.first_name }} {{ item.last_name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6 p-2 my_input_style">
         <mat-form-field class="example-form-field">
-          <mat-select
-            [(ngModel)]="train_invoice.agent_id"
-            placeholder="Агент: "
-            name="agent_id">
-            <mat-option *ngFor="let item of users_names" [value]="item._id" >{{ item.name }}</mat-option>
-          </mat-select>
+          <input value="{{train_invoice.agent_id.first_name + ' ' +train_invoice.agent_id.last_name}}"
+            [formControl]="agentFromControl" name="agent_id" type="text" 
+            placeholder="Агент: " matInput [matAutocomplete]="agent_id">
+          
+          <mat-autocomplete autoActiveFirstOption #agent_id="matAutocomplete">
+            <mat-option (onSelectionChange)="setAgentValue($event, item)"
+                        *ngFor="let item of agentAutoComplete | async" [value]="item.last_name">
+              {{ item.first_name }} {{ item.last_name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>
@@ -462,12 +494,13 @@
 
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input [(ngModel)]="train_invoice.detail_info.departure_station_id.name_ukr"
+                <input [value]="train_invoice.detail_info.departure_station_id.name_ukr"
                   [formControl]="departureStationFromControl" name="departure_station_id" type="text" 
                   placeholder="Відправлення: " matInput [matAutocomplete]="departure_station_id">
                 
                 <mat-autocomplete autoActiveFirstOption #departure_station_id="matAutocomplete">
-                  <mat-option *ngFor="let item of departureStationAutoComplete | async" [value]="item.name_ukr">
+                  <mat-option (onSelectionChange)="setDepartureStationValue($event, item)" 
+                              *ngFor="let item of departureStationAutoComplete | async" [value]="item.name_ukr">
                     {{ item.name_ukr }}
                   </mat-option>
                 </mat-autocomplete>
@@ -476,12 +509,13 @@
 
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input [(ngModel)]="train_invoice.detail_info.arrival_station_id.name_ukr"
+                <input [value]="train_invoice.detail_info.arrival_station_id.name_ukr"
                   [formControl]="arrivalStationFromControl" name="arrival_station_id" type="text" 
                   placeholder="Прибуття: " matInput [matAutocomplete]="arrival_station_id">
                 
                 <mat-autocomplete autoActiveFirstOption #arrival_station_id="matAutocomplete">
-                  <mat-option *ngFor="let item of arrivalStationAutoComplete | async" [value]="item.name_ukr">
+                  <mat-option (onSelectionChange)="setArrivalStationValue($event, item)" 
+                              *ngFor="let item of arrivalStationAutoComplete | async" [value]="item.name_ukr">
                     {{ item.name_ukr }}
                   </mat-option>
                 </mat-autocomplete>
@@ -492,20 +526,23 @@
           <div class="row ml-0 mr-0">
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
-                <input
-                  value="{{train_invoice.detail_info.surname.last_name_native}} {{train_invoice.detail_info.surname.first_name_native}}"
-                  matInput
-                  type="text"
-                  placeholder="Прізвище:"
-                  name="surname_id"
-                />
+                <input value="{{train_invoice.detail_info.surname_id.last_name_native}} {{train_invoice.detail_info.surname_id.first_name_native}}"
+                  [formControl]="individualCounterpartyFromControl" name="surname_id" type="text" 
+                  placeholder="Прізвище: " matInput [matAutocomplete]="surname_id">
+                
+                <mat-autocomplete autoActiveFirstOption #surname_id="matAutocomplete">
+                  <mat-option (onSelectionChange)="setIndividualCounterpartyValue($event, item)" 
+                              *ngFor="let item of individualCounterpartyAutoComplete | async" [value]="item.last_name">
+                    {{ item.last_name_native }} {{ item.first_name_native}} 
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
             </div>
 
             <div class="form-group col-6 p-2 my_input_style">
               <mat-form-field class="example-form-field">
                 <input
-                  [value]="train_invoice.detail_info.ticket_number"
+                  [(ngModel)]="train_invoice.detail_info.ticket_number"
                   matInput
                   type="text"
                   placeholder="Номер квитка:"
@@ -532,7 +569,7 @@
                     <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
                         <input
-                          [value]="train_invoice.detail_info.train_number"
+                          [(ngModel)]="train_invoice.detail_info.train_number"
                           matInput
                           type="text"
                           placeholder="Номер потягу: "
@@ -544,7 +581,7 @@
                     <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
                         <input
-                          [value]="train_invoice.detail_info.carriage_number"
+                          [(ngModel)]="train_invoice.detail_info.carriage_number"
                           matInput
                           type="text"
                           placeholder="№ вагона: "
@@ -556,7 +593,7 @@
                     <div class="form-group col-lg-2 col-md-4 col-sm-6 col-xs-12 p-2 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
                         <input
-                          [value]="train_invoice.detail_info.place"
+                          [(ngModel)]="train_invoice.detail_info.place"
                           matInput
                           type="text"
                           placeholder="Місце: "
@@ -568,7 +605,7 @@
                     <div class="form-group col-lg-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 mr-0 ml-0 my_input_style">
                       <mat-form-field class="example-full-width">
                         <input
-                          [value]="train_invoice.detail_info.service_type"
+                          [(ngModel)]="train_invoice.detail_info.service_type"
                           matInput
                           type="text"
                           placeholder="Тип сервісу: "

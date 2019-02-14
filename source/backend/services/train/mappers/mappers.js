@@ -57,12 +57,25 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   t.detail_info.place = tfx.seats;
   // Тип сервиса 
   t.detail_info.service_type = tfx.wagonType;
+
+  let st_code = tfx.departureStationCode ? tfx.departureStationCode : '';
+  let departure = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
+  if(departure){
+    t.detail_info.departure_station_id = departure._id;
+  }
+
+  st_code = tfx.arrivalStationCode ? tfx.arrivalStationCode : '';
+  let arrival = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
+  if(arrival){
+    t.detail_info.arrival_station_id = arrival._id;
+  }
+
   // Дата отправления
   t.detail_info.departure_dt = _get_date_time(tfx.departureDate);
-  t.detail_info.departure_station = tfx.departureStation;
+  
   // Дата и время прибытия
   t.detail_info.arrival_dt = _get_date_time(tfx.arrivalDate);
-  t.detail_info.arrival_station = tfx.arrivalStation;
+  
   // Дата покупки у поставщика
   t.payment_provider_dt = _get_date_time(additional_params.timeStamp)
   // Фамилия
@@ -70,9 +83,14 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
     last_name_native: tfx.passenger.lastName,
     first_name_native: tfx.passenger.firstName
   }
-  let individual_counterparty = new Ref.ReferenceIndividualCounterpartiesModel(individual);
-  individual_counterparty = await individual_counterparty.save();
-  t.detail_info.surname = individual_counterparty._id;
+  let individual_counterparty = Ref.ReferenceIndividualCounterpartiesModel.findOne(individual);
+
+  if(!individual_counterparty){
+    individual_counterparty = new Ref.ReferenceIndividualCounterpartiesModel(individual);
+    individual_counterparty = await individual_counterparty.save();
+  }  
+
+  t.detail_info.surname_id = individual_counterparty._id;
   // номер билета
   t.detail_info.ticket_number = tfx.confirmationNumber;
   

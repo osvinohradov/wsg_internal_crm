@@ -1,12 +1,35 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ServiceTypeReference } from "../models";
+import { ServiceTypeReference, RefServiceTypeNameModel } from "../models";
+import { Observable } from "rxjs";
 
 @Injectable()
-export class ServiceTypeService {
+export class RefServiceTypeService {
   baseUrl: String = "http://localhost:8080/api/v1";
 
   constructor(private http: HttpClient) {}
+
+
+
+  get_service_types_names(service_type_name=''): Observable<RefServiceTypeNameModel[]> {
+    const url = `${this.baseUrl}/ref/service_types/names`;
+    
+    return this.http.get<RefServiceTypeNameModel[]>(url, { params: {
+      service_type_name: service_type_name
+    }});
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   get_service_types_count() {
     return this.http.get<number>(

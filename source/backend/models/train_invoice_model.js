@@ -46,7 +46,7 @@ const TrainInvoiceSchema = new BaseModel({
   // Постачальник (посилання на Контрагентів)
   provider_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null },
   // Сплата такси
-  taxes_payment: { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null },
+  taxes_payment_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null },
   // Куратор
   curator_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCurator', default: null },
   // Код бронювання
@@ -213,7 +213,7 @@ TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, proje
                       .populate({ path: 'offer_currency_id', select: 'name' })
                       .populate({ path: 'total_currency_id', select: 'name' })
                       .populate({ path: 'provider_id', select: 'name' })
-                      .populate({ path: 'taxes_payment', select: 'name' })
+                      .populate({ path: 'taxes_payment_id', select: 'name' })
                       .populate({ path: 'curator_id', select: 'name' })
                       .populate({ path: 'currency_exchange_id', select: 'name' })
                       .populate({ path: 'service_type_id', select: 'name' })
@@ -222,7 +222,7 @@ TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, proje
                       .populate({ path: 'agent_id', select: 'first_name last_name' })
                       .populate({ path: 'organization_id', select: 'name' })
 
-                      .populate({ path: 'detail_info.surname_id', select: 'first_native_name last_native_name middle_native_name', model: 'ReferenceIndividualCounterparties' })
+                      .populate({ path: 'detail_info.surname_id', select: 'first_name_native last_name_native middle_name_native', model: 'ReferenceIndividualCounterparties' })
                       .populate({ path: 'detail_info.departure_station_id', select: 'name_ukr', model: 'RefRailwayStationModel' })
                       
                       .populate({ path: 'detail_info.arrival_station_id', select: 'name_ukr', model: 'RefRailwayStationModel' })
@@ -235,8 +235,25 @@ TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, proje
   return invoices;
 }
 
-TrainInvoiceSchema.statics.create_train_invoice = function(data){
-  
+TrainInvoiceSchema.statics.get_normalize_invoice = function(invoice){
+  invoice.client_id = invoice.client_id._id;
+  invoice.group_invoice_id = invoice.group_invoice_id._id;
+  invoice.offer_currency_id = invoice.offer_currency_id._id;
+  invoice.total_currency_id = invoice.total_currency_id._id;
+  invoice.provider_id = invoice.provider_id._id;
+  invoice.taxes_payment_id = invoice.taxes_payment_id._id;
+  invoice.curator_id = invoice.curator_id._id;
+  invoice.currency_exchange_id = invoice.currency_exchange_id._id;
+  invoice.service_type_id = invoice.service_type_id._id;
+  invoice.checking_account_id = invoice.checking_account_id._id;
+  invoice.responsible_agent_id = invoice.responsible_agent_id._id;
+  invoice.agent_id = invoice.agent_id._id;
+  invoice.organization_id = invoice.organization_id._id;
+  invoice.detail_info.departure_station_id = invoice.detail_info.departure_station_id._id;
+  invoice.detail_info.arrival_station_id = invoice.detail_info.arrival_station_id._id;
+  invoice.detail_info.surname_id = invoice.detail_info.surname_id._id;
+
+  return invoice;
 }
 
 const TrainInvoiceModel = mongoose.model("TrainInvoice", TrainInvoiceSchema);

@@ -56,9 +56,9 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatListModule } from "@angular/material/list";
 import { AirportService, AviaCompanyService, CityService,
-  RefCounterpartyService, RefCuratorService, CurrencyExchangeService,
-         IndividualCounterpartyService, RefNomenclatureService, ServiceTypeService, RefUnitClassifierService } from "./services";
-import { RefUnitClassifierNameModel } from "./models";
+  RefCounterpartyService, RefCuratorService, RefCurrencyExchangeService,
+         RefIndividualCounterpartyService, RefNomenclatureService, RefServiceTypeService, RefUnitClassifierService } from "./services";
+
 
 
 // print components
@@ -169,9 +169,9 @@ import { RefUnitClassifierNameModel } from "./models";
     CityService,
     
     RefCuratorService,
-    CurrencyExchangeService,
-    IndividualCounterpartyService,
-    ServiceTypeService,
+    RefCurrencyExchangeService,
+    RefIndividualCounterpartyService,
+    RefServiceTypeService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
   ],
   bootstrap: []

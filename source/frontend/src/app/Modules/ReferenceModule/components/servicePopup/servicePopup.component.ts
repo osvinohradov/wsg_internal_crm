@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import { ServiceTypeService, RefCounterpartyService } from '../../services';
+import { RefServiceTypeService, RefCounterpartyService } from '../../services';
 import { ServiceTypeReference } from '../../models';
 import { FormControl } from '@angular/forms';
 
@@ -21,7 +21,7 @@ export class ServicePopupReferencesComponent implements OnInit {
   // constructor(
   //   public dialogRef: MatDialogRef<ServiceTypeReference>,
   //   @Inject(MAT_DIALOG_DATA) public service_type: ServiceTypeReference,
-  //   public ServiceTypeService: ServiceTypeService, public RefCounterpartyService: RefCounterpartyService
+  //   public RefServiceTypeService: RefServiceTypeService, public RefCounterpartyService: RefCounterpartyService
   // ) {
   //   this.get_counterparties_names_ids(null);
   //   if (!this.service_type) {
@@ -32,13 +32,13 @@ export class ServicePopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   // update_service_type(service_type: ServiceTypeReference) {
-  //   this.ServiceTypeService.update_service_type(service_type).subscribe(data => {
+  //   this.RefServiceTypeService.update_service_type(service_type).subscribe(data => {
   //     this.service_type = data as ServiceTypeReference;
   //   });
   // }
 
   // save_service_type(service_type: ServiceTypeReference) {
-  //   this.ServiceTypeService.save_service_type(service_type).subscribe(data => {
+  //   this.RefServiceTypeService.save_service_type(service_type).subscribe(data => {
   //     let tmp = data as ServiceTypeReference;
   //     if (!tmp._id) {
   //       this.is_saved = false;
@@ -57,7 +57,7 @@ export class ServicePopupReferencesComponent implements OnInit {
   //     return;
   //   }
 
-  //   this.ServiceTypeService.remove_service_type(service_type_id).subscribe(() => {
+  //   this.RefServiceTypeService.remove_service_type(service_type_id).subscribe(() => {
   //     this.dialogRef.close({ action: "remove", id: service_type_id, element: null });
   //   });
   // }

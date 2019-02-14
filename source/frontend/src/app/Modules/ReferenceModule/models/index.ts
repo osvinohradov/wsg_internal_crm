@@ -12,6 +12,12 @@ import { ServiceTypeReference } from './service_type.reference';
 import { RefRailwayStationNameModel } from './railway_station';
 import { RefUnitClassifierNameModel } from './ref_unit_classifier_name';
 import { RefCuratorNameModel } from './curator_name';
+import { RefCurrencyExchangeNameModel } from './currency_exchange_name';
+import { RefServiceTypeNameModel } from './service_type_name';
+import { RefCheckingAccountNameModel } from './checking_account_name';
+import { RefIndividualCounterpartyNameModel } from './individual_counterparty_name';
+import { RefOrganizationNameModel } from './organization_name';
+import { RefUserNameModel } from './user_name.model';
 
 
 
@@ -30,5 +36,11 @@ export {
     RefCounterpartyNameModel,
     RefRailwayStationNameModel,
     RefUnitClassifierNameModel,
-    RefCuratorNameModel
+    RefCuratorNameModel,
+    RefCurrencyExchangeNameModel,
+    RefServiceTypeNameModel,
+    RefCheckingAccountNameModel,
+    RefIndividualCounterpartyNameModel,
+    RefOrganizationNameModel,
+    RefUserNameModel
 }
