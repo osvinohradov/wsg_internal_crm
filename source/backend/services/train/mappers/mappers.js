@@ -17,10 +17,9 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   t.number = generate_random_number();
   t.date = date;
   t.payment_form = PAYMENT_FORMS[tfx.paymentGateway]; // get_payment_form(tfx.paymentGateway);
-  t.payment_date = date;
+  // Set by system user
+  // t.payment_date = date;
   t.tickets_count = 1;
-
-  t.total_amount = 0;
 
   let client = await Ref.ReferenceCounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
 
@@ -59,14 +58,14 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   // Тип сервиса 
   t.detail_info.service_type = tfx.wagonType;
 
-  let st_code = tfx.departureStationCode ? new RegExp(`.*${tfx.departureStationCode}.*`, 'i') : '';
+  let st_code = tfx.departureStationCode ? new RegExp(`.*2${tfx.departureStationCode}.*`, 'i') : '';
   
   let departure = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
   if(departure){
     t.detail_info.departure_station_id = departure._id;
   }
 
-  st_code = tfx.arrivalStationCode ? new RegExp(`.*${tfx.arrivalStationCode}.*`, 'i') : '';
+  st_code = tfx.arrivalStationCode ? new RegExp(`.*2${tfx.arrivalStationCode}.*`, 'i') : '';
   let arrival = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
   
   if(arrival){
@@ -86,20 +85,29 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
     last_name_native: tfx.passenger.lastName,
     first_name_native: tfx.passenger.firstName
   }
-  let individual_counterparty = Ref.ReferenceIndividualCounterpartiesModel.findOne(individual);
+
+  let individual_counterparty = await Ref.ReferenceIndividualCounterpartiesModel.findOne(individual);
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@ Individual counterparty @@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log(individual_counterparty);
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
 
   if(!individual_counterparty){
     individual_counterparty = new Ref.ReferenceIndividualCounterpartiesModel(individual);
     individual_counterparty = await individual_counterparty.save();
-  }  
-
+    console.log('========================== Individual counterparty ==========================');
+    console.log(individual_counterparty);
+    console.log('=============================================================================');
+    t.detail_info.surname_id = individual_counterparty._id;
+  }
   t.detail_info.surname_id = individual_counterparty._id;
+
+  
   // номер билета
   t.detail_info.ticket_number = tfx.confirmationNumber;
   
   // Стоимость поставщика
   t.detail_info.supplier_cost = {};
-
   t.detail_info.supplier_cost.sum = parse_number(tfx.documentsPrice);
   t.detail_info.supplier_cost.mpe = 0;
   t.detail_info.supplier_cost.currency_id = currency;
@@ -131,17 +139,6 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   t.detail_info.other_services.mpe = 0;
   t.detail_info.other_services.currency_id = currency;
 
-  // Секція "Всього"
-  t.detail_info.total_amount = {};
-  t.detail_info.total_amount.sum = 0;
-  t.detail_info.total_amount.mpe = 0;
-  t.detail_info.total_amount.currency_id = currency;
-
-
-  t.detail_info.additional_info = '';
-  t.detail_info.total_amount_ucop = 0;
-  t.detail_info.ucop_mpe = 0;
-
   // Other service sum
   let vfrc = parse_number(tfx.vatFromRemitCommission);
   let vfm = parse_number(tfx.vatFromMarkup);
@@ -150,9 +147,24 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   let osm = vfrc + vfm;
 
   t.detail_info.other_services.sum = oss;
-  // Other service mpe
-  
+  // Other service mpe  
   t.detail_info.other_services.mpe = osm;
+
+
+  // TODO: Add forfeit
+  // Секція "Всього"
+  t.detail_info.total_amount = {};
+  t.detail_info.total_amount.sum = t.detail_info.supplier_cost.sum +  t.detail_info.supplier_commision.sum + 
+      t.detail_info.agency_services.sum + t.detail_info.other_services.sum;
+  
+  t.detail_info.total_amount.mpe = t.detail_info.supplier_cost.mpe + t.detail_info.supplier_commision.mpe +
+      t.detail_info.agency_services.mpe + t.detail_info.other_services.mpe;
+
+  t.detail_info.total_amount.currency_id = currency;
+
+  t.detail_info.additional_info = '';
+  t.detail_info.total_amount_ucop = 0;
+  t.detail_info.ucop_mpe = 0;
 
   return t;
 }

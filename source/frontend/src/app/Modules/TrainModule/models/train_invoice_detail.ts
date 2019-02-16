@@ -27,7 +27,7 @@ export class TrainInvoiceDetail {
   // Сплачено
   is_paid: boolean = false;
   // Групове замовлення
-  group_invoice_id: GroupInvoiceNameModel = null; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
+  group_invoice_id: any = null; //:{ type: Schema.Types.ObjectId, ref: 'AviaGroupInvoice' },
   // Валюта пропозиції
   offer_currency_id: any = null; // :{ type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
   // Підсумкова валюта
@@ -74,9 +74,9 @@ class DetailInfo {
   // Дата покупки у поставщика
   payment_provider_dt: Date = new Date();
   // откуда добавить таблицу
-  departure_station_id: RefRailwayStationNameModel = null;
+  departure_station_id: string = null;
   // куда добавить таблицу
-  arrival_station_id: RefRailwayStationNameModel = null;
+  arrival_station_id: string = null;
   // ReferenceIndividualCounterparties
   surname_id: string = null;
   //

@@ -41,7 +41,7 @@ export class TrainInvoiceComponent implements OnInit {
       console.log(typeof this.train_invoices[0])
       console.log("Fetch train invoices: ", this.train_invoices[0]);
       this.is_loader_displayed = false;
-    })
+    });
   }
   
   get_invoice_count(){
@@ -75,8 +75,9 @@ export class TrainInvoiceComponent implements OnInit {
       data.detail_info.departure_station_id = data.detail_info.departure_station_id ? data.detail_info.departure_station_id : new RefRailwayStationNameModel();
       data.detail_info.surname_id = data.detail_info.surname_id ? data.detail_info.surname_id : new RefIndividualCounterpartyNameModel();
       
-
+      this.is_loader_displayed = false;
       this.open_dialog(data).afterClosed().subscribe((dialog_response) => {
+        
         console.log('Dialog closed.')
       });
     })

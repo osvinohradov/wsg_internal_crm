@@ -1,3 +1,4 @@
+<!-- TODO: Add button to drop down list -->
 <!-- Modal content-->
 
 <h2 class="ml-4 title_main_page_margin">
@@ -213,14 +214,12 @@
 
       <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6 p-2 my_input_style ">
         <mat-form-field class="example-full-width">
-          <input
-            type="text"
-            placeholder="Форма сплати:"
-            aria-label="PaymentForm"
-            matInput />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
+          <mat-select [(value)]="train_invoice.payment_form" placeholder="Форма сплати:">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let payment_form of PAYMENT_FORMS" [value]="payment_form">
+              {{ payment_form }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
@@ -265,6 +264,9 @@
               {{ item.name }}
             </mat-option>
           </mat-autocomplete>
+          <button mat-button matSuffix mat-icon-button aria-label="Settings">
+              <mat-icon>more_horiz</mat-icon>
+          </button>
         </mat-form-field> 
       </div>
 

@@ -20,7 +20,7 @@ class TrainView extends BaseView{
         catch(err){
             console.log(err)
             // Сделать вывод информации об ошибке, а в будующем логировать все ошибки
-            this.send_error_response();
+            this.send_error_response(res);
         }
     }
 
@@ -87,6 +87,7 @@ class TrainView extends BaseView{
             });
         }
         try{
+            // TODO: We need to validate each object for existing field
             invoice = await TrainInvoiceModel.get_normalize_invoice(invoice);
             invoice_id = invoice._id;
             // TODO: return updated object

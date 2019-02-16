@@ -236,22 +236,29 @@ TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, proje
 }
 
 TrainInvoiceSchema.statics.get_normalize_invoice = function(invoice){
-  invoice.client_id = invoice.client_id._id;
-  invoice.group_invoice_id = invoice.group_invoice_id._id;
-  invoice.offer_currency_id = invoice.offer_currency_id._id;
-  invoice.total_currency_id = invoice.total_currency_id._id;
-  invoice.provider_id = invoice.provider_id._id;
-  invoice.taxes_payment_id = invoice.taxes_payment_id._id;
-  invoice.curator_id = invoice.curator_id._id;
-  invoice.currency_exchange_id = invoice.currency_exchange_id._id;
-  invoice.service_type_id = invoice.service_type_id._id;
-  invoice.checking_account_id = invoice.checking_account_id._id;
-  invoice.responsible_agent_id = invoice.responsible_agent_id._id;
-  invoice.agent_id = invoice.agent_id._id;
-  invoice.organization_id = invoice.organization_id._id;
-  invoice.detail_info.departure_station_id = invoice.detail_info.departure_station_id._id;
-  invoice.detail_info.arrival_station_id = invoice.detail_info.arrival_station_id._id;
-  invoice.detail_info.surname_id = invoice.detail_info.surname_id._id;
+    invoice.client_id = invoice.client_id._id;
+    invoice.group_invoice_id = invoice.group_invoice_id._id;
+    invoice.offer_currency_id = invoice.offer_currency_id._id;
+    invoice.total_currency_id = invoice.total_currency_id._id;
+    invoice.provider_id = invoice.provider_id._id;
+    invoice.taxes_payment_id = invoice.taxes_payment_id._id;
+    invoice.curator_id = invoice.curator_id._id;
+    invoice.currency_exchange_id = invoice.currency_exchange_id._id;
+    invoice.service_type_id = invoice.service_type_id._id;
+    invoice.checking_account_id = invoice.checking_account_id._id;
+    invoice.responsible_agent_id = invoice.responsible_agent_id._id;
+    invoice.agent_id = invoice.agent_id._id;
+    invoice.organization_id = invoice.organization_id._id;
+    invoice.detail_info.departure_station_id = invoice.detail_info.departure_station_id._id;
+    invoice.detail_info.arrival_station_id = invoice.detail_info.arrival_station_id._id;
+    invoice.detail_info.surname_id = invoice.detail_info.surname_id._id;
+    invoice.detail_info.supplier_cost.currency_id = invoice.detail_info.supplier_cost.currency_id._id;
+    invoice.detail_info.supplier_commision.currency_id = invoice.detail_info.supplier_commision.currency_id._id;
+    invoice.detail_info.forfeit.currency_id = invoice.detail_info.forfeit.currency_id._id;
+    invoice.detail_info.agency_services.currency_id = invoice.detail_info.agency_services.currency_id._id;
+    invoice.detail_info.other_services.currency_id = invoice.detail_info.other_services.currency_id._id;
+    invoice.detail_info.total_amount.currency_id = invoice.detail_info.total_amount.currency_id._id;
+
 
   return invoice;
 }

@@ -10,7 +10,7 @@ export class RefRailwayStationService {
   constructor(private http: HttpClient) {}
 
   get_railway_stations_names(railway_station_name: string): Observable<RefRailwayStationNameModel[]> {
-    const url = `${this.baseUrl}/ref/railway_station/names`;
+    const url = `${this.baseUrl}/ref/railway_stations/names`;
 
     return this.http.get<RefRailwayStationNameModel[]>(url, {
       params: {

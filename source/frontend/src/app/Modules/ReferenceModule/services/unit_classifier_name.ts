@@ -11,7 +11,7 @@ export class RefUnitClassifierService {
 
 
   get_ref_unit_clasifiers_names(ref_unit_classifier_name=''): Observable<RefUnitClassifierNameModel[]> {
-      const url = `${this.baseUrl}/ref/counterparties/names`;
+      const url = `${this.baseUrl}/ref/unit_classifiers/names`;
 
     return this.http.get<RefUnitClassifierNameModel[]>(url, { params: {
       ref_unit_classifier_name: ref_unit_classifier_name

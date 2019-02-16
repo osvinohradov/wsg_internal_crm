@@ -22,3 +22,6 @@ npm run frontend_start_local
 1. Main app DB name - WSG_CRM_v1
 2. AviaTicketXML parser DB name - _new_AviaTicketFromXML
 3. Train tickets DB name - TrainTicketDB
+
+
+TODO: Put ou User service to separate module - "Common"

@@ -24,7 +24,7 @@
       </div>
   
       <div class="d-inline mr-my-1">
-        <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Оновити">
+        <button (click)="load_invoices_data()" type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Оновити">
           <span class="material-icons">refresh</span>
         </button>
       </div>
@@ -304,10 +304,20 @@
     </nav>
   </div> -->
   
-  <div class="container-fluid position-absolute d-flex align-items-center justify-content-center clearfix" *ngIf="loader_displayed">
+  <div class="container-fluid position-absolute d-flex align-items-center justify-content-center clearfix" *ngIf="is_loader_displayed">
     <div class="row">
       <div class="col-md-12 col-lg-12 col-xl-12">
-        <img src="../../../../../assets/img/loader.gif">
+          <div id="circularG">
+            <div id="circularG_1" class="circularG"></div>
+            <div id="circularG_2" class="circularG"></div>
+            <div id="circularG_3" class="circularG"></div>
+            <div id="circularG_4" class="circularG"></div>
+            <div id="circularG_5" class="circularG"></div>
+            <div id="circularG_6" class="circularG"></div>
+            <div id="circularG_7" class="circularG"></div>
+            <div id="circularG_8" class="circularG"></div>
+          </div>
+        <!-- <img width="64" height="64" src="../../../../../assets/img/earth.gif"> -->
       </div>
     </div>
   </div>

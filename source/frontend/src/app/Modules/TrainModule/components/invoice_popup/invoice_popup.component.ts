@@ -29,7 +29,7 @@ import { GroupInvoiceNameModel } from '../../../GroupInvoice/models';
 
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from "rxjs";
-import { map, startWith, catchError, debounceTime, switchMap } from "rxjs/operators";
+import { map, startWith, catchError, debounceTime, switchMap, debounce } from "rxjs/operators";
 
 @Component({
   selector: "app-invoice-popup",
@@ -88,15 +88,17 @@ export class TrainInvoiceDialogComponent implements OnInit {
   public arrivalStationAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
   public arrivalStationFromControl = new FormControl();
   // Individual Counterparty
-  public individualCounterpartyAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
+  public individualCounterpartyAutoComplete: Observable<RefIndividualCounterpartyNameModel[]> = null;
   public individualCounterpartyFromControl = new FormControl();
 
-  public PAYMENT_FORMS = {
-    "cash": "Готівка",
-    "non-cash" : "Платіжна картка",
-    "credit" : "Банківський кредит"
-  }
+  public PAYMENT_FORMS = [ 
+    "Готівка",
+    "Платіжна картка",
+    "Банківський кредит"
+  ]
 
+  // TODO: Try to fetch data once and put it in array
+  public unitClassifierNamesCollection = [];
   constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail,
               private GroupInvoiceService: GroupInvoiceService,
@@ -115,8 +117,165 @@ export class TrainInvoiceDialogComponent implements OnInit {
               public toastr: ToastrManager){
   
   }  
-
-  fetchRefCounterparties(value: string): Observable<RefCounterpartyNameModel[]>{
+  
+  initializeForm(){
+    // Fill client auto complete field
+    this.clientAutoComplete = this.clientFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefCounterpartiesNames(value);
+      })
+    );
+    // Fetch group invoice names
+    this.groupInvoiceAutoComplete = this.groupInvoiceFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchGroupInvoiceNames(value);
+      })
+    );
+    // Fetch reference unit classifier names
+    this.offerCurrencyAutoComplete = this.offerCurrencyFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefUnitClassifiersNames(value);
+      })
+    );
+    // Fetch reference unit classifier names
+    this.totalCurrencyAutoComplete = this.totalCurrencyFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefUnitClassifiersNames(value);
+      })
+    );
+    // Fetch provider names
+    this.providerAutoComplete = this.providerFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefCounterpartiesNames(value);
+      })
+    );
+    // Fetch taxes payment names
+    this.taxesPaymentAutoComplete = this.taxesPaymentFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefCounterpartiesNames(value);
+      })
+    );
+    // Fetch curator names
+    this.curatorAutoComplete = this.curatorFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefCuratorsNames(value);
+      })
+    );
+    // Fetch currency exchange
+    this.currencyExchangeAutoComplete = this.currencyExchangeFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefCurrencyExchangesNames(value);
+      })
+    );
+    // Fetch Service types names
+    this.serviceTypeAutoComplete = this.serviceTypeFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefServiceTypesNames(value);
+      })
+    );
+    // Fetch Checking account
+    this.checkingAccountAutoComplete = this.checkingAccountFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefCheckingAccountsNames(value);
+      })
+    );
+    // Fetch responsible agent names
+    this.responsibleAgentAutoComplete = this.responsibleAgentFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefUsersNames(value);
+      })
+    );
+    // Fetch agent names
+    this.agentAutoComplete = this.agentFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefUsersNames(value);
+      })
+    );
+    // Fetch organizations names
+    this.organizationAutoComplete = this.organizationFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefOrganizationsNames(value);
+      })
+    );
+    // Fetch organizations names
+    this.organizationAutoComplete = this.organizationFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefOrganizationsNames(value);
+      })
+    );
+    // Fetch individual counterparties names
+    this.individualCounterpartyAutoComplete = this.individualCounterpartyFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefIndividualCounterpartiesNames(value);
+      })
+    );
+  // public individualCounterpartyAutoComplete: Observable<RefRailwayStationNameModel[]> = null;
+  // public individualCounterpartyFromControl = new FormControl();
+    // Fill departure station auto complete field
+    this.departureStationAutoComplete = this.departureStationFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefRailwayStationsNames(value);
+      })
+    );
+    // Fill arrival station auto complete field
+    this.arrivalStationAutoComplete = this.arrivalStationFromControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        console.log('value: ', value);
+        return this.fetchRefRailwayStationsNames(value);
+      })
+    );    
+  }
+  fetchRefCounterpartiesNames(value: string): Observable<RefCounterpartyNameModel[]>{
     return this.RefCounterpartyService
       .get_counterparties_names(value)
       .pipe(map(result => {
@@ -275,47 +434,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     this.toastr.errorToastr('Щось пішло не так!', 'Помилка!')
   }
 
-  initializeForm(){
-    // Fill client auto complete field
-    this.clientAutoComplete = this.clientFromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap(value => {
-        console.log('value: ', value);
-        return this.fetchRefCounterparties(value);
-      })
-    );
-    this.groupInvoiceAutoComplete = this.groupInvoiceFromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap(value => {
-        console.log('value: ', value);
-        return this.fetchGroupInvoiceNames(value);
-      })
-    );
-
-
-
-    // Fill departure station auto complete field
-    this.departureStationAutoComplete = this.departureStationFromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap(value => {
-        console.log('value: ', value);
-        return this.fetchRefRailwayStationsNames(value);
-      })
-    );
-
-    // Fill arrival station auto complete field
-    this.arrivalStationAutoComplete = this.arrivalStationFromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap(value => {
-        console.log('value: ', value);
-        return this.fetchRefRailwayStationsNames(value);
-      })
-    );    
-  }
+  
 
 
   ngOnInit() {
@@ -332,12 +451,21 @@ export class TrainInvoiceDialogComponent implements OnInit {
     this.currencyExchangeFromControl.setValue(this.train_invoice.currency_exchange_id.name);
     this.serviceTypeFromControl.setValue(this.train_invoice.service_type_id.name);
     this.checkingAccountFromControl.setValue(this.train_invoice.checking_account_id.name);
-    this.responsibleAgentFromControl.setValue(`${this.train_invoice.responsible_agent_id.first_name} ${this.train_invoice.responsible_agent_id.last_name}`);
-    this.agentFromControl.setValue(`${this.train_invoice.agent_id.first_name} ${this.train_invoice.agent_id.last_name}`);
+    let responsible_agent = this.train_invoice.responsible_agent_id.first_name && this.train_invoice.responsible_agent_id.last_name ?
+        `${this.train_invoice.responsible_agent_id.first_name} ${this.train_invoice.responsible_agent_id.last_name}` : '';
+    
+        this.responsibleAgentFromControl.setValue(responsible_agent);
+    let agent = this.train_invoice.agent_id.first_name && this.train_invoice.agent_id.last_name ?
+        `${this.train_invoice.agent_id.first_name} ${this.train_invoice.agent_id.last_name}` : '';
+    
+        this.agentFromControl.setValue(agent);
     this.organizationFromControl.setValue(this.train_invoice.organization_id.group_name);
     this.departureStationFromControl.setValue(this.train_invoice.detail_info.departure_station_id.name_ukr);
     this.arrivalStationFromControl.setValue(this.train_invoice.detail_info.arrival_station_id.name_ukr);
-    this.individualCounterpartyFromControl.setValue(`${this.train_invoice.detail_info.surname_id.last_name_native} ${this.train_invoice.detail_info.surname_id.first_name_native}`);
+
+    let individual_counterparty = this.train_invoice.detail_info.surname_id.last_name_native && this.train_invoice.detail_info.surname_id.first_name_native ?
+    `${this.train_invoice.detail_info.surname_id.last_name_native} ${this.train_invoice.detail_info.surname_id.first_name_native}` : '';
+    this.individualCounterpartyFromControl.setValue(individual_counterparty);
 
 
     this.initializeForm();
@@ -396,7 +524,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     this.TrainService.create_train_invoice(ticket)
       .then((data: TrainInvoiceDetail) => {
         this.toastr.successToastr('Залізничний квиток успішно збереженно.', 'Успішно!');
-        this.train_invoice = data;
+        //this.train_invoice = data;
       })
       .catch((err) => {
         console.log(err);
@@ -409,7 +537,8 @@ export class TrainInvoiceDialogComponent implements OnInit {
     this.TrainService.update_train_invoice(ticket)
       .then((data: TrainInvoiceDetail) => {
         this.toastr.successToastr('Залізничний квиток успішно змінено.', 'Успішно!');
-        this.train_invoice = data;
+        // this.train_invoice = data;
+        console.log(data)
       })
       .catch((err) => {
         console.log(err);
@@ -417,7 +546,10 @@ export class TrainInvoiceDialogComponent implements OnInit {
       });
   }
 
-  save_update(ticket){
+  save_update(ticket: TrainInvoiceDetail){
+    if(!ticket){
+      // error occured
+    }
     if(ticket._id){
       this.update_ticket(ticket);
     }

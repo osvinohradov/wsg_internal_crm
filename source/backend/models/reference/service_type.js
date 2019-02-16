@@ -47,7 +47,7 @@ ReferenceServiceTypeSchema.statics.get_service_types_names = async function(serv
                     { name: new RegExp(`${service_type_name}`, 'i') } :
                     {};
 
-    let service_types = ReferenceServiceTypeModel.find(query, '_id name', options);
+    let service_types = await ReferenceServiceTypeModel.find(query, '_id name', options);
     return service_types;
 }
 

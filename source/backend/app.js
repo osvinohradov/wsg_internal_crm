@@ -40,7 +40,12 @@ let avia_xml_tickets_dir = 'E:\\test_ticket';
 
 // let avia_xml_watcher = new FileWatcher(avia_xml_tickets_dir);
 // avia_xml_watcher.initialize_watcher();
-
+process.on('uncaughtException', (err) => {
+    console.log('uncaughtException occured...');
+    console.log('============================================== !!! Error !!! ==============================================');
+    console.log(err);
+    console.log('===========================================================================================================');
+})
 
 
 mongoose.connect(`mongodb://localhost:27017/wsg_db`, { useNewUrlParser: true });

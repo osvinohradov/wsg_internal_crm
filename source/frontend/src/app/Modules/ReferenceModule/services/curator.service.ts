@@ -11,7 +11,7 @@ export class RefCuratorService {
 
 
   get_curators_names(curator_name=''): Observable<RefCuratorNameModel[]>{
-    const url = `${this.baseUrl}/ref/curator/names`;
+    const url = `${this.baseUrl}/ref/curators/names`;
     
     return this.http.get<RefCuratorNameModel[]>(url, { params: {
       curator_name: curator_name
