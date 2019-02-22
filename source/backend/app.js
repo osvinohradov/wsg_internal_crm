@@ -14,6 +14,7 @@ require('./models/initialize_db');
 
 require('./service_db_init/initialize_zhd_station');
 
+
 const app = express();
 const port = 8080;
 const baseUrl = '/api/v1';
@@ -28,6 +29,8 @@ global.app = app;
 
 global.app.config = config_init.get_config_data();
 console.log(global.app.config)
+let THS = require('./services/ticket_handler.service').TicketHandlerService;
+new THS(global.app.config.parser_config)
 //register_routes(app, baseUrl);
 
 initialize_train_ticket_parsers(global.app.config)

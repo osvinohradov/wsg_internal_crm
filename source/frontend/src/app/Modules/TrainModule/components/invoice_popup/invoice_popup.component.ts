@@ -30,6 +30,8 @@ import { GroupInvoiceNameModel } from '../../../GroupInvoice/models';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from "rxjs";
 import { map, startWith, catchError, debounceTime, switchMap, debounce } from "rxjs/operators";
+import { CONFIG } from '../../../constants';
+
 
 @Component({
   selector: "app-invoice-popup",
@@ -41,6 +43,8 @@ import { map, startWith, catchError, debounceTime, switchMap, debounce } from "r
   ]
 })
 export class TrainInvoiceDialogComponent implements OnInit {
+
+  public SERVER_URL = CONFIG.SERVER_URL;
   // public is_saved: Boolean = false;
   // Client (counterparty)
   public clientAutoComplete: Observable<RefCounterpartyNameModel[]> = null;

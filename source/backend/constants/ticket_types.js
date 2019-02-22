@@ -1,0 +1,12 @@
+const AMADEUS_TRAIN_TICKET_NAME = 'amadeus';
+const ARGEST_TRAIN_TICKET_NAME = 'argest';
+
+
+const TRAIN_TICKETS = {
+    AMADEUS_TRAIN_TICKET_NAME,
+    ARGEST_TRAIN_TICKET_NAME
+}
+
+export {
+    TRAIN_TICKETS
+}

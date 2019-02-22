@@ -1,5 +1,5 @@
-import { map_ticket_from_argest } from './train/mappers/mappers';
-import { parse_ticket } from './train/parsers/argest_parser';
+import { map_ticket_from_argest } from './train/mapper/mappers';
+import { parse_ticket } from './train/parser/argest.parser';
 
 
 import fs from 'fs';

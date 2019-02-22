@@ -1,9 +1,9 @@
 import path from 'path';
 import fs from 'fs';
 
-import { parse_ticket_from_argest } from './parsers/argest_parser';
-import { map_ticket_from_argest } from './mappers/mappers';
-import  { FileWatcherFactory } from '../../utils';
+// import { parse_ticket_from_argest } from './parsers/amadeus_parser';
+// import { map_ticket_from_argest } from './mappers/mappers';
+// import  { FileWatcherFactory } from '../../utils';
 
 export function train_xml_ticket_initializer(config){
     let _path = config['path_to_files'];

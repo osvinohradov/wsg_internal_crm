@@ -10,7 +10,7 @@ router.route('/train/invoices')
         train_handler.get_train_invoices(req, res);
     })
 
-router.route('/train/invoice')
+router.route(`/train/invoice`)
     // Створити новий рахунок
     .post(async (req, res) => {
         train_handler.create_train_invoice(req, res);
@@ -19,7 +19,7 @@ router.route('/train/invoice')
         train_handler.update_train_invoice(req, res);
     })
 
-router.route('/train/invoice/:id')
+router.route(`/train/invoice/:id`)
     // Отримати рахунок по id
     .get(async (req, res) => {
         train_handler.get_train_invoice_by_id(req, res);
@@ -33,10 +33,15 @@ router.route('/train/invoice/:id')
         train_handler.delete_train_invoice(req, res);
     });
 
-router.route('/train/count/invoices')
+router.route(`/train/count/invoices`)
     // Отримати загальну кількість рахунків у базі.
     .get((req, res) => {
         // TrainHandler.TrainInvoiceView.get_train_invoice_count(req, res);
+    });
+
+router.route(`/print/train/act/:invoice_id`)
+    .get((req, res) => {
+        train_handler.print_act_document(req, res);
     });
 
 export { router };

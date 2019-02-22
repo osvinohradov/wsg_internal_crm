@@ -24,7 +24,7 @@
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
       <mat-menu #PrintMenu="matMenu">
-        <button mat-menu-item class="my_menu_label">Друк акта</button>
+        <a href="{{SERVER_URL}}/print/train/act/{{train_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк акта</a>
         <button mat-menu-item class="my_menu_label">Друк накладної</button>
         <button mat-menu-item class="my_menu_label">Друк рахунка</button>
         <button mat-menu-item class="my_menu_label">

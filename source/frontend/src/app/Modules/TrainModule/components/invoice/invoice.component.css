@@ -484,8 +484,9 @@ span > i {
     cursor: default;
 }
 
-span.my_menu_label, button.my_menu_label{
+span.my_menu_label, button.my_menu_label, a.my_menu_label{
     font-size: 11px;
+    text-decoration: none;
 }
 
 div.my_menu_icon span.material-icons{

@@ -1,0 +1,1 @@
+import xml_parser from 'xml-parser';

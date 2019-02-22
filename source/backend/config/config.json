@@ -10,6 +10,31 @@
             "user": "",
             "password": ""
         },
+        "parser_config":{
+            "root_dir": "D:",
+            "dir_name": "wsg_data",
+            "types": {
+                "train": {
+                    "folder_name": "train",
+                    "categories": {
+                        "amadeus":{
+                            "name": "amadeus",
+                            "handlers": {
+                                "parser": "amadeus",
+                                "mapper": "amadeus"
+                            }
+                        },
+                        "argest":{
+                            "name": "argest",
+                            "handlers": {
+                                "parser": "argest",
+                                "mapper": "argest"
+                            }
+                        }
+                    }
+                }
+            }            
+        },
         "path_to_files":{
             "root": "D:\\",
             "dir_name": "wsg_data",

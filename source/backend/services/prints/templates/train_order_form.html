@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Видаткова накладна №<%= %> від <%= %></title>
+    <style>
+            body,
+            ul,
+            p {
+              margin: 0px;
+              padding: 0px;
+            }
+            body {
+              width: 210mm;
+              height: 297mm;
+              box-sizing: border-box;
+              padding-left: 20mm;
+              padding-right: 5mm;
+            }
+            hr {
+              height: 2px;
+              background-color: black;
+            }
+      
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            td > hr {
+              width: 50%;
+            }
+            .header {
+              text-align: left;
+            }
+          </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td style="width: 40%; text-align: justify;">
+               
+            </td>
+            <td style="width: 60%; text-align: justify;">
+                <b>Товариство з обмеженою відповідальністю "ВОРЛДСЕРВІС ГРУП"</b>
+                Р/р 26001402367063, у банку АТ "ОТП БАНК" в м.Київ, МФО 300528,<br/>
+                юр. адреса: Україна, 01133, м.Київ, вул. Щорса, буд. 32-А, н/п № 1-А, тел.: 0445202727,<br/>
+                код за ЄДРПОУ 32158383, ІПН 321583826558
+            </td>
+        </tr>
+    </table>
+
+    <p style="text-align: center;">
+        www.worldserviec.ua
+    </p>
+
+    <p style="text-align: center;">
+        <b >
+            Рахунок № 78943846384383
+        </b>
+        від 16/02/2019
+    </p>
+
+    <table>
+        <tr>
+            <td style="width: 50%; text-align: left;">
+                Отримувач<br/>
+                адреса<br/>
+                тел.<br/>
+                факс.<br/>
+                відповідальна особа<br/>
+            </td>
+            <td style="width: 50%; text-align: left;">
+                =ФІЗИЧНА ОСОБА<br/>
+                <br/>
+                <br/>
+                Куратор:<br/>
+            </td>
+        </tr>
+    </table>
+
+
+    <!-- Основная таблица -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th style="text-align: center; width: 5%;">№</th>
+                <th>Найменування</th>
+                <th>Од.виміру</th>
+                <th>Кіл.</th>
+                <th>Вартість без ПДВ</th>
+                <th>ПДВ</th>
+                <th>Всього</th>
+            </tr>
+        </thead>
+
+        <!-- Залізничний квиток -->
+        <tr>
+            <td style="text-align: center">1.</td>
+            <td style="text-align: justify; width: 55%;">
+                Залізничний квиток (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>) тип та номер вагону (№<%= detail_info.carriage_number %>),
+                місце (№<%= detail_info.place %>), потяг (№<%= detail_info.train_number %>) за маршрутом (<%= detail_info.departure_station_id.name_ukr %> : <%= detail_info.arrival_station_id.name_ukr %>), дата та час відправлення (<%= detail_info.departure_dt %>),
+                дата та час прибуття (<%= detail_info.arrival_dt %>).
+            </td>
+            <td style="text-align: center">1</td>
+            <td style="text-align: center">шт</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <!-- Послуги з оформлення електронного ваучера -->
+        <tr style="border: 1px solid black;">
+            <td style="text-align: center; width: 5%;">2.</td>
+            <td style="text-align: justify; width: 55%;">
+                Послуги з оформлення електронного ваучера (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>)
+            </td>
+            <td style="text-align: center">1</td>
+            <td style="text-align: center">грн</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+         <!-- Послуги агенції -->
+         <tr style="border: 1px solid black;">
+            <td style="text-align: center; width: 5%;">2.</td>
+            <td style="text-align: justify; width: 55%;">
+                Послуги з оформлення електронного ваучера (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>)
+            </td>
+            <td style="text-align: center">1</td>
+            <td style="text-align: center">грн</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <!-- Підсумок -->
+        <tfoot>
+            <tr style="font-weight: 700; text-align: right; border: 1px solid white;">
+            <td colspan="5">Всього:</td>
+            <td><%= detail_info.total_amount.sum %></td>
+            </tr>
+            <tr style="font-weight: 700; text-align: right; border: 1px solid white;">
+            <td colspan="5">У тому числі ПДВ:</td>
+            <td><%= detail_info.total_amount.mpe %></td>
+            </tr>
+        </tfoot>
+    </table>
+    <br/>
+    <p>
+        Всього найменувань =2, на суму =597,16 грн. В тому числі ПДВ =1,74 грн.<br/>
+        П'ятсот дев'яносто сім гривень 16 копійок<br/>
+        У т.ч. ПДВ Одна гривня 74 копійки
+    </p>
+    <br/>
+    <!-- Таблиця для підпису -->
+    <table>
+        <tr>
+            <td>
+                Виписав(ла): ______________________________________________<br/>
+                <span>
+                    Генеральний директор Ігор Дзуєнко<br/>
+                    igor@worldservice.ua +044 520 27 27 внутр 700
+                </span>
+            </td>
+            <td>_____________________________________</td>
+        </tr>
+    </table>
+</body>
+</html>
