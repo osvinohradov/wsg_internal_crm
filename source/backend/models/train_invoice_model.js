@@ -90,9 +90,9 @@ const TrainInvoiceSchema = new BaseModel({
       departure_dt: { type: Date },
       // Дата покупки у поставщика
       payment_provider_dt: { type: Date },
-      // откуда добавить таблицу
+      // откуда 
       departure_station_id: { type: Schema.Types.ObjectId, ref: 'RefRailwayStationModel', default: null },
-      // куда добавить таблицу
+      // куда
       arrival_station_id: { type: Schema.Types.ObjectId, ref: 'RefRailwayStationModel', default: null },
       // ReferenceIndividualCounterparties
       surname_id: {  type: Schema.Types.ObjectId, ref: 'ReferenceIndividualCounterparties', default: null },

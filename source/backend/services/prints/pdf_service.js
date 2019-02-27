@@ -16,7 +16,6 @@ class PDFService extends PDFServiceBase {
         
         let form = await this._get_html_form(path_to_form);
         let compiled_form = await this._compile_form(form, invoice);
-        console.log('Compiled form data: ', compiled_form);
         let pdf_file = await this._generate_pdf_document(compiled_form);
         return pdf_file;
     }

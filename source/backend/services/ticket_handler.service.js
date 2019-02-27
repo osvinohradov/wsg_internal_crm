@@ -1,6 +1,7 @@
 // Built-in packages
 import fs from 'fs';
 import path from 'path';
+import util from 'util';
 // Installed packages
 
 // Internal packages
@@ -26,15 +27,45 @@ class TicketHandlerService{
         await this._init_dirs();
         await this.set_parser();
         await this.initialize_watchers();
-       
     }
 
     async process_ticket(path_to_ticket, handler_type, ticket_category){
-        console.log('######################################');
-        console.log('path to ticket: ', path_to_ticket);
-        console.log('handler type: ', handler_type);
-        console.log('ticket category: ', ticket_category);
-        console.log('######################################');
+        //  1. Зчитати файл
+        //  2. Передати дані в парсер
+        //  3. Отримати квиток
+        //  4. Передати квиток в мапер
+        //  5. Отримати готовий квиток
+        //  6. Зберегти інвойс в БД
+
+        console.log(handler_type, ticket_category);
+        
+        let file_content = await this.read_file(path_to_ticket);
+        let parsed_ticket = await this.handlers[handler_type][ticket_category]['parser'].parse(file_content);
+        console.log('Parsed ticket: ', util.inspect(parsed_ticket, true, Infinity, true));        
+        let invoices = await this.handlers[handler_type][ticket_category]['mapper'].map(parsed_ticket, this.models[handler_type]);
+        console.log('====================================================================================================');
+        console.log('Mapped ticket: ', util.inspect(invoices, true, Infinity, true));        
+        console.log('====================================================================================================');
+        let query = Array.isArray(invoices) ? invoices : [invoices];
+        await this.models[handler_type].insertMany(query);
+        console.log(`Квиток ${path_to_ticket} збережено.`);
+    }
+
+    async read_file(path_to_file){
+        let fr_promise = new Promise((resolve, reject) => {
+            fs.readFile(path_to_file, { encoding: 'utf8' }, (err, res) => {
+                if(err){
+                    console.log(`Під час зчитування файлу сталася помилка.`);
+                    console.log(err)
+                    resolve(null);
+                    return;
+                }
+
+                let data = res.toString();
+                resolve(data);
+            });
+        });
+        return fr_promise;
     }
 
     async set_parser(){
@@ -104,8 +135,12 @@ class TicketHandlerService{
             console.log(`Обробникыв не встановленно.`);
             return;
         }
-        
-        let watcher = new FileWatcher(`D:\\wsg_data\\train\\amadeus`, "train", 'amadeus');
+        // TODO: Implement auto watchers
+        let watcher = new FileWatcher(`D:\\wsg_data\\train\\argest`, "train", 'argest');
+        let watcher_argest = new FileWatcher(`D:\\wsg_data\\train\\amadeus`, "train", 'amadeus');
+        let watcher_tourism = new FileWatcher(`D:\\wsg_data\\tourism\\tourism`, "tourism", 'tourism');
+        watcher_argest.start_watch(this.process_ticket.bind(this));
+        watcher_tourism.start_watch(this.process_ticket.bind(this));
         watcher.start_watch(this.process_ticket.bind(this));
     }
 

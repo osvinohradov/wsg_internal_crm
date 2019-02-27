@@ -8,7 +8,7 @@ import cookie_parser from 'cookie-parser';
 import { FileWatcher } from './services';
 
 import { config_init, dir_init, route_init } from './initializers';
-import { initialize_train_ticket_parsers } from './services/train_ticket_parser';
+//import { initialize_train_ticket_parsers } from './services/train_ticket_parser';
 
 require('./models/initialize_db');
 
@@ -33,7 +33,7 @@ let THS = require('./services/ticket_handler.service').TicketHandlerService;
 new THS(global.app.config.parser_config)
 //register_routes(app, baseUrl);
 
-initialize_train_ticket_parsers(global.app.config)
+//initialize_train_ticket_parsers(global.app.config)
 
 dir_init.directory_initializer(global.app.config['path_to_files'])
 route_init.register_routes(app, baseUrl);
@@ -48,8 +48,12 @@ process.on('uncaughtException', (err) => {
     console.log('============================================== !!! Error !!! ==============================================');
     console.log(err);
     console.log('===========================================================================================================');
-})
+});
 
+process.on('unhandledRejection', error => {
+    // Will print "unhandledRejection err is not defined"
+    console.log('unhandledRejection', error.message);
+  });
 
 mongoose.connect(`mongodb://localhost:27017/wsg_db`, { useNewUrlParser: true });
 

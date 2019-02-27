@@ -476,20 +476,20 @@ export class TrainInvoiceDialogComponent implements OnInit {
   }
 
   _get_date(dt){
-    let date  = moment(dt).format('YYYY-MM-DD');
+    let date  = moment.utc(dt).format('YYYY-MM-DD');
     return date;
   }
   
   _get_date_time(dt){
-    let date_time = moment(dt, 'MM/DD/YYYY');
+    let date_time = moment.utc(dt, ['MM/DD/YYYY HH:mm', 'YYYY-MM-DD HH:mm']);
     if(!date_time.isValid()){
-      return moment().format('DD-MM-YYYY');
+      return moment.utc().format('DD-MM-YYYY HH:mm');
     }
-    return date_time.format('DD-MM-YYYY');
+    return date_time.format('DD-MM-YYYY HH:mm');
   }
 
   _get_time(dt){
-    let time = moment(dt).format('HH:mm');
+    let time = moment.utc(dt).format('HH:mm');
     return time;
   }
 

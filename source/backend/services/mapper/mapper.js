@@ -1,6 +1,7 @@
 export class Mapper{
+    constructor(){}
 
-    map_ticket(section){
+    async map_ticket(section){
         
         
     }

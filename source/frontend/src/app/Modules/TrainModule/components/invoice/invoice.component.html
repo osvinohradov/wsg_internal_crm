@@ -267,11 +267,11 @@
             <!-- Returned document -->
             <td class="text-center">{{ invoice.returned_document }}</td>
             <!-- Provider payment date -->
-            <td class="text-center">{{ invoice.detail_info.payment_provider_dt }}</td>
+            <td class="text-center">{{ invoice.detail_info.payment_provider_dt | date: 'dd/MM/yyyy H:mm:ss' }}</td>
             <!-- Payment form -->
             <td class="text-center">{{ invoice.payment_form }}</td>
             <!-- Payment date -->
-            <td class="text-center">{{ invoice.payment_date | date: 'dd/MM/yyyy' }}</td>
+            <td class="text-center">{{ invoice.payment_date | date: 'dd/MM/yyyy H:mm:ss' }}</td>
 
             <td class="text-center">
               <mat-checkbox class="" primary [(ngModel)]="invoice.is_processed" [disabled]="true"></mat-checkbox>

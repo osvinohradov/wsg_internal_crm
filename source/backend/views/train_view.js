@@ -10,6 +10,7 @@ import { generate_random_number } from '../helpers';
 import { PDF_TMP_NAMES } from '../constants';
 import { PDFService } from '../services';
 
+moment.locale('uk');
 
 class TrainView extends BaseView{
     constructor(){
@@ -135,8 +136,10 @@ class TrainView extends BaseView{
                 console.log(`Invoice not found.`);
                 this.send_error_response(res, 404);
             }
-            console.log(invoice)
-            // invoice.date = moment(invoice.date).format('DD MMMM YYYY');
+            console.log('Date: ', invoice.date)
+            let date = moment.utc(invoice.date, ['YYYY-MM-DDTHH:mm:s Z']).format('DD MMMM YYYY');
+            invoice.creation_date = date;
+            
             let last_name = invoice.detail_info.surname_id.last_name_native ? invoice.detail_info.surname_id.last_name_native : '';
             let first_name = invoice.detail_info.surname_id.first_name_native ? invoice.detail_info.surname_id.first_name_native : '';
             invoice.detail_info.surname_id = `${last_name} ${first_name}`;
@@ -149,17 +152,48 @@ class TrainView extends BaseView{
 
             invoice.detail_info.carriage_number = `${carriage_number}${carriage_type}`;
 
+            invoice.detail_info.total_amount.sum = invoice.detail_info.supplier_cost.sum +
+                invoice.detail_info.supplier_commision.sum + invoice.detail_info.forfeit.sum +
+                invoice.detail_info.agency_services.sum + invoice.detail_info.other_services.sum;
+            
+            invoice.detail_info.total_amount.mpe = invoice.detail_info.supplier_cost.mpe +
+                invoice.detail_info.supplier_commision.mpe + invoice.detail_info.forfeit.mpe +
+                invoice.detail_info.agency_services.mpe + invoice.detail_info.other_services.mpe;
+
             console.log(wN(123.7, { lang: 'uk' }))
             console.log( invoice.detail_info.total_amount.sum);
             
             let total_amount_sum_arr = invoice.detail_info.total_amount.sum.toString().split('.');
+            let total_amount_sum_coins =  total_amount_sum_arr[1] ? total_amount_sum_arr[1] : '00';
+
+            let total_amount_mpe_arr = invoice.detail_info.total_amount.mpe.toString().split('.');
+            let total_amount_mpe_coins = total_amount_mpe_arr[1] ? total_amount_mpe_arr[1] : '00';
+
+            let total_amount = (invoice.detail_info.total_amount.sum + invoice.detail_info.total_amount.mpe).toString().split('.');
+            let total_amount_coins =  total_amount[1] ? total_amount[1] : '00';
+
             let total_amount_full_sum = total_amount_sum_arr[0] ? this._write_number(total_amount_sum_arr[0]) : 0;
-            let total_amount_coins =  total_amount_sum_arr[1] ? total_amount_sum_arr[1] : '00';
+            let total_amount_full_mpe = total_amount_mpe_arr[0] ? this._write_number(total_amount_mpe_arr[0]) : 0;
+            let total_amount_full = total_amount[0] ? this._write_number(total_amount[0]) : 0;
+
             let written_sum = {
                 total_amount_full_sum,
+                total_amount_sum_coins,
+                total_amount_full_mpe,
+                total_amount_mpe_coins,
+                total_amount_full,
                 total_amount_coins
             }
             invoice.written_sum = written_sum;
+
+            invoice.detail_info.total_amount.sum = invoice.detail_info.supplier_cost.sum +
+                invoice.detail_info.supplier_commision.sum + invoice.detail_info.forfeit.sum +
+                invoice.detail_info.agency_services.sum + invoice.detail_info.other_services.sum;
+            
+            invoice.detail_info.total_amount.mpe = invoice.detail_info.supplier_cost.mpe +
+                invoice.detail_info.supplier_commision.mpe + invoice.detail_info.forfeit.mpe +
+                invoice.detail_info.agency_services.mpe + invoice.detail_info.other_services.mpe;
+
             let pdf_form = await PDFService.get_act_pdf_form(PDF_TMP_NAMES.TRAIN.TRAIN_ACT_FORM_NAME, invoice);
             res.setHeader('Content-Type', 'application/pdf');
             res.status(200).send(pdf_form);

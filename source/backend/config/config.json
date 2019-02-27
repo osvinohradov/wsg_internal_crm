@@ -32,6 +32,18 @@
                             }
                         }
                     }
+                },
+                "tourism": {
+                    "folder_name": "tourism",
+                    "categories": {
+                        "tourism":{
+                            "name": "tourism",
+                            "handlers": {
+                                "parser": "tourism",
+                                "mapper": "tourism"
+                            }
+                        }
+                    }
                 }
             }            
         },

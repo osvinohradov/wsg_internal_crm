@@ -1,6 +1,8 @@
 import * as model from './index';
 import { OrganizationModel } from './lib';
-import { DEFAULT_COUNTERPARTY_NAME } from '../constants/common';
+import { DEFAULT_COUNTERPARTY_NAME,
+         DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE,
+         DEFAULT_TRAIN_ARGEST_SERVICE_TYPE } from '../constants/common';
 
 async function init_db(){
     console.log('#################################### Initialize DB ####################################');
@@ -66,6 +68,17 @@ async function init_db(){
         await reference_individual_counterparty.save();
     }
 
+    if((await model.Ref.ReferenceServiceTypeModel.find({ name: DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE })).length == 0){
+        console.log('======== Create Amageus Service Type ========');
+        let reference_service_type = new model.Ref.ReferenceServiceTypeModel({ name: DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE });
+        await reference_service_type.save();
+    }
+
+    if((await model.Ref.ReferenceServiceTypeModel.find({ name: DEFAULT_TRAIN_ARGEST_SERVICE_TYPE })).length == 0){
+        console.log('======== Create Argest Service Type ========');
+        let reference_service_type = new model.Ref.ReferenceServiceTypeModel({ name: DEFAULT_TRAIN_ARGEST_SERVICE_TYPE });
+        await reference_service_type.save();
+    }
 
     console.log('#######################################################################################');
 }

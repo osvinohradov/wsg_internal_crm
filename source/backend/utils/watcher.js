@@ -23,7 +23,7 @@ class FileWatcher{
 
     start_watch(cb){
         if(typeof cb !== 'function'){
-            console.log(``);
+            console.log(`Параметр не являється функцією.`);
             return;
         }
         this.cb = cb;
