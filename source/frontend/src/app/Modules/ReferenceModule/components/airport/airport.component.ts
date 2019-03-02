@@ -8,7 +8,9 @@ import { AirportPopupReferencesComponent } from './../airportPopup/airportPopup.
 
 import { AirportService } from '../../services';
 
-import { AirportReference } from '../../models';
+import { AirportModel } from '../../models';
+import { ToastrManager } from 'ng6-toastr-notifications';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -16,10 +18,10 @@ import { AirportReference } from '../../models';
   templateUrl: './airport.component.html',
   styleUrls: ['./airport.component.css']
 })
-export class AirportReferencesComponent implements OnInit {
+export class AirportComponent implements OnInit {
 
   // Сохраняются загруженне Аэропорты
-  public airports: AirportReference[] = null;
+  public airports: AirportModel[] = null;
   // В данной версии не используется. Сохраняются выделенные элементы.
   public selected_items = [];
   // Указывает нужно отображать загрузчик или нет
@@ -35,8 +37,7 @@ export class AirportReferencesComponent implements OnInit {
   // Переменная для блока пагинации. Пересмотреть и возможно избавится.
   public pagination_arr = [];
 
-
-  constructor(public dialog: MatDialog, private AirportService: AirportService) { }
+  constructor(public dialog: MatDialog, private AirportService: AirportService, public toastr: ToastrManager) { }
 
   ngOnInit() {
     this.refresh_data();
@@ -49,6 +50,8 @@ export class AirportReferencesComponent implements OnInit {
       this.pagination_arr = new Array(count)
     });
   }
+
+  
 
   load_airports(skip, limit){
     this.current_page = skip;
@@ -68,7 +71,7 @@ export class AirportReferencesComponent implements OnInit {
   }
 
   create_airport(){
-    this.open_dialog(new AirportReference()).afterClosed()
+    this.open_dialog(new AirportModel()).afterClosed()
     .subscribe((dialog_result) => {
       console.log(dialog_result)
       if(!dialog_result) return;
@@ -78,18 +81,24 @@ export class AirportReferencesComponent implements OnInit {
     });
   }
 
-  edit_airport(airport_item: AirportReference){
-    let airport_copy = AirportReference.clone(airport_item);
-    
-    this.open_dialog(airport_copy).afterClosed()
-    .subscribe((dialog_result) => {
-      if(!dialog_result) return;
-      this.handle_dialog_result(dialog_result);
+  retrieve_airport(airport_id, callback){
+    console.log('retrieve airport')
+    this.AirportService.get_airport_by_id(airport_id).subscribe((result) => {
+      callback(result);
+    });
+  }
 
-      this.airports.forEach((item, index, array) => {
-        if(item._id == dialog_result._id){
-          array[index] = dialog_result;
-        }
+  edit_airport(airport_id){
+    if(!airport_id){
+      this.toastr.errorToastr('Не передано ідентифікатор аеропорту!', 'Помилка!')
+      return;
+    }
+    console.log('Edit airport fn called')
+
+    this.retrieve_airport(airport_id, (airport: AirportModel) => {
+
+      this.open_dialog(airport).afterClosed().subscribe((dialog_result) => {
+        console.log('Edit airport dialog result: ', dialog_result)
       });
     });
   }
@@ -108,7 +117,7 @@ export class AirportReferencesComponent implements OnInit {
     return this.dialog.open(AirportPopupReferencesComponent, {
       panelClass: 'my-centered-dialog',
       width: '50%',
-      height: '75vh',
+      height: 'auto',
       data: data
     });  
   }

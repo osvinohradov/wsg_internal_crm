@@ -91,23 +91,20 @@ span.printDropdownButton{
   bottom: 1px;
 }
 
-span.my_menu_label{
+/* span.my_menu_label{
   position: relative;
   top: 0px;
-}
+} */
 
 button.btn.btn-default.my_button_style {
+  text-align: center;
   background-color: #dadde5;
   cursor: pointer;
   border-radius: 3px;
-  font-size: 0.875em;
+  font-size: 0.7rem;
   border: none;
   margin-left: 1px;
   margin-right: 1px;
-}
-
-.my_square_button{
-  width: 39px;
 }
 
 .btn:focus {
@@ -325,10 +322,6 @@ select.form-control {
 
 /* TABLE STYLES */
 
-.mr-my-1{
-  margin-right: 2px;
-}
-
 .ml-my-1{
   margin-right: 2px;
 }
@@ -437,7 +430,7 @@ h2 {
 .title_main_page_margin{
   margin-top: 1.5rem; /* 24px */
   margin-bottom: 1.5rem; /* 24px */
-  font-size: 1.500rem !important;
+  font-size: 1.3rem !important;
 }
 
 .subtitle_main_page_margin{

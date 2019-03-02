@@ -85,8 +85,12 @@ export class PDFServiceBase{
 
     _read_file_async(path_to_file, read_opt){
         return new Promise((resolve, reject) => {
+            console.log(`Print file ${path_to_file}`);
+            
             fs.readFile(path_to_file, read_opt, (err, data) => {
                 if(err){
+                    console.log(`Error ocurred`, err);
+                    return;
                     // throw err
                 }
                 data = data.toString();                

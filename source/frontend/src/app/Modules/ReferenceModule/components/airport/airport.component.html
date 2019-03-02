@@ -10,22 +10,6 @@
             </button>
         </div>
         <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
-                <span class="material-icons">filter_none</span>
-            </button>
-        </div>
-
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Змінити">
-                <span class="material-icons">edit</span>
-            </button>
-        </div>
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Відмінити для вилучення/Зняти позначку">
-                <span class="material-icons">remove_from_queue</span>
-            </button>
-        </div>
-        <div class="d-inline mr-my-1">
             <button type="button" class="btn btn-default my_button_style">
                 <span class="material-icons">location_searching</span>
                 <span class="my_button_label">Знайти</span>
@@ -154,7 +138,6 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col" class="code-column">Найменування</th>
-                    <th scope="col" class="code-column">Код</th>
                     <th scope="col">Найменування російською</th>
                     <th scope="col">Найменування англійською</th>
                     <th scope="col">Найменування українською</th>
@@ -169,18 +152,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="main" *ngFor="let airport of airports" (dblclick)="edit_airport(airport)">
-                    <td class="text-center" scope="row">{{airport.Name}}</td>
-                    <td class="text-center">{{airport.Code}}</td>
-                    <td class="text-center">{{airport.NameRus}}</td>
-                    <td class="text-center">{{airport.NameEng}}</td>
-                    <td class="text-center">{{airport.NameUkr}}</td>
-                    <td class="text-center">{{airport.PlaceRus}}</td>
-                    <td class="text-center">{{airport.PlaceEng}}</td>
-                    <td class="text-center">{{airport.PlaceUkr}}</td>
-                    <td class="text-center">{{airport.CountryRus}}</td>
-                    <td class="text-center">{{airport.CountryEng}}</td>
-                    <td class="text-center">{{airport.CountryUkr}}</td>
+                <tr class="main" *ngFor="let airport of airports" (dblclick)="edit_airport(airport._id)">
+                    <td class="text-center" scope="row">{{airport.name}}</td>
+                    <td class="text-center">{{airport.name_rus}}</td>
+                    <td class="text-center">{{airport.name_eng}}</td>
+                    <td class="text-center">{{airport.name_ukr}}</td>
+                    <td class="text-center">{{airport.place_rus}}</td>
+                    <td class="text-center">{{airport.place_eng}}</td>
+                    <td class="text-center">{{airport.place_ukr}}</td>
+                    <td class="text-center">{{airport.country_rus}}</td>
+                    <td class="text-center">{{airport.country_eng}}</td>
+                    <td class="text-center">{{airport.country_ukr}}</td>
                     <td class="text-center">{{airport.latitude}}</td>
                     <td class="text-center">{{airport.longitude}}</td>
                 </tr>

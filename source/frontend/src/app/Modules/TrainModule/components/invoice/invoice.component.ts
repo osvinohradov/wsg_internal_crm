@@ -110,9 +110,9 @@ export class TrainInvoiceComponent implements OnInit {
    */
   open_dialog(data): MatDialogRef<TrainInvoiceDialogComponent>{
     return this.dialog.open(TrainInvoiceDialogComponent, {
-      panelClass: "my-centered-dialog",
-      width: "98%",
-      height: "90vh",
+      panelClass: 'my-centered-dialog',
+      width: '95%',
+      height: 'auto',
       data: data
     })
   }

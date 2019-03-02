@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AviaCompanyReferencesComponent } from './components/aviaCompany/aviaCompany.component';
-import { AirportReferencesComponent } from './components/airport/airport.component';
+import { AirportComponent } from './components/airport/airport.component';
 import { CityReferencesComponent } from './components/city/city.component';
 import { CounterpartiesContractReferencesComponent } from './components/counterpartiesContract/counterpartiesContract.component';
 import { CounterpartyReferencesComponent } from './components/counterparty/counterparty.component';
@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: 'reference', children: [
       { path: 'avia-company', component: AviaCompanyReferencesComponent },
-      { path: 'airport', component: AirportReferencesComponent },
+      { path: 'airport', component: AirportComponent },
       { path: 'city', component: CityReferencesComponent },
       { path: 'counterparties-contracts', component: CounterpartiesContractReferencesComponent },
       { path: 'counterparty', component: CounterpartyReferencesComponent },

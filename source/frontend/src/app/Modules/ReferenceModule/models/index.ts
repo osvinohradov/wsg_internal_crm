@@ -1,5 +1,5 @@
 // References
-import { AirportReference } from './airport.reference';
+import { AirportModel } from './airport.reference';
 import { AviaCompanyReference } from './avia_company.reference';
 import { CityReference } from './city.reference';
 import { CounterpartyReference, RefCounterpartyNameModel } from './counerparty.reference';
@@ -22,7 +22,7 @@ import { RefUserNameModel } from './user_name.model';
 
 
 export {
-    AirportReference,
+    AirportModel,
     AviaCompanyReference,
     CityReference,
     CounterpartyReference,

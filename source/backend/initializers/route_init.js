@@ -3,7 +3,7 @@ import { train_ctrl,
          user_ctrl,
          organization_ctrl,
 
-
+         ReferencesRoutes,
          ref } from '../controllers';
 
 /**
@@ -29,4 +29,10 @@ export function register_routes(app, base_route){
     app.use(base_route, ref.ref_individual_counterparty_ctrl);
     app.use(base_route, ref.ref_service_type_ctrl);
     app.use(base_route, ref.ref_railway_station_ctrl);
+
+
+
+
+
+    app.use(base_route, ReferencesRoutes.Airports);
 }

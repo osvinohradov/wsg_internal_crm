@@ -1,8 +1,11 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
-import { AirportReference } from "../../models";
+import { AirportModel } from "../../models";
 import { AirportService } from "../../services";
+import { ToastrManager } from "ng6-toastr-notifications";
+import { map } from "rxjs/operators";
+
 
 @Component({
   selector: "airport-popup-ref",
@@ -17,27 +20,28 @@ import { AirportService } from "../../services";
 export class AirportPopupReferencesComponent implements OnInit {
   public is_saved: Boolean = false;
 
-  constructor(
-    public dialogRef: MatDialogRef<AirportPopupReferencesComponent>,
-    @Inject(MAT_DIALOG_DATA) public airport: AirportReference,
-    public AirportService: AirportService
-  ) {
-    if (!this.airport) {
-      this.airport = new AirportReference();
+  constructor(public dialogRef: MatDialogRef<AirportPopupReferencesComponent>,
+              @Inject(MAT_DIALOG_DATA) public airport: AirportModel,
+              public AirportService: AirportService,
+              public toastr: ToastrManager){
+    if(!airport){
+      console.log('Airport object was not received')
+      this.airport = new AirportModel();
     }
+    console.log('Airport: ', airport)
   }
 
   ngOnInit() {}
 
-  update_airport(airport: AirportReference) {
+  update_airport(airport: AirportModel) {
     this.AirportService.update_airport(airport).subscribe(data => {
-      this.airport = data as AirportReference;
+      this.airport = data as AirportModel;
     });
   }
 
-  save_airport(airport: AirportReference) {
+  save_airport(airport: AirportModel) {
     this.AirportService.save_airport(airport).subscribe(data => {
-      let tmp = data as AirportReference;
+      let tmp = data as AirportModel;
       if (!tmp._id) {
         this.is_saved = false;
       } else {
@@ -59,13 +63,13 @@ export class AirportPopupReferencesComponent implements OnInit {
     });
   }
 
-  save_and_close(airport: AirportReference) {
+  save_and_close(airport: AirportModel) {
     // Save ticket
     this.save_update_airport(airport);
     this.close_dialog(airport);
   }
 
-  save_update_airport(airport: AirportReference) {
+  save_update_airport(airport: AirportModel) {
     if (!airport._id) {
       this.save_airport(airport);
     } else {

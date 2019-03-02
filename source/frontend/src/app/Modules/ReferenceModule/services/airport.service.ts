@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AirportReference } from "../models";
+import { AirportModel } from "../models";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class AirportService {
@@ -10,27 +11,28 @@ export class AirportService {
 
   // Start Airports Service Block
   get_airports_count() {
-    return this.http.get<number>(this.baseUrl + `/references/count/airport`);
+    return this.http.get<number>(this.baseUrl + `/reference/count/airport`);
   }
 
   get_airports(skip, limit) {
-    return this.http.get<AirportReference[]>(
-      this.baseUrl + `/references/airport?skip=${skip}&limit=${limit}`
+    return this.http.get<AirportModel[]>(
+      this.baseUrl + `/reference/airports?skip=${skip}&limit=${limit}`
     );
   }
 
   get_airport_by_id(id: string) {
-    return this.http.get(this.baseUrl + `/references/airport/${id}`);
+    console.log('airport id: ', id)
+    return this.http.get<AirportModel>(this.baseUrl + `/reference/airport/${id}`);
   }
 
-  update_airport(airport: AirportReference) {
+  update_airport(airport: AirportModel) {
     return this.http.put(
       this.baseUrl + `/references/airport/${airport._id}`,
       airport
     );
   }
 
-  save_airport(airport: AirportReference) {
+  save_airport(airport: AirportModel) {
     return this.http.post(this.baseUrl + `/references/airport`, airport);
   }
 

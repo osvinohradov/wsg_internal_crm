@@ -435,7 +435,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
   // TODO: Add data fetching 
 
   showError(err, msg){
-    this.toastr.errorToastr('Щось пішло не так!', 'Помилка!')
+    this.toastr.errorToastr('Щось пішло не так!', 'Помилка!');
   }
 
   

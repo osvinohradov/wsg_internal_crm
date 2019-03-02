@@ -49,3 +49,20 @@ span.my_button_label {
     padding-left: 2px;
     padding-right: 2px;
 }
+
+mat-form-field.custom-form-field{
+    padding-top: 0px !important;
+    font-size: 0.85rem;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.form_button{
+    background-color: rgba(192, 199, 214, 0.5);
+    border: none;
+    border-radius: 4px;
+}
+
+.icon_button{
+    padding: 0px;
+    min-width: 10px;
+}

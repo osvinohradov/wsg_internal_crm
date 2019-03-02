@@ -18,6 +18,8 @@ import ref_service_type_handler from './ref_service_type_view';
 import ref_railway_station_handler from './ref_railway_station';
 
 
+import * as References from './references';
+
 export {
     train_handler,
     group_invoice_handler,
@@ -33,5 +35,7 @@ export {
     ref_checking_account_handler,
     ref_individual_counterparty_handler,
     ref_service_type_handler,
-    ref_railway_station_handler
+    ref_railway_station_handler,
+
+    References
 }

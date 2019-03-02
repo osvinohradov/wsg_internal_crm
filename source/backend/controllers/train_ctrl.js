@@ -43,5 +43,9 @@ router.route(`/print/train/act/:invoice_id`)
     .get((req, res) => {
         train_handler.print_act_document(req, res);
     });
+router.route(`/print/train/invoice/:invoice_id`)
+    .get((req, res) => {
+        train_handler.print_invoice_document(req, res);
+    });
 
 export { router };

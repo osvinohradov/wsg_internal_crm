@@ -7,7 +7,7 @@ import { ReferenceRoutingModule } from "./reference-routing.module";
 import { AviaCompanyReferencesComponent } from "./components/aviaCompany/aviaCompany.component";
 import { AviaCompanyPopupReferencesComponent } from "./components/aviaCompanyPopup/aviaCompanyPopup.component";
 
-import { AirportReferencesComponent } from "./components/airport/airport.component";
+import { AirportComponent } from "./components/airport/airport.component";
 import { AirportPopupReferencesComponent } from "./components/airportPopup/airportPopup.component";
 
 import { CityReferencesComponent } from "./components/city/city.component";
@@ -59,7 +59,7 @@ import { AirportService, AviaCompanyService, CityService,
   RefCounterpartyService, RefCuratorService, RefCurrencyExchangeService,
          RefIndividualCounterpartyService, RefNomenclatureService, RefServiceTypeService, RefUnitClassifierService } from "./services";
 
-
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 // print components
 // import { AviaPrintInvoicePopupComponent } from './../AviaModule/components/printInvoice/printInvoice.component';
@@ -71,7 +71,7 @@ import { AirportService, AviaCompanyService, CityService,
   declarations: [
     AviaCompanyReferencesComponent,
     AviaCompanyPopupReferencesComponent,
-    AirportReferencesComponent,
+    AirportComponent,
     AirportPopupReferencesComponent,
     CityReferencesComponent,
     CityPopupReferencesComponent,
@@ -97,6 +97,7 @@ import { AirportService, AviaCompanyService, CityService,
     // AviaPrintScoreWithStampPopupComponent
   ],
   imports: [
+    ToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -135,7 +136,7 @@ import { AirportService, AviaCompanyService, CityService,
   exports: [
     AviaCompanyReferencesComponent,
     AviaCompanyPopupReferencesComponent,
-    AirportReferencesComponent,
+    AirportComponent,
     AirportPopupReferencesComponent,
     CityReferencesComponent,
     CityPopupReferencesComponent,
