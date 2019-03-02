@@ -464,8 +464,10 @@ export class TrainInvoiceDialogComponent implements OnInit {
     
         this.agentFromControl.setValue(agent);
     this.organizationFromControl.setValue(this.train_invoice.organization_id.group_name);
-    this.departureStationFromControl.setValue(this.train_invoice.detail_info.departure_station_id.name_ukr);
-    this.arrivalStationFromControl.setValue(this.train_invoice.detail_info.arrival_station_id.name_ukr);
+    let departure_station_name = this.train_invoice.detail_info.departure_station_id.name_ukr ? this.train_invoice.detail_info.departure_station_id.name_ukr : this.train_invoice.detail_info.departure_station_id.name_rus;
+    this.departureStationFromControl.setValue(departure_station_name);
+    let arrival_station_name = this.train_invoice.detail_info.arrival_station_id.name_ukr ? this.train_invoice.detail_info.arrival_station_id.name_ukr : this.train_invoice.detail_info.arrival_station_id.name_rus;
+    this.arrivalStationFromControl.setValue(arrival_station_name);
 
     let individual_counterparty = this.train_invoice.detail_info.surname_id.last_name_native && this.train_invoice.detail_info.surname_id.first_name_native ?
     `${this.train_invoice.detail_info.surname_id.last_name_native} ${this.train_invoice.detail_info.surname_id.first_name_native}` : '';
