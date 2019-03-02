@@ -223,7 +223,7 @@ TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, proje
                       .populate({ path: 'organization_id', select: 'name' })
 
                       .populate({ path: 'detail_info.surname_id', select: 'first_name_native last_name_native middle_name_native', model: 'ReferenceIndividualCounterparties' })
-                      .populate({ path: 'detail_info.departure_station_id', select: 'name_ukr name_ukr', model: 'RefRailwayStationModel' })
+                      .populate({ path: 'detail_info.departure_station_id', select: 'name_ukr name_rus', model: 'RefRailwayStationModel' })
                       
                       .populate({ path: 'detail_info.arrival_station_id', select: 'name_ukr name_rus', model: 'RefRailwayStationModel' })
                       .populate({ path: 'detail_info.supplier_cost.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
