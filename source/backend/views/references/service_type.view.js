@@ -80,6 +80,23 @@ class ServiceTypeView extends BaseView{
 
         this.send_success_response(res, { count: service_type_count});
     }
+
+    async get_service_types_names(req, res){
+        let service_types = null;
+ 
+        let service_type_name = req.query.service_type_name;
+ 
+         try{
+             service_types = await Ref.ServiceTypeModel.get_service_types_names(service_type_name);
+ 
+             this.send_success_response(res, service_types);
+         }
+         catch(err){
+             console.log(err)
+             // Сделать вывод информации об ошибке, а в будующем логировать все ошибки
+             this.send_error_response();
+         }
+     }
 }
 
 export default new ServiceTypeView();

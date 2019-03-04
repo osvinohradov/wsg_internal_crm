@@ -14,6 +14,12 @@ router.route('/reference/service_types')
         References.ServiceTypeController.get_service_types(req, res);
     });
 
+router.route('/reference/service_types/names')
+    // Отримати всі існуючі рахунки
+    .get(async (req, res) => {
+        References.ServiceTypeController.get_service_types_names(req, res);
+    });
+
 router.route('/reference/service_type')
     // Створюэмо новий елемент в таблиці
     .post(async (req, res) => {
