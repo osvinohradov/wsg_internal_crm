@@ -8,7 +8,7 @@ import { AviaCompanyReferencesComponent } from "./components/aviaCompany/aviaCom
 import { AviaCompanyPopupReferencesComponent } from "./components/aviaCompanyPopup/aviaCompanyPopup.component";
 
 import { AirportComponent } from "./components/airport/airport.component";
-import { AirportPopupReferencesComponent } from "./components/airportPopup/airportPopup.component";
+import { AirportPopupReferencesComponent } from "./components/airport_popup/airport_popup.component";
 
 import { CityReferencesComponent } from "./components/city/city.component";
 import { CityPopupReferencesComponent } from "./components/cityPopup/cityPopup.component";
@@ -32,7 +32,7 @@ import { IndividualCounterpartiesReferencesComponent } from "./components/indivi
 import { IndividualCounterpartiesPopupReferencesComponent } from "./components/individualCounterpartiesPopup/individualCounterpartiesPopup.component";
 
 import { ServiceReferencesComponent } from "./components/service/service.component";
-import { ServicePopupReferencesComponent } from "./components/servicePopup/servicePopup.component";
+import { ServicePopupReferencesComponent } from "./components/service_popup/service_popup.component";
 
 import { SearchPopupReferencesComponent } from "./components/searchPopup/searchPopup.component";
 

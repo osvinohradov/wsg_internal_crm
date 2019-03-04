@@ -1,54 +1,35 @@
-<h2 class="ml-4 title_main_page_margin">
-    Види сервисів</h2>
+<h3 class="ml-4 title_main_page_margin">
+    Види сервисів
+</h3>
 
-<div class="ml-4 mr-4 pl-0 pr-0  clearfix">
-    <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
-        <div class="d-inline pl-0 mr-my-1">
-            <button (click)="create_service_type(service_type)" type="button" class="btn btn-default my_button_style">
-                <span class="material-icons">add</span>
-                <span class="my_button_label">Створити</span>
-            </button>
-        </div>
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Скопіювати">
-                <span class="material-icons">filter_none</span>
-            </button>
-        </div>
-
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Змінити">
-                <span class="material-icons">edit</span>
-            </button>
-        </div>
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Відмінити для вилучення/Зняти позначку">
-                <span class="material-icons">remove_from_queue</span>
-            </button>
-        </div>
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style">
-                <span class="material-icons">location_searching</span>
-                <span class="my_button_label">Знайти</span>
-            </button>
-        </div>
-        <div class="d-inline mr-my-1">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Відмінити пошук">
-                <span class="material-icons">location_disabled</span>
-            </button>
-        </div>
-        <!-- Button Row - End -->
+<div class="ml-4 mr-4 pl-0 pr-0 clearfix">
+    <div class="col-md-10 pl-0 pr-0 d-inline float-lg-left">
+        <!-- Створити -->
+        <button (click)="create_service_type()" mat-raised-button class="mr-2 form_button" matTooltip="Створити">
+            Створити
+            <span class="material-icons">add</span>
+        </button>
+        <!-- Знайти -->
+        <button mat-raised-button class="mr-2 form_button" matTooltip="Скопіювати">
+            Знайти
+            <span class="material-icons">location_searching</span>
+        </button>
+        <!-- Відмінити пошук -->
+        <button mat-raised-button class="form_button icon_button" matTooltip="Відмінити пошук">
+            <span class="material-icons">location_disabled</span>
+        </button>
     </div>
-    <!--MENU Buttons End-->
+    
     <!-- DropDown ALL Actions -->
     <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
-        <div id="referencesButton" class="d-lg-inline d-none float-right">
-            <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
-                <span class="material-icons">help_outline</span>
-            </button>
+        <button mat-raised-button class="form_button icon_button float-right" matTooltip="Довідка">
+            <span class="material-icons">help_outline</span>
+        </button>
 
-        </div>
         <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
-            <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+            <!-- Всі дії -->
+            <button mat-raised-button class="mr-2 form_button" [matMenuTriggerFor]="menu">
+                Всі дії
                 <span class="material-icons">keyboard_arrow_down</span>
             </button>
             <mat-menu #menu="matMenu">

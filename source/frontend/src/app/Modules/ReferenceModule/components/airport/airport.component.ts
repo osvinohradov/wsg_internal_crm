@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, PageEvent } from '@angular/material';
-// import { AviaPrintInvoicePopupComponent } from './../../../../Components/printInvoice/printInvoice.component';
-// import { AviaPrintActPopupComponent } from './../../../../Components/printAct/printAct.component';
-// import { AviaPrintScorePopupComponent } from './../../../../Components/printScore/printScore.component';
-// import { AviaPrintScoreWithStampPopupComponent } from './../../../../Components/printScoreWithStamp/printScoreWithStamp.component';
-import { AirportPopupReferencesComponent } from './../airportPopup/airportPopup.component';
+import { AirportPopupReferencesComponent } from './../airport_popup/airport_popup.component';
 
 import { AirportService } from '../../services';
 
@@ -16,7 +12,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'airport-ref',
   templateUrl: './airport.component.html',
-  styleUrls: ['./airport.component.css']
+  styleUrls: ['./airport.component.css', '../../../Common/styles.css']
 })
 export class AirportComponent implements OnInit {
 
@@ -37,49 +33,64 @@ export class AirportComponent implements OnInit {
   // Переменная для блока пагинации. Пересмотреть и возможно избавится.
   public pagination_arr = [];
 
-  constructor(public dialog: MatDialog, private AirportService: AirportService, public toastr: ToastrManager) { }
+  constructor(public dialog: MatDialog,
+              private AirportService: AirportService,
+              public toastr: ToastrManager) { }
 
   ngOnInit() {
+    this.get_airports_count();
     this.refresh_data();
   }
 
   get_airports_count(){
-    this.AirportService.get_airports_count().subscribe((data) => {
-      this.elements_count = data;
-      let count = Math.ceil(this.elements_count / this.limit);
-      this.pagination_arr = new Array(count)
-    });
-  }
-
-  
+    this.AirportService.get_airports_count()
+      .subscribe(
+        (response: any) => {
+          this.elements_count = response.data.count;
+          let count = Math.ceil(this.elements_count / this.limit);
+          this.pagination_arr = new Array(count)
+        }, 
+        (response: any) => {
+          console.log(response);
+        });
+  } 
 
   load_airports(skip, limit){
-    this.current_page = skip;
+    this.loader_displayed = true;
+    this.current_page = skip;    
     skip = skip > 0 ? skip * 10 : skip;
-    this.AirportService.get_airports(skip, limit).subscribe((data) => {
-      this.airports = data;
-    });
+    this.AirportService.get_airports(skip, limit)
+      .subscribe(
+        (response: any) => {
+          this.airports = response.data;
+          this.loader_displayed = false;
+        },
+        (response) => {
+          console.log(response);
+          this.toastr.errorToastr('Неможливо завантажити аеропорти!', 'Помилка!');
+          this.loader_displayed = false;
+        });
+  }
+
+  create_airport(){
+    let airport = new AirportModel();
+    this.open_dialog(airport).afterClosed()
+      .subscribe(
+        (dialog_result) => {
+          this.load_airports(this.skip, this.limit);
+      });
   }
 
   refresh_data(){
     this.loader_displayed = true;
-    this.AirportService.get_airports(this.skip, this.limit).subscribe((data) => {
-      this.airports = data;
+    this.AirportService.get_airports(this.skip, this.limit).subscribe((response: any) => {
+      this.airports = response.data;
       this.get_airports_count()
       this.loader_displayed = false;
     });
   }
 
-  create_airport(){
-    this.open_dialog(new AirportModel()).afterClosed()
-    .subscribe((dialog_result) => {
-      console.log(dialog_result)
-      if(!dialog_result) return;
-
-      this.airports.unshift(dialog_result)
-      console.log('Created arport: ', dialog_result)
-    });
-  }
+  
 
   retrieve_airport(airport_id, callback){
     console.log('retrieve airport')

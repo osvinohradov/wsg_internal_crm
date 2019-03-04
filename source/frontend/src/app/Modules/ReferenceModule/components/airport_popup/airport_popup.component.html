@@ -1,23 +1,23 @@
 <!-- Modal content-->
 
-<h3 style="margin:0;" class="title_main_page_margin">Аеропорти:</h3>
+<h3 class="mt-0 title_main_page_margin">Аеропорти:</h3>
 <hr class="mt-2 mb-2" />
 
 <!--Row MENU Buttons -->
 <div id="invoicePopup" class="clearfix">
   <div class="col-md-6 pl-0 pr-0 d-inline d-none">
 
-    <button mat-raised-button class="mr-1 form_button">Записати та закрити</button>
+    <button (click)="save_airport(airport)" mat-raised-button class="mr-1 form_button">Записати та закрити</button>
     
     <button mat-raised-button class="mr-1 form_button icon_button" matTooltip="Скопіювати">
       <span class="material-icons">filter_none</span>
     </button>
 
-    <button mat-raised-button class="mr-1 form_button icon_button" matTooltip="Скопіювати">
+    <button (click)="save+airport(airport)" mat-raised-button class="mr-1 form_button icon_button" matTooltip="Зберегти">
       <span class="material-icons">save</span>
     </button>
 
-    <button mat-raised-button class="mr-1 form_button icon_button" matTooltip="Скопіювати">
+    <button (click)="delete_airport()" [disabled]="!airport._id"  mat-raised-button class="mr-1 form_button icon_button" matTooltip="Видалити">
       <span class="material-icons">delete</span>
     </button>
 
@@ -168,10 +168,8 @@
   </form>
 </div>
 
-<!-- Popup Footer -->
 <div id="invoiceModalFooter">
   <div class="float-right d-inline">
-    <button (click)="close_dialog(airport)" mat-raised-button color="warn">Закрити</button>
+    <button (click)="close_dialog()" mat-raised-button color="warn">Закрити</button>
   </div>
 </div>
-<!-- Popup Footer - End -->

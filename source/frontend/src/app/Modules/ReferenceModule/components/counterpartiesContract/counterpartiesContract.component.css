@@ -670,5 +670,13 @@ option{
     padding-left: 0 !important;
 }
 
+.form_button{
+    background-color: rgba(192, 199, 214, 0.5);
+    border: none;
+    border-radius: 4px;
+}
 
-/* GROUP ORDER POPUP -- end */
+.icon_button{
+    padding: 0px;
+    min-width: 10px;
+}

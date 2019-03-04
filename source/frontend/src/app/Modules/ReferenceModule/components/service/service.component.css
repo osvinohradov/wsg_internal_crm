@@ -672,3 +672,14 @@ thead {
   .my-centered-dialog{
     height: auto;
 }
+
+.form_button{
+  background-color: rgba(192, 199, 214, 0.5);
+  border: none;
+  border-radius: 4px;
+}
+
+.icon_button{
+  padding: 0px;
+  min-width: 10px;
+}

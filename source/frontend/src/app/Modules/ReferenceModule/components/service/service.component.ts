@@ -1,10 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-// import { AviaPrintInvoicePopupComponent } from './../../../../Components/printInvoice/printInvoice.component';
-// import { AviaPrintActPopupComponent } from './../../../../Components/printAct/printAct.component';
-// import { AviaPrintScorePopupComponent } from './../../../../Components/printScore/printScore.component';
-// import { AviaPrintScoreWithStampPopupComponent } from './../../../../Components/printScoreWithStamp/printScoreWithStamp.component';
-import { ServicePopupReferencesComponent } from "./../servicePopup/servicePopup.component";
+
+import { ServicePopupReferencesComponent } from "./../service_popup/service_popup.component";
 
 import { RefServiceTypeService } from '../../services';
 
@@ -113,9 +110,9 @@ export class ServiceReferencesComponent implements OnInit {
 
   open_dialog(data): MatDialogRef<ServicePopupReferencesComponent> {
     return this.dialog.open(ServicePopupReferencesComponent, {
-      panelClass: "my-centered-dialog",
-      width: "80%",
-      height: "70vh",
+      panelClass: 'my-centered-dialog',
+      width: '50%',
+      height: 'auto',
       data: data
     });
   }

@@ -1,4 +1,4 @@
-import { ReferenceAirportModel } from './airports';
+import { AirportModel } from './airports';
 import { ReferenceAviaCompanyModel } from './avia_company';
 import { ReferenceServiceTypeModel } from './service_type';
 import { ReferenceCounterpartyModel,
@@ -19,7 +19,7 @@ import { RefRailwayStationModel } from './railway_stations';
 
 
 export {
-    ReferenceAirportModel,
+    AirportModel,
     ReferenceCheckingAccountModel,
     BankModel,
     ReferenceAviaCompanyModel,

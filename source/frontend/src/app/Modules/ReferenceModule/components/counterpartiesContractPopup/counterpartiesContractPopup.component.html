@@ -1,35 +1,42 @@
 <!-- Modal content-->
 
-<h2 class="ml-4 title_main_page_margin">Договори контрагентів (створення) *
+<h2 class="mt-0 title_main_page_margin">
+  Договори контрагентів
 </h2>
 
-<!--Row MENU Buttons -->
-<div id="counterpartiesContractPopup" class="ml-4 mr-4 pl-0 pr-0 clearfix">
-  <div class="col-md-8 pl-0 pr-0 d-lg-inline d-none float-lg-left">
-    <div class="d-inline pl-0 mr-my-1">
-      <button type="button" class="btn btn-default my_button_style bold">
-        <span class="my_button_label font-weight-bold">Записати та закрити</span>
-      </button>
-    </div>
-    <div class="d-inline mr-my-1">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Записати">
-        <span class="material-icons">save</span>
-      </button>
-    </div>
+
+<div id="counterpartiesContractPopup" class="clearfix">
+  <div class="col-md-6 pl-0 pr-0 d-inline float-lg-left">
+    <!-- Записати та закрити -->
+    <button mat-raised-button class="mr-2 form_button">Записати та закрити</button>
+    <!-- Скопіювати -->
+    <button mat-raised-button class="mr-2 form_button icon_button" matTooltip="Скопіювати">
+      <span class="material-icons">filter_none</span>
+    </button>
+    <!-- Зберегти -->
+    <button mat-raised-button class="mr-2 form_button icon_button" matTooltip="Зберегти">
+      <span class="material-icons">save</span>
+    </button>
+    <!-- Видалити -->
+    <button mat-raised-button class="mr-2 form_button icon_button" matTooltip="Видалити">
+      <span class="material-icons">delete</span>
+    </button>
   </div>
   <!--Container MENU Buttons End-->
 
   <!-- DropDown ALL Actions -->
   <div class="col-md-4 pl-0 pr-0 float-lg-right float-left">
-    <div id="referencesButton" class="d-xl-inline d-none float-right">
-      <button type="button" class="btn btn-default my_button_style my_square_button" matTooltip="Довідка">
-        <span class="material-icons">help_outline</span>
-      </button>
-    </div>
+    <button mat-raised-button class="mr-2 form_button icon_button float-right" matTooltip="Довідка">
+      <span class="material-icons">help_outline</span>
+    </button>
+
     <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
-      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="menu">Всі дії
+      <!-- Всі дії -->
+      <button mat-raised-button class="mr-2 form_button"[matMenuTriggerFor]="menu">
+        Всі дії
         <span class="material-icons">keyboard_arrow_down</span>
       </button>
+
       <mat-menu #menu="matMenu">
         <button mat-menu-item>
           <div class="d-inline mr-3 my_menu_icon">
@@ -84,90 +91,84 @@
   </div>
   <!-- DropDown ALL Actions end-->
 </div>
-<!--Row MENU Buttons End-->
 
 <!-- Airport Popup Form Container -->
-<div class="ml-4 mr-4 mt-4 mb-4">
+<div class="mt-3 mb-1">
   <form class="form-horizontal" role="form">
+    
     <div class="row mr-0 ml-0">
-      <div class="form-group col-12 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Організація:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-12 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Контрагент:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-12 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Група:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-6 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Назва:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-6 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Код:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-12 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Назва для друку:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-12 col-lg-4 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Вид договору:" />
-          <button mat-button matSuffix mat-icon-button aria-label="Settings">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="form-group col-12 col-lg-4 p-2 my_input_style">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Номер:" />
-        </mat-form-field>
-      </div>
-      <div class="form-group col-12 col-lg-4 p-2 my_input_style">
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker1" placeholder="Від:">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-      </div>
+      <!-- Організація -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Організація:" />
+        <button mat-button matSuffix mat-icon-button aria-label="settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- Контрагент -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Контрагент:" />
+        <button mat-button matSuffix mat-icon-button aria-label="settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- Група -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Група:" />
+        <button mat-button matSuffix mat-icon-button aria-label="settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
     </div>
+        
+    <div class="row mr-0 ml-0">
+      <!-- Назва -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Назва:" />
+        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- Код -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Код:" />
+        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- Назва для друку -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Назва для друку:" />
+        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+        
+    <div class="row mr-0 ml-0">
+      <!-- Вид договору -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Вид договору:" />
+        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- Номер -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput type="text" placeholder="Номер:" />
+      </mat-form-field>
+      <!-- Від -->
+      <mat-form-field class="col-4 pr-1 pl-1 custom-form-field">
+        <input matInput [matDatepicker]="picker1" placeholder="Від:">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </div>
+
   </form>
 </div>
 
-<!-- Popup Footer -->
 <div id="counterpartiesContractPopupFooter">
-  <div class="mr-4 mb-4 float-right">
-    <button type="button" class="btn btn-default my_button_style" (click)="closePopup()">
-      <span class="pr-3 mb-4 my_button_label">Закрити</span>
-    </button>
+  <div class="float-right d-inline">
+    <button (click)="close_dialog()" mat-raised-button color="warn">Закрити</button>
   </div>
 </div>
-<!-- Popup Footer - End -->
