@@ -34,7 +34,9 @@ export class AirportPopupReferencesComponent implements OnInit {
     this.AirportService.create_airport(airport)
       .subscribe(
         (response: HttpResponse) => {
+          console.log('response: ', response)
           this.airport = response.data as AirportModel;
+          console.log(this.airport)
           this.toastr.successToastr('Аеропорт успішно збережено.', 'Успiх!');
         },
         (response: HttpResponse) => {

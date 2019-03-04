@@ -3,7 +3,7 @@ import { Ref } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
-class RefAirportView extends BaseView{
+class AirportView extends BaseView{
     constructor(){
         super();
     }
@@ -15,7 +15,7 @@ class RefAirportView extends BaseView{
         try{
             airports = await Ref.AirportModel.find({}).skip(skip).limit(10);
 
-            this.send_success_response(res, { data: airports }, 200);
+            this.send_success_response(res, airports);
         }
         catch(err){
             console.log(err)
@@ -29,7 +29,7 @@ class RefAirportView extends BaseView{
         try{
             let airport = await Ref.AirportModel.findOne({ _id: airport_id});
 
-            this.send_success_response(res, airport, 200);
+            this.send_success_response(res, airport);
         }
         catch(err){
             console.log(err)
@@ -52,7 +52,7 @@ class RefAirportView extends BaseView{
 
         airport = await airport.save();
 
-        this.send_success_response(res, airport, 200);
+        this.send_success_response(res, airport);
     }
 
     async update_aiprport(req, res){
@@ -62,6 +62,7 @@ class RefAirportView extends BaseView{
         // TODO: Validate body
         airport = await Ref.AirportModel.findOneAndUpdate({ _id: airport_id }, airport, { new: true });
 
+        console.log(airport)
         this.send_success_response(res, airport);
     }
 
@@ -78,8 +79,8 @@ class RefAirportView extends BaseView{
 
         airport_count = await Ref.AirportModel.countDocuments({});
 
-        this.send_success_response(res, { data: { count: airport_count } });
+        this.send_success_response(res, { count: airport_count});
     }
 }
 
-export default new RefAirportView();
+export default new AirportView();

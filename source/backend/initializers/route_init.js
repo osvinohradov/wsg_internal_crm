@@ -3,7 +3,7 @@ import { train_ctrl,
          user_ctrl,
          organization_ctrl,
 
-         ReferencesRoutes,
+         References,
          ref } from '../controllers';
 
 /**
@@ -34,5 +34,11 @@ export function register_routes(app, base_route){
 
 
 
-    app.use(base_route, ReferencesRoutes.Airports);
+    app.use(base_route, References.AirportsRoute);
+    app.use(base_route, References.AviaCompanyRoute);
+    app.use(base_route, References.ServiceTypeRoute);
+    app.use(base_route, References.CounterpartyContractRoute);
+    app.use(base_route, References.CounterpartyRoute);
+    app.use(base_route, References.CounterpartyGroupRoute);
+    app.use(base_route, References.CuratorRoute);
 }

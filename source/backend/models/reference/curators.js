@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Куратори
-const ReferenceCuratorSchema = new Schema({
+const CuratorSchema = new Schema({
     name:       { type: String, default: '' },  // Найменування
-    client_id:  { type: Schema.Types.ObjectId, ref: 'ReferenceCounterpartyModel' },     // Клієнт (посилання на контагентів)
+    client_id:  { type: Schema.Types.ObjectId, ref: 'CounterpartyModel' },     // Клієнт (посилання на контагентів)
 
     updated_at: { type: Date, default: Date.now() },
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_curators' });
 
 
-ReferenceCuratorSchema.statics.get_curators_names = async function(curator_name, options={}){
+CuratorSchema.statics.get_curators_names = async function(curator_name, options={}){
     
     let query = curator_name ? 
                     { name: new RegExp(`${curator_name}`, 'i') } :
@@ -22,8 +22,8 @@ ReferenceCuratorSchema.statics.get_curators_names = async function(curator_name,
 }
 
 
-const ReferenceCuratorModel = mongoose.model('ReferenceCurator', ReferenceCuratorSchema);
+const CuratorModel = mongoose.model('CuratorModel', CuratorSchema);
 
 export {
-    ReferenceCuratorModel
+    CuratorModel
 }

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Авіа компанії
-const ReferenceAviaCompanySchema = new Schema({
+const AviaCompanySchema = new Schema({
     name:       { type: String, default: '', required: true },
     code:       { type: String, default: '', required: true },
     iata:       { type: String, default: '', required: true }, // IATA
@@ -11,8 +11,8 @@ const ReferenceAviaCompanySchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_avia_companies' });
 
-const ReferenceAviaCompanyModel = mongoose.model('ReferenceAviaCompany', ReferenceAviaCompanySchema);
+const AviaCompanyModel = mongoose.model('AviaCompany', AviaCompanySchema);
 
 export {
-    ReferenceAviaCompanyModel
+    AviaCompanyModel
 }

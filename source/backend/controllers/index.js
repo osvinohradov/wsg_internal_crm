@@ -14,7 +14,7 @@ import { router as ref_individual_counterparty_ctrl } from './ref_individual_cou
 import { router as ref_service_type_ctrl } from './ref_service_type_ctrl';
 import { router as ref_railway_station_ctrl } from './ref_railway_station_ctrl';
 
-import * as ReferencesRoutes from './references';
+import * as References from './references';
 
 const ref = {
     ref_counterparty_ctrl,
@@ -27,7 +27,7 @@ const ref = {
 }
 
 export {
-    ReferencesRoutes,
+    References,
     train_ctrl,
     group_invoice_ctrl,
 

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Види сервісів
-const ReferenceServiceTypeSchema = new Schema({
+const ServiceTypeSchema = new Schema({
     name:                       { type: String, required: true },           // Найменування
     provider_id:                {   
                                     type: Schema.Types.ObjectId,
@@ -41,7 +41,7 @@ const ReferenceServiceTypeSchema = new Schema({
 }, {collection: 'ref_service_types' });
 
 
-ReferenceServiceTypeSchema.statics.get_service_types_names = async function(service_type_name, options={}){
+ServiceTypeSchema.statics.get_service_types_names = async function(service_type_name, options={}){
     
     let query = service_type_name ? 
                     { name: new RegExp(`${service_type_name}`, 'i') } :
@@ -52,8 +52,8 @@ ReferenceServiceTypeSchema.statics.get_service_types_names = async function(serv
 }
 
 
-const ReferenceServiceTypeModel = mongoose.model('ReferenceServiceType', ReferenceServiceTypeSchema);
+const ServiceTypeModel = mongoose.model('ServiceType', ServiceTypeSchema);
 
 export {
-    ReferenceServiceTypeModel
+    ServiceTypeModel
 }

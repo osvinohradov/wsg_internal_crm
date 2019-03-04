@@ -7,6 +7,7 @@ import { AirportService } from '../../services';
 import { AirportModel } from '../../models';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { map } from 'rxjs/operators';
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 
 @Component({
@@ -45,12 +46,12 @@ export class AirportComponent implements OnInit {
   get_airports_count(){
     this.AirportService.get_airports_count()
       .subscribe(
-        (response: any) => {
+        (response: HttpResponse) => {
           this.elements_count = response.data.count;
           let count = Math.ceil(this.elements_count / this.limit);
           this.pagination_arr = new Array(count)
         }, 
-        (response: any) => {
+        (response: HttpResponse) => {
           console.log(response);
         });
   } 
@@ -61,11 +62,11 @@ export class AirportComponent implements OnInit {
     skip = skip > 0 ? skip * 10 : skip;
     this.AirportService.get_airports(skip, limit)
       .subscribe(
-        (response: any) => {
+        (response: HttpResponse) => {
           this.airports = response.data;
           this.loader_displayed = false;
         },
-        (response) => {
+        (response: HttpResponse) => {
           console.log(response);
           this.toastr.errorToastr('Неможливо завантажити аеропорти!', 'Помилка!');
           this.loader_displayed = false;
@@ -81,6 +82,22 @@ export class AirportComponent implements OnInit {
       });
   }
 
+  edit_airport(airport_id){
+    if(!airport_id){
+      this.toastr.errorToastr('Не передано ідентифікатор аеропорту!', 'Помилка!')
+      return;
+    }
+
+    this.retrieve_airport(airport_id, (airport: AirportModel) => {
+
+      this.open_dialog(airport).afterClosed()
+        .subscribe((dialog_result) => {
+          console.log('Edit airport dialog result: ', dialog_result);
+          this.load_airports(this.skip, this.limit);
+        });
+    });
+  }
+
   refresh_data(){
     this.loader_displayed = true;
     this.AirportService.get_airports(this.skip, this.limit).subscribe((response: any) => {
@@ -94,26 +111,14 @@ export class AirportComponent implements OnInit {
 
   retrieve_airport(airport_id, callback){
     console.log('retrieve airport')
-    this.AirportService.get_airport_by_id(airport_id).subscribe((result) => {
-      callback(result);
+    this.AirportService.get_airport_by_id(airport_id).subscribe((response: HttpResponse) => {
+      // TODO: Add validation errors
+      let airport = response.data;
+      callback(airport);
     });
   }
 
-  edit_airport(airport_id){
-    if(!airport_id){
-      this.toastr.errorToastr('Не передано ідентифікатор аеропорту!', 'Помилка!')
-      return;
-    }
-    console.log('Edit airport fn called')
-
-    this.retrieve_airport(airport_id, (airport: AirportModel) => {
-
-      this.open_dialog(airport).afterClosed().subscribe((dialog_result) => {
-        console.log('Edit airport dialog result: ', dialog_result)
-      });
-    });
-  }
-
+  
   handle_dialog_result(response){
     if(response.action == 'remove'){
       this.airports.forEach((item, index, array) => {

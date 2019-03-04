@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Контрагенти
-const ReferenceCounterpartySchema = new Schema({
+const CounterpartySchema = new Schema({
     name:               { type: String, default: '' },        // Найменування
     general:            { type: {
                                 // Фіз./Юр. особа (enumerate [Фізична особа, Юридична особа])
@@ -12,13 +12,13 @@ const ReferenceCounterpartySchema = new Schema({
                                 // Повне найменування
                                 full_name :{ type: String },
                                 // Група (посилання на групу контрагентів)
-                                group_id :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterpartiesGroup' },
+                                group_id :{ type: Schema.Types.ObjectId, ref: 'CounterpartyGroupModel' },
                                 // Головний контрагент (Посилання на групу контрагентів)
-                                main_counterparty :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty' },
+                                main_counterparty :{ type: Schema.Types.ObjectId, ref: 'CounterpartyModel' },
                                 // Основний договір (посилання Договори контрагентів)
-                                main_contract :{ type: Schema.Types.ObjectId, ref: 'ReferenceCounterpartyContracts' },
+                                main_contract :{ type: Schema.Types.ObjectId, ref: 'CounterpartyContractModel' },
                                 // Основний бануівській рахунок (посилання на Банківські рахунки)
-                                bank_account :{ type: Schema.Types.ObjectId, ref: 'ReferenceCheckingAccount' }
+                                bank_account :{ type: Schema.Types.ObjectId, ref: 'CheckingAccountModel' }
                             } 
                         }, // Загальні
     other:              { type: {
@@ -43,10 +43,10 @@ const ReferenceCounterpartySchema = new Schema({
                                 representation  :{ type: String },
                             }]
                         },      // Контакти
-    individuals_id :    { type: [Schema.Types.ObjectId], ref: 'ReferenceIndividualCounterparties' },    // Фізичні особи (посилання на Фізичні особи) Потрібні поля: (Фізична особа, Коментар)
+    individuals_id :    { type: [Schema.Types.ObjectId], ref: 'IndividualCounterpartyModel' },    // Фізичні особи (посилання на Фізичні особи) Потрібні поля: (Фізична особа, Коментар)
     services:           { type: [{
                                 // Послуга (посилання на Види сервісів)
-                                service_id         :{ type: Schema.Types.ObjectId, ref: 'ReferenceServiceType' },
+                                service_id         :{ type: Schema.Types.ObjectId, ref: 'ServiceTypeModel' },
                                 // Агентська винагорода
                                 agent_awark        :{ type: Number },
                                 // Процент банку
@@ -60,36 +60,36 @@ const ReferenceCounterpartySchema = new Schema({
                         },
     comment:            { type: String, default: '' },  // Коментар
 
-    checking_accounts_ids:      { type: [Schema.Types.ObjectId], ref: 'ReferenceCheckingAccount', default: [] },
-    counterparty_contracts_ids: { type: [Schema.Types.ObjectId], ref: 'ReferenceCounterpartyContracts', default: [] },
+    checking_accounts_ids:      { type: [Schema.Types.ObjectId], ref: 'CheckingAccountModel', default: [] },
+    counterparty_contracts_ids: { type: [Schema.Types.ObjectId], ref: 'CounterpartyContractsModel', default: [] },
 
     updated_at:         { type: Date, default: Date.now() },
     created_at:         { type: Date, default: Date.now() }
 }, { collection: 'ref_counterparties' });
 
 
-ReferenceCounterpartySchema.statics.get_counterparties_names = async function(counterparty_name, options={}){
+CounterpartySchema.statics.get_counterparties_names = async function(counterparty_name, options={}){
     
     let query = counterparty_name ? 
                     { name: new RegExp(`${counterparty_name}`, 'i') } :
                     {};
 console.log(query)
-    let counterparties = ReferenceCounterpartyModel.find(query, '_id name', options);
+    let counterparties = CounterpartyModel.find(query, '_id name', options);
     return counterparties;
 }
 
 // Групи контрагентів
-const ReferenceCounterpartiesGroupSchema = new Schema({
+const CounterpartyGroupSchema = new Schema({
     name:               { type: String },   // Найменування групи
 
     updated_at:         { type: Date, default: Date.now() },
     created_at:         { type: Date, default: Date.now() }
 }, { collection: 'ref_counterparties_groups' });
 
-const ReferenceCounterpartyModel = mongoose.model('ReferenceCounterparty', ReferenceCounterpartySchema);
-const ReferenceCounterpartiesGroupModel = mongoose.model('ReferenceCounterpartiesGroup', ReferenceCounterpartiesGroupSchema);
+const CounterpartyModel = mongoose.model('CounterpartyModel', CounterpartySchema);
+const CounterpartyGroupModel = mongoose.model('CounterpartiesGroupModel', CounterpartyGroupSchema);
 
 export {
-    ReferenceCounterpartyModel,
-    ReferenceCounterpartiesGroupModel
+    CounterpartyModel,
+    CounterpartyGroupModel
 }
