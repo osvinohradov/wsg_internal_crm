@@ -7,8 +7,7 @@
     <title>Видаткова накладна №<%= %> від <%= %></title>
     <style>
             body,
-            ul,
-            p {
+            ul{
               margin: 0px;
               padding: 0px;
             }
@@ -40,12 +39,12 @@
     <table>
         <tr>
             <td style="width: 40%; text-align: justify;">
-               
+               <img src="print_logo.png" />
             </td>
-            <td style="width: 60%; text-align: justify;">
-                <b>Товариство з обмеженою відповідальністю "ВОРЛДСЕРВІС ГРУП"</b>
-                Р/р 26001402367063, у банку АТ "ОТП БАНК" в м.Київ, МФО 300528,<br/>
-                юр. адреса: Україна, 01133, м.Київ, вул. Щорса, буд. 32-А, н/п № 1-А, тел.: 0445202727,<br/>
+            <td style="width: 60%;">
+                <b>Товариство з обмеженою відповідальністю <br/> "ВОРЛДСЕРВІС ГРУП"</b><br />
+                Р/р 26001402367063, у банку АТ "ОТП БАНК" в м.Київ, <br /> МФО 300528,<br/>
+                юр. адреса: Україна, 01133, м.Київ, вул. Щорса, буд. <br /> 32-А, н/п № 1-А, тел.: 0445202727,<br />
                 код за ЄДРПОУ 32158383, ІПН 321583826558
             </td>
         </tr>
@@ -57,9 +56,9 @@
 
     <p style="text-align: center;">
         <b >
-            Рахунок № 78943846384383
+            Рахунок №<%= number %>
         </b>
-        від 16/02/2019
+        від <%= creation_date%>
     </p>
 
     <table>
@@ -94,10 +93,10 @@
                 <th>Всього</th>
             </tr>
         </thead>
-
+        <% let i = 0; %>
         <!-- Залізничний квиток -->
         <tr>
-            <td style="text-align: center">1.</td>
+            <td style="text-align: center"><%= ++i%>.</td>
             <td style="text-align: justify; width: 55%;">
                 Залізничний квиток (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>) тип та номер вагону (№<%= detail_info.carriage_number %>),
                 місце (№<%= detail_info.place %>), потяг (№<%= detail_info.train_number %>) за маршрутом (<%= detail_info.departure_station_id.name_ukr %> : <%= detail_info.arrival_station_id.name_ukr %>), дата та час відправлення (<%= detail_info.departure_dt %>),
@@ -105,49 +104,57 @@
             </td>
             <td style="text-align: center">1</td>
             <td style="text-align: center">шт</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <!-- Послуги з оформлення електронного ваучера -->
-        <tr style="border: 1px solid black;">
-            <td style="text-align: center; width: 5%;">2.</td>
-            <td style="text-align: justify; width: 55%;">
-                Послуги з оформлення електронного ваучера (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>)
-            </td>
-            <td style="text-align: center">1</td>
-            <td style="text-align: center">грн</td>
-            <td></td>
-            <td></td>
+            <td style="text-align: center"><%= detail_info.supplier_cost.sum %></td>
+            <td style="text-align: center"><%= detail_info.supplier_cost.mpe %></td>
+            <td style="text-align: center"><%= detail_info.supplier_cost.sum %></td>
         </tr>
 
+        <!-- Послуги з оформлення електронного ваучера -->
+        <% if(detail_info.other_services.sum != 0) {%>
+            <tr style="border: 1px solid black;">
+                <td style="text-align: center; width: 5%;"><%= ++i%>.</td>
+                <td style="text-align: justify; width: 55%;">
+                    Послуги з оформлення електронного ваучера (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>)
+                </td>
+                <td style="text-align: center">1</td>
+                <td style="text-align: center">грн</td>
+                <td style="text-align: center"><%= detail_info.other_services.sum - detail_info.other_services.mpe %></td>
+                <td style="text-align: center"><%= detail_info.other_services.mpe %></td>
+                <td style="text-align: center"><%= detail_info.other_services.sum %></td>
+            </tr>
+        <%} %>
+
          <!-- Послуги агенції -->
-         <tr style="border: 1px solid black;">
-            <td style="text-align: center; width: 5%;">2.</td>
-            <td style="text-align: justify; width: 55%;">
-                Послуги з оформлення електронного ваучера (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>)
-            </td>
-            <td style="text-align: center">1</td>
-            <td style="text-align: center">грн</td>
-            <td></td>
-            <td></td>
-        </tr>
+        <% if(detail_info.agency_services.sum != 0) {%>
+            <tr style="border: 1px solid black;">
+                <td style="text-align: center; width: 5%;"><%= ++i%>.</td>
+                <td style="text-align: justify; width: 55%;">
+                        Послуги агенції за оформлення квитка (№<%= detail_info.ticket_number %>) для (<%= detail_info.surname_id %>)
+                </td>
+                <td style="text-align: center">1</td>
+                <td style="text-align: center">грн</td>
+                <td style="text-align: center"><%= detail_info.agency_services.sum - detail_info.agency_services.mpe %></td>
+                <td style="text-align: center"><%= detail_info.agency_services.mpe %></td>
+                <td style="text-align: center"><%= detail_info.agency_services.sum %></td>
+            </tr>
+        <%} %>
         <!-- Підсумок -->
         <tfoot>
             <tr style="font-weight: 700; text-align: right; border: 1px solid white;">
-            <td colspan="5">Всього:</td>
-            <td><%= detail_info.total_amount.sum %></td>
+                <td colspan="6">Всього:</td>
+                <td><%= detail_info.total_amount.sum %></td>
             </tr>
             <tr style="font-weight: 700; text-align: right; border: 1px solid white;">
-            <td colspan="5">У тому числі ПДВ:</td>
-            <td><%= detail_info.total_amount.mpe %></td>
+                <td colspan="6">У тому числі ПДВ:</td>
+                <td><%= detail_info.total_amount.mpe %></td>
             </tr>
         </tfoot>
     </table>
     <br/>
     <p>
-        Всього найменувань =2, на суму =597,16 грн. В тому числі ПДВ =1,74 грн.<br/>
-        П'ятсот дев'яносто сім гривень 16 копійок<br/>
-        У т.ч. ПДВ Одна гривня 74 копійки
+        Всього найменувань = <%= i%>, на суму = <%= detail_info.total_amount.sum %> грн. В тому числі ПДВ = <%= detail_info.total_amount.mpe %> грн.<br/>
+        <%= written_sum.total_amount_full %> грн. <%=written_sum.total_amount_coins %> коп. <br />
+        У т.ч. ПДВ <%=written_sum.total_amount_full_mpe %> грн. <%=written_sum.total_amount_mpe_coins %> коп.
     </p>
     <br/>
     <!-- Таблиця для підпису -->
@@ -161,6 +168,7 @@
                 </span>
             </td>
             <td>_____________________________________</td>
+            <span></span>
         </tr>
     </table>
 </body>

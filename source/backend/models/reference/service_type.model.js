@@ -6,19 +6,19 @@ const ServiceTypeSchema = new Schema({
     name:                       { type: String, required: true },           // Найменування
     provider_id:                {   
                                     type: Schema.Types.ObjectId,
-                                    ref: 'ReferenceCounterparty',
+                                    ref: 'CounterpartyModel',
                                     default: null
                                 },                                          // Постачальник (посилання на Контрагентів)
    
     additional_provider_id:     { 
                                     type: Schema.Types.ObjectId,
-                                    ref: 'ReferenceCounterparty',
+                                    ref: 'CounterpartyModel',
                                     default: null
                                 },                                          // Додатковий постачальник (посилання на Контрагентів)
    
     nomenclature_catalog_id:    {
                                     type: Schema.Types.ObjectId,
-                                    ref: 'ReferenceNomenclatureGroup',
+                                    ref: 'NomenclatureGroupModel',
                                     default: null
                                 },                                          // Каталог номенклатури (посилання на Номенклатура)
     ticket_short_name:          { type: String, default: '' },              // Коротке найменування квитка
@@ -26,7 +26,7 @@ const ServiceTypeSchema = new Schema({
    
     nomenclature_as_service_id: { 
                                     type: Schema.Types.ObjectId, 
-                                    ref: 'ReferenceNomenclature',
+                                    ref: 'NomenclatureModel',
                                     default: null
                                 },                                          // Підлегла номенклатура (як послуга)
     
@@ -47,12 +47,12 @@ ServiceTypeSchema.statics.get_service_types_names = async function(service_type_
                     { name: new RegExp(`${service_type_name}`, 'i') } :
                     {};
 
-    let service_types = await ReferenceServiceTypeModel.find(query, '_id name', options);
+    let service_types = await ServiceTypeModel.find(query, '_id name', options);
     return service_types;
 }
 
 
-const ServiceTypeModel = mongoose.model('ServiceType', ServiceTypeSchema);
+const ServiceTypeModel = mongoose.model('ServiceTypeModel', ServiceTypeSchema);
 
 export {
     ServiceTypeModel

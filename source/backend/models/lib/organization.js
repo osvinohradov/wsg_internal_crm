@@ -21,7 +21,7 @@ OrganizationSchema.statics.get_organizations_names = async function(organization
 }
 
 
-const OrganizationModel = mongoose.model('Organization', OrganizationSchema);
+const OrganizationModel = mongoose.model('OrganizationModel', OrganizationSchema);
 
 export {
     OrganizationModel

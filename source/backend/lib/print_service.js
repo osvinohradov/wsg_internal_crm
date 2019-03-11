@@ -1,5 +1,6 @@
 // Built-in library
 import fs from 'fs';
+import path from 'path';
 // Installed library
 import ejs from 'ejs';
 import pdf from 'html-pdf';
@@ -47,6 +48,8 @@ export class PDFServiceBase{
      * @param {String} form 
      */
     async _generate_pdf_document(form, options){
+        
+        let assets_dir = `${process.cwd()}${path.sep}assets`
         let opt = {
             "width": "210mm",
             "height": "297mm",
@@ -59,6 +62,7 @@ export class PDFServiceBase{
             "footer": {
                 "height": "10mm",
             },
+            "base": assets_dir
         }
         let doc_buf = await this._create_pdf_async(form, opt);
         

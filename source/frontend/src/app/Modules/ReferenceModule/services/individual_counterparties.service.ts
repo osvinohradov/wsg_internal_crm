@@ -10,7 +10,7 @@ export class RefIndividualCounterpartyService {
   constructor(private http: HttpClient) {}
 
   get_individual_counterparties_names(individual_counterparty_name=''): Observable<RefIndividualCounterpartyNameModel[]> {
-    const url = `${this.baseUrl}/ref/individual_counterparties/names`;
+    const url = `${this.baseUrl}/reference/individual_counterparties/names`;
     
     return this.http.get<RefIndividualCounterpartyNameModel[]>(url, { params: {
       individual_counterparty_name: individual_counterparty_name

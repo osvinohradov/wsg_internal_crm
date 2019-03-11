@@ -7,6 +7,7 @@ import { TrainInvoiceInfo, TrainInvoiceDetail } from "../../models";
 import { TrainInvoiceDialogComponent } from "../invoice_popup/invoice_popup.component";
 import { GroupInvoiceNameModel } from "../../../GroupInvoice/models";
 import { CounterpartyNameModel, RefRailwayStationNameModel, RefUnitClassifierNameModel, RefCuratorNameModel, RefCurrencyExchangeNameModel, ServiceTypeNameModel, RefCheckingAccountNameModel, RefUserNameModel, RefOrganizationNameModel, RefIndividualCounterpartyNameModel } from "../../../ReferenceModule/models";
+import { HttpResponse } from "../../../Common/models/HttpResponseModel";
 
 
 @Component({
@@ -36,8 +37,8 @@ export class TrainInvoiceComponent implements OnInit {
   load_invoices_data(){
     this.is_loader_displayed = true;
 
-    this.TrainService.get_train_invoices(0, 0).subscribe((data: TrainInvoiceInfo[]) => {
-      this.train_invoices = data;
+    this.TrainService.get_train_invoices(0, 0).subscribe((response: HttpResponse) => {
+      this.train_invoices = response.data;
       console.log(typeof this.train_invoices[0])
       console.log("Fetch train invoices: ", this.train_invoices[0]);
       this.is_loader_displayed = false;
@@ -50,11 +51,14 @@ export class TrainInvoiceComponent implements OnInit {
 
   edit_invoice(invoice_id) {
     this.is_loader_displayed = true;
-    this.TrainService.get_train_invoice_by_id(invoice_id).subscribe((data: TrainInvoiceDetail) => {
-      if(!data){
+    this.TrainService.get_train_invoice_by_id(invoice_id).subscribe((response: HttpResponse) => {
+      if(!response || response.fail){
         // connect toaster library and show notification
         console.log('Invoice not found.');
+        alert('Data not found');
+        return;
       }
+      let data = response.data;
 
       // TODO: Refactoring. Change method of getting null properties
       data.client_id = data.client_id ? data.client_id : new CounterpartyNameModel();

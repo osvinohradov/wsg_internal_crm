@@ -44,6 +44,6 @@ GroupInvoiceSchema.statics.get_group_invoices_names = async function(group_invoi
     return invoices;
 }
 
-const GroupInvoiceModel = mongoose.model('GroupInvoice', GroupInvoiceSchema);
+const GroupInvoiceModel = mongoose.model('GroupInvoiceModel', GroupInvoiceSchema);
 
 export default GroupInvoiceModel;

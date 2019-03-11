@@ -10,7 +10,7 @@ export class RefNomenclatureService {
 
 
   get_ref_unit_clasifiers_names() {
-    return this.http.get<number>(this.baseUrl + `/ref/unit_classifiers/names`).toPromise();
+    return this.http.get<number>(this.baseUrl + `/reference/unit_classifiers/names`).toPromise();
   }
 
 // get_nomenclature_count() {

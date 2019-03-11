@@ -26,6 +26,6 @@ UserSchema.statics.get_users_names = async function(user_name, options={}){
 }
 
 
-const UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('UserModel', UserSchema);
 
 export default UserModel;

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Аеропорти
-const RefRailwayStationSchema = new Schema({
+const RailwayStationSchema = new Schema({
     station_code:   { type: String, default: '' },
     name_rus:       { type: String, default: '' },      // Найменування на російській
     name_eng:       { type: String, default: '' },      // Найменування на англійській
@@ -22,7 +22,7 @@ const RefRailwayStationSchema = new Schema({
 }, { collection: 'ref_railways_stations' });
 
 
-RefRailwayStationSchema.statics.get_railway_stations_names = function(railway_station_name, options={}){
+RailwayStationSchema.statics.get_railway_stations_names = function(railway_station_name, options={}){
 
     let regexp = railway_station_name ? new RegExp(`.*${railway_station_name}.*`, 'i') : ''
     
@@ -31,14 +31,14 @@ RefRailwayStationSchema.statics.get_railway_stations_names = function(railway_st
         {};
     console.log('Find name:', query)
 
-    let railway_stations = RefRailwayStationModel.find(query, '_id name_ukr name_rus name_eng', options);
+    let railway_stations = RailwayStationModel.find(query, '_id name_ukr name_rus name_eng', options);
     return railway_stations;
 }
 
 
 
-const RefRailwayStationModel = mongoose.model('RefRailwayStationModel', RefRailwayStationSchema);
+const RailwayStationModel = mongoose.model('RailwayStationModel', RailwayStationSchema);
 
 export {
-    RefRailwayStationModel
+    RailwayStationModel
 }

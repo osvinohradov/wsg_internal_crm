@@ -24,7 +24,7 @@ class TrainView extends BaseView{
         try{
             invoices_info = await TrainInvoiceModel.get_train_invoices_info(params);
 
-            this.send_success_response(res, 200, invoices_info);
+            this.send_success_response(res, invoices_info);
         }
         catch(err){
             console.log(err)
@@ -37,15 +37,15 @@ class TrainView extends BaseView{
         const id = req.params.id;
         let invoice = null;
         if(!id){
-            this.send_error_response(res, 400, {
+            this.send_error_response(res, {
                 "description": "Bad request params. Request must contains parameter id."
-            });
+            }, 400);
             return;
         }
         try{
 
             invoice = await TrainInvoiceModel.get_train_invoice_by_id({ _id: id });
-            this.send_success_response(res, 200, invoice);
+            this.send_success_response(res, invoice);
         }
         catch(err){
             console.log('Error: ', err)
@@ -59,9 +59,9 @@ class TrainView extends BaseView{
         
 
         if(!invoice){
-            this.send_error_response(req, 400, {
+            this.send_error_response(req, {
                 "description": "Bad request params. Request must contains body."
-            });
+            }, 400);
         }
         try{
             invoice = await TrainInvoiceModel.get_normalize_invoice(invoice);
@@ -69,16 +69,16 @@ class TrainView extends BaseView{
             invoice = new TrainInvoiceModel(invoice);
             let err = invoice.validateSync();
             if(err){
-                this.send_error_response(res, 500, {
+                this.send_error_response(res, {
                     "description": "Internal Server Error. Data not stored."
-                });
+                }, 500);
                 return;
             }
             console.log('================================= Train invoice =================================');
             console.log(invoice)
             console.log('=================================================================================');
             invoice = await invoice.save();
-            this.send_success_response(res, 200, invoice);
+            this.send_success_response(res, invoice);
         }
         catch(err){
              // Сделать вывод информации об ошибке, а в будующем логировать все ошибки
@@ -91,9 +91,9 @@ class TrainView extends BaseView{
         let invoice_id = null;
 
         if(!invoice){
-            this.send_error_response(req, 400, {
+            this.send_error_response(req, {
                 "description": "Bad request params. Request must contains body."
-            });
+            }, 400);
         }
         try{
             // TODO: We need to validate each object for existing field
@@ -105,11 +105,11 @@ class TrainView extends BaseView{
             console.log('================================= Train invoice =================================');
             console.log(invoice)
             console.log('=================================================================================');
-            this.send_success_response(res, 200, invoice);
+            this.send_success_response(res, invoice);
         }
         catch(err){
             console.log(err);
-            this.send_error_response(res, 500);
+            this.send_error_response(res, {}, 500);
         }
 
     }
@@ -118,7 +118,7 @@ class TrainView extends BaseView{
         const id = req.query.id;
         try{
             await TrainInvoiceModel.deleteOne({ id: id });
-            this.send_success_response(res, 200, {
+            this.send_success_response(res, {
                 "description": `Data deleted by id ${id}`
             });
         }
@@ -134,7 +134,7 @@ class TrainView extends BaseView{
             let invoice = await TrainInvoiceModel.get_train_invoice_by_id({ _id: invoice_id });
             if(!invoice){
                 console.log(`Invoice not found.`);
-                this.send_error_response(res, 404);
+                this.send_error_response(res, {}, 404);
             }
             console.log('Date: ', invoice.date)
             let date = moment.utc(invoice.date, ['YYYY-MM-DDTHH:mm:s Z']).format('DD MMMM YYYY');
@@ -200,7 +200,7 @@ class TrainView extends BaseView{
         }
         catch(err){
             console.log(err);
-            this.send_error_response(res, 500);
+            this.send_error_response(res, {}, 500);
         }  
     }
 
@@ -210,7 +210,7 @@ class TrainView extends BaseView{
             let invoice = await TrainInvoiceModel.get_train_invoice_by_id({ _id: invoice_id });
             if(!invoice){
                 console.log(`Invoice not found.`);
-                this.send_error_response(res, 404);
+                this.send_error_response(res, {}, 404);
             }
             console.log('Date: ', invoice.date)
             let date = moment.utc(invoice.date, ['YYYY-MM-DDTHH:mm:s Z']).format('DD MMMM YYYY');
@@ -276,8 +276,84 @@ class TrainView extends BaseView{
         }
         catch(err){
             console.log(err);
-            this.send_error_response(res, 500);
+            this.send_error_response(res, {}, 500);
         }  
+    }
+
+    async print_order_document(req, res){
+        let invoice_id = req.params.invoice_id;
+        try{
+            let invoice = await TrainInvoiceModel.get_train_invoice_by_id({ _id: invoice_id });
+            if(!invoice){
+                console.log(`Invoice not found.`);
+                this.send_error_response(res, {}, 404);
+            }
+            console.log('Date: ', invoice.date)
+            let date = moment.utc(invoice.date, ['YYYY-MM-DDTHH:mm:s Z']).format('DD MMMM YYYY');
+            invoice.creation_date = date;
+            
+            let last_name = invoice.detail_info.surname_id.last_name_native ? invoice.detail_info.surname_id.last_name_native : '';
+            let first_name = invoice.detail_info.surname_id.first_name_native ? invoice.detail_info.surname_id.first_name_native : '';
+            invoice.detail_info.surname_id = `${last_name} ${first_name}`;
+
+            invoice.detail_info.departure_dt = moment(invoice.detail_info.departure_dt).format('DD.MM.YYYY HH:mm:ss');
+            invoice.detail_info.arrival_dt = moment(invoice.detail_info.arrival_dt).format('DD.MM.YYYY HH:mm:ss');
+
+            let carriage_number = invoice.detail_info.carriage_number ? invoice.detail_info.carriage_number : '';
+            let carriage_type = invoice.detail_info.service_type ? `, ${invoice.detail_info.service_type}` : '';
+
+            invoice.detail_info.carriage_number = `${carriage_number}${carriage_type}`;
+
+            invoice.detail_info.total_amount.sum = invoice.detail_info.supplier_cost.sum +
+                invoice.detail_info.supplier_commision.sum + invoice.detail_info.forfeit.sum +
+                invoice.detail_info.agency_services.sum + invoice.detail_info.other_services.sum;
+            
+            invoice.detail_info.total_amount.mpe = invoice.detail_info.supplier_cost.mpe +
+                invoice.detail_info.supplier_commision.mpe + invoice.detail_info.forfeit.mpe +
+                invoice.detail_info.agency_services.mpe + invoice.detail_info.other_services.mpe;
+
+            console.log(wN(123.7, { lang: 'uk' }))
+            console.log( invoice.detail_info.total_amount.sum);
+            
+            let total_amount_sum_arr = invoice.detail_info.total_amount.sum.toString().split('.');
+            let total_amount_sum_coins =  total_amount_sum_arr[1] ? total_amount_sum_arr[1] : '00';
+
+            let total_amount_mpe_arr = invoice.detail_info.total_amount.mpe.toString().split('.');
+            let total_amount_mpe_coins = total_amount_mpe_arr[1] ? total_amount_mpe_arr[1] : '00';
+
+            let total_amount = (invoice.detail_info.total_amount.sum + invoice.detail_info.total_amount.mpe).toString().split('.');
+            let total_amount_coins =  total_amount[1] ? total_amount[1] : '00';
+
+            let total_amount_full_sum = total_amount_sum_arr[0] ? this._write_number(total_amount_sum_arr[0]) : 0;
+            let total_amount_full_mpe = total_amount_mpe_arr[0] ? this._write_number(total_amount_mpe_arr[0]) : 0;
+            let total_amount_full = total_amount[0] ? this._write_number(total_amount[0]) : 0;
+
+            let written_sum = {
+                total_amount_full_sum,
+                total_amount_sum_coins,
+                total_amount_full_mpe,
+                total_amount_mpe_coins,
+                total_amount_full,
+                total_amount_coins
+            }
+            invoice.written_sum = written_sum;
+
+            invoice.detail_info.total_amount.sum = invoice.detail_info.supplier_cost.sum +
+                invoice.detail_info.supplier_commision.sum + invoice.detail_info.forfeit.sum +
+                invoice.detail_info.agency_services.sum + invoice.detail_info.other_services.sum;
+            
+            invoice.detail_info.total_amount.mpe = invoice.detail_info.supplier_cost.mpe +
+                invoice.detail_info.supplier_commision.mpe + invoice.detail_info.forfeit.mpe +
+                invoice.detail_info.agency_services.mpe + invoice.detail_info.other_services.mpe;
+
+            let pdf_form = await PDFService.get_act_pdf_form(PDF_TMP_NAMES.TRAIN.TRAIN_ORDER_FORM_NAME, invoice);
+            res.setHeader('Content-Type', 'application/pdf');
+            res.status(200).send(pdf_form);
+        }
+        catch(err){
+            console.log(err);
+            this.send_error_response(res, {}, 500);
+        }
     }
 
 

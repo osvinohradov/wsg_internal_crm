@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CityReference } from "../models";
+import { HttpResponse } from "../../Common/models/HttpResponseModel";
 
 @Injectable()
 export class CityService {
@@ -9,29 +10,26 @@ export class CityService {
   constructor(private http: HttpClient) {}
 
   get_cities_count() {
-    return this.http.get<number>(this.baseUrl + `/references/count/city`);
+    return this.http.get<HttpResponse>(this.baseUrl + `/reference/count/city`);
   }
 
   get_cities(skip, limit) {
-    return this.http.get<CityReference[]>(
-      this.baseUrl + `/references/city?skip=${skip}&limit=${limit}`
-    );
+    return this.http.get<HttpResponse>(this.baseUrl + `/reference/city?skip=${skip}&limit=${limit}`);
   }
 
   get_city_by_id(id: string) {
-    return this.http.get(this.baseUrl + `/references/city/${id}`);
+    return this.http.get<HttpResponse>(this.baseUrl + `/reference/city/${id}`);
   }
 
   update_city(city: CityReference) {
-    return this.http.put(
-      this.baseUrl + `/references/curator/${city._id}`, city);
+    return this.http.put<HttpResponse>(this.baseUrl + `/reference/curator/${city._id}`, city);
   }
 
   save_city(city: CityReference) {
-    return this.http.post(this.baseUrl + `/references/city`, city);
+    return this.http.post<HttpResponse>(this.baseUrl + `/reference/city`, city);
   }
 
   remove_city(id: string) {
-    return this.http.delete(this.baseUrl + `/references/city/${id}`);
+    return this.http.delete<HttpResponse>(this.baseUrl + `/reference/city/${id}`);
   }
 }

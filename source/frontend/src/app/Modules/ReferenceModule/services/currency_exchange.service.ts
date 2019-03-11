@@ -10,7 +10,7 @@ export class RefCurrencyExchangeService {
   constructor(private http: HttpClient) {}
 
   get_currency_exchanges_names(currency_exchange_name=''): Observable<CounterpartyNameModel[]> {
-    const url = `${this.baseUrl}/ref/currency_exchanges/names`;
+    const url = `${this.baseUrl}/reference/currency_exchanges/names`;
     
     return this.http.get<CounterpartyNameModel[]>(url, { params: {
       currency_exchange_name: currency_exchange_name

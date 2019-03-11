@@ -10,7 +10,7 @@ const CurrencyExchangeSchema = new Schema({
     created_at:     { type: Date, default: Date.now() }
 }, { collection: 'ref_currency_exchanges' });
 
-const CurrencyExchangeModel = mongoose.model('CurrencyExchange', CurrencyExchangeSchema);
+const CurrencyExchangeModel = mongoose.model('CurrencyExchangeModel', CurrencyExchangeSchema);
 
 export {
     CurrencyExchangeModel

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { RefCheckingAccountNameModel } from "../models";
 import { Observable } from "rxjs";
+import { HttpResponse } from "../../Common/models/HttpResponseModel";
 
 @Injectable()
 export class RefCheckingAccountService {
@@ -9,10 +10,10 @@ export class RefCheckingAccountService {
 
   constructor(private http: HttpClient) {}
 
-  get_checking_accounts_names(checking_account_name=''): Observable<RefCheckingAccountNameModel[]> {
-    const url = `${this.baseUrl}/ref/checking_accounts/names`;
+  get_checking_accounts_names(checking_account_name=''): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/checking_accounts/names`;
     
-    return this.http.get<RefCheckingAccountNameModel[]>(url, { params: {
+    return this.http.get<HttpResponse>(url, { params: {
         checking_account_name: checking_account_name
     }});
   }
