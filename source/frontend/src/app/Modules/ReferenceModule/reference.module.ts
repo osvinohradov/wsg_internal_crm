@@ -56,8 +56,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatListModule } from "@angular/material/list";
 import { AirportService, AviaCompanyService, CityService,
-  RefCounterpartyService, RefCuratorService, RefCurrencyExchangeService,
-         RefIndividualCounterpartyService, RefNomenclatureService, RefServiceTypeService, RefUnitClassifierService } from "./services";
+  CounterpartyService, RefCuratorService, RefCurrencyExchangeService,
+         RefIndividualCounterpartyService, RefNomenclatureService, ServiceTypeService, RefUnitClassifierService } from "./services";
 
 import { ToastrModule } from 'ng6-toastr-notifications';
 
@@ -156,10 +156,9 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     ServicePopupReferencesComponent,
     SearchPopupReferencesComponent,
     ReferenceRoutingModule,
-    //RefCounterpartyService,
   ],
   providers: [
-    RefCounterpartyService,
+    CounterpartyService,
     RefNomenclatureService,
     RefUnitClassifierService,
     RefCuratorService,
@@ -172,7 +171,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     RefCuratorService,
     RefCurrencyExchangeService,
     RefIndividualCounterpartyService,
-    RefServiceTypeService,
+    ServiceTypeService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
   ],
   bootstrap: []

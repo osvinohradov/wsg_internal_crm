@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 
 // Населені пункти
-const ReferenceCitySchema = new Schema({    
+const CitySchema = new Schema({    
     station_code:   { type: String, default: '' },
     name_rus:       { type: String, default: '' },  // Повна назва російською
     name_eng:       { type: String, default: '' },  // Повна назва англійською
@@ -13,8 +13,8 @@ const ReferenceCitySchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_city' });
 
-const ReferenceCityModel = mongoose.model('ReferenceCity', ReferenceCitySchema);
+const CityModel = mongoose.model('CityModel', CitySchema);
 
 export {
-    ReferenceCityModel
+    CityModel
 }

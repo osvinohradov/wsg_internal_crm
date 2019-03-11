@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { AviaInvoice } from "../../models";
 import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { RefCounterpartyService } from "../../../ReferenceModule/services";
+import { CounterpartyService } from "../../../ReferenceModule/services";
 import { FormControl } from "@angular/forms";
 
 @Component({
@@ -43,7 +43,7 @@ export class AviaInvoicePopupComponent implements OnInit {
 
   // public counterparties_name_id: any = [];
   // get_counterparties_names_id(pattern){
-  //   this.RefCounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
+  //   this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
   //     console.log(data)
   //   });
   // }
@@ -65,7 +65,7 @@ export class AviaInvoicePopupComponent implements OnInit {
   //   public dialogRef: MatDialogRef<AviaInvoicePopupComponent>,
   //   @Inject(MAT_DIALOG_DATA) public avia_invoice: AviaInvoice,
   //   public AviaInvoiceService: AviaInvoiceService,
-  //   public RefCounterpartyService: RefCounterpartyService,
+  //   public CounterpartyService: CounterpartyService,
   //   public AviaGroupInvoiceService: AviaGroupInvoiceService
   // ) {
   //   if (!this.avia_invoice) {
@@ -158,7 +158,7 @@ export class AviaInvoicePopupComponent implements OnInit {
   //  */
 
   // get_counterparty_names(pattern) {
-  //   this.RefCounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
+  //   this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe(data => {
   //     console.log(data);
   //   });
   // }

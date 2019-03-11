@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import { CounterpartyReference } from "../../models";
+import { CounterpartyModel } from "../../models";
 //import { CounterpartyService } from "../../services";
 
 @Component({

@@ -20,7 +20,7 @@ const TrainInvoiceSchema = new BaseModel({
   // Всього
   total_amount: { type: Number, default: 0 },
   // Клієнт (посилання на Контрагентів)
-  client_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null },
+  client_id: { type: Schema.Types.ObjectId, ref: 'CounterpartyModel', default: null },
   // Дата послуг
   service_date: { type: Date },
   // Без реалізації
@@ -30,49 +30,49 @@ const TrainInvoiceSchema = new BaseModel({
   // Сплачено
   is_paid: { type: Boolean, default: false },
   // Групове замовлення (посилання на Групове замовлення)
-  group_invoice_id: { type: Schema.Types.ObjectId, ref: 'GroupInvoice', default: null },
+  group_invoice_id: { type: Schema.Types.ObjectId, ref: 'GroupInvoiceModel', default: null },
   // Валюта пропозиції
   offer_currency_id: {
     type: Schema.Types.ObjectId,
-    ref: 'ReferenceUnitClassifier',
+    ref: 'UnitClassifierModel',
     default: null
   },
   // Підсумкова валюта
   total_currency_id: {
     type: Schema.Types.ObjectId,
-    ref: 'ReferenceUnitClassifier',
+    ref: 'UnitClassifierModel',
     default: null
   },
   // Постачальник (посилання на Контрагентів)
-  provider_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null },
+  provider_id: { type: Schema.Types.ObjectId, ref: 'CounterpartyModel', default: null },
   // Сплата такси
-  taxes_payment_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null },
+  taxes_payment_id: { type: Schema.Types.ObjectId, ref: 'CounterpartyModel', default: null },
   // Куратор
-  curator_id: { type: Schema.Types.ObjectId, ref: 'ReferenceCurator', default: null },
+  curator_id: { type: Schema.Types.ObjectId, ref: 'CuratorModel', default: null },
   // Код бронювання
   // booking_code         :{ type: String },
   // Обмін валют (посилання на Обмін валют)
   currency_exchange_id: {
     type: Schema.Types.ObjectId,
-    ref: 'ReferenceCurrencyExchange',
+    ref: 'CurrencyExchangeModel',
     default: null
   },
   // Вид сервісу (посилання на Вид сервісу)
-  service_type_id: { type: Schema.Types.ObjectId, ref: 'ReferenceServiceType', default: null },
+  service_type_id: { type: Schema.Types.ObjectId, ref: 'ServiceTypeModel', default: null },
   // Розрахунковий рахунок (посилання на Банківські рахунки) 
-  checking_account_id     :{ type: Schema.Types.ObjectId, ref: 'ReferenceCheckingAccount', default: null },
+  checking_account_id     :{ type: Schema.Types.ObjectId, ref: 'CheckingAccountModel', default: null },
   // Коментар
   comment: { type: String },
   // Відповідальний (посилання на Користувачі)
-  responsible_agent_id:  { type: Schema.Types.ObjectId, ref: 'User' },
+  responsible_agent_id:  { type: Schema.Types.ObjectId, ref: 'UserModel' },
   // Агент (посилання на Користувачі)
-  agent_id: { type: Schema.Types.ObjectId, ref: 'User' },
+  agent_id: { type: Schema.Types.ObjectId, ref: 'UserModel' },
   // Показую відкривався киток чи ні
   is_processed: { type: Boolean, default: false },
   // Документ що повертається
   returned_document:    { type: String },
   // Організація
-  organization_id:         { type: Schema.Types.ObjectId, ref: 'Organization', default: null },
+  organization_id:         { type: Schema.Types.ObjectId, ref: 'OrganizationModel', default: null },
   // Детальна інформація
   detail_info: {
     type: {
@@ -91,11 +91,11 @@ const TrainInvoiceSchema = new BaseModel({
       // Дата покупки у поставщика
       payment_provider_dt: { type: Date },
       // откуда 
-      departure_station_id: { type: Schema.Types.ObjectId, ref: 'RefRailwayStationModel', default: null },
+      departure_station_id: { type: Schema.Types.ObjectId, ref: 'RailwayStationModel', default: null },
       // куда
-      arrival_station_id: { type: Schema.Types.ObjectId, ref: 'RefRailwayStationModel', default: null },
+      arrival_station_id: { type: Schema.Types.ObjectId, ref: 'RailwayStationModel', default: null },
       // ReferenceIndividualCounterparties
-      surname_id: {  type: Schema.Types.ObjectId, ref: 'ReferenceIndividualCounterparties', default: null },
+      surname_id: {  type: Schema.Types.ObjectId, ref: 'IndividualCounterpartiesModel', default: null },
       //
       ticket_number: { type: String, default: '' },
 
@@ -106,7 +106,7 @@ const TrainInvoiceSchema = new BaseModel({
           mpe: { type: Number, default: 0 },
           currency_id: {
             type: Schema.Types.ObjectId,
-            ref: 'ReferenceUnitClassifier',
+            ref: 'UnitClassifierModel',
             default: null
           }
         },
@@ -120,7 +120,7 @@ const TrainInvoiceSchema = new BaseModel({
           percent: { type: Number, default: 0 },
           currency_id: {
             type: Schema.Types.ObjectId,
-            ref: 'ReferenceUnitClassifier',
+            ref: 'UnitClassifierModel',
             default: null
           }
         },
@@ -133,7 +133,7 @@ const TrainInvoiceSchema = new BaseModel({
           mpe: { type: Number, default: 0 },
           currency_id: {
             type: Schema.Types.ObjectId,
-            ref: 'ReferenceUnitClassifier',
+            ref: 'UnitClassifierModel',
             default: null
           }
         },
@@ -148,7 +148,7 @@ const TrainInvoiceSchema = new BaseModel({
           bank_percent: { type: Number, default: 0 },
           currency_id: {
             type: Schema.Types.ObjectId,
-            ref: 'ReferenceUnitClassifier',
+            ref: 'UnitClassifierModel',
             default: null
           }
         },
@@ -161,7 +161,7 @@ const TrainInvoiceSchema = new BaseModel({
           mpe: { type: Number, default: 0 },
           currency_id: {
             type: Schema.Types.ObjectId,
-            ref: 'ReferenceUnitClassifier',
+            ref: 'UnitClassifierModel',
             default: null
           }
         }, default: {}
@@ -173,7 +173,7 @@ const TrainInvoiceSchema = new BaseModel({
           mpe: { type: Number, default: 0 },
           currency_id: {
             type: Schema.Types.ObjectId,
-            ref: 'ReferenceUnitClassifier',
+            ref: 'UnitClassifierModel',
             default: null
           }
         }, default: new Object()
@@ -201,8 +201,8 @@ TrainInvoiceSchema.statics.get_train_invoices_info = async function(params){
                       .populate({ path: 'offer_currency_id', select: 'name'})
                       .populate({ path: 'total_currency_id', select: 'name'})
                       .populate({ path: 'organization_id', select: 'name'})
-                      .populate({ path: 'detail_info.surname', model: 'ReferenceIndividualCounterparties' })
-                      .populate({ path: 'detail_info.total_amount.currency_id', model: 'ReferenceUnitClassifier' });
+                      .populate({ path: 'detail_info.surname', model: 'IndividualCounterpartyModel' })
+                      .populate({ path: 'detail_info.total_amount.currency_id', model: 'UnitClassifierModel' });
   return invoices;
 }
 
@@ -222,16 +222,16 @@ TrainInvoiceSchema.statics.get_train_invoice_by_id = async function(query, proje
                       .populate({ path: 'agent_id', select: 'first_name last_name' })
                       .populate({ path: 'organization_id', select: 'name' })
 
-                      .populate({ path: 'detail_info.surname_id', select: 'first_name_native last_name_native middle_name_native', model: 'ReferenceIndividualCounterparties' })
-                      .populate({ path: 'detail_info.departure_station_id', select: 'name_ukr name_rus', model: 'RefRailwayStationModel' })
+                      .populate({ path: 'detail_info.surname_id', select: 'first_name_native last_name_native middle_name_native', model: 'IndividualCounterpartyModel' })
+                      .populate({ path: 'detail_info.departure_station_id', select: 'name_ukr name_rus', model: 'RailwayStationModel' })
                       
-                      .populate({ path: 'detail_info.arrival_station_id', select: 'name_ukr name_rus', model: 'RefRailwayStationModel' })
-                      .populate({ path: 'detail_info.supplier_cost.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
-                      .populate({ path: 'detail_info.supplier_commision.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
-                      .populate({ path: 'detail_info.forfeit.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
-                      .populate({ path: 'detail_info.agency_services.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
-                      .populate({ path: 'detail_info.other_services.currency_id', select: 'name', model: 'ReferenceUnitClassifier' })
-                      .populate({ path: 'detail_info.total_amount.currency_id', select: 'name', model: 'ReferenceUnitClassifier' });
+                      .populate({ path: 'detail_info.arrival_station_id', select: 'name_ukr name_rus', model: 'RailwayStationModel' })
+                      .populate({ path: 'detail_info.supplier_cost.currency_id', select: 'name', model: 'UnitClassifierModel' })
+                      .populate({ path: 'detail_info.supplier_commision.currency_id', select: 'name', model: 'UnitClassifierModel' })
+                      .populate({ path: 'detail_info.forfeit.currency_id', select: 'name', model: 'UnitClassifierModel' })
+                      .populate({ path: 'detail_info.agency_services.currency_id', select: 'name', model: 'UnitClassifierModel' })
+                      .populate({ path: 'detail_info.other_services.currency_id', select: 'name', model: 'UnitClassifierModel' })
+                      .populate({ path: 'detail_info.total_amount.currency_id', select: 'name', model: 'UnitClassifierModel' });
   return invoices;
 }
 

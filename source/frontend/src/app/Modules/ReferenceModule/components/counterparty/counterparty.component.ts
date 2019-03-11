@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { CounterpartyPopupReferencesComponent } from "./../counterpartyPopup/counterpartyPopup.component";
 
-import { RefCounterpartyService } from "../../services";
-import { CounterpartyReference } from "../../models";
+import { CounterpartyService } from "../../services";
+import { CounterpartyModel } from "../../models";
 
 @Component({
   selector: "counterparty-ref",

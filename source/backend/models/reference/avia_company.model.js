@@ -11,7 +11,7 @@ const AviaCompanySchema = new Schema({
     created_at: { type: Date, default: Date.now() }
 }, { collection: 'ref_avia_companies' });
 
-const AviaCompanyModel = mongoose.model('AviaCompany', AviaCompanySchema);
+const AviaCompanyModel = mongoose.model('AviaCompanyModel', AviaCompanySchema);
 
 export {
     AviaCompanyModel

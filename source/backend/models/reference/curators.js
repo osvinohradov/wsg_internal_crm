@@ -17,7 +17,7 @@ CuratorSchema.statics.get_curators_names = async function(curator_name, options=
                     { name: new RegExp(`${curator_name}`, 'i') } :
                     {};
 
-    let curator = ReferenceCuratorModel.find(query, '_id name', options);
+    let curator = CuratorModel.find(query, '_id name', options);
     return curator;
 }
 

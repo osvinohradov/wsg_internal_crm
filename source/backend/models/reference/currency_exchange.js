@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Обмін валют
-const ReferenceCurrencyExchangeSchema = new Schema({
+const CurrencyExchangeSchema = new Schema({
     name:           { type: String, default: '', required: true },  // Найменування
     coefficient:    { type: Number, default: 0 },  // Коефіцієнт
 
@@ -10,8 +10,8 @@ const ReferenceCurrencyExchangeSchema = new Schema({
     created_at:     { type: Date, default: Date.now() }
 }, { collection: 'ref_currency_exchanges' });
 
-const ReferenceCurrencyExchangeModel = mongoose.model('ReferenceCurrencyExchange', ReferenceCurrencyExchangeSchema);
+const CurrencyExchangeModel = mongoose.model('CurrencyExchange', CurrencyExchangeSchema);
 
 export {
-    ReferenceCurrencyExchangeModel
+    CurrencyExchangeModel
 }

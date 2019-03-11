@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import * as moment from 'moment';
 // import { AviaInvoice } from "../../models";
 // import { AviaInvoiceService, AviaGroupInvoiceService } from "../../services";
-import { RefCounterpartyService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService, RefCurrencyExchangeService, RefServiceTypeService, RefCheckingAccountService, RefIndividualCounterpartyService, RefOrganizationService, RefUserService } from "../../../ReferenceModule/services";
+import { CounterpartyService, RefRailwayStationService, RefUnitClassifierService, RefCuratorService, RefCurrencyExchangeService, ServiceTypeService, RefCheckingAccountService, RefIndividualCounterpartyService, RefOrganizationService, RefUserService } from "../../../ReferenceModule/services";
 import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { TrainInvoiceDetail } from "../../models";
 
@@ -14,11 +14,11 @@ import { TrainService } from "../../services";
 
 // TODO: Put out to outer file
 import { RefRailwayStationNameModel,
-         RefCounterpartyNameModel,
+         CounterpartyNameModel,
          RefUnitClassifierNameModel,
          RefCuratorNameModel,
          RefCurrencyExchangeNameModel, 
-         RefServiceTypeNameModel,
+         ServiceTypeNameModel,
          RefCheckingAccountNameModel,
          RefUserNameModel,
          RefOrganizationNameModel,
@@ -47,7 +47,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
   public SERVER_URL = CONFIG.SERVER_URL;
   // public is_saved: Boolean = false;
   // Client (counterparty)
-  public clientAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public clientAutoComplete: Observable<CounterpartyNameModel[]> = null;
   public clientFromControl = new FormControl();
   // Group Invoice
   public groupInvoiceAutoComplete: Observable<GroupInvoiceNameModel[]> = null;
@@ -59,10 +59,10 @@ export class TrainInvoiceDialogComponent implements OnInit {
   public totalCurrencyAutoComplete: Observable<RefUnitClassifierNameModel[]> = null;
   public totalCurrencyFromControl = new FormControl();
   // Provider ID 
-  public providerAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public providerAutoComplete: Observable<CounterpartyNameModel[]> = null;
   public providerFromControl = new FormControl();
   // Taxes payment ID
-  public taxesPaymentAutoComplete: Observable<RefCounterpartyNameModel[]> = null;
+  public taxesPaymentAutoComplete: Observable<CounterpartyNameModel[]> = null;
   public taxesPaymentFromControl = new FormControl();
   // Curator ID
   public curatorAutoComplete: Observable<RefCuratorNameModel[]> = null;
@@ -71,7 +71,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
   public currencyExchangeAutoComplete: Observable<RefCurrencyExchangeNameModel[]> = null;
   public currencyExchangeFromControl = new FormControl();
   // Service Type
-  public serviceTypeAutoComplete: Observable<RefServiceTypeNameModel[]> = null;
+  public serviceTypeAutoComplete: Observable<ServiceTypeNameModel[]> = null;
   public serviceTypeFromControl = new FormControl();
   // Checking Account
   public checkingAccountAutoComplete: Observable<RefCheckingAccountNameModel[]> = null;
@@ -106,14 +106,14 @@ export class TrainInvoiceDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail,
               private GroupInvoiceService: GroupInvoiceService,
-              private RefCounterpartyService: RefCounterpartyService,
+              private CounterpartyService: CounterpartyService,
               private TrainService: TrainService,
               private RefNomenclatureService: RefNomenclatureService,
               private RefRailwayStationService: RefRailwayStationService,
               private RefUnitClassifierService: RefUnitClassifierService,
               private RefCuratorService: RefCuratorService,
               private RefCurrencyExchangeService: RefCurrencyExchangeService,
-              private RefServiceTypeService: RefServiceTypeService,
+              private ServiceTypeService: ServiceTypeService,
               private RefCheckingAccountService: RefCheckingAccountService,
               private RefIndividualCounterpartyService: RefIndividualCounterpartyService,
               private RefOrganizationService: RefOrganizationService,
@@ -279,8 +279,8 @@ export class TrainInvoiceDialogComponent implements OnInit {
       })
     );    
   }
-  fetchRefCounterpartiesNames(value: string): Observable<RefCounterpartyNameModel[]>{
-    return this.RefCounterpartyService
+  fetchRefCounterpartiesNames(value: string): Observable<CounterpartyNameModel[]>{
+    return this.CounterpartyService
       .get_counterparties_names(value)
       .pipe(map(result => {
         return result;
@@ -326,8 +326,8 @@ export class TrainInvoiceDialogComponent implements OnInit {
     );
   }
 
-  fetchRefServiceTypesNames(value: string): Observable<RefServiceTypeNameModel[]>{
-    return this.RefServiceTypeService
+  fetchRefServiceTypesNames(value: string): Observable<ServiceTypeNameModel[]>{
+    return this.ServiceTypeService
       .get_service_types_names(value)
       .pipe(map(result => {
         return result;

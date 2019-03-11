@@ -61,7 +61,7 @@ const CounterpartySchema = new Schema({
     comment:            { type: String, default: '' },  // Коментар
 
     checking_accounts_ids:      { type: [Schema.Types.ObjectId], ref: 'CheckingAccountModel', default: [] },
-    counterparty_contracts_ids: { type: [Schema.Types.ObjectId], ref: 'CounterpartyContractsModel', default: [] },
+    counterparty_contracts_ids: { type: [Schema.Types.ObjectId], ref: 'CounterpartyContractModel', default: [] },
 
     updated_at:         { type: Date, default: Date.now() },
     created_at:         { type: Date, default: Date.now() }

@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import { RefServiceTypeService, RefCounterpartyService } from '../../services';
-import { ServiceTypeReference } from '../../models';
+import { ServiceTypeService, CounterpartyService } from '../../services';
+import { ServiceTypeModel } from '../../models';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -16,27 +16,27 @@ export class ServicePopupReferencesComponent implements OnInit {
   public counterparties_names_ids: any[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<ServiceTypeReference>,
-    @Inject(MAT_DIALOG_DATA) public service_type: ServiceTypeReference,
-    public RefServiceTypeService: RefServiceTypeService, public RefCounterpartyService: RefCounterpartyService
+    public dialogRef: MatDialogRef<ServiceTypeModel>,
+    @Inject(MAT_DIALOG_DATA) public service_type: ServiceTypeModel,
+    public ServiceTypeService: ServiceTypeService, public CounterpartyService: CounterpartyService
   ) {
     this.get_counterparties_names_ids(null);
     if (!this.service_type) {
-      this.service_type = new ServiceTypeReference();
+      this.service_type = new ServiceTypeModel();
     }
   }
 
   ngOnInit() {}
 
-  update_service_type(service_type: ServiceTypeReference) {
-    this.RefServiceTypeService.update_service_type(service_type).subscribe(data => {
-      this.service_type = data as ServiceTypeReference;
+  update_service_type(service_type: ServiceTypeModel) {
+    this.ServiceTypeService.update_service_type(service_type).subscribe(response => {
+      this.service_type = response.data as ServiceTypeModel;
     });
   }
 
-  save_service_type(service_type: ServiceTypeReference) {
-    this.RefServiceTypeService.save_service_type(service_type).subscribe(data => {
-      let tmp = data as ServiceTypeReference;
+  save_service_type(service_type: ServiceTypeModel) {
+    this.ServiceTypeService.create_servive_type(service_type).subscribe(response => {
+      let tmp = response.data as ServiceTypeModel;
       if (!tmp._id) {
         this.is_saved = false;
       } else {
@@ -54,18 +54,18 @@ export class ServicePopupReferencesComponent implements OnInit {
       return;
     }
 
-    this.RefServiceTypeService.remove_service_type(service_type_id).subscribe(() => {
+    this.ServiceTypeService.delete_service_type(service_type_id).subscribe((response) => {
       this.dialogRef.close({ action: "remove", id: service_type_id, element: null });
     });
   }
 
-  save_and_close(service_type: ServiceTypeReference) {
+  save_and_close(service_type: ServiceTypeModel) {
     // Save ticket
     this.save_update_service_type(service_type);
     this.close_dialog(service_type);
   }
 
-  save_update_service_type(service_type: ServiceTypeReference) {
+  save_update_service_type(service_type: ServiceTypeModel) {
     if (!service_type._id) {
       this.save_service_type(service_type);
     } else {
@@ -94,7 +94,7 @@ export class ServicePopupReferencesComponent implements OnInit {
 
   get_counterparties_names_ids(pattern: string){
     console.log(pattern)
-    // this.RefCounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
+    // this.CounterpartyService.get_counterparties_names_ids(pattern).subscribe((data) => {
     //   console.log('Data:', data)
     //   this.counterparties_names_ids = data;
     //   console.log(this.counterparties_names_ids)

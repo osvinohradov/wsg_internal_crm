@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl } from '@angular/forms';
 
 import { CuratorReference } from "../../models";
-import { RefCuratorService, RefCounterpartyService } from "../../services";
+import { RefCuratorService, CounterpartyService } from "../../services";
 
 
 @Component({

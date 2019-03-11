@@ -8,20 +8,20 @@ const GroupInvoiceSchema = new Schema({
     group_name:         { type: String, required: true },
     // Дата
     date:               { type: Date },
-    organization_id:    { type: Schema.Types.ObjectId, ref: 'Organization', default: null },
+    organization_id:    { type: Schema.Types.ObjectId, ref: 'OrganizationModel', default: null },
     is_paid:            { type: Boolean, default: false }, // Сплачено
-    client_id:          { type: Schema.Types.ObjectId, ref: 'ReferenceCounterparty', default: null  },// Клієнт (посилання на Контрагентів)
+    client_id:          { type: Schema.Types.ObjectId, ref: 'CounterpartyModel', default: null  },// Клієнт (посилання на Контрагентів)
     payment_form:       { type: String, default: 'Готівка' }, // Форма сплати (Готівка, Платіжна картка, Банківський кредит)
     payment_date:       { type: Date, default: null }, // Дата сплати
     service_date:       { type: Date, default: null },
-    checking_account_id:{ type: Schema.Types.ObjectId, ref: 'ReferenceCheckingAccount' },
-    total_currency:     { type: Schema.Types.ObjectId, ref: 'ReferenceUnitClassifier' },
+    checking_account_id:{ type: Schema.Types.ObjectId, ref: 'CheckingAccountModel' },
+    total_currency:     { type: Schema.Types.ObjectId, ref: 'UnitClassifierModel' },
     total_amount:       { type: Number, default: 0 },
     content:            { type: String, default: '' },
     comment:            { type: String, default: '' },// Коментар
-    curator_id:         { type: Schema.Types.ObjectId, ref: 'ReferenceCurator', default: null },
-    responsible_agent_id:  { type: Schema.Types.ObjectId, ref: 'User' },
-    agent_id:              { type: Schema.Types.ObjectId, ref: 'User' }, // Агент (посилання на Користувачі)
+    curator_id:         { type: Schema.Types.ObjectId, ref: 'CuratorModel', default: null },
+    responsible_agent_id:  { type: Schema.Types.ObjectId, ref: 'UserModel' },
+    agent_id:              { type: Schema.Types.ObjectId, ref: 'UserModel' }, // Агент (посилання на Користувачі)
     is_void:            { type: Boolean, default: false },
     general_checking_account:               { type: Boolean, default: false },
     content_of_general_checking_account:    { type: String, default: '' },

@@ -9,12 +9,9 @@ import organization_handler from './organizations_view';
 
 
 // References
-import ref_counterparty_handler from './ref_counterparty_view';
-import ref_curator_handler from './ref_curator_view';
 import ref_unit_classifier_handler from './ref_unit_classifier_view';
 import ref_checking_account_handler from './ref_checking_account_view';
 import ref_individual_counterparty_handler from './ref_individual_counterparty_view';
-import ref_service_type_handler from './ref_service_type_view';
 import ref_railway_station_handler from './ref_railway_station';
 
 
@@ -29,12 +26,9 @@ export {
     organization_handler,
 
     // References
-    ref_counterparty_handler,
-    ref_curator_handler,
     ref_unit_classifier_handler,
     ref_checking_account_handler,
     ref_individual_counterparty_handler,
-    ref_service_type_handler,
     ref_railway_station_handler,
 
     References

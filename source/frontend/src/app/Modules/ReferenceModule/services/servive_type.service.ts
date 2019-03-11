@@ -1,67 +1,51 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ServiceTypeReference, RefServiceTypeNameModel } from "../models";
+import { ServiceTypeModel, ServiceTypeNameModel } from "../models";
 import { Observable } from "rxjs";
+import { HttpResponse } from "../../Common/models/HttpResponseModel";
 
 @Injectable()
-export class RefServiceTypeService {
+export class ServiceTypeService {
   baseUrl: String = "http://localhost:8080/api/v1";
 
   constructor(private http: HttpClient) {}
 
 
-
-  get_service_types_names(service_type_name=''): Observable<RefServiceTypeNameModel[]> {
-    const url = `${this.baseUrl}/ref/service_types/names`;
+  get_service_types_names(service_type_name=''): Observable<ServiceTypeModel[]> {
+    const url = `${this.baseUrl}/reference/service_types/names`;
     
-    return this.http.get<RefServiceTypeNameModel[]>(url, { params: {
+    return this.http.get<ServiceTypeModel[]>(url, { params: {
       service_type_name: service_type_name
     }});
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  get_service_types_count() {
-    return this.http.get<number>(
-      this.baseUrl + `/references/count/service_type`
-    );
+  get_service_types(): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/service_types`;
+    return this.http.get<HttpResponse>(url);
   }
 
-  get_service_types(skip, limit) {
-    return this.http.get<ServiceTypeReference[]>(
-      this.baseUrl + `/references/service_type?skip=${skip}&limit=${limit}`
-    );
+  get_service_type_by_id(id: string): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/service_type/${id}`;
+    return this.http.get<HttpResponse>(url);
   }
 
-  get_service_type_by_id(id: string) {
-    return this.http.get(this.baseUrl + `/references/service_type/${id}`);
+  create_servive_type(service_type: ServiceTypeModel): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/service_type`;
+    return this.http.post<HttpResponse>(url, service_type);
   }
 
-  update_service_type(service_type: ServiceTypeReference) {
-    return this.http.put(
-      this.baseUrl + `/references/service_type/${service_type._id}`,
-      service_type
-    );
+  update_service_type(service_type: ServiceTypeModel): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/service_type/${service_type._id}`;
+    return this.http.put<HttpResponse>(url, service_type);
   }
 
-  save_service_type(service_type: ServiceTypeReference) {
-    return this.http.post(
-      this.baseUrl + `/references/service_type`,
-      service_type
-    );
+  delete_service_type(id: string): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/service_type/${id}`;
+    return this.http.delete<HttpResponse>(url);
   }
 
-  remove_service_type(id: string) {
-    return this.http.delete(this.baseUrl + `/references/service_type/${id}`);
+  get_service_types_count(): Observable<HttpResponse> {
+    const url = `${this.baseUrl}/reference/count/service_type`;
+    return this.http.get<HttpResponse>(url);
   }
 }

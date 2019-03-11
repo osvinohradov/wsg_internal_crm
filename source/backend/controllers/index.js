@@ -6,7 +6,6 @@ import { router as user_ctrl } from './user_ctrl';
 import { router as organization_ctrl } from './organization_ctrl';
 
 // References
-import { router as ref_counterparty_ctrl } from './ref_counterparty_ctrl';
 import { router as ref_curator_ctrl } from './ref_curator_ctrl';
 import { router as ref_unit_classifier_ctrl } from './ref_unit_classifier_ctrl';
 import { router as ref_checking_account_ctrl } from './ref_checking_account_ctrl';
@@ -17,7 +16,6 @@ import { router as ref_railway_station_ctrl } from './ref_railway_station_ctrl';
 import * as References from './references';
 
 const ref = {
-    ref_counterparty_ctrl,
     ref_curator_ctrl,
     ref_unit_classifier_ctrl,
     ref_checking_account_ctrl,

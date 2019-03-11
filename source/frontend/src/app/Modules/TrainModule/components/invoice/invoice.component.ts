@@ -6,7 +6,7 @@ import { TrainService } from "../../services";
 import { TrainInvoiceInfo, TrainInvoiceDetail } from "../../models";
 import { TrainInvoiceDialogComponent } from "../invoice_popup/invoice_popup.component";
 import { GroupInvoiceNameModel } from "../../../GroupInvoice/models";
-import { RefCounterpartyNameModel, RefRailwayStationNameModel, RefUnitClassifierNameModel, RefCuratorNameModel, RefCurrencyExchangeNameModel, RefServiceTypeNameModel, RefCheckingAccountNameModel, RefUserNameModel, RefOrganizationNameModel, RefIndividualCounterpartyNameModel } from "../../../ReferenceModule/models";
+import { CounterpartyNameModel, RefRailwayStationNameModel, RefUnitClassifierNameModel, RefCuratorNameModel, RefCurrencyExchangeNameModel, ServiceTypeNameModel, RefCheckingAccountNameModel, RefUserNameModel, RefOrganizationNameModel, RefIndividualCounterpartyNameModel } from "../../../ReferenceModule/models";
 
 
 @Component({
@@ -57,15 +57,15 @@ export class TrainInvoiceComponent implements OnInit {
       }
 
       // TODO: Refactoring. Change method of getting null properties
-      data.client_id = data.client_id ? data.client_id : new RefCounterpartyNameModel();
+      data.client_id = data.client_id ? data.client_id : new CounterpartyNameModel();
       data.group_invoice_id = data.group_invoice_id ? data.group_invoice_id : new GroupInvoiceNameModel();
       data.offer_currency_id = data.offer_currency_id ? data.offer_currency_id : new RefUnitClassifierNameModel();
       data.total_currency_id = data.total_currency_id ? data.total_currency_id : new RefUnitClassifierNameModel();
-      data.provider_id = data.provider_id ? data.provider_id : new RefCounterpartyNameModel();
-      data.taxes_payment_id = data.taxes_payment_id ? data.taxes_payment_id : new RefCounterpartyNameModel();
+      data.provider_id = data.provider_id ? data.provider_id : new CounterpartyNameModel();
+      data.taxes_payment_id = data.taxes_payment_id ? data.taxes_payment_id : new CounterpartyNameModel();
       data.curator_id = data.curator_id ? data.curator_id : new RefCuratorNameModel();
       data.currency_exchange_id = data.currency_exchange_id ? data.currency_exchange_id : new RefCurrencyExchangeNameModel();
-      data.service_type_id = data.service_type_id ? data.service_type_id : new RefServiceTypeNameModel();
+      data.service_type_id = data.service_type_id ? data.service_type_id : new ServiceTypeNameModel();
       data.checking_account_id = data.checking_account_id ? data.checking_account_id : new RefCheckingAccountNameModel();
       data.responsible_agent_id = data.responsible_agent_id ? data.responsible_agent_id : new RefUserNameModel();
       data.agent_id = data.agent_id ? data.agent_id : new RefUserNameModel();

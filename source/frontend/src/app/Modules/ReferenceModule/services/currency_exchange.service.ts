@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CurrencyExchangeReference, RefCounterpartyNameModel } from "../models";
+import { CurrencyExchangeReference, CounterpartyNameModel } from "../models";
 import { Observable } from "rxjs";
 
 @Injectable()
@@ -9,10 +9,10 @@ export class RefCurrencyExchangeService {
 
   constructor(private http: HttpClient) {}
 
-  get_currency_exchanges_names(currency_exchange_name=''): Observable<RefCounterpartyNameModel[]> {
+  get_currency_exchanges_names(currency_exchange_name=''): Observable<CounterpartyNameModel[]> {
     const url = `${this.baseUrl}/ref/currency_exchanges/names`;
     
-    return this.http.get<RefCounterpartyNameModel[]>(url, { params: {
+    return this.http.get<CounterpartyNameModel[]>(url, { params: {
       currency_exchange_name: currency_exchange_name
     }});
   }

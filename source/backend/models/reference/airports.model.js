@@ -22,7 +22,7 @@ const AirportSchema = new Schema({
     created_at:     { type: Date, default: Date.now() }
 }, { collection: 'ref_airports' });
 
-const AirportModel = mongoose.model('Airport', AirportSchema);
+const AirportModel = mongoose.model('AirportModel', AirportSchema);
 
 export {
     AirportModel

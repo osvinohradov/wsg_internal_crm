@@ -3,9 +3,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { ServicePopupReferencesComponent } from "./../service_popup/service_popup.component";
 
-import { RefServiceTypeService } from '../../services';
+import { ServiceTypeService } from '../../services';
 
-import { ServiceTypeReference } from '../../models';
+import { ServiceTypeModel } from '../../models';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class ServiceReferencesComponent implements OnInit {
 
 
   // Сохраняются загруженне Виды сервисов
-  public service_types: ServiceTypeReference[] = null;
+  public service_types: ServiceTypeModel[] = null;
   // В данной версии не используется. Сохраняются выделенные элементы.
   public selected_items = [];
   // Указывает нужно отображать загрузчик или нет
@@ -35,78 +35,78 @@ export class ServiceReferencesComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private RefServiceTypeService: RefServiceTypeService
+    private ServiceTypeService: ServiceTypeService
   ) {}
 
   ngOnInit() {
-    this.refresh_data();
+    // this.refresh_data();
   }
 
-  get_service_types_count() {
-    this.RefServiceTypeService.get_service_types_count().subscribe(data => {
-      this.elements_count = data;
-      let count = Math.ceil(this.elements_count / this.limit);
-      this.pagination_arr = new Array(count);
-    });
-  }
+  // get_service_types_count() {
+  //   this.ServiceTypeService.get_service_types_count().subscribe(data => {
+  //     this.elements_count = data;
+  //     let count = Math.ceil(this.elements_count / this.limit);
+  //     this.pagination_arr = new Array(count);
+  //   });
+  // }
 
-  load_service_types(skip, limit) {
-    this.current_page = skip;
-    skip = skip > 0 ? skip * 10 : skip;
-    this.RefServiceTypeService.get_service_types(skip, limit).subscribe(data => {
-      this.service_types = data;
-    });
-  }
+  // load_service_types(skip, limit) {
+  //   this.current_page = skip;
+  //   skip = skip > 0 ? skip * 10 : skip;
+  //   this.ServiceTypeService.get_service_types(skip, limit).subscribe(data => {
+  //     this.service_types = data;
+  //   });
+  // }
 
-  refresh_data() {
-    this.loader_displayed = true;
-    this.RefServiceTypeService.get_service_types(this.skip, this.limit).subscribe(
-      data => {
-        this.service_types = data;
-        this.get_service_types_count();
-        this.loader_displayed = false;
-      }
-    );
-  }
+  // refresh_data() {
+  //   this.loader_displayed = true;
+  //   this.ServiceTypeService.get_service_types(this.skip, this.limit).subscribe(
+  //     data => {
+  //       this.service_types = data;
+  //       this.get_service_types_count();
+  //       this.loader_displayed = false;
+  //     }
+  //   );
+  // }
 
-  create_service_type() {
-    this.open_dialog(new ServiceTypeReference())
-      .afterClosed()
-      .subscribe(dialog_result => {
-        console.log(dialog_result);
-        if (!dialog_result) return;
+  // create_service_type() {
+  //   this.open_dialog(new ServiceTypeReference())
+  //     .afterClosed()
+  //     .subscribe(dialog_result => {
+  //       console.log(dialog_result);
+  //       if (!dialog_result) return;
 
-        this.service_types.unshift(dialog_result);
-        console.log("Created service type: ", dialog_result);
-      });
-  }
+  //       this.service_types.unshift(dialog_result);
+  //       console.log("Created service type: ", dialog_result);
+  //     });
+  // }
 
-  edit_service_type(service_type_item: ServiceTypeReference) {
-    let service_type_copy = ServiceTypeReference.clone(service_type_item);
+  // edit_service_type(service_type_item: ServiceTypeReference) {
+  //   let service_type_copy = ServiceTypeReference.clone(service_type_item);
 
-    this.open_dialog(service_type_copy)
-      .afterClosed()
-      .subscribe(dialog_result => {
-        if (!dialog_result) return;
-        this.handle_dialog_result(dialog_result);
+  //   this.open_dialog(service_type_copy)
+  //     .afterClosed()
+  //     .subscribe(dialog_result => {
+  //       if (!dialog_result) return;
+  //       this.handle_dialog_result(dialog_result);
 
-        this.service_types.forEach((item, index, array) => {
-          if (item._id == dialog_result._id) {
-            array[index] = dialog_result;
-          }
-        });
-      });
-  }
+  //       this.service_types.forEach((item, index, array) => {
+  //         if (item._id == dialog_result._id) {
+  //           array[index] = dialog_result;
+  //         }
+  //       });
+  //     });
+  // }
 
-  handle_dialog_result(response) {
-    if (response.action == "remove") {
-      this.service_types.forEach((item, index, array) => {
-        if (item._id == response.id) {
-          array.splice(index, 1);
-        }
-      });
-    }
-  }
+  // handle_dialog_result(response) {
+  //   if (response.action == "remove") {
+  //     this.service_types.forEach((item, index, array) => {
+  //       if (item._id == response.id) {
+  //         array.splice(index, 1);
+  //       }
+  //     });
+  //   }
+  // }
 
   open_dialog(data): MatDialogRef<ServicePopupReferencesComponent> {
     return this.dialog.open(ServicePopupReferencesComponent, {
