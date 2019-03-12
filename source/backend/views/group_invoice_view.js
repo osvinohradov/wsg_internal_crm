@@ -15,12 +15,12 @@ class GroupInvoiceView extends BaseView{
         try{
             invoices = await GroupInvoiceModel.get_group_invoices_names(group_invoice_name);
 
-            this.send_success_response(res, 200, invoices);
+            this.send_success_response(res, invoices);
         }
         catch(err){
             console.log(err)
             // Сделать вывод информации об ошибке, а в будующем логировать все ошибки
-            this.send_error_response();
+            this.send_error_response(res, {}, 500);
         }
     }
 }

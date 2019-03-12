@@ -7,15 +7,9 @@ import group_invoice_handler from './group_invoice_view';
 import user_handler from './user_view';
 import organization_handler from './organizations_view';
 
-
 // References
-import ref_unit_classifier_handler from './ref_unit_classifier_view';
-import ref_checking_account_handler from './ref_checking_account_view';
-import ref_individual_counterparty_handler from './ref_individual_counterparty_view';
-import ref_railway_station_handler from './ref_railway_station';
-
-
 import * as References from './references';
+
 
 export {
     train_handler,
@@ -24,12 +18,6 @@ export {
     // Services
     user_handler,
     organization_handler,
-
-    // References
-    ref_unit_classifier_handler,
-    ref_checking_account_handler,
-    ref_individual_counterparty_handler,
-    ref_railway_station_handler,
 
     References
 }

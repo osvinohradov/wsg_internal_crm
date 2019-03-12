@@ -19,7 +19,7 @@
       <mat-menu #PrintMenu="matMenu">
         <a href="{{SERVER_URL}}/print/train/act/{{train_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк акта</a>
         <a href="{{SERVER_URL}}/print/train/invoice/{{train_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк накладної</a>
-        <button mat-menu-item class="my_menu_label">Друк рахунка</button>
+        <a href="{{SERVER_URL}}/print/train/order/{{train_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк рахунка</a>
         <button mat-menu-item class="my_menu_label">
           Друк рахунка з печаткою
         </button>

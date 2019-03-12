@@ -53,7 +53,7 @@ CheckingAccountSchema.statics.get_checking_accounts_names = async function(check
                     { name: new RegExp(`${checking_account_name}`, 'i') } :
                     {};
 
-    let checking_account = ReferenceCheckingAccountModel.find(query, '_id name', options);
+    let checking_account = CheckingAccountModel.find(query, '_id name', options);
     return checking_account;
 }
 

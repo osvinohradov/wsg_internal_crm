@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CurrencyExchangeReference, CounterpartyNameModel } from "../models";
 import { Observable } from "rxjs";
+import { HttpResponse } from "../../Common/models/HttpResponseModel";
 
 @Injectable()
 export class RefCurrencyExchangeService {
@@ -9,10 +10,10 @@ export class RefCurrencyExchangeService {
 
   constructor(private http: HttpClient) {}
 
-  get_currency_exchanges_names(currency_exchange_name=''): Observable<CounterpartyNameModel[]> {
+  get_currency_exchanges_names(currency_exchange_name=''): Observable<HttpResponse> {
     const url = `${this.baseUrl}/reference/currency_exchanges/names`;
     
-    return this.http.get<CounterpartyNameModel[]>(url, { params: {
+    return this.http.get<HttpResponse>(url, { params: {
       currency_exchange_name: currency_exchange_name
     }});
   }
@@ -32,7 +33,7 @@ export class RefCurrencyExchangeService {
   }
 
   get_currency_exchanges(skip, limit) {
-    return this.http.get<CurrencyExchangeReference[]>(
+    return this.http.get<HttpResponse>(
       this.baseUrl + `/references/currency_exchange?skip=${skip}&limit=${limit}`
     );
   }
@@ -42,17 +43,17 @@ export class RefCurrencyExchangeService {
   }
 
   update_currency_exchange(curator: CurrencyExchangeReference) {
-    return this.http.put(
+    return this.http.put<HttpResponse>(
       this.baseUrl + `/references/currency_exchange/${curator._id}`,
       curator
     );
   }
 
   save_currency_exchange(curator: CurrencyExchangeReference) {
-    return this.http.post(this.baseUrl + `/references/currency_exchange`, curator);
+    return this.http.post<HttpResponse>(this.baseUrl + `/references/currency_exchange`, curator);
   }
 
   remove_currency_exchange(id: string) {
-    return this.http.delete(this.baseUrl + `/references/currency_exchange/${id}`);
+    return this.http.delete<HttpResponse>(this.baseUrl + `/references/currency_exchange/${id}`);
   }
 }

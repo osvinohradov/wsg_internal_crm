@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CurrencyExchangeReference } from "../../models";
 import { RefCurrencyExchangeService } from "../../services";
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 @Component({
   selector: 'currency-exchange-popup-ref',
@@ -28,14 +29,14 @@ export class CurrencyExchangePopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_currency_exchange(currency_exchange: CurrencyExchangeReference) {
-    this.RefCurrencyExchangeService.update_currency_exchange(currency_exchange).subscribe(data => {
-      this.currency_exchange = data as CurrencyExchangeReference;
+    this.RefCurrencyExchangeService.update_currency_exchange(currency_exchange).subscribe((response: HttpResponse) => {
+      this.currency_exchange = response.data as CurrencyExchangeReference;
     });
   }
 
   save_currency_exchange(currency_exchange: CurrencyExchangeReference) {
-    this.RefCurrencyExchangeService.save_currency_exchange(currency_exchange).subscribe(data => {
-      let tmp = data as CurrencyExchangeReference;
+    this.RefCurrencyExchangeService.save_currency_exchange(currency_exchange).subscribe((response: HttpResponse) => {
+      let tmp = response.data as CurrencyExchangeReference;
       if (!tmp._id) {
         this.is_saved = false;
       } else {

@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CurrencyExchangePopupReferencesComponent } from './../currencyExchangePopup/currencyExchangePopup.component';
 import { RefCurrencyExchangeService } from '../../services';
 import { CurrencyExchangeReference } from '../../models';
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 @Component({
   selector: 'currency-exchange-ref',
@@ -46,15 +47,15 @@ get_currency_exchanges_count(){
 load_currency_exchanges(skip, limit){
   this.current_page = skip;
   skip = skip > 0 ? skip * 10 : skip;
-  this.RefCurrencyExchangeService.get_currency_exchanges(skip, limit).subscribe((data) => {
-    this.currency_exchanges = data;
+  this.RefCurrencyExchangeService.get_currency_exchanges(skip, limit).subscribe((response: HttpResponse) => {
+    this.currency_exchanges = response.data;
   });
 }
 
 refresh_data(){
   this.loader_displayed = true;
-  this.RefCurrencyExchangeService.get_currency_exchanges(this.skip, this.limit).subscribe((data) => {
-    this.currency_exchanges = data;
+  this.RefCurrencyExchangeService.get_currency_exchanges(this.skip, this.limit).subscribe((response: HttpResponse) => {
+    this.currency_exchanges = response.data;
     this.get_currency_exchanges_count()
     this.loader_displayed = false;
   });

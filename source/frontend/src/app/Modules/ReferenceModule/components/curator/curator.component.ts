@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CuratorPopupReferencesComponent } from './../curatorPopup/curatorPopup.component';
 import { RefCuratorService } from '../../services';
 import { CuratorReference } from '../../models';
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 
 @Component({
@@ -39,8 +40,8 @@ export class CuratorReferencesComponent implements OnInit {
   }
 
   get_curators_count(){
-    this.RefCuratorService.get_curators_count().subscribe((data) => {
-      this.elements_count = data;
+    this.RefCuratorService.get_curators_count().subscribe((response: HttpResponse) => {
+      this.elements_count = response.data.count;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count)
     });
@@ -49,15 +50,15 @@ export class CuratorReferencesComponent implements OnInit {
   load_curator(skip, limit){
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.RefCuratorService.get_curators(skip, limit).subscribe((data) => {
-      this.curators = data;
+    this.RefCuratorService.get_curators(skip, limit).subscribe((response: HttpResponse) => {
+      this.curators = response.data;
     });
   }
 
   refresh_data(){
     this.loader_displayed = true;
-    this.RefCuratorService.get_curators(this.skip, this.limit).subscribe((data) => {
-      this.curators = data;
+    this.RefCuratorService.get_curators(this.skip, this.limit).subscribe((response: HttpResponse) => {
+      this.curators = response.data;
       this.get_curators_count()
       this.loader_displayed = false;
     });

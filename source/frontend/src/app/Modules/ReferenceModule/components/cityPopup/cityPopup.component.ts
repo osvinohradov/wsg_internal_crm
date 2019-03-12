@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CityReference } from "../../models";
 import { CityService } from "../../services";
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 @Component({
   selector: 'city-popup-ref',
@@ -26,14 +27,14 @@ export class CityPopupReferencesComponent implements OnInit {
   ngOnInit() {}
 
   update_city(city: CityReference) {
-    this.CityService.update_city(city).subscribe(data => {
-      this.city = data as CityReference;
+    this.CityService.update_city(city).subscribe((response: HttpResponse) => {
+      this.city = response.data as CityReference;
     });
   }
 
   save_city(city: CityReference) {
-    this.CityService.save_city(city).subscribe(data => {
-      let tmp = data as CityReference;
+    this.CityService.save_city(city).subscribe((response: HttpResponse) => {
+      let tmp = response.data as CityReference;
       if (!tmp._id) {
         this.is_saved = false;
       } else {

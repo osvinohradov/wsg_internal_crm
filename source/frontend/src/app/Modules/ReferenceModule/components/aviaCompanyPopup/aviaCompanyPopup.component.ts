@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { AviaCompanyReference } from "../../models";
 import { AviaCompanyService } from "../../services";
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 @Component({
   selector: 'avia-company-popup-ref',
@@ -34,8 +35,8 @@ export class AviaCompanyPopupReferencesComponent implements OnInit {
   }
 
   save_avia_company(avia_company: AviaCompanyReference) {
-    this.AviaCompanyService.save_avia_company(avia_company).subscribe(data => {
-      let tmp = data as AviaCompanyReference;
+    this.AviaCompanyService.save_avia_company(avia_company).subscribe((response: HttpResponse) => {
+      let tmp = response.data as AviaCompanyReference;
       if (!tmp._id) {
         this.is_saved = false;
       } else {

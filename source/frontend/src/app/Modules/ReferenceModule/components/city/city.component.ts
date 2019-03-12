@@ -5,6 +5,7 @@ import { SearchPopupReferencesComponent } from "./../searchPopup/searchPopup.com
 
 import { CityService } from "../../services";
 import { CityReference } from "../../models";
+import { HttpResponse } from "../../../Common/models/HttpResponseModel";
 
 @Component({
   selector: "city-ref",
@@ -36,8 +37,8 @@ export class CityReferencesComponent implements OnInit {
   }
 
   get_cities_count() {
-    this.CityService.get_cities_count().subscribe(data => {
-      this.elements_count = data;
+    this.CityService.get_cities_count().subscribe((response: HttpResponse) => {
+      this.elements_count = response.data.count;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count);
     });
@@ -46,15 +47,15 @@ export class CityReferencesComponent implements OnInit {
   load_cities(skip, limit) {
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.CityService.get_cities(skip, limit).subscribe(data => {
-      this.cities = data;
+    this.CityService.get_cities(skip, limit).subscribe((response: HttpResponse) => {
+      this.cities = response.data;
     });
   }
 
   refresh_data() {
     this.loader_displayed = true;
-    this.CityService.get_cities(this.skip, this.limit).subscribe(data => {
-      this.cities = data;
+    this.CityService.get_cities(this.skip, this.limit).subscribe((response: HttpResponse) => {
+      this.cities = response.data;
       this.get_cities_count();
       this.loader_displayed = false;
     });

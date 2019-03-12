@@ -16,12 +16,12 @@ class OrganizationView extends BaseView{
         try{
             organizations = await OrganizationModel.get_organizations_names(organization_name);
 
-            this.send_success_response(res, 200, organizations);
+            this.send_success_response(res, organizations);
         }
         catch(err){
             console.log(err)
             // Сделать вывод информации об ошибке, а в будующем логировать все ошибки
-            this.send_error_response();
+            this.send_error_response(res, {}, 500);
         }
     }
 }

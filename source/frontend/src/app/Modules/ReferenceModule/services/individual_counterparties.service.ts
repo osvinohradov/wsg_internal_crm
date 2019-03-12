@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { IndividualCounterpartyReference, IndividualCounterpartiesPassportReference, RefIndividualCounterpartyNameModel } from "../models";
 import { Observable } from "rxjs";
+import { HttpResponse } from "../../Common/models/HttpResponseModel";
 
 @Injectable()
 export class RefIndividualCounterpartyService {
@@ -9,10 +10,10 @@ export class RefIndividualCounterpartyService {
 
   constructor(private http: HttpClient) {}
 
-  get_individual_counterparties_names(individual_counterparty_name=''): Observable<RefIndividualCounterpartyNameModel[]> {
+  get_individual_counterparties_names(individual_counterparty_name=''): Observable<HttpResponse> {
     const url = `${this.baseUrl}/reference/individual_counterparties/names`;
     
-    return this.http.get<RefIndividualCounterpartyNameModel[]>(url, { params: {
+    return this.http.get<HttpResponse>(url, { params: {
       individual_counterparty_name: individual_counterparty_name
     }});
   }
@@ -34,7 +35,7 @@ export class RefIndividualCounterpartyService {
   }
 
   get_individual_counterparties(skip, limit) {
-    return this.http.get<IndividualCounterpartyReference[]>(
+    return this.http.get<HttpResponse>(
       this.baseUrl + `/references/individual_counterparty?skip=${skip}&limit=${limit}`
     );
   }
@@ -44,15 +45,15 @@ export class RefIndividualCounterpartyService {
   }
 
   update_individual_counterparty(individual_counterparty: IndividualCounterpartyReference) {
-    return this.http.put(
+    return this.http.put<HttpResponse>(
       this.baseUrl + `/references/individual_counterparty/${individual_counterparty._id}`,individual_counterparty);
   }
 
   save_individual_counterparty(individual_counterparty: IndividualCounterpartyReference) {
-    return this.http.post(this.baseUrl + `/references/individual_counterparty`, individual_counterparty);
+    return this.http.post<HttpResponse>(this.baseUrl + `/references/individual_counterparty`, individual_counterparty);
   }
 
   remove_individual_counterparty(id: string) {
-    return this.http.delete(this.baseUrl + `/references/individual_counterparty/${id}`);
+    return this.http.delete<HttpResponse>(this.baseUrl + `/references/individual_counterparty/${id}`);
   }
 }

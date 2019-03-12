@@ -11,10 +11,10 @@ export class ServiceTypeService {
   constructor(private http: HttpClient) {}
 
 
-  get_service_types_names(service_type_name=''): Observable<ServiceTypeModel[]> {
+  get_service_types_names(service_type_name=''): Observable<HttpResponse> {
     const url = `${this.baseUrl}/reference/service_types/names`;
     
-    return this.http.get<ServiceTypeModel[]>(url, { params: {
+    return this.http.get<HttpResponse>(url, { params: {
       service_type_name: service_type_name
     }});
   }

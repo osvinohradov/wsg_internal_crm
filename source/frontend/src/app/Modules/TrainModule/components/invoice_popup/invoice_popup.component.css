@@ -67,5 +67,5 @@ mat-form-field.custom-form-field{
     min-width: 10px;
 }
 mat-checkbox > label > span.mat-checkbox-label{
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
 }

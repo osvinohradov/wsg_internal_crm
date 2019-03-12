@@ -31,6 +31,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from "rxjs";
 import { map, startWith, catchError, debounceTime, switchMap, debounce } from "rxjs/operators";
 import { CONFIG } from '../../../constants';
+import { HttpResponse } from "../../../Common/models/HttpResponseModel";
 
 
 @Component({
@@ -283,7 +284,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.CounterpartyService
       .get_counterparties_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   } 
@@ -294,7 +295,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
       .pipe(map(result => {
         console.log('===================== Group Invoices =====================');
         console.log(result);
-        return result;
+        return result.data;
       })
     );
   }
@@ -303,7 +304,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefUnitClassifierService
       .get_ref_unit_clasifiers_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -312,7 +313,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefCuratorService
       .get_curators_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -321,7 +322,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefCurrencyExchangeService
       .get_currency_exchanges_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -330,7 +331,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.ServiceTypeService
       .get_service_types_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -339,7 +340,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefCheckingAccountService
       .get_checking_accounts_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -348,7 +349,8 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefUserService
       .get_users_names(value)
       .pipe(map(result => {
-        return result;
+        console.log('User names: ', result.data)
+        return result.data;
       })
     );
   }
@@ -357,7 +359,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefOrganizationService
       .get_organizations_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -366,7 +368,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefRailwayStationService
       .get_railway_stations_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   }
@@ -375,7 +377,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
     return this.RefIndividualCounterpartyService
       .get_individual_counterparties_names(value)
       .pipe(map(result => {
-        return result;
+        return result.data;
       })
     );
   } 
@@ -528,7 +530,7 @@ export class TrainInvoiceDialogComponent implements OnInit {
   save_ticket(ticket: TrainInvoiceDetail){
     console.log('Save ticket');
     this.TrainService.create_train_invoice(ticket)
-      .then((data: TrainInvoiceDetail) => {
+      .then((response: HttpResponse) => {
         this.toastr.successToastr('Залізничний квиток успішно збереженно.', 'Успішно!');
         //this.train_invoice = data;
       })
@@ -541,10 +543,10 @@ export class TrainInvoiceDialogComponent implements OnInit {
   update_ticket(ticket){
     console.log('Update ticket');
     this.TrainService.update_train_invoice(ticket)
-      .then((data: TrainInvoiceDetail) => {
+      .then((response: HttpResponse) => {
         this.toastr.successToastr('Залізничний квиток успішно змінено.', 'Успішно!');
         // this.train_invoice = data;
-        console.log(data)
+        console.log(response)
       })
       .catch((err) => {
         console.log(err);

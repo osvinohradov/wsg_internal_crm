@@ -9,6 +9,7 @@ import { AviaCompanyPopupReferencesComponent } from './../aviaCompanyPopup/aviaC
 import { AviaCompanyService } from '../../services';
 
 import { AviaCompanyReference } from '../../models';
+import { HttpResponse } from '../../../Common/models/HttpResponseModel';
 
 @Component({
   selector: 'aviaCompany-ref',
@@ -41,8 +42,8 @@ export class AviaCompanyReferencesComponent implements OnInit {
   }
   // Получаем общее количество авиа компаний в БД
   get_avia_companies_count(){
-    this.AviaCompanyService.get_avia_company_count().subscribe((data) => {
-      this.elements_count = data;
+    this.AviaCompanyService.get_avia_company_count().subscribe((response: HttpResponse) => {
+      this.elements_count = response.data.count;
       let count = Math.ceil(this.elements_count / this.limit);
       this.pagination_arr = new Array(count)
     });
@@ -51,16 +52,16 @@ export class AviaCompanyReferencesComponent implements OnInit {
   load_avia_compaies(skip, limit){
     this.current_page = skip;
     skip = skip > 0 ? skip * 10 : skip;
-    this.AviaCompanyService.get_avia_companies(skip, limit).subscribe((data) => {
-      this.avia_companies = data;
+    this.AviaCompanyService.get_avia_companies(skip, limit).subscribe((response: HttpResponse) => {
+      this.avia_companies = response.data;
     });
   }
 
   // Запрашиваем данные заново для обновления
   refresh_data(){
     this.loader_displayed = true;
-    this.AviaCompanyService.get_avia_companies(this.skip, this.limit).subscribe((data) => {
-      this.avia_companies = data;
+    this.AviaCompanyService.get_avia_companies(this.skip, this.limit).subscribe((response: HttpResponse) => {
+      this.avia_companies = response.data;
       this.get_avia_companies_count()
       this.loader_displayed = false;
     });
