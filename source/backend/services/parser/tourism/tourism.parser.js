@@ -1,7 +1,7 @@
 // Built-in packages
-import util from 'util';
+
 // Installed packages
-import xml_parser from 'xml-parser';
+
 // Internal packages
 import { Parser } from '../parser';
 
@@ -15,7 +15,7 @@ class TourismParser extends Parser {
     async parse(xml_ticket){
         let ticket_as_obj = await this.get_xml_data(xml_ticket);
         let invoice = this.get_invoice(ticket_as_obj, null);
-        console.log(util.inspect(ticket_as_obj, true, Infinity, true));
+        return invoice;
     }
 
     async get_invoice(ticket, model){
@@ -30,26 +30,32 @@ class TourismParser extends Parser {
         invoice[ticket.name]['brand'] = ticket.attributes.brand;
 
         let date = await this.get_attr(ticket.children);
-
-        console.log(invoice);
-        console.log(date);
-
+        let result = Object.assign(invoice, date);
+        return result;
     }
 
-    async get_attr(arr){
+    async get_attr(arr, is_child){
         let section = {};
 
         for(let i = 0; i < arr.length; i++){
             let elem = arr[i];
+            section[elem.name] = {
+                attrs: null,
+                elements: []
+            }
 
             let attrs = {};
             for(let prop in elem.attributes){
                 attrs[prop] = elem.attributes[prop]
             }
 
-            section[elem.name] = {}
+            for(let i = 0; i < elem.children.length; i++){
+                let element = null;
+                element = await this.get_attr(elem.children, true);
+                section[elem.name]['elements'].push(element);
+            }
+
             section[elem.name]['attrs'] = attrs;
-            //section[elem.name]['child'] = child;
         }
 
         return section;
