@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -87,7 +87,7 @@ class CurrencyExchangeController extends BaseView{
         let currency_exchanges_name = req.query.currency_exchanges_name;
  
         try{
-            currency_exchanges = await Ref.CurrencyExchangeModel.get_currency_exchange_names(currency_exchanges_name);
+            currency_exchanges = await References.CurrencyExchangeModel.get_currency_exchange_names(currency_exchanges_name);
 
             this.send_success_response(res, currency_exchanges);
         }

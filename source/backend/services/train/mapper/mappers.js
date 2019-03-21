@@ -1,7 +1,7 @@
 import moment from 'moment';
 import mongoose from 'mongoose';
 
-import { TrainInvoiceModel, Ref } from "../../../models";
+import { TrainInvoiceModel, References } from "../../../models";
 import { PAYMENT_FORMS } from '../../../constants/common';
 import { generate_random_number } from '../../../helpers';
 import { DEFAULT_COUNTERPARTY_NAME } from '../../../constants/common';
@@ -21,7 +21,7 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   // t.payment_date = date;
   t.tickets_count = 1;
 
-  let client = await Ref.ReferenceCounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
+  let client = await References.CounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
 
   t.client_id = client ? client._id : null;  
   t.service_date = date; // возможно заменить (спросить у Игоря)
@@ -31,7 +31,7 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
   t.is_paid = false;
   t.group_invoice_id = null;
 
-  let currency = await Ref.ReferenceUnitClassifierModel.findOne({ name: 'ГРН' });
+  let currency = await References.UnitClassifierModel.findOne({ name: 'ГРН' });
   currency = currency._id || null;
 
   t.offer_currency_id = currency;
@@ -60,13 +60,13 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
 
   let st_code = tfx.departureStationCode ? new RegExp(`.*2${tfx.departureStationCode}.*`, 'i') : '';
   
-  let departure = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
+  let departure = await References.RailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
   if(departure){
     t.detail_info.departure_station_id = departure._id;
   }
 
   st_code = tfx.arrivalStationCode ? new RegExp(`.*2${tfx.arrivalStationCode}.*`, 'i') : '';
-  let arrival = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
+  let arrival = await References.RailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
   
   if(arrival){
     t.detail_info.arrival_station_id = arrival._id;
@@ -86,14 +86,14 @@ export async function map_ticket_from_argest(ticket_from_xml, additional_params)
     first_name_native: tfx.passenger.firstName
   }
 
-  let individual_counterparty = await Ref.ReferenceIndividualCounterpartiesModel.findOne(individual);
+  let individual_counterparty = await References.IndividualCounterpartyModel.findOne(individual);
   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@ Individual counterparty @@@@@@@@@@@@@@@@@@@@@@@@@@');
   console.log(individual_counterparty);
   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 
 
   if(!individual_counterparty){
-    individual_counterparty = new Ref.ReferenceIndividualCounterpartiesModel(individual);
+    individual_counterparty = new References.IndividualCounterpartyModel(individual);
     individual_counterparty = await individual_counterparty.save();
     console.log('========================== Individual counterparty ==========================');
     console.log(individual_counterparty);

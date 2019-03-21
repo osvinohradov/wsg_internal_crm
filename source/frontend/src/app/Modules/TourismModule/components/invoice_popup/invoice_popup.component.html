@@ -1,0 +1,945 @@
+<h4 class="mb-2">
+  Накладна туризм:
+  {{ tourism_invoice.number ? tourism_invoice.number : 0 }}
+  від
+  {{ _get_date_time(tourism_invoice.date) }}
+</h4>
+
+<!--Row MENU Buttons -->
+<div id="invoicePopup" class="clearfix">
+  <div class="col-md-6 pl-0 pr-0 d-inline d-none">
+
+    <button mat-raised-button class="mr-1 form_button">Провести та закрити</button>
+
+    <div class="d-inline mr-my-1">
+      <button mat-raised-button class="mr-1 form_button" [matMenuTriggerFor]="PrintMenu">
+        Друк
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #PrintMenu="matMenu">
+        <a href="{{SERVER_URL}}/print/train/act/{{tourism_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк акта</a>
+        <a href="{{SERVER_URL}}/print/train/invoice/{{tourism_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк накладної</a>
+        <a href="{{SERVER_URL}}/print/train/order/{{tourism_invoice._id}}" target="_blank" mat-menu-item class="my_menu_label">Друк рахунка</a>
+        <button mat-menu-item class="my_menu_label">
+          Друк рахунка з печаткою
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="d-inline mr-my-1">
+      <button class="btn btn-default my_button_style" mat-button [matMenuTriggerFor]="ChoiceMenu">
+        Підбір
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+      <mat-menu #ChoiceMenu="matMenu">
+        <button mat-menu-item class="my_menu_label">Choice 1</button>
+        <button mat-menu-item class="my_menu_label">Choice 2</button>
+      </mat-menu>
+    </div>
+
+    <button (click)="save_update(tourism_invoice)" mat-raised-button class="mr-1 form_button icon_button" matTooltip="Записати">
+      <span class="material-icons">save</span>
+    </button>
+
+    <button mat-raised-button class="mr-1 form_button icon_button" matTooltip="Провести">
+      <span class="material-icons">offline_pin</span>
+    </button>
+
+    <button (click)="close_dialog()" mat-raised-button class="mr-1 form_button icon_button" matTooltip="Закрити">
+      <span class="material-icons">close</span>
+    </button>
+
+  </div>
+
+  <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+    <button mat-raised-button class="float-right mr-1 form_button icon_button" matTooltip="Довідка">
+      <span class="material-icons">help_outline</span>
+    </button>
+
+    <div class="allActionsMenu d-inline mr-my-1 float-left float-lg-right">
+      
+      <button mat-raised-button class="mr-1 form_button" [matMenuTriggerFor]="menu">Всі дії
+        <span class="material-icons">keyboard_arrow_down</span>
+      </button>
+
+      <mat-menu #menu="matMenu">
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Провести та закрити</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">library_books</span>
+          </div>
+          <span class="d-inline my_menu_label">Перечитати</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">filter_none</span>
+          </div>
+          <span class="d-inline my_menu_label">Скопіювати</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">remove_from_queue</span>
+          </div>
+          <span class="d-inline my_menu_label">Відмітити для вилучення / Зняти позначку</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">playlist_play</span>
+          </div>
+          <span class="d-inline my_menu_label">Показати у списку</span>
+        </button>
+
+        <button mat-menu-item>
+          <span class="empty-icon d-inline my_menu_label">Друк</span>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">chevron_right</span>
+          </div>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons"> filter_tilt_shift</span>
+          </div>
+          <span class="d-inline my_menu_label">Підбір</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">save</span>
+          </div>
+          <span class="d-inline my_menu_label">Записати</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">offline_pin</span>
+          </div>
+          <span class="d-inline my_menu_label">Провести</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">close</span>
+          </div>
+          <span class="d-inline my_menu_label">Закрити</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">cloud_download</span>
+          </div>
+          <span class="d-inline my_menu_label">Завантаження ONLINE бронювання</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">transform</span>
+          </div>
+          <span class="d-inline my_menu_label">Змінити форму...</span>
+        </button>
+
+        <button mat-menu-item>
+          <div class="d-inline mr-3 my_menu_icon">
+            <span class="material-icons">help_outline</span>
+          </div>
+          <span class="d-inline my_menu_label">Довідка</span>
+        </button>
+
+      </mat-menu>
+    </div>
+  </div>
+
+</div>
+
+<!--Row MENU Buttons End-->
+
+
+<!-- Invoice Popup Form Container -->
+<div class="mt-4 mb-1">
+  <form class="form-horizontal" role="form">
+    <div class="row mr-0 ml-0">
+      <!-- Номер -->
+      <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.number" name="number" matInput placeholder="Номер:" disabled>
+      </mat-form-field>
+      <!-- Дата -->
+      <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
+        <input [(ngModel)]="tourism_invoice.date" name="date"
+          matInput [matDatepicker]="picker0" placeholder="Дата:" />
+        <mat-datepicker-toggle matSuffix [for]="picker0" ></mat-datepicker-toggle>
+        <mat-datepicker #picker0></mat-datepicker>
+      </mat-form-field>
+      <!-- Дата сплати -->
+      <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
+        <input [(ngModel)]="tourism_invoice.payment_date" name="payment_date"
+          matInput [matDatepicker]="picker1" placeholder="Дата сплати:" />
+        <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <!-- Дата послуг -->
+      <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
+        <input [(ngModel)]="tourism_invoice.service_date" name="service_date"
+          matInput [matDatepicker]="picker2" placeholder="Дата послуг:" />
+        <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      <!-- Форма сплати -->
+      <mat-form-field class="col-2 pr-1 pl-1 custom-form-field">
+        <mat-select [(value)]="tourism_invoice.payment_form" placeholder="Форма сплати:">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let payment_form of PAYMENT_FORMS" [value]="payment_form">
+            {{ payment_form }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- Квитків -->
+      <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.service_count" name="service_count" disabled matInput placeholder="Послуг:"/>
+      </mat-form-field>
+      <!-- Всього -->
+      <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
+        <input [value]="_get_total_amount_sum()" name="total_amount" matInput placeholder="Всього:" disabled />
+      </mat-form-field>
+      <!-- Опрацьовано -->
+      <section class="col-1 pt-3 pr-1 pl-1 custom-form-field">
+        <mat-checkbox [(ngModel)]="tourism_invoice.is_paid" name="processed" class="float-left" matInput disabled>Оплачено:</mat-checkbox>
+      </section>
+
+    </div>
+
+    
+    <div class="row mr-0 ml-0">
+      <!-- Клієнт  -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.client_id.name"
+          [formControl]="clientFromControl" name="departure_station_id" type="text" 
+          placeholder="Клієнт: " matInput [matAutocomplete]="client_id">
+        <mat-autocomplete autoActiveFirstOption #client_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setClientValue($event, item)"
+                      *ngFor="let item of clientAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+        <button mat-button matSuffix mat-icon-button aria-label="Settings">
+            <mat-icon>more_horiz</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- Групове замовлення -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.group_invoice_id.group_name" 
+          [formControl]="groupInvoiceFromControl" name="group_invoice_id" type="text" 
+          placeholder="Групове замовлення: " matInput [matAutocomplete]="group_invoice_id">
+        <mat-autocomplete autoActiveFirstOption #group_invoice_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setGroupInvoiceValue($event, item)"
+                      *ngFor="let item of groupInvoiceAutoComplete | async" [value]="item._id">
+            {{ item.group_name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Вид сервісу -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.service_type_id.name"
+          [formControl]="serviceTypeFromControl" name="service_type_id" type="text" 
+          placeholder="Вид сервісу: " matInput [matAutocomplete]="service_type_id">
+        <mat-autocomplete autoActiveFirstOption #service_type_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setServiceTypeValue($event, item)"
+                      *ngFor="let item of serviceTypeAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Сплата такси -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.taxes_payment_id.name"
+          [formControl]="taxesPaymentFromControl" name="taxes_payment_id" type="text" 
+          placeholder="Сплата такси: " matInput [matAutocomplete]="taxes_payment_id">
+        <mat-autocomplete autoActiveFirstOption #taxes_payment_id="matAutocomplete">
+          <mat-option  (onSelectionChange)="setTaxesPaymentValue($event, item)"
+                      *ngFor="let item of taxesPaymentAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!--Валюта пропозиції  -->
+      <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.offer_currency_id.name"
+          [formControl]="offerCurrencyFromControl" name="offer_currency_id" type="text" 
+          placeholder="Валюта пропозиції: " matInput [matAutocomplete]="offer_currency_id">
+        <mat-autocomplete autoActiveFirstOption #offer_currency_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setOfferCurrencyValue($event, item)"
+                      *ngFor="let item of offerCurrencyAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Підсумкова валюта -->
+      <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.total_currency_id.name"
+          [formControl]="totalCurrencyFromControl" name="total_currency_id" type="text" 
+          placeholder="Підсумкова валюта: " matInput [matAutocomplete]="total_currency_id">
+        <mat-autocomplete autoActiveFirstOption #total_currency_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setTotalCurrencyValue($event, item)"
+                      *ngFor="let item of totalCurrencyAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Обмін валют -->
+      <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.currency_exchange_id.name"
+          [formControl]="currencyExchangeFromControl" name="currency_exchange_id" type="text" 
+          placeholder="Обмін валют: " matInput [matAutocomplete]="currency_exchange_id">
+        <mat-autocomplete autoActiveFirstOption #currency_exchange_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setCurrencyExchangeValue($event, item)"
+                      *ngFor="let item of currencyExchangeAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- На дату -->
+      <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
+        <input matInput [matDatepicker]="picker3" placeholder="На дату:" />
+        <mat-datepicker-toggle matSuffix [for]="picker3" ></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+
+    <div class="row mr-0 ml-0">
+      <!-- Постачальник -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.provider_id.name"
+          [formControl]="providerFromControl" name="provider_id" type="text" 
+          placeholder="Постачальник: " matInput [matAutocomplete]="provider_id">
+        <mat-autocomplete autoActiveFirstOption #provider_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setProviderValue($event, item)"
+                      *ngFor="let item of providerAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Куратор -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.curator_id.name"
+          [formControl]="curatorFromControl" name="curator_id" type="text" 
+          placeholder="Куратор: " matInput [matAutocomplete]="curator_id">
+        <mat-autocomplete autoActiveFirstOption #curator_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setCuratorValue($event, item)"
+                      *ngFor="let item of curatorAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Відповідальний -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input value="{{tourism_invoice.responsible_agent_id.first_name + ' ' +tourism_invoice.responsible_agent_id.last_name}}"
+          [formControl]="responsibleAgentFromControl" name="responsible_agent_id" type="text" 
+          placeholder="Відповідальний: " matInput [matAutocomplete]="responsible_agent_id">
+        <mat-autocomplete autoActiveFirstOption #responsible_agent_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setResponsibleAgentValue($event, item)"
+                      *ngFor="let item of responsibleAgentAutoComplete | async" [value]="item.last_name">
+            {{ item.first_name }} {{ item.last_name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Агент -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input value="{{tourism_invoice.agent_id.first_name + ' ' +tourism_invoice.agent_id.last_name}}"
+          [formControl]="agentFromControl" name="agent_id" type="text" 
+          placeholder="Агент: " matInput [matAutocomplete]="agent_id">
+        <mat-autocomplete autoActiveFirstOption #agent_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setAgentValue($event, item)"
+                      *ngFor="let item of agentAutoComplete | async" [value]="item.last_name">
+            {{ item.first_name }} {{ item.last_name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Розрахунковий рахунок -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.checking_account_id.name"
+          [formControl]="checkingAccountFromControl" name="checking_account_id" type="text" 
+          placeholder="Розрахунковий рахунок: " matInput [matAutocomplete]="checking_account_id">
+        <mat-autocomplete autoActiveFirstOption #checking_account_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setCheckingAccountValue($event, item)"
+                      *ngFor="let item of checkingAccountAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Коментар -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [(ngModel)]="tourism_invoice.comment" name="comment" matInput placeholder="Коментар:" />
+      </mat-form-field>
+
+    </div>
+
+<!-- TODO: Add table for stations -->
+    <!-- Angular Material Tabs -->
+    <mat-tab-group>
+      <mat-tab activelabel label="Детальна інформація">
+        <div id="document_content" class="mr-2 ml-2 mb-1 mt-3">
+          <div class="row ml-0 mr-0">
+            <!-- Відправлення -->
+            <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+              <input [value]="tourism_invoice.detail_info.departure_station_id.name_ukr"
+                [formControl]="departureStationFromControl" name="departure_station_id" type="text" 
+                placeholder="Відправлення: " matInput [matAutocomplete]="departure_station_id">
+              <mat-autocomplete autoActiveFirstOption #departure_station_id="matAutocomplete">
+                <mat-option (onSelectionChange)="setDepartureStationValue($event, item)" 
+                            *ngFor="let item of departureStationAutoComplete | async" [value]="item.name_ukr">
+                  {{ item.name_ukr }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <!-- Прибуття -->
+            <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+              <input [value]="tourism_invoice.detail_info.arrival_station_id.name_ukr"
+                [formControl]="arrivalStationFromControl" name="arrival_station_id" type="text" 
+                placeholder="Прибуття: " matInput [matAutocomplete]="arrival_station_id">
+              <mat-autocomplete autoActiveFirstOption #arrival_station_id="matAutocomplete">
+                <mat-option (onSelectionChange)="setArrivalStationValue($event, item)" 
+                            *ngFor="let item of arrivalStationAutoComplete | async" [value]="item.name_ukr">
+                  {{ item.name_ukr }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <!-- Прізвище -->
+            <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+              <input value="{{tourism_invoice.detail_info.surname_id.last_name_native}} {{tourism_invoice.detail_info.surname_id.first_name_native}}"
+                [formControl]="individualCounterpartyFromControl" name="surname_id" type="text" 
+                placeholder="Прізвище: " matInput [matAutocomplete]="surname_id">
+              <mat-autocomplete autoActiveFirstOption #surname_id="matAutocomplete">
+                <mat-option (onSelectionChange)="setIndividualCounterpartyValue($event, item)" 
+                            *ngFor="let item of individualCounterpartyAutoComplete | async" [value]="item.last_name">
+                  {{ item.last_name_native }} {{ item.first_name_native}} 
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <!-- Номер квитка -->
+            <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+              <input [(ngModel)]="tourism_invoice.detail_info.ticket_number" name="ticket_number" matInput
+                type="text" placeholder="Номер квитка:" />
+            </mat-form-field>
+          </div>
+          
+          <div class="row mr-0 ml-0 mt-1">
+
+            <!-- Інформація про потяг -->
+            <div class="col-4">
+
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Інформація про потяг:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Номер потягу -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.train_number" name="train_number"
+                    matInput type="text" placeholder="Номер потягу: " />
+                </mat-form-field>
+                <!-- № вагона -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.carriage_number" name="carriage_number"
+                    matInput type="text" placeholder="№ вагона: " />
+                </mat-form-field>
+                <!-- Місце -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.place" name="place"
+                    matInput type="text" placeholder="Місце: " />
+                </mat-form-field>
+                <!-- Тип сервісу -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.service_type" name="service_type"
+                    matInput type="text" placeholder="Тип сервісу: " />
+                </mat-form-field>
+
+              </div>
+            </div>
+
+            <!-- Дата та час -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Дата та час:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Відправлення -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_date(tourism_invoice.detail_info.departure_dt)" name="departure_date"
+                    matInput type="text" placeholder="Відправлення: " />
+                </mat-form-field>
+                <!--  -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_time(tourism_invoice.detail_info.departure_dt)" name="departure_time"
+                    matInput type="text" />
+                </mat-form-field>
+                <!-- Прибуття -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_date(tourism_invoice.detail_info.arrival_dt)" name="arrival_date"
+                    matInput type="text" placeholder="Прибуття: " />
+                </mat-form-field>
+                <!--  -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_time(tourism_invoice.detail_info.arrival_dt)" name="arrival_time"
+                    matInput type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Дата покупки квитка -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Дата покупки квитка:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <mat-form-field class="col-12 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_date(tourism_invoice.detail_info.payment_provider_dt)" name="payment_provider_dt"
+                    matInput placeholder="У постачальника:" />
+                </mat-form-field>
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="row mr-0 ml-0 mt-1">
+
+            <!-- Вартість постачальника -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                    Вартість постачальника:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Сума постач -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.supplier_cost.sum" name="supplier_cost.sum"
+                    matInput placeholder="Сума постач.: " />
+                </mat-form-field>
+                <!-- В т.ч. ПДВ -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.supplier_cost.mpe" name="supplier_cost.mpe"
+                    matInput placeholder="В т.ч. ПДВ: " />
+                </mat-form-field>
+                <!-- Валюта -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <mat-select
+                    [(ngModel)]="tourism_invoice.detail_info.supplier_cost.currency_id" name="supplier_cost.currency_id"
+                    placeholder="Валюта: ">
+                    <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Комісія постачальника -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Комісія постачальника:
+                  </h4>
+                </div>
+              </div>
+              <div class="row">
+                <!-- % -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.supplier_commision.percent" name="supplier_commision.percent"
+                    matInput placeholder="%: " />
+                </mat-form-field>
+                <!-- Сума -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.supplier_commision.sum" name="supplier_commision.sum"
+                    matInput placeholder="Сума: " />
+                </mat-form-field>
+                <!-- В т.ч. ПДВ -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.supplier_commision.mpe" name="supplier_commision.mpe"
+                    matInput placeholder="В т.ч. ПДВ: " />
+                </mat-form-field>
+                <!-- Валюта -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <mat-select [(ngModel)]="tourism_invoice.detail_info.supplier_commision.currency_id"
+                    placeholder="Валюта: " name="supplier_commision.currency_id" >
+                    <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+
+              </div>
+            </div>
+
+            <!-- Штраф -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Штраф:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Сума -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.forfeit.sum" name="forfeit.sum"
+                    matInput placeholder="Сума: " />
+                </mat-form-field>
+                <!-- В т.ч. ПДВ -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.forfeit.mpe" name="forfeit.mpe"
+                    matInput placeholder="В т.ч. ПДВ: " />
+                </mat-form-field>
+                <!-- Валюта -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <mat-select [(ngModel)]="tourism_invoice.detail_info.forfeit.currency_id"
+                    placeholder="Валюта: " name="forfeit.currency_id" >
+                    <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mr-0 ml-0 mt-1">
+
+            <!-- Послуги агенції -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Послуги агенції:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- % -->
+                <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.agency_services.percent"
+                    matInput placeholder="%: " name="agency_services.percent" />
+                </mat-form-field>
+                <!-- Сума -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.agency_services.sum"
+                    matInput placeholder="Сума: " name="agency_services.sum" />
+                </mat-form-field>
+                <!-- % банку -->
+                <mat-form-field class="col-3 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.agency_services.bank_percent"
+                    matInput placeholder="% банку: " name="agency_services.bank_percent" />
+                </mat-form-field>
+                <!-- В т.ч. ПДВ -->
+                <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.agency_services.mpe"
+                    matInput placeholder="В т.ч. ПДВ: " name="agency_services.bank_percent" />
+                </mat-form-field>
+                <!-- Валюта -->
+                <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+                  <mat-select [(ngModel)]="tourism_invoice.detail_info.agency_services.currency_id"
+                    placeholder="Валюта: " name="forfeit.currency_id" >
+                    <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Інші послуги -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Інші послуги:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Сума -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.other_services.sum" name="other_services.sum"
+                    (change)="_change_total_sum()" matInput placeholder="Сума: "/>
+                </mat-form-field>
+                <!-- В т.ч. ПДВ -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.other_services.mpe" 
+                    matInput placeholder="В т.ч. ПДВ: " name="other_services.mpe" />
+                </mat-form-field>
+                <!-- Валюта -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <mat-select [(ngModel)]="tourism_invoice.detail_info.other_services.currency_id"
+                    placeholder="Валюта: " name="forfeit.currency_id" >
+                    <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+    
+            </div>
+
+            <!-- Всього -->
+            <div class="col-4">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Всього:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Сума -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_total_amount_sum()" name="total_amount.sum"
+                    matInput placeholder="Сума: " />
+                </mat-form-field>
+                <!-- В т.ч. ПДВ -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [value]="_get_total_amount_mpe()" name="total_amount.mpe"
+                    matInput placeholder="В т.ч. ПДВ: " />
+                </mat-form-field>
+                <!-- Валюта -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <mat-select [(ngModel)]="tourism_invoice.detail_info.total_amount.currency_id"
+                    placeholder="Валюта: " name="forfeit.currency_id">
+                    <mat-option *ngFor="let item of ref_unit_classifier_names" [value]="item._id" >{{ item.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mr-0 ml-0 mt-1">
+            <!-- Каса УЦОП -->
+            <div class="col-12">
+              <div class="row">
+                <!-- TODO: Delete my_input_style and change it on another -->
+                <div class="col-12 my_input_style">
+                  <h4 class="control-label float-left">
+                      Каса УЦОП:
+                  </h4>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Сума послуг каси УЦОП -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.total_amount_ucop" name="total_amount_ucop"
+                    matInput placeholder="Сума послуг каси УЦОП: " />
+                </mat-form-field>
+                <!-- ПДВ послуг каси УЦОП -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.ucop_mpe" name="ucop_mpe"
+                    matInput placeholder="ПДВ послуг каси УЦОП: " />
+                </mat-form-field>
+                <!-- Додаткова інформація -->
+                <mat-form-field class="col-4 pt-3 pr-1 pl-1 custom-form-field">
+                  <input [(ngModel)]="tourism_invoice.detail_info.additional_info" name="additional_info"
+                    matInput placeholder="Додаткова інформація: " />
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </mat-tab>
+      <!-- TAB 1 - END -->
+
+      <!-- TAB 2 - START -->
+      <mat-tab label="Таблиця">
+        <div class="mb-4 mt-4">
+          <!-- Table Controls -->
+          <div class="pl-0 mt-4 pr-0 clearfix">
+            <div class="col-md-10 pl-0 pr-0 d-lg-inline d-none float-lg-left">
+              <div class="d-inline mr-my-1">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Скопіювати"
+                >
+                  <span class="material-icons">filter_none</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Вилучити" >
+                  <span class="material-icons">delete_sweep</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Перемістити вверх"
+                >
+                  <span class="material-icons">arrow_upward</span>
+                </button>
+              </div>
+              <div class="d-inline mr-my-1">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Перемістити вниз"
+                >
+                  <span class="material-icons">arrow_downward</span>
+                </button>
+              </div>
+            </div>
+            <!-- Button Row - End -->
+            <!-- DropDown ALL Actions -->
+            <div class="col-md-2 pl-0 pr-0 float-lg-right float-left">
+              <div id="referencesButton" class="d-lg-inline d-none float-right">
+                <button
+                  type="button"
+                  class="btn btn-default my_button_style my_square_button"
+                  matTooltip="Довідка"
+                >
+                  <span class="material-icons">help_outline</span>
+                </button>
+              </div>
+              <div
+                class="allActionsMenu d-inline mr-my-1 float-left float-lg-right"
+              >
+                <button
+                  class="btn btn-default my_button_style"
+                  mat-button
+                  [matMenuTriggerFor]="menu"
+                >
+                  Всі дії
+                  <span class="material-icons">keyboard_arrow_down</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_searching</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Знайти</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">location_disabled</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Відмінити пошук</span>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">settings</span>
+                    </div>
+                    <span class="d-inline my_menu_label"
+                      >Настроїти список...</span
+                    >
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">done_all</span>
+                    </div>
+                    <span class="d-inline my_menu_label"
+                      >Вивести список...</span
+                    >
+                  </button>
+                  <button mat-menu-item>
+                    <div class="d-inline mr-3 my_menu_icon">
+                      <span class="material-icons">refresh</span>
+                    </div>
+                    <span class="d-inline my_menu_label">Оновити</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+            <!-- DropDown ALL Actions end-->
+          </div>
+          <!-- Table Controls - End -->
+
+          <!-- Popup Table -->
+          <div class="mt-2 ml-0 mr-0 my_table_style">
+            <div class="col-md-12 pl-0 pr-0 mb-0 table-responsive">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="code_column">N</th>
+                    <th scope="col">Номер рейсу</th>
+                    <th scope="col">Місце</th>
+                    <th scope="col">Місце відправлення</th>
+                    <th scope="col">Місце прибуття</th>
+                    <th scope="col" class="code_column">Тип сервісу</th>
+                    <th scope="col">Час відправлення</th>
+                    <th scope="col">Час прибуття</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    class="main"
+                    *ngFor="
+                      let invoice of tourism_invoice.FlightInfo;
+                      let i = index
+                    "
+                  >
+                    <td class="text-center" scope="row">{{ i + 1 }}</td>
+                    <td class="text-center">{{ invoice.FlightNumber }}</td>
+                    <td class="text-center">{{ invoice.Place }}</td>
+                    <td class="text-center">{{ invoice.DeparturePlace }}</td>
+                    <td class="text-center">{{ invoice.ArrivalPlace }}</td>
+                    <td class="text-center">{{ invoice.ServiceType }}</td>
+                    <td class="text-center">{{ invoice.DepartureTime }}</td>
+                    <td class="text-center">{{ invoice.ArrivalTime }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Popup Table - End -->
+        </div>
+      </mat-tab>
+      <!-- TAB 2 - END -->
+    </mat-tab-group>
+    <!-- Angular Material Tabs - End -->
+  </form>
+</div>
+
+<!-- Popup Footer -->
+
+<div id="invoiceModalFooter">
+  <div class="float-right d-inline">
+    <button (click)="close_dialog()" mat-raised-button color="warn">Закрити</button>
+  </div>
+</div>
+<!-- Popup Footer - End -->

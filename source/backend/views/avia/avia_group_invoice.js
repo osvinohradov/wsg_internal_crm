@@ -154,7 +154,7 @@ export async function get_all_avia_group_invoices(req, res) {
 export async function get_avia_group_invoice_count(req, res) {
     let avia_group_invoice_count = null;
     try{
-        avia_group_invoice_count = await AviaGroupInvoice.count();
+        avia_group_invoice_count = await AviaGroupInvoice.countDocuments();
         console.log(avia_group_invoice_count)
 
         if(!avia_group_invoice_count){

@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -87,7 +87,7 @@ class RailwayStationController extends BaseView{
         let railway_station_name = req.query.railway_station_name;
  
         try{
-            railway_stations = await Ref.RailwayStationModel.get_railway_stations_names(railway_station_name, { limit: 10 });
+            railway_stations = await References.RailwayStationModel.get_railway_stations_names(railway_station_name, { limit: 10 });
 
             this.send_success_response(res, railway_stations);
         }

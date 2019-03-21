@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -87,7 +87,7 @@ class CheckingAccountController extends BaseView{
         let checking_account_name = req.query.checking_account_name;
  
         try{
-            checking_accounts = await Ref.CheckingAccountModel.get_checking_accounts_names(checking_account_name);
+            checking_accounts = await References.CheckingAccountModel.get_checking_accounts_names(checking_account_name);
 
             this.send_success_response(res, checking_accounts);
         }

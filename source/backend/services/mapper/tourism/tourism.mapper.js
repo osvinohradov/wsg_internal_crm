@@ -13,7 +13,15 @@ class TourismMapper extends Mapper{
     }
 
     async map(ticket, model){
-        
+        console.log('Ticket: ', ticket);
+        let trourism_invoice = new model();
+        trourism_invoice.number = generate_random_number();  
+        trourism_invoice.date = ticket.booking.createdAt;
+        trourism_invoice.service_date = ticket.booking.checkOut;
+        trourism_invoice.client_id = null;
+        trourism_invoice.service_type_id = null;
+
+        trourism_invoice.detail_info = {};
     }
 
     async get_date_time(dt_str){

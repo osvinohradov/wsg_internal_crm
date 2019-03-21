@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -13,7 +13,7 @@ class CuratorController extends BaseView{
         let skip = 0;
         let limit = 10;
         try{
-            curators = await Ref.CuratorModel.find({}).skip(skip).limit(10);
+            curators = await References.CuratorModel.find({}).skip(skip).limit(10);
 
             this.send_success_response(res, curators);
         }
@@ -27,7 +27,7 @@ class CuratorController extends BaseView{
     async get_curator(req, res){
         let curator_id = req.params.id;
         try{
-            let curator = await Ref.CuratorModel.findOne({ _id: curator_id});
+            let curator = await References.CuratorModel.findOne({ _id: curator_id});
 
             this.send_success_response(res, curator);
         }
@@ -41,7 +41,7 @@ class CuratorController extends BaseView{
     async create_curator(req, res){
         let curator = req.body;
 
-        curator = new Ref.CuratorModel(curator);
+        curator = new References.CuratorModel(curator);
         let is_invalid = curator.validateSync();
         if(is_invalid){
             // TODO: Return error
@@ -60,7 +60,7 @@ class CuratorController extends BaseView{
         let curator = req.body;
 
         // TODO: Validate body
-        curator = await Ref.CuratorModel.findOneAndUpdate({ _id: curator_id }, curator, { new: true });
+        curator = await References.CuratorModel.findOneAndUpdate({ _id: curator_id }, curator, { new: true });
         
         this.send_success_response(res, curator);
     }
@@ -68,7 +68,7 @@ class CuratorController extends BaseView{
     async delete_curator(req, res){
         let curator_id = req.params.id;
 
-        let deleted = await Ref.CuratorModel.findOneAndDelete({ _id: curator_id });
+        let deleted = await References.CuratorModel.findOneAndDelete({ _id: curator_id });
         // TODO: Send status
         this.send_success_response(res, {});
     }
@@ -76,7 +76,7 @@ class CuratorController extends BaseView{
     async get_curators_count(req, res){
         let curators_count = null;
 
-        curators_count = await Ref.CuratorModel.countDocuments({});
+        curators_count = await References.CuratorModel.countDocuments({});
 
         this.send_success_response(res, { count: curators_count});
     }
@@ -87,7 +87,7 @@ class CuratorController extends BaseView{
         let curator_name = req.query.curator_name;
  
          try{
-             curators = await Ref.CuratorModel.get_curators_names(curator_name);
+             curators = await References.CuratorModel.get_curators_names(curator_name);
  
              this.send_success_response(res, curators);
          }

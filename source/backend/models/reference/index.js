@@ -10,12 +10,10 @@ import { CurrencyExchangeModel } from './currency_exchange.model';
 import { IndividualCounterpartyModel } from './individual_counterparty.model';
 import { IndividualCounterpartyPassportModel } from './individual_counterparty_passport.model';
 import { RailwayStationModel } from './railway_stations.model';
+import { CityModel } from './city';
 
 
 
-
-
-import { ReferenceCityModel } from './city';
 import { ReferenceNomenclatureModel, 
          ReferenceNomenclatureGroupModel,
          ReferenceEmbezzlementModel } from './nomenclature';
@@ -37,11 +35,10 @@ export {
     IndividualCounterpartyModel,
     IndividualCounterpartyPassportModel,
     RailwayStationModel,
+    CityModel,
 
 
 
-    
-    ReferenceCityModel,
     ReferenceNomenclatureModel,
     ReferenceNomenclatureGroupModel,
     ReferenceEmbezzlementModel,

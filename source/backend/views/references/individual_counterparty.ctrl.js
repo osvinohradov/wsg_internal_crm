@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -87,7 +87,7 @@ class IndividualCounterpartyController extends BaseView{
         let individual_counterparty_name = req.query.individual_counterparty_name;
  
         try{
-            individual_counterparties = await Ref.IndividualCounterpartyModel.get_individual_counterparties_names(individual_counterparty_name);
+            individual_counterparties = await References.IndividualCounterpartyModel.get_individual_counterparties_names(individual_counterparty_name);
 
             this.send_success_response(res, individual_counterparties);
         }

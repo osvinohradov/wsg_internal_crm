@@ -9,9 +9,9 @@ import { PAYMENT_FORMS,
          DEFAULT_COUNTERPARTY_NAME,
          DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE,
          MPE_RATE } from '../../../constants/common';
-import { Ref } from '../../../models';
+import { References } from '../../../models';
 
-class TainAmadeusMapper extends Mapper{
+class TrainAmadeusMapper extends Mapper{
     constructor(){
         super();
     }
@@ -51,7 +51,7 @@ class TainAmadeusMapper extends Mapper{
         t.payment_form = PAYMENT_FORMS['credit'];
         t.tickets_count = 1;
 
-        let client = await Ref.ReferenceCounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
+        let client = await References.CounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
         t.client_id = client ? client._id : null;  
         t.service_date = date; // возможно заменить (спросить у Игоря)
 
@@ -60,7 +60,7 @@ class TainAmadeusMapper extends Mapper{
         t.is_paid = false;
         t.group_invoice_id = null;
 
-        let currency = await Ref.ReferenceUnitClassifierModel.findOne({ name: DEFAULT_UNIT_CLASSIFIER_NAME });
+        let currency = await References.UnitClassifierModel.findOne({ name: DEFAULT_UNIT_CLASSIFIER_NAME });
         currency = currency._id || null;
         t.offer_currency_id = currency;
         t.total_currency_id = currency;
@@ -70,7 +70,7 @@ class TainAmadeusMapper extends Mapper{
         t.curator_id = null;
         t.currency_exchange_id = null;
 
-        let service = await Ref.ReferenceServiceTypeModel.findOne({ name: DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE });
+        let service = await References.ServiceTypeModel.findOne({ name: DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE });
         t.service_type_id = service ? service._id : null;
 
         t.checking_account_id = null;
@@ -100,11 +100,11 @@ class TainAmadeusMapper extends Mapper{
         t.detail_info.service_type = tfx.wagonType;
 
         let st_code = tfx.departureStationCode ? new RegExp(`.*2${tfx.departureStationCode}.*`, 'i') : '';
-        let departure = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
+        let departure = await References.RailwayStationModel.findOne({ $or: [{ name_eng: tfx.departureStation }, { station_code : st_code } ]});
         t.detail_info.departure_station_id = departure ? departure._id : null;
         
         st_code = tfx.arrivalStationCode ? new RegExp(`.*2${tfx.arrivalStationCode}.*`, 'i') : '';
-        let arrival = await Ref.RefRailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
+        let arrival = await References.RailwayStationModel.findOne({ $or: [{ name_eng: tfx.arrivalStation }, { station_code : st_code } ]});
         t.detail_info.arrival_station_id = arrival ? arrival._id : null;
         
         // Дата отправления
@@ -124,11 +124,11 @@ class TainAmadeusMapper extends Mapper{
             first_name_native: passenger.firstName
         }
 
-        let individual_counterparty = await Ref.ReferenceIndividualCounterpartiesModel.findOne(individual);
+        let individual_counterparty = await References.IndividualCounterpartyModel.findOne(individual);
 
 
         if(!individual_counterparty){
-            individual_counterparty = new Ref.ReferenceIndividualCounterpartiesModel(individual);
+            individual_counterparty = new References.IndividualCounterpartyModel(individual);
             individual_counterparty = await individual_counterparty.save();
         }
         t.detail_info.surname_id = individual_counterparty._id;
@@ -219,4 +219,4 @@ class TainAmadeusMapper extends Mapper{
     }
 }
 
-export default new TainAmadeusMapper();
+export default new TrainAmadeusMapper();

@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -13,7 +13,7 @@ class AviaCompanyView extends BaseView{
         let skip = 0;
         let limit = 10;
         try{
-            avia_company = await Ref.AviaCompanyModel.find({}).skip(skip).limit(limit);
+            avia_company = await References.AviaCompanyModel.find({}).skip(skip).limit(limit);
 
             this.send_success_response(res, avia_company);
         }
@@ -27,7 +27,7 @@ class AviaCompanyView extends BaseView{
     async get_avia_company(req, res){
         let avia_company_id = req.params.id;
         try{
-            let avia_company = await Ref.AviaCompanyModel.findOne({ _id: avia_company_id});
+            let avia_company = await References.AviaCompanyModel.findOne({ _id: avia_company_id});
 
             this.send_success_response(res, avia_company);
         }
@@ -41,7 +41,7 @@ class AviaCompanyView extends BaseView{
     async create_avia_company(req, res){
         let avia_company = req.body;
 
-        avia_company = new Ref.AviaCompanyModel(avia_company);
+        avia_company = new References.AviaCompanyModel(avia_company);
         let is_invalid = avia_company.validateSync();
         if(is_invalid){
             // TODO: Return error
@@ -60,7 +60,7 @@ class AviaCompanyView extends BaseView{
         let avia_company = req.body;
 
         // TODO: Validate body
-        avia_company = await Ref.AviaCompanyModel.findOneAndUpdate({ _id: avia_company_id }, avia_company, { new: true });
+        avia_company = await References.AviaCompanyModel.findOneAndUpdate({ _id: avia_company_id }, avia_company, { new: true });
 
         this.send_success_response(res, avia_company);
     }
@@ -68,7 +68,7 @@ class AviaCompanyView extends BaseView{
     async delete_avia_company(req, res){
         let avia_company_id = req.params.id;
 
-        let deleted = await Ref.AviaCompanyModel.findOneAndDelete({ _id: avia_company_id });
+        let deleted = await References.AviaCompanyModel.findOneAndDelete({ _id: avia_company_id });
         // TODO: Send status
         this.send_success_response(res, {});
     }
@@ -76,7 +76,7 @@ class AviaCompanyView extends BaseView{
     async get_avia_company_count(req, res){
         let avia_company_count = null;
 
-        avia_company_count = await Ref.AviaCompanyModel.countDocuments({});
+        avia_company_count = await References.AviaCompanyModel.countDocuments({});
 
         this.send_success_response(res, { count: avia_company_count});
     }

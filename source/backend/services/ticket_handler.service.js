@@ -6,7 +6,7 @@ import util from 'util';
 
 // Internal packages
 import { isEmpty, FileWatcher } from '../utils';
-import { TrainInvoiceModel } from '../models';
+import { TrainInvoiceModel, TourismInvoiceModel } from '../models';
 
 
 class TicketHandlerService{
@@ -14,6 +14,7 @@ class TicketHandlerService{
     handlers = {};
     models = {
         train: TrainInvoiceModel,
+        tourism: TourismInvoiceModel,
         avia: ''
     }
 

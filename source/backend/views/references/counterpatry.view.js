@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -13,7 +13,7 @@ class CounterpartyView extends BaseView{
         let skip = 0;
         let limit = 10;
         try{
-            counterparties = await Ref.CounterpartyModel.find({}).skip(skip).limit(10);
+            counterparties = await References.CounterpartyModel.find({}).skip(skip).limit(10);
 
             this.send_success_response(res, counterparties);
         }
@@ -27,7 +27,7 @@ class CounterpartyView extends BaseView{
     async get_counterparty(req, res){
         let counterparty_id = req.params.id;
         try{
-            let counterparty = await Ref.CounterpartyModel.findOne({ _id: counterparty_id});
+            let counterparty = await References.CounterpartyModel.findOne({ _id: counterparty_id});
 
             this.send_success_response(res, counterparty);
         }
@@ -41,7 +41,7 @@ class CounterpartyView extends BaseView{
     async create_counterparty(req, res){
         let counterparty = req.body;
 
-        counterparty = new Ref.CounterpartyModel(counterparty);
+        counterparty = new References.CounterpartyModel(counterparty);
         let is_invalid = counterparty.validateSync();
         if(is_invalid){
             // TODO: Return error
@@ -60,7 +60,7 @@ class CounterpartyView extends BaseView{
         let counterparty = req.body;
 
         // TODO: Validate body
-        counterparty = await Ref.CounterpartyModel.findOneAndUpdate({ _id: counterparty_id }, counterparty, { new: true });
+        counterparty = await References.CounterpartyModel.findOneAndUpdate({ _id: counterparty_id }, counterparty, { new: true });
 
         this.send_success_response(res, counterparty);
     }
@@ -68,7 +68,7 @@ class CounterpartyView extends BaseView{
     async delete_counterparty(req, res){
         let counterparty_id = req.params.id;
 
-        let deleted = await Ref.CounterpartyModel.findOneAndDelete({ _id: counterparty_id });
+        let deleted = await References.CounterpartyModel.findOneAndDelete({ _id: counterparty_id });
         // TODO: Send status
         this.send_success_response(res, {});
     }
@@ -76,7 +76,7 @@ class CounterpartyView extends BaseView{
     async get_counterparties_count(req, res){
         let counterparties_count = null;
 
-        counterparties_count = await Ref.CounterpartyModel.countDocuments({});
+        counterparties_count = await References.CounterpartyModel.countDocuments({});
 
         this.send_success_response(res, { count: counterparties_count});
     }
@@ -86,7 +86,7 @@ class CounterpartyView extends BaseView{
        let counterparty_name = req.query.counterparty_name;
 
         try{
-           counterparties = await Ref.CounterpartyModel.get_counterparties_names(counterparty_name);
+           counterparties = await References.CounterpartyModel.get_counterparties_names(counterparty_name);
 
             this.send_success_response(res, counterparties);
         }

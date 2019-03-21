@@ -254,7 +254,7 @@ export async function get_avia_invoice_by_id(req, res) {
 export async function get_avia_invoice_count(req, res) {
     let avia_invoices_count = null;
     try {
-        avia_invoices_count = await AviaInvoice.count();
+        avia_invoices_count = await AviaInvoice.countDocuments();
 
         if (!avia_invoices_count) {
             throw new HttpResponseError(`Can't get avia invoice count.`, 404, null);

@@ -1,5 +1,5 @@
 import { BaseView, Exception } from '../../lib';
-import { Ref } from '../../models';
+import { References } from '../../models';
 import { generate_random_number } from '../../helpers';
 
 // TODO: Involve validator to each handler
@@ -87,7 +87,7 @@ class UnitClassifierController extends BaseView{
         let unit_classifier_name = req.query.unit_classifier_name;
  
         try{
-            unit_classifiers = await Ref.UnitClassifierModel.get_unit_classifiers_names(unit_classifier_name);
+            unit_classifiers = await References.UnitClassifierModel.get_unit_classifiers_names(unit_classifier_name);
 
             this.send_success_response(res, unit_classifiers);
         }

@@ -11,7 +11,7 @@ import { PAYMENT_FORMS,
          DEFAULT_TRAIN_AMADEUS_SERVICE_TYPE,
          MPE_RATE, 
          DEFAULT_TRAIN_ARGEST_SERVICE_TYPE} from '../../../constants/common';
-import { Ref } from '../../../models';
+import { References } from '../../../models';
 
 
 class TainArgestMapper extends Mapper{
@@ -37,7 +37,7 @@ class TainArgestMapper extends Mapper{
         model.tickets_count = ticket.travel.trip.boarding_pass;
         model.total_amount = 0;
 
-        let client = await Ref.ReferenceCounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
+        let client = await References.CounterpartyModel.findOne({ name: DEFAULT_COUNTERPARTY_NAME });
         model.client_id = client ? client._id : null;  
 
         model.service_date = ticket_date;
@@ -48,7 +48,7 @@ class TainArgestMapper extends Mapper{
         model.is_paid = false;
         model.group_invoice_id = null;
 
-        let currency = await Ref.ReferenceUnitClassifierModel.findOne({ name: DEFAULT_UNIT_CLASSIFIER_NAME });
+        let currency = await References.UnitClassifierModel.findOne({ name: DEFAULT_UNIT_CLASSIFIER_NAME });
         currency = currency._id || null;
 
         model.offer_currency_id = currency;
@@ -59,8 +59,8 @@ class TainArgestMapper extends Mapper{
         model.curator_id = null;
         model.currency_exchange_id = null;
 
-        let service = await Ref.ReferenceServiceTypeModel.findOne({ name: DEFAULT_TRAIN_ARGEST_SERVICE_TYPE });
-        model.service_type_id = null;
+        let service = await References.ServiceTypeModel.findOne({ name: DEFAULT_TRAIN_ARGEST_SERVICE_TYPE });
+        model.service_type_id = service._id || null;
 
         model.checking_account_id = null;
         model.comment = '';
@@ -85,11 +85,11 @@ class TainArgestMapper extends Mapper{
         model.detail_info.payment_provider_dt = ticket_date;
 
         let st_code = ticket.travel.src.idx ? new RegExp(`.*${ticket.travel.src.idx}.*`, 'i') : '';
-        let dep_st = await Ref.RefRailwayStationModel.findOne({ station_code : st_code });
+        let dep_st = await References.RailwayStationModel.findOne({ station_code : st_code });
         model.detail_info.departure_station_id = dep_st ? dep_st._id : null;
 
         st_code = ticket.travel.dst.idx ? new RegExp(`.*${ticket.travel.dst.idx}.*`, 'i') : '';
-        let arr_st = await Ref.RefRailwayStationModel.findOne({ station_code : st_code });
+        let arr_st = await References.RailwayStationModel.findOne({ station_code : st_code });
         model.detail_info.arrival_station_id = arr_st ? arr_st._id : null;
 
         let individual = {
@@ -97,10 +97,10 @@ class TainArgestMapper extends Mapper{
             first_name_native: ticket.sold_seats.passenger.name
         };
 
-        let individual_counterparty = await Ref.ReferenceIndividualCounterpartiesModel.findOne(individual);
+        let individual_counterparty = await References.IndividualCounterpartyModel.findOne(individual);
 
         if(!individual_counterparty){
-            individual_counterparty = new Ref.ReferenceIndividualCounterpartiesModel(individual);
+            individual_counterparty = new References.IndividualCounterpartyModel(individual);
             individual_counterparty = await individual_counterparty.save();
         }
         model.detail_info.surname_id = individual_counterparty._id;
