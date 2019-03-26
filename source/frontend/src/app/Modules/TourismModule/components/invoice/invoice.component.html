@@ -199,11 +199,10 @@
             <th scope="col">Дата</th>
             <th scope="col">Номер</th>
             <th scope="col">Повернення</th>
-            <th scope="col">Void</th>
             <th scope="col">Опл.</th>
-            <th scope="col">Клієнт</th>
-            <th scope="col">Групове замовлення</th>
+            <th scope="col">Контрагент</th>
             <th scope="col">Вид сервісу</th>
+            <th scope="col">Групове замовлення</th>
             <th scope="col">Зміст</th>
             <th scope="col">Постачальник</th>
             <th scope="col">Сума</th>
@@ -211,10 +210,8 @@
             <th scope="col">Коментар</th>
             <th scope="col">Агент</th>
             <th scope="col">Відповідальний</th>
-            <th scope="col">Валюта пропозиції</th>
             <th scope="col">Підсумкова валюта</th>
-            <th scope="col">Організація</th>
-            <th scope="col">Документ що повертається</th>
+            <th scope="col">На дату</th>
             <th scope="col">Дата купівлі у постачальника</th>
             <th scope="col">Форма сплати</th>
             <th scope="col">Дата сплати</th>
@@ -223,87 +220,48 @@
         </thead>
         <tbody>
             <tr *ngFor="let invoice of train_invoices" (dblclick)="edit_invoice(invoice._id)" class="main">
-            <!-- Date -->
-            <td class="text-center" scope="row">{{ invoice.date | date: 'dd/MM/yyyy H:mm:ss' }}</td>
-            <!-- Number -->
-            <td class="text-center">{{ invoice.number }}</td>
-            <!-- Is returned -->
-            <td class="text-center">
-                <mat-checkbox class="" primary [(ngModel)]="invoice.is_returned" [disabled]="true"></mat-checkbox>
-            </td>
-            <!-- Is void -->
-            <td class="text-center">
-                <mat-checkbox class="" primary [(ngModel)]="invoice.is_void" [disabled]="true"></mat-checkbox>
-            </td>
-            <!-- Is paid -->
-            <td class="text-center">
-                <mat-checkbox class="" primary [(ngModel)]="invoice.is_paid" [disabled]="true"></mat-checkbox>
-            </td>
-            <!-- Client -->
-            <td class="text-center">{{ invoice.client_id ? invoice.client_id.name : "-" }}</td>
-            <td class="text-center">{{ invoice.group_invoice_id ? invoice.group_invoice_id.group_name : "-" }}</td>
-            <td class="text-center">{{ invoice.service_type_id ? invoice.service_type_id.name : "-" }}</td>
-            <!-- Оплата залізничного квитка Бірюкова Анастасія. Маршрут: від Київ-Пасажирський до Івано-Франківськ. 
-                Дата та час відправлення: 18.03.2019 19:05:00; Дата та час прибуття: 19.03.2019 05:43:00;
-                Потяг: 043К; Вагон 05; Місце 15; Код підтвердження: ШЯП-Е1-30887. -->
-            <td class="text-center" matTooltip="{{__get_invoice_content(invoice)}}">{{ __get_invoice_content(invoice) }}</td>
-            <!-- Provider id -->
-            <td class="text-center">{{ invoice.provider_id ? invoice.provider_id : "-" }}</td>
-            <!-- Total amount -->
-            <td class="text-center">{{ invoice.detail_info.total_amount.sum }}</td>
-            <!-- MPE -->
-            <td class="text-center">{{ invoice.detail_info.total_amount.mpe }}</td>
-            <!-- Comment -->
-            <td class="text-center">{{ invoice.comment }}</td>
-            <!-- Agent -->
-            <td class="text-center">{{ invoice.agent_id ? invoice.agent_id.first_name + " " + invoice.agent_id.last_name  : "-" }}</td>
-            <!-- Responsible Agent -->
-            <td class="text-center">{{ invoice.responsible_agent_id ? invoice.responsible_agent_id.first_name + " " + invoice.responsible_agent_id.last_name  : "-" }}</td>
-            <!-- Offer Currency -->
-            <td class="text-center">{{ invoice.offer_currency_id ? invoice.offer_currency_id.name : "-" }}</td>
-            <!-- Total Currency -->
-            <td class="text-center">{{ invoice.total_currency_id ? invoice.total_currency_id.name : "-" }}</td>
-            <!-- Organization -->
-            <td class="text-center">{{ invoice.organization ? invoice.organization.name : "-" }}</td>
-            <!-- Returned document -->
-            <td class="text-center">{{ invoice.returned_document }}</td>
-            <!-- Provider payment date -->
-            <td class="text-center">{{ invoice.detail_info.payment_provider_dt | date: 'dd/MM/yyyy H:mm:ss' }}</td>
-            <!-- Payment form -->
-            <td class="text-center">{{ invoice.payment_form }}</td>
-            <!-- Payment date -->
-            <td class="text-center">{{ invoice.payment_date | date: 'dd/MM/yyyy H:mm:ss' }}</td>
-
-            <td class="text-center">
-                <mat-checkbox class="" primary [(ngModel)]="invoice.is_processed" [disabled]="true"></mat-checkbox>
-            </td>
+                <!-- Date -->
+                <td class="text-center" scope="row">{{ invoice.date | date: 'dd/MM/yyyy H:mm:ss' }}</td>
+                <!-- Number -->
+                <td class="text-center">{{ invoice.number }}</td>
+                <!-- Is returned -->
+                <td class="text-center">
+                    <mat-checkbox primary [disabled]="true">Повернення</mat-checkbox>
+                </td>
+                <!-- Is paid -->
+                <td class="text-center">
+                    <mat-checkbox [(ngModel)]="invoice.is_paid" [disabled]="true" primary>Опл</mat-checkbox>
+                </td>
+                <td class="text-center">Контрагент</td>
+                <td class="text-center">Вид сервісу</td>
+                <td class="text-center">Групове замовлення</td>
+                <td class="text-center" matTooltip="">Зміст</td>
+                <!-- Provider id -->
+                <td class="text-center">Постачальник</td>
+                <!-- Total amount -->
+                <td class="text-center">Сума</td>
+                <!-- MPE -->
+                <td class="text-center">В т.ч.ПДВ</td>
+                <!-- Comment -->
+                <td class="text-center">Коментар</td>
+                <!-- Agent -->
+                <td class="text-center">Агент</td>
+                <!-- Responsible Agent -->
+                <td class="text-center">Відповідальний</td>
+                <!-- Total Currency -->
+                <td class="text-center">Підсумкова валюта</td>
+                <td class="text-center">На дату</td>
+                <td class="text-center">Дата купівлі у постачальника</td>
+                <td class="text-center">Форма сплати</td>
+                <td class="text-center">Дата сплати</td>
+                <td class="text-center">
+                    <mat-checkbox class="" primary [(ngModel)]="invoice.is_processed" [disabled]="true">Оброблено</mat-checkbox>
+                </td>
             </tr>
         </tbody>
         </table>
     </div>
 </div>
-
-<!-- <div *ngIf="elements_count >= limit" class="col-md-12 d-flex align-items-center justify-content-center clearfix">
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-    <li class="page-item">
-        <button class="page-link" aria-label="Previous" (click)="load_airports(0, 20)">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-        </button>
-    </li>
-    <li class="page-item" *ngFor="let item of pagination_arr; let index = index" [class.active]="index == current_page">
-        <button class="page-link" (click)="load_airports(index, limit)">{{index + 1}}</button>
-    </li>
-    <li class="page-item">
-        <button class="page-link" aria-label="Next" (click)="load_airports(0, 20)">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-        </button>
-    </li>
-    </ul>
-</nav>
-</div> -->
   
 <div class="container-fluid position-absolute d-flex align-items-center justify-content-center clearfix" *ngIf="is_loader_displayed">
   <div class="row">

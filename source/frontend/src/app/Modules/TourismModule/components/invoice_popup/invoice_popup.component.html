@@ -202,7 +202,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <!-- Квитків -->
+      <!-- Послуг -->
       <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
         <input [value]="tourism_invoice.service_count" name="service_count" disabled matInput placeholder="Послуг:"/>
       </mat-form-field>
@@ -210,7 +210,7 @@
       <mat-form-field class="col-1 pr-1 pl-1 custom-form-field">
         <input [value]="_get_total_amount_sum()" name="total_amount" matInput placeholder="Всього:" disabled />
       </mat-form-field>
-      <!-- Опрацьовано -->
+      <!-- Оплачено -->
       <section class="col-1 pt-3 pr-1 pl-1 custom-form-field">
         <mat-checkbox [(ngModel)]="tourism_invoice.is_paid" name="processed" class="float-left" matInput disabled>Оплачено:</mat-checkbox>
       </section>
@@ -246,42 +246,6 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <!-- Вид сервісу -->
-      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
-        <input [value]="tourism_invoice.service_type_id.name"
-          [formControl]="serviceTypeFromControl" name="service_type_id" type="text" 
-          placeholder="Вид сервісу: " matInput [matAutocomplete]="service_type_id">
-        <mat-autocomplete autoActiveFirstOption #service_type_id="matAutocomplete">
-          <mat-option (onSelectionChange)="setServiceTypeValue($event, item)"
-                      *ngFor="let item of serviceTypeAutoComplete | async" [value]="item.name">
-            {{ item.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <!-- Сплата такси -->
-      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
-        <input [value]="tourism_invoice.taxes_payment_id.name"
-          [formControl]="taxesPaymentFromControl" name="taxes_payment_id" type="text" 
-          placeholder="Сплата такси: " matInput [matAutocomplete]="taxes_payment_id">
-        <mat-autocomplete autoActiveFirstOption #taxes_payment_id="matAutocomplete">
-          <mat-option  (onSelectionChange)="setTaxesPaymentValue($event, item)"
-                      *ngFor="let item of taxesPaymentAutoComplete | async" [value]="item.name">
-            {{ item.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <!--Валюта пропозиції  -->
-      <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
-        <input [value]="tourism_invoice.offer_currency_id.name"
-          [formControl]="offerCurrencyFromControl" name="offer_currency_id" type="text" 
-          placeholder="Валюта пропозиції: " matInput [matAutocomplete]="offer_currency_id">
-        <mat-autocomplete autoActiveFirstOption #offer_currency_id="matAutocomplete">
-          <mat-option (onSelectionChange)="setOfferCurrencyValue($event, item)"
-                      *ngFor="let item of offerCurrencyAutoComplete | async" [value]="item.name">
-            {{ item.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
       <!-- Підсумкова валюта -->
       <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
         <input [value]="tourism_invoice.total_currency_id.name"
@@ -294,6 +258,39 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
+      <!-- Курс НБУ -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input name="taxes_payment_id" type="text" placeholder="Курс НБУ: " matInput>
+        </mat-autocomplete>
+      </mat-form-field>
+
+
+      <!-- Вид сервісу -->
+      <mat-form-field class="col-2 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.service_type_id.name"
+          [formControl]="serviceTypeFromControl" name="service_type_id" type="text" 
+          placeholder="Вид сервісу: " matInput [matAutocomplete]="service_type_id">
+        <mat-autocomplete autoActiveFirstOption #service_type_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setServiceTypeValue($event, item)"
+                      *ngFor="let item of serviceTypeAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      
+      <!--Валюта пропозиції  -->
+      <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
+        <input [value]="tourism_invoice.offer_currency_id.name"
+          [formControl]="offerCurrencyFromControl" name="offer_currency_id" type="text" 
+          placeholder="Валюта пропозиції: " matInput [matAutocomplete]="offer_currency_id">
+        <mat-autocomplete autoActiveFirstOption #offer_currency_id="matAutocomplete">
+          <mat-option (onSelectionChange)="setOfferCurrencyValue($event, item)"
+                      *ngFor="let item of offerCurrencyAutoComplete | async" [value]="item.name">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      
       <!-- Обмін валют -->
       <mat-form-field class="col-1 pt-3 pr-1 pl-1 custom-form-field">
         <input [value]="tourism_invoice.currency_exchange_id.name"
