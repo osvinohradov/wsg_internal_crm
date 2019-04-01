@@ -215,7 +215,7 @@ class TrainView extends BaseView{
             console.log('Date: ', invoice.date)
             let date = moment.utc(invoice.date, ['YYYY-MM-DDTHH:mm:s Z']).format('DD MMMM YYYY');
             invoice.creation_date = date;
-            
+            console.log('Invoice for print: ', invoice);
             let last_name = invoice.detail_info.surname_id.last_name_native ? invoice.detail_info.surname_id.last_name_native : '';
             let first_name = invoice.detail_info.surname_id.first_name_native ? invoice.detail_info.surname_id.first_name_native : '';
             invoice.detail_info.surname_id = `${last_name} ${first_name}`;
