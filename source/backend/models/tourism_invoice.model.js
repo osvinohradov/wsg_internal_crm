@@ -255,6 +255,18 @@ TourismInvoiceSchema.statics.get_normalize_invoice = function(invoice){
   return invoice;
 }
 
+TourismInvoiceSchema.statics.find_invoices = async function(conditions, options){
+  // TODO: Add validation on incoming params
+  conditions = {
+    $and:[
+      conditions,
+      { is_deleted: false}
+  ]}
+  const tourism_invoice = await this.find(conditions, null, options);
+  return tourism_invoice;
+}
+
+
 const TourismInvoiceModel = mongoose.model("TourismInvoiceModel", TourismInvoiceSchema);
 
 export default TourismInvoiceModel;

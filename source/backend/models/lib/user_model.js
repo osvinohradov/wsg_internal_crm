@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 
 // Населені пункти
 const UserSchema = new Schema({    
-    first_name:             { type: String, required: true },
-    last_name:              { type: String, required: true },
+    first_name:             { type: String, required: [true, `First name is required field.`] },
+    last_name:              { type: String, required: [true, `Last name is required field.`] },
+    password:               { type: String, required: [true, `Password is required field.`] },
+    email:                  { type: String, required: [true, `Email is required field.`] },
 
+    // Service fields
+    is_deleted:             { type: Boolean, default: false },
     updated_at:             { type: Date, default: Date.now() },
     created_at:             { type: Date, default: Date.now() }
 }, { collection: 'users' });

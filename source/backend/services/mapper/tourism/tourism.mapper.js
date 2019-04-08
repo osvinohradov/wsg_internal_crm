@@ -22,6 +22,8 @@ class TourismMapper extends Mapper{
         trourism_invoice.service_type_id = null;
 
         trourism_invoice.detail_info = {};
+
+        console.log('Tourism invoice: ', ticket)
     }
 
     async get_date_time(dt_str){
