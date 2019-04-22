@@ -11,7 +11,7 @@ import { HttpResponse } from "../../../Common/models/HttpResponseModel";
 
 
 @Component({
-  selector: "avia-invoice",
+  selector: "train-invoice",
   templateUrl: "./invoice.component.html",
   styleUrls: ["./invoice.component.css"]
 })

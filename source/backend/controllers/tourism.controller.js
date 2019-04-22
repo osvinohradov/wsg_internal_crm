@@ -8,6 +8,16 @@ import { TourismInvoiceModel } from '../models';
 
 
 class TourismController extends Controller{
+    /**
+     * Description:
+     *      Method for retrieve tourism invoices from db.
+     * 
+     * Method: GET
+     * URL: /tourim/invoices
+     * 
+     * @param {HttpRequest} req - Request from client 
+     * @param {HttpResponse} res - Response from server 
+     */
     async get_tourism_invoices(req, res){
         const skip = req.query.slip || 0;
         const limit = req.query.limit || 10;
@@ -18,6 +28,16 @@ class TourismController extends Controller{
         this.send_success_response(res, tourism_invoices);
     }
 
+    /**
+     * Description:
+     *      Method for retrieve tourism invoice by id
+     * 
+     * Method: GET
+     * URL: /tourism/invoice
+     * 
+     * @param {HttpRequest} req - Request from client 
+     * @param {HttpResponse} res - Response from server 
+     */
     async get_tourism_invoice_by_id(req, res){
        
     }
@@ -34,3 +54,5 @@ class TourismController extends Controller{
     
     }
 }
+
+export default new TourismController();

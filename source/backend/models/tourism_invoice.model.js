@@ -18,7 +18,7 @@ const TourismInvoiceSchema = new BaseModel({
   // Дата сплати
   payment_date: { type: Date },
   // Кількість квитків
-  service_count: { type: Number, default: 0 },
+  service_count: { type: Number, default: 1 },
   // Всього
   total_amount: { type: Number, default: 0 },
   // Клієнт (посилання на Контрагентів)

@@ -11,6 +11,9 @@
 thead {
     background-color: #f1f1f1;
 }
+.mat-checkbox-label {
+    font-size: 0.875em !important;
+}
 
 th {
     font-weight: normal;

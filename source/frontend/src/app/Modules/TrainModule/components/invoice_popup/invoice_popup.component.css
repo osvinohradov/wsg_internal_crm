@@ -1,5 +1,9 @@
 /* From GroupInvoicePopup.css */
 
+.mat-checkbox-label {
+    font-size: 0.875em !important;
+}
+
 .mat-form-field{
     width: 100%;
 }

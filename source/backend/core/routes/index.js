@@ -1,4 +1,4 @@
-import Router from './controller';
+import Router from './router';
 
 export {
     Router

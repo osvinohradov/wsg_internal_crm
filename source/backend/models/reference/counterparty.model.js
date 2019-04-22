@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 
 // Internal packages
-import { CounterpartyGeneralSchema } from './common.model';
+import { CounterpartyGeneralSchema, CounterpartyOthersSchema } from './common.model';
 
 const Schema = mongoose.Schema;
 

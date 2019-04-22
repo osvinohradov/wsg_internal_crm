@@ -13,17 +13,31 @@ class TourismMapper extends Mapper{
     }
 
     async map(ticket, model){
-        console.log('Ticket: ', ticket);
+        let invoices = []
+        console.log('Count of rooms: ', ticket.rooms.elements.length)
+
+        for(let i = 0; i < ticket.rooms.elements.length; i++){
+            let invoice = await this._create_invoice(invoice, model, i);
+            invoice.push(invoice);
+        }
+
+        console.log('Tourism invoice: ', ticket);
+
+        return invoices;
+    }
+
+    async _create_invoice(invoice, model, index){
         let trourism_invoice = new model();
-        trourism_invoice.number = generate_random_number();  
+        trourism_invoice.number = `000${ticket.booking.bookingId}`; // generate_random_number();  
         trourism_invoice.date = ticket.booking.createdAt;
         trourism_invoice.service_date = ticket.booking.checkOut;
+        trourism_invoice.service_count = 1;
+
+
         trourism_invoice.client_id = null;
         trourism_invoice.service_type_id = null;
 
         trourism_invoice.detail_info = {};
-
-        console.log('Tourism invoice: ', ticket)
     }
 
     async get_date_time(dt_str){

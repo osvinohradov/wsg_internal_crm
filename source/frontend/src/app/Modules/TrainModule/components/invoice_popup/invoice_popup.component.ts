@@ -32,18 +32,21 @@ import { Observable } from "rxjs";
 import { map, startWith, catchError, debounceTime, switchMap, debounce } from "rxjs/operators";
 import { CONFIG } from '../../../constants';
 import { HttpResponse } from "../../../Common/models/HttpResponseModel";
+import { ActivatedRoute } from "@angular/router";
 
 
 @Component({
-  selector: "app-invoice-popup",
+  selector: "app-train-invoice-detail",
   templateUrl: "./invoice_popup.component.html",
-  styleUrls: [
-    
+  styleUrls: [    
     "./invoice_popup.component.css",
     "../invoice/invoice.component.css"
   ]
 })
 export class TrainInvoiceDialogComponent implements OnInit {
+
+  public train_invoice = null;
+  public is_data_avaliable: Boolean = false;
 
   public SERVER_URL = CONFIG.SERVER_URL;
   // public is_saved: Boolean = false;
@@ -104,8 +107,9 @@ export class TrainInvoiceDialogComponent implements OnInit {
 
   // TODO: Try to fetch data once and put it in array
   public unitClassifierNamesCollection = [];
-  constructor(public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail,
+  constructor(// public dialogRef: MatDialogRef<TrainInvoiceDialogComponent>,
+              private route: ActivatedRoute,
+              // @Inject(MAT_DIALOG_DATA) public train_invoice: TrainInvoiceDetail,
               private GroupInvoiceService: GroupInvoiceService,
               private CounterpartyService: CounterpartyService,
               private TrainService: TrainService,
@@ -120,8 +124,12 @@ export class TrainInvoiceDialogComponent implements OnInit {
               private RefOrganizationService: RefOrganizationService,
               private RefUserService: RefUserService,
               public toastr: ToastrManager){
-  
-  }  
+                console.log('ID: ', this.route.snapshot.paramMap.get('id'))
+  } 
+
+  retrieve_train_invoice(){
+
+  }
   
   initializeForm(){
     // Fill client auto complete field
@@ -445,27 +453,58 @@ export class TrainInvoiceDialogComponent implements OnInit {
 
   ngOnInit() {
     console.log('====================================== ngOnInit called ======================================')
-    console.log(this.train_invoice);
-    this.clientFromControl.setValue(this.train_invoice.client_id.name);
-    this.groupInvoiceFromControl.setValue(this.train_invoice.group_invoice_id.group_name);
-    this.offerCurrencyFromControl.setValue(this.train_invoice.offer_currency_id.name);
-    this.totalCurrencyFromControl.setValue(this.train_invoice.total_currency_id.name);
-    this.providerFromControl.setValue(this.train_invoice.provider_id.name);
-    this.providerFromControl.setValue(this.train_invoice.provider_id.name);
-    this.taxesPaymentFromControl.setValue(this.train_invoice.taxes_payment_id.name);
-    this.curatorFromControl.setValue(this.train_invoice.curator_id.name);
-    this.currencyExchangeFromControl.setValue(this.train_invoice.currency_exchange_id.name);
-    this.serviceTypeFromControl.setValue(this.train_invoice.service_type_id.name);
-    this.checkingAccountFromControl.setValue(this.train_invoice.checking_account_id.name);
-    let responsible_agent = this.train_invoice.responsible_agent_id.first_name && this.train_invoice.responsible_agent_id.last_name ?
+    console.log('ID: ', this.route.snapshot.paramMap.get('id'));
+
+    const invoice_id = this.route.snapshot.paramMap.get('id');
+
+    this.TrainService.get_train_invoice_by_id(invoice_id).subscribe((response: HttpResponse)=> {
+      if(response.success){
+        this.train_invoice = response.data;
+
+        console.log(this.train_invoice)
+
+        this._init();
+        console.log('Data was loaded')
+        this.is_data_avaliable = true;
+      }
+    })
+    
+    
+  }
+
+  _init(){
+    let client_name = this.train_invoice.client_id ? this.train_invoice.client_id.name : '';
+    let group_invoice = this.train_invoice.group_invoice_id ? this.train_invoice.group_invoice_id.group_name : '';
+    let offer_currency = this.train_invoice.offer_currency_id ? this.train_invoice.offer_currency_id.name : '';
+    let total_currency = this.train_invoice.total_currency_id ? this.train_invoice.total_currency_id.name : '';
+    let provider = this.train_invoice.provider_id ? this.train_invoice.provider_id.name : '';
+    let taxes_payment = this.train_invoice.taxes_payment_id ? this.train_invoice.taxes_payment_id.name : '';
+    let curator = this.train_invoice.curator_id ? this.train_invoice.curator_id.name : '';
+    let currency_exchange = this.train_invoice.currency_exchange_id ? this.train_invoice.currency_exchange_id.name : '';
+    let service_type = this.train_invoice.service_type_id ? this.train_invoice.service_type_id.name : '';
+    let checking_account = this.train_invoice.checking_account_id ? this.train_invoice.checking_account_id.name : '';
+    let organization = this.train_invoice.organization_id ? this.train_invoice.organization_id.group_name : '';
+
+    this.clientFromControl.setValue(client_name);
+    this.groupInvoiceFromControl.setValue(group_invoice);
+    this.offerCurrencyFromControl.setValue(offer_currency);
+    this.totalCurrencyFromControl.setValue(total_currency);
+    this.providerFromControl.setValue(provider);
+    this.taxesPaymentFromControl.setValue(taxes_payment);
+    this.curatorFromControl.setValue(curator);
+    this.currencyExchangeFromControl.setValue(currency_exchange);
+    this.serviceTypeFromControl.setValue(service_type);
+    this.checkingAccountFromControl.setValue(checking_account);
+    let responsible_agent = this.train_invoice.responsible_agent_id && this.train_invoice.responsible_agent_id.first_name && this.train_invoice.responsible_agent_id.last_name ?
         `${this.train_invoice.responsible_agent_id.first_name} ${this.train_invoice.responsible_agent_id.last_name}` : '';
     
         this.responsibleAgentFromControl.setValue(responsible_agent);
-    let agent = this.train_invoice.agent_id.first_name && this.train_invoice.agent_id.last_name ?
+    let agent = this.train_invoice.agent_id && this.train_invoice.agent_id.first_name && this.train_invoice.agent_id.last_name ?
         `${this.train_invoice.agent_id.first_name} ${this.train_invoice.agent_id.last_name}` : '';
     
-        this.agentFromControl.setValue(agent);
-    this.organizationFromControl.setValue(this.train_invoice.organization_id.group_name);
+    this.agentFromControl.setValue(agent);
+
+    this.organizationFromControl.setValue(organization);
     let departure_station_name = this.train_invoice.detail_info.departure_station_id.name_ukr ? this.train_invoice.detail_info.departure_station_id.name_ukr : this.train_invoice.detail_info.departure_station_id.name_rus;
     this.departureStationFromControl.setValue(departure_station_name);
     let arrival_station_name = this.train_invoice.detail_info.arrival_station_id.name_ukr ? this.train_invoice.detail_info.arrival_station_id.name_ukr : this.train_invoice.detail_info.arrival_station_id.name_rus;
